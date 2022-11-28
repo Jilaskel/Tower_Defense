@@ -4,7 +4,7 @@ from utilitaries import *
 class Background(pygame.sprite.Sprite):
       def __init__(self):
             super().__init__()
-            self.image = pygame.image.load("Assets/Background/background1.png").convert()    
+            self.current_image = pygame.image.load("Assets/Background/background1.png").convert()    
             self.posX = 0  ## 170
             self.posY = 0  ## 100
             self.menu_height = WINDOW_HEIGHT/8.0  ## 135 en 1920x1080
@@ -16,5 +16,5 @@ class Background(pygame.sprite.Sprite):
 
 
       def render(self):
-            window.blit(self.image, (self.posX, self.posY))    
+            window.blit(self.current_image, (self.posX, self.posY))    
 
