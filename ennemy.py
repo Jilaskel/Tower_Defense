@@ -2,27 +2,27 @@ import pygame
 from utilitaries import *
 
 class Ennemy(pygame.sprite.Sprite):
-      def __init__(self,game,x,y):
+      def __init__(self,x,y):
             super().__init__()
             self.images_path = "Assets/Ennemies/"
             self.image = pygame.image.load(self.images_path+"ennemy1.png").convert()    
             self.posX = x     # game.background.bush_width
             self.posY = y     # 135
             self.vel = vec(0,0)
-            self.vel.x = 20
+            self.vel.x = 0.2 # pixel by ms
 
-      def move(self):
+      def move(self,game):
             # Will set running to False if the player has slowed down to a certain extent
-            self.posX += self.vel.x
+            self.posX += self.vel.x * game.timestep
 
 
-      def render(self):
+      def render(self,game):
             window.blit(self.image, (self.posX, self.posY))  
 
 
 #class Gobelin(Ennemy,pygame.sprite.Sprite):
 class Gobelin(Ennemy,pygame.sprite.Sprite):
-      def __init__(self,game,x,y):
+      def __init__(self,x,y):
             pygame.sprite.Sprite.__init__(self)
             self.images_path = "Assets/Ennemies/Gobelin/WalkAnim/"
             self.image = pygame.image.load(self.images_path+"/001.png").convert_alpha()
@@ -33,20 +33,26 @@ class Gobelin(Ennemy,pygame.sprite.Sprite):
             self.posX = x     
             self.posY = y     
             self.vel = vec(0,0)
-            self.vel.x = 10
+            self.vel.x = 0.1 # pixel by ms
             self.moving = False
             self.move_frame = 0
+            self.time_per_frame = 30 # in ms
+            self.my_timer = 0
 
-      def move(self):
+      def move(self,game):
             # Will set running to False if the player has slowed down to a certain extent
-            self.posX += self.vel.x
+            self.posX += self.vel.x * game.timestep
             self.moving = True
 
 
-      def render(self):
+      def render(self,game):
             if self.moving:
-                  self.move_frame += 1 
-                  self.move_frame = self.move_frame%self.number_frame_walking
+                  self.my_timer += game.timestep
+                  if self.my_timer>self.time_per_frame:
+                        self.move_frame += 1
+                        self.move_frame = self.move_frame%self.number_frame_walking
+                        self.my_timer = 0.0
+                                    
                   window.blit(self.image_walking[self.move_frame], (self.posX, self.posY))
             else:
                   window.blit(self.image, (self.posX, self.posY))  
