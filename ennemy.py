@@ -9,18 +9,16 @@ class Ennemy(pygame.sprite.Sprite):
             self.posX = x     # game.background.bush_width
             self.posY = y     # 135
             self.vel = vec(0,0)
-            self.vel.x = 0.2 # pixel by ms
+            self.vel[0] = 0.2 # pixel by ms
 
-      def move(self,game):
-            # Will set running to False if the player has slowed down to a certain extent
-            self.posX += self.vel.x * game.timestep
+      def move(self,game):           
+            self.posX += self.vel[0] * game.timestep
 
 
       def render(self,game):
             window.blit(self.current_image, (self.posX, self.posY))  
 
 
-#class Gobelin(Ennemy,pygame.sprite.Sprite):
 class Gobelin(Ennemy,pygame.sprite.Sprite):
       def __init__(self,x,y):
             pygame.sprite.Sprite.__init__(self)
@@ -34,7 +32,7 @@ class Gobelin(Ennemy,pygame.sprite.Sprite):
             self.posX = x     
             self.posY = y     
             self.vel = vec(0,0)
-            self.vel.x = 0.2 # 0.1 # pixel by ms
+            self.vel[0] = 0.2 # 0.1 # pixel by ms
             self.moving = False
             self.move_frame = 0
             self.time_per_frame = 30 # in ms
@@ -44,12 +42,11 @@ class Gobelin(Ennemy,pygame.sprite.Sprite):
             self.rect.x = self.posX
             self.rect.y = self.posY
 
-      def move(self,game):
-            # Will set running to False if the player has slowed down to a certain extent
-            self.posX += self.vel.x * game.timestep
+      def move(self,game):           
+            self.posX += self.vel[0] * game.timestep
             self.rect.x = self.posX
-            #self.rect.move_ip(self.vel.x * game.timestep,0) 
-           # self.rect += self.vel.x * game.timestep
+            #self.rect.move_ip(self.vel[0] * game.timestep,0) 
+           # self.rect += self.vel[0] * game.timestep
             self.moving = True
             if self.moving:
                   self.my_timer += game.timestep

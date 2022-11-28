@@ -19,6 +19,8 @@ class Game():
             self.all_towers = pygame.sprite.Group()
             self.all_towers.add(Ballista(x_middle,y_middle))
 
+            self.all_projectiles = pygame.sprite.Group()
+
             self.all_ennemies = pygame.sprite.Group()
             self.all_ennemies.add(Gobelin(self.background.bush_width*0.1,y_middle))
 
@@ -30,12 +32,19 @@ class Game():
       def move_objects(self):
             for ennemy in self.all_ennemies:
                   ennemy.move(self)
+                  
+            for projectile in self.all_projectiles:
+                  projectile.move(self)
+                  projectile.check_impact(self)
 
       def render(self):
             self.background.render()
 
             for tower in self.all_towers:
                   tower.render(self)
+
+            for projectile in self.all_projectiles:
+                  projectile.render(self)
 
             for ennemy in self.all_ennemies:
                   ennemy.render(self)

@@ -1,5 +1,6 @@
 import pygame
 from utilitaries import *
+from projectile import *
 
 class Tower(pygame.sprite.Sprite):
       def __init__(self,x,y):
@@ -50,7 +51,7 @@ class Ballista(Tower,pygame.sprite.Sprite):
 
             self.detected_ennemies = False
             self.rect = self.current_image.get_rect()
-            self.range = 1.0
+            self.range = 4.0
             self.radius = (self.rect.width+self.rect.height)/2.0 * self.range
             self.rect.x = self.posX
             self.rect.y = self.posY
@@ -73,6 +74,8 @@ class Ballista(Tower,pygame.sprite.Sprite):
                         self.anim_frame += 1
                         self.anim_frame = self.anim_frame%self.number_frame_attacking
                         self.my_timer = 0.0
+                        if (self.anim_frame==7):
+                              game.all_projectiles.add(Bolt(self.posX,self.posY,self.my_target))
             else:
                   if not(self.attack_finished):
                         self.my_timer += game.timestep
