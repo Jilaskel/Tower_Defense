@@ -8,11 +8,10 @@ class Ennemy(pygame.sprite.Sprite):
             self.current_image = pygame.image.load(self.images_path+"ennemy1.png").convert()    
             self.posX = x     # game.background.bush_width
             self.posY = y     # 135
-            self.vel = vec(0,0)
-            self.vel[0] = 0.2 # pixel by ms
+            self.velocity = 0.2 # pixel by ms
 
       def move(self,game):           
-            self.posX += self.vel[0] * game.timestep
+            self.posX += self.velocity * game.timestep
 
 
       def render(self,game):
@@ -31,8 +30,7 @@ class Gobelin(Ennemy,pygame.sprite.Sprite):
                   self.image_walking.append(pygame.image.load(self.images_path+"00"+str(i)+".png").convert_alpha())   
             self.posX = x     
             self.posY = y     
-            self.vel = vec(0,0)
-            self.vel[0] = 0.2 # 0.1 # pixel by ms
+            self.velocity = 0.2 # 0.1 # pixel by ms
             self.moving = False
             self.move_frame = 0
             self.time_per_frame = 30 # in ms
@@ -43,10 +41,8 @@ class Gobelin(Ennemy,pygame.sprite.Sprite):
             self.rect.y = self.posY
 
       def move(self,game):           
-            self.posX += self.vel[0] * game.timestep
+            self.posX += self.velocity * game.timestep
             self.rect.x = self.posX
-            #self.rect.move_ip(self.vel[0] * game.timestep,0) 
-           # self.rect += self.vel[0] * game.timestep
             self.moving = True
             if self.moving:
                   self.my_timer += game.timestep

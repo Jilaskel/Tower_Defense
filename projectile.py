@@ -7,11 +7,10 @@ class Projectile(pygame.sprite.Sprite):
             super().__init__()   
             self.posX = x     # game.background.bush_width
             self.posY = y     # 135
-            self.vel = vec(0,0)
-            self.vel[0] = 0.2 # pixel by ms
+            self.velocity = 0.2 # pixel by ms
 
       def move(self,game):           
-            self.posX += self.vel[0] * game.timestep
+            self.posX += self.velocity * game.timestep
 
       def render(self,game):
             window.blit(self.current_image, (self.posX, self.posY))  
@@ -26,7 +25,7 @@ class Bolt(Projectile,pygame.sprite.Sprite):
             self.posX = x     
             self.posY = y     
             self.direction = vec(0,0)
-            self.vel = vec(0.6,0.6)  # pixel by ms
+            self.velocity = 0.6  # pixel by ms
             self.moving = False
             self.rect = self.current_image.get_rect()
 
@@ -39,8 +38,8 @@ class Bolt(Projectile,pygame.sprite.Sprite):
       def move(self,game):
             self.direction = (self.target.posX - self.posX, self.target.posY - self.posY)   
             self.direction /= sqrt(self.direction[0]**2+self.direction[1]**2)     
-            self.posX += self.vel[0] * game.timestep * self.direction[0]
-            self.posY += self.vel[1] * game.timestep * self.direction[1]
+            self.posX += self.velocity * game.timestep * self.direction[0]
+            self.posY += self.velocity * game.timestep * self.direction[1]
             self.rect.x = self.posX
             self.rect.y = self.posY
             self.moving = True

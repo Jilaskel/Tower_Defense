@@ -17,7 +17,8 @@ class Game():
             y_middle = self.background.menu_height + 2*self.background.square_side
 
             self.all_towers = pygame.sprite.Group()
-            self.all_towers.add(Ballista(x_middle,y_middle))
+            self.all_towers.add(Ballista(self,x_middle,y_middle))
+            self.all_towers.add(Basic_tower(self,x_middle,y_middle+2*self.background.square_side))
 
             self.all_projectiles = pygame.sprite.Group()
 
