@@ -1,7 +1,6 @@
 import pygame
 from pygame.locals import *
 import sys
-import random
 import time
 from game import *
  
@@ -25,6 +24,7 @@ while RUNNING:
                         game_has_started = True
 
       if game_has_started:
+            game.spawning_ennemies()
             game.move_objects()
             game.fight()
              

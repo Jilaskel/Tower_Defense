@@ -57,7 +57,7 @@ class Ballista(Tower,pygame.sprite.Sprite):
             self.my_target = []
 
             self.rect = self.current_image.get_rect()
-            self.range = 2.0*(self.rect.width+self.rect.height)/2.0
+            self.range = 6.0*(self.rect.width+self.rect.height)/2.0
             self.rect.x = self.posX - self.range
             self.rect.y = self.posY
             self.rect.w = self.range 
@@ -128,7 +128,6 @@ class Basic_tower(Tower,pygame.sprite.Sprite):
             self.detected_ennemies = pygame.sprite.spritecollide(self, game.all_ennemies, False, pygame.sprite.collide_circle)
             if (self.detected_ennemies):
                   self.attacking = True
-                  print("Attack!")
                   if not(self.my_target in self.detected_ennemies):
                         self.my_target = self.detected_ennemies[0]
             else:
