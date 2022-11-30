@@ -22,6 +22,8 @@ class Bolt(Projectile,pygame.sprite.Sprite):
             self.images_path = "Assets/Tower/Baliste/"
             self.current_image = pygame.image.load(self.images_path+"/CarreauBaliste.png").convert_alpha()
  
+            self.damage = 5.0
+
             self.posX = x     
             self.posY = y     
             self.direction = vec(0,0)
@@ -36,8 +38,9 @@ class Bolt(Projectile,pygame.sprite.Sprite):
             self.rect.y = self.posY
 
       def move(self,game):
-            self.direction = (self.target.posX - self.posX, self.target.posY - self.posY)   
-            self.direction /= sqrt(self.direction[0]**2+self.direction[1]**2)     
+            if (pygame.sprite.Sprite.alive(self.target)):
+                  self.direction = (self.target.posX - self.posX, self.target.posY - self.posY)   
+                  self.direction /= sqrt(self.direction[0]**2+self.direction[1]**2)     
             self.posX += self.velocity * game.timestep * self.direction[0]
             self.posY += self.velocity * game.timestep * self.direction[1]
             self.rect.x = self.posX
@@ -48,6 +51,9 @@ class Bolt(Projectile,pygame.sprite.Sprite):
             self.hit_ennemies = pygame.sprite.spritecollide(self, game.all_ennemies, False,pygame.sprite.collide_rect_ratio(self.ratio_for_impact))
             if self.hit_ennemies:
                   pygame.sprite.Sprite.kill(self)
+                  for i in range (len(self.hit_ennemies)):
+                        self.hit_ennemies[i].hp -= self.damage
+
 
 
       def render(self,game):

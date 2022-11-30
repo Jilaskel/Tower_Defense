@@ -23,12 +23,17 @@ while RUNNING:
                   if event.key == pygame.K_SPACE:
                         game_has_started = True
 
+      #print(pygame.mouse.get_pressed(5))
+
       if game_has_started:
             game.spawning_ennemies()
             game.move_objects()
             game.fight()
-             
+            game.die() 
+
       game.render()
+      game.advance_time()
+
 
     
  

@@ -49,6 +49,10 @@ class Game():
                   tower.check_ennemies(self)
                   tower.attack_and_reload(self)
 
+      def die(self):
+            for ennemy in self.all_ennemies:
+                  ennemy.die(self)
+
       def render(self):
             self.background.render()
 
@@ -62,9 +66,12 @@ class Game():
                   ennemy.render(self)
 
             pygame.display.update()
+
+      def advance_time(self):
             CLOCK.tick(FPS)
             self.timestep = CLOCK.get_time()
             self.timer += self.timestep
+            #print(CLOCK.get_fps())
                   
             
 
