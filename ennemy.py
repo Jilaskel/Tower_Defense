@@ -31,8 +31,8 @@ class Gobelin(Ennemy,pygame.sprite.Sprite):
             for i in range(1,self.number_frame_walking+1):
                   self.image_walking.append(pygame.image.load(self.images_path+"00"+str(i)+".png").convert_alpha())   
 
-            self.hp = 10.0
-            self.hp_max = 10.0
+            self.hp_max = 20.0
+            self.hp = self.hp_max
 
             self.posX = x     
             self.posY = y     

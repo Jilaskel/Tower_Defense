@@ -27,8 +27,8 @@ while RUNNING:
 
       if game_has_started:
             game.spawning_ennemies()
-            game.move_objects()
             game.fight()
+            game.move_objects()
             game.die() 
 
       game.render()

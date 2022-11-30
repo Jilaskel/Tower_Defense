@@ -36,6 +36,11 @@ class Game():
       def spawning_ennemies(self):
             self.script.spawning_ennemies(self)
 
+      def fight(self):
+            for tower in self.all_towers:
+                  tower.check_ennemies(self)
+                  tower.attack_and_reload(self)
+
       def move_objects(self):
             for ennemy in self.all_ennemies:
                   ennemy.move(self)
@@ -43,11 +48,6 @@ class Game():
             for projectile in self.all_projectiles:
                   projectile.move(self)
                   projectile.check_impact(self)
-
-      def fight(self):
-            for tower in self.all_towers:
-                  tower.check_ennemies(self)
-                  tower.attack_and_reload(self)
 
       def die(self):
             for ennemy in self.all_ennemies:

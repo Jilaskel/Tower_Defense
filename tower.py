@@ -119,7 +119,7 @@ class Basic_tower(Tower,pygame.sprite.Sprite):
             self.my_target = []
             
             self.rect = self.current_image.get_rect()
-            self.range = 10.0 * (self.rect.width+self.rect.height)/2.0
+            self.range = 3.0 * (self.rect.width+self.rect.height)/2.0
             self.radius = self.range
             self.rect.x = self.posX
             self.rect.y = self.posY
