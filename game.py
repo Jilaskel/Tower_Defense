@@ -2,6 +2,9 @@ import pygame
 from background import *
 from tower import *
 from ennemy import *
+from mouse import *
+from menu import *
+from grid import *
 from script_spawning import *
 from utilitaries import *
 
@@ -14,7 +17,15 @@ class Game():
             self.timestep = CLOCK.get_time()
             self.timer = 0.0
 
+            self.has_started = False
+
             self.background = Background()
+
+            self.grid = Grid(self)
+
+            self.menu = Menu(self)
+
+            self.mouse = Mouse()
 
             self.script = Script()
 
@@ -23,15 +34,19 @@ class Game():
             y_middle = self.background.menu_height + 3*self.background.square_side
 
             self.all_towers = pygame.sprite.Group()
-            self.all_towers.add(Ballista(self,x_middle+2*side,y_middle))
 
-            self.all_towers.add(Basic_tower(self,x_middle-2*side,y_middle+3*self.background.square_side))
-            self.all_towers.add(Basic_tower(self,x_middle+2*side,y_middle-3*self.background.square_side))
+            # self.all_towers.add(Ballista(self,x_middle+2*side,y_middle))
+
+            # self.all_towers.add(Basic_tower(self,x_middle-2*side,y_middle+3*self.background.square_side))
+            # self.all_towers.add(Basic_tower(self,x_middle+2*side,y_middle-3*self.background.square_side))
 
             self.all_projectiles = pygame.sprite.Group()
 
             self.all_ennemies = pygame.sprite.Group()
             #self.all_ennemies.add(Gobelin(self.background.bush_width*0.1,y_middle))
+
+      def deal_with_mouse(self):
+            self.mouse.doing_stuff(self)
 
       def spawning_ennemies(self):
             self.script.spawning_ennemies(self)
@@ -55,15 +70,18 @@ class Game():
 
       def render(self):
             self.background.render()
+            self.menu.render()
 
             for tower in self.all_towers:
-                  tower.render(self)
+                  tower.render()
 
             for projectile in self.all_projectiles:
-                  projectile.render(self)
+                  projectile.render()
 
             for ennemy in self.all_ennemies:
-                  ennemy.render(self)
+                  ennemy.render()
+
+            self.mouse.render()
 
             pygame.display.update()
 

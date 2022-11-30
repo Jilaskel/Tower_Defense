@@ -5,17 +5,14 @@ import numpy as np
 import math
 
 class Projectile(pygame.sprite.Sprite):
-      def __init__(self,x,y):
-            super().__init__()   
-            self.posX = x     # game.background.bush_width
-            self.posY = y     # 135
-            self.velocity = 0.2 # pixel by ms
+      def __init__(self,x,y): 
+            pass
 
       def move(self,game):           
-            self.posX += self.velocity * game.timestep
+            pass
 
-      def render(self,game):
-            window.blit(self.current_image, (self.posX, self.posY))  
+      def render(self):
+            pass  
 
       def rotate(self):
             scalar_product = self.initial_direction[0]*self.direction[0]+self.initial_direction[1]*self.direction[1]
@@ -48,11 +45,12 @@ class Bolt(Projectile,pygame.sprite.Sprite):
             self.direction = vec(0,0)
             self.velocity = 2.0 #0.6  # pixel by ms
             self.moving = False
-            self.rect = self.current_image.get_rect()
+  
 
             self.target = target
             self.ratio_for_impact = 0.25
 
+            self.rect = self.current_image.get_rect()
             self.rect.x = self.posX
             self.rect.y = self.posY
 
@@ -76,6 +74,6 @@ class Bolt(Projectile,pygame.sprite.Sprite):
 
 
 
-      def render(self,game):
+      def render(self):
             window.blit(self.current_image, (self.posX, self.posY))  
  

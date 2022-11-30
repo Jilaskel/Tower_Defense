@@ -3,20 +3,13 @@ from utilitaries import *
 
 class Ennemy(pygame.sprite.Sprite):
       def __init__(self,x,y):
-            super().__init__()
-            self.images_path = "Assets/Ennemies/"
-            self.current_image = pygame.image.load(self.images_path+"ennemy1.png").convert()    
-            self.posX = x     # game.background.bush_width
-            self.posY = y     # 135
-            self.velocity = 0.2 # pixel by ms
-            self.hp = 10.0
+            pass
 
       def move(self,game):           
-            self.posX += self.velocity * game.timestep
+            pass
 
-
-      def render(self,game):
-            window.blit(self.current_image, (self.posX, self.posY))  
+      def render(self):
+            pass  
 
 
 class Gobelin(Ennemy,pygame.sprite.Sprite):
@@ -39,7 +32,8 @@ class Gobelin(Ennemy,pygame.sprite.Sprite):
             self.velocity = 0.2 # 0.1 # pixel by ms
             self.moving = False
             self.move_frame = 0
-            self.time_per_frame = 30 # in ms
+            self.anim_total_time = 600  # in ms
+            self.time_per_frame = self.anim_total_time/self.number_frame_walking # in ms
             self.my_timer = 0
 
             self.rect = self.current_image.get_rect()
@@ -64,6 +58,6 @@ class Gobelin(Ennemy,pygame.sprite.Sprite):
             if (self.hp<=0):
                   pygame.sprite.Sprite.kill(self)
 
-      def render(self,game):
+      def render(self):
             window.blit(self.current_image, (self.posX, self.posY))  
  

@@ -21,11 +21,12 @@ while RUNNING:
       # Event handling for a range of different key presses    
             if event.type == pygame.KEYDOWN:
                   if event.key == pygame.K_SPACE:
-                        game_has_started = True
+                        game.has_started = True
 
       #print(pygame.mouse.get_pressed(5))
+      game.deal_with_mouse()
 
-      if game_has_started:
+      if game.has_started:
             game.spawning_ennemies()
             game.fight()
             game.move_objects()

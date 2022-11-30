@@ -12,6 +12,8 @@ class Script():
         self.my_script = np.array([[2.0, GOBELIN_TAG, 1],     # temps en s, type, quantite
                        [8.0, GOBELIN_TAG, 2],
                        [16.0, GOBELIN_TAG, 3],
+                       [20.0, GOBELIN_TAG, 3],
+                       [24.0, GOBELIN_TAG, 3],
                        [100000, GOBELIN_TAG, 1]])
         self.line = 0
         
