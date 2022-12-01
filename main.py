@@ -18,12 +18,14 @@ while RUNNING:
                   RUNNING = False
                   sys.exit()
 
-      # Event handling for a range of different key presses    
-            # if event.type == pygame.KEYDOWN:
-            #       if event.key == pygame.K_SPACE:
-            #             game.has_started = True
 
-      game.has_started = True
+      if START_WITH_SPACE_BAR:
+            if event.type == pygame.KEYDOWN:
+                  if event.key == pygame.K_SPACE:
+                        game.has_started = True
+      else:
+            game.has_started = True
+
       game.deal_with_mouse()
 
       if game.has_started:

@@ -33,22 +33,21 @@ class Projectile(pygame.sprite.Sprite):
 class Bolt(Projectile,pygame.sprite.Sprite):
       def __init__(self,x,y,target):
             pygame.sprite.Sprite.__init__(self)
-            self.images_path = "Assets/Tower/Baliste/"
-            self.inital_image = pygame.image.load(self.images_path+"/CarreauBaliste.png").convert_alpha()
+            self.inital_image = pygame.image.load(BOLT_IMAGE_PATH).convert_alpha()
             self.current_image = self.inital_image
             self.initial_direction = vec(-1,0)
 
-            self.damage = 5.0
+            self.damage = BOLT_DAMAGE
 
             self.posX = x     
             self.posY = y     
             self.direction = vec(0,0)
-            self.velocity = 2.0 #0.6  # pixel by ms
+            self.velocity = BOLT_VELOCITY  # pixel by ms
             self.moving = False
   
 
             self.target = target
-            self.ratio_for_impact = 0.25
+            self.ratio_for_impact = BOLT_RATIO_FOR_IMPACT
 
             self.rect = self.current_image.get_rect()
             self.rect.x = self.posX

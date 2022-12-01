@@ -19,9 +19,8 @@ class Spawning_mode():
                         [100000, GOBELIN_TAG, 1]])
             self.line = 0
         else:
-            self.last_time_spawning_gobelin = 4.0
             self.number_gobelin_spawned = 1.0
-
+            self.last_time_spawning_gobelin = SPAWNING_INITIAL_TIME - P1_GOBELIN_SPAWNING_PERIOD*self.number_gobelin_spawned            
         
 
     def spawning_ennemies(self,game):

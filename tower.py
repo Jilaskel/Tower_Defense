@@ -16,24 +16,23 @@ class Tower(pygame.sprite.Sprite):
 class Ballista(Tower,pygame.sprite.Sprite):
       def __init__(self,game,x,y):
             pygame.sprite.Sprite.__init__(self)
-            self.images_path = "Assets/Tower/Baliste/AnimAttack/"
+            self.images_path = BALLISTA_ATTACK_IMAGE_PATH
             self.static_image = pygame.image.load(self.images_path+"0001.png").convert_alpha()    
-            self.current_image = self.static_image
-            self.ammo_image = pygame.image.load("Assets/Tower/Baliste/CarreauBaliste.png").convert_alpha()    
+            self.current_image = self.static_image    
             self.posX = x
             self.posY = y
+            self.number_frame_attacking = BALLISTA_NUMBER_FRAME_ATTACKING
 
-            self.firing_period = 1800 #in ms
+            self.firing_period = BALLISTA_FIRING_PERIOD #in ms
             self.my_timer = 0
 
             self.attacking = True
             self.attack_finished = True
 
-            self.number_frame_attacking = 15
             self.image_attacking = []
             for i in range(1,self.number_frame_attacking+1):
                   self.image_attacking.append(pygame.image.load(self.images_path+str(i).zfill(4)+".png").convert_alpha())   
-            self.firing_frame = 5
+            self.firing_frame = BALLISTA_FIRING_FRAME
             self.anim_frame = 0
             self.time_per_frame = self.firing_period/self.number_frame_attacking # in ms
 
@@ -41,7 +40,7 @@ class Ballista(Tower,pygame.sprite.Sprite):
             self.my_target = []
 
             self.rect = self.current_image.get_rect()
-            self.range = 6.0*(self.rect.width+self.rect.height)/2.0
+            self.range = BALLISTA_RANGE*(self.rect.width+self.rect.height)/2.0
             self.rect.x = self.posX - self.range
             self.rect.y = self.posY
             self.rect.w = self.range 
@@ -52,7 +51,6 @@ class Ballista(Tower,pygame.sprite.Sprite):
                   self.attacking = True
                   if not(self.my_target in self.detected_ennemies):
                         self.my_target = self.detected_ennemies[0]
-                  #print("Attack!")
             else:
                   self.attacking = False
 
@@ -86,14 +84,12 @@ class Ballista(Tower,pygame.sprite.Sprite):
 class Basic_tower(Tower,pygame.sprite.Sprite):
       def __init__(self,game,x,y):
             pygame.sprite.Sprite.__init__(self)
-            self.images_path = "Assets/Tower/"
-            self.static_image = pygame.image.load(self.images_path+"tower1.png").convert_alpha()    
-            self.current_image = self.static_image
-            self.ammo_image = pygame.image.load("Assets/Tower/Baliste/CarreauBaliste.png").convert_alpha()    
+            self.static_image = pygame.image.load(BASIC_TOWER_IMAGE_PATH).convert_alpha()    
+            self.current_image = self.static_image  
             self.posX = x
             self.posY = y
 
-            self.firing_period = 900 #in ms
+            self.firing_period = BASIC_TOWER_FIRING_PERIOD
             self.my_timer = self.firing_period*2
 
             self.attacking = True
@@ -103,7 +99,7 @@ class Basic_tower(Tower,pygame.sprite.Sprite):
             self.my_target = []
             
             self.rect = self.current_image.get_rect()
-            self.range = 3.0 * (self.rect.width+self.rect.height)/2.0
+            self.range = BASIC_TOWER_RANGE * (self.rect.width+self.rect.height)/2.0
             self.radius = self.range
             self.rect.x = self.posX
             self.rect.y = self.posY
