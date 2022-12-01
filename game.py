@@ -1,4 +1,5 @@
 import pygame
+from audio_mixer import *
 from background import *
 from tower import *
 from ennemy import *
@@ -18,6 +19,8 @@ class Game():
             self.timer = 0.0
 
             self.has_started = False
+
+            self.mixer = Mixer()
 
             self.background = Background()
 
