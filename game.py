@@ -6,7 +6,7 @@ from ennemy import *
 from mouse import *
 from menu import *
 from grid import *
-from script_spawning import *
+from spawning_mode import *
 from utilitaries import *
 
 ############################# 
@@ -30,7 +30,7 @@ class Game():
 
             self.mouse = Mouse()
 
-            self.script = Script()
+            self.spawning_mode = Spawning_mode(self)
 
             side = self.background.square_side
             x_middle = self.background.bush_width + 6*self.background.square_side
@@ -52,7 +52,7 @@ class Game():
             self.mouse.doing_stuff(self)
 
       def spawning_ennemies(self):
-            self.script.spawning_ennemies(self)
+            self.spawning_mode.spawning_ennemies(self)
 
       def fight(self):
             for tower in self.all_towers:

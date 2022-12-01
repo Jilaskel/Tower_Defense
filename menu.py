@@ -1,8 +1,8 @@
 import pygame
 from utilitaries import *
 
-BASIC_TOWER_TAG = 1
-BALLISTA_TAG = 2
+BASIC_TOWER_BUTTON_TAG = 1
+BALLISTA_BUTTON_TAG = 2
 
 class Menu():
       def __init__(self,game):
@@ -13,11 +13,11 @@ class Menu():
 
             path = "Assets/Tower/tower1.png"
             (x,y) = (self.margin,0)
-            self.all_buttons.add(Button(path,x,y,BASIC_TOWER_TAG))
+            self.all_buttons.add(Button(path,x,y,BASIC_TOWER_BUTTON_TAG))
 
             path = "Assets/Tower/Baliste/AnimAttack/0001.png"
             (x,y) = (self.margin+1.5*side,0)
-            self.all_buttons.add(Button(path,x,y,BALLISTA_TAG))
+            self.all_buttons.add(Button(path,x,y,BALLISTA_BUTTON_TAG))
 
       def render(self):
             for button in self.all_buttons:
@@ -34,10 +34,10 @@ class Button(pygame.sprite.Sprite):
             self.rect.y = self.posY   
 
             self.my_tag = tag
-            if (self.my_tag==BASIC_TOWER_TAG):
+            if (self.my_tag==BASIC_TOWER_BUTTON_TAG):
                 self.compatible_grass = True
                 self.compatible_road = False
-            elif (self.my_tag==BALLISTA_TAG):
+            elif (self.my_tag==BALLISTA_BUTTON_TAG):
                 self.compatible_grass = False
                 self.compatible_road = True
             else : 
