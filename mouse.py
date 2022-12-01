@@ -8,8 +8,7 @@ class Mouse(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
 
-        self.images_path = "Assets/Cursor/"
-        self.static_image = pygame.image.load(self.images_path+"cursor4.png").convert_alpha()  
+        self.static_image = pygame.image.load(MOUSE_IMAGE_PATH).convert_alpha()  
         self.static_image = pygame.transform.scale(self.static_image,(40.8,50))
         self.current_image = self.static_image
 

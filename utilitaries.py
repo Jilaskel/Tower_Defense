@@ -23,6 +23,15 @@ MUSIC_FILE = "Audio/Music/Age_of_War_Theme Soundtrack.mp3"
 FADE_UP_TIME = 3.0 # in seconds
 MUSIC_VOLUME = 0.1
 
+#### BACKGROUND
+BACKGROUND_PATH = "Assets/Background/background1.png"
+
+#### MOUSE
+MOUSE_IMAGE_PATH = "Assets/Cursor/cursor4.png"
+
+####MENU
+MENU_BASIC_TOWER_BUTTON_IMAGE_PATH = "Assets/Tower/tower1.png"
+MENU_BALLISTA_BUTTON_IMAGE_PATH = "Assets/Tower/Baliste/AnimAttack/0001.png"
 
 #### ENNEMIES SPAWNING 
 SPAWNING_WITH_SCRIPT = False

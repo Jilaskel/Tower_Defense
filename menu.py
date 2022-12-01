@@ -11,11 +11,11 @@ class Menu():
             self.margin = game.background.bush_width*2
             side = game.background.square_side
 
-            path = "Assets/Tower/tower1.png"
+            path = MENU_BASIC_TOWER_BUTTON_IMAGE_PATH
             (x,y) = (self.margin,0)
             self.all_buttons.add(Button(path,x,y,BASIC_TOWER_BUTTON_TAG))
 
-            path = "Assets/Tower/Baliste/AnimAttack/0001.png"
+            path = MENU_BALLISTA_BUTTON_IMAGE_PATH
             (x,y) = (self.margin+1.5*side,0)
             self.all_buttons.add(Button(path,x,y,BALLISTA_BUTTON_TAG))
 
