@@ -4,7 +4,7 @@ from utilitaries import *
 class Background(pygame.sprite.Sprite):
       def __init__(self):
             super().__init__()
-            self.current_image = pygame.image.load(BACKGROUND_PATH).convert_alpha()    
+            self.current_image = pygame.image.load(BACKGROUND_IMAGE_PATH).convert_alpha()    
             self.posX = 0  ## 170
             self.posY = 0  ## 100
             self.rect = self.current_image.get_rect()

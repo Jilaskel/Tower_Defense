@@ -19,15 +19,16 @@ FPS = 120
 CLOCK = pygame.time.Clock() 
 
 ### MUSIC
-MUSIC_FILE = "Audio/Music/Age_of_War_Theme Soundtrack.mp3"
+MUSIC_FILE_PATH = "Audio/Music/Age_of_War_Theme Soundtrack.mp3"
 FADE_UP_TIME = 3.0 # in seconds
 MUSIC_VOLUME = 0.1
 
 #### BACKGROUND
-BACKGROUND_PATH = "Assets/Background/background1.png"
+BACKGROUND_IMAGE_PATH = "Assets/Background/background1.png"
 
 #### MOUSE
 MOUSE_IMAGE_PATH = "Assets/Cursor/cursor4.png"
+MOUSE_SIZE = [40.8,50]  #   pixel
 
 ####MENU
 MENU_BASIC_TOWER_BUTTON_IMAGE_PATH = "Assets/Tower/tower1.png"

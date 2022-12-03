@@ -9,7 +9,7 @@ class Mouse(pygame.sprite.Sprite):
         super().__init__()
 
         self.static_image = pygame.image.load(MOUSE_IMAGE_PATH).convert_alpha()  
-        self.static_image = pygame.transform.scale(self.static_image,(40.8,50))
+        self.static_image = pygame.transform.scale(self.static_image,(MOUSE_SIZE[0],MOUSE_SIZE[1]))
         self.current_image = self.static_image
 
         self.ratio_for_hitbox = 1.0
