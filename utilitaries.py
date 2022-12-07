@@ -71,12 +71,14 @@ TOWER_CIRCLE_RANGE_IMAGE_ALPHA = 100
 
 #### BASIC_TOWER
 BASIC_TOWER_IMAGE_PATH = "Assets/Tower/tower1.png"
+BASIC_TOWER_SIZE = [135,135] #   pixel
 
 BASIC_TOWER_FIRING_PERIOD = 900 # in ms
-BASIC_TOWER_RANGE = 3.0 # multiplied by the image size
+BASIC_TOWER_RANGE = 2.5 # multiplied by the image size
 
 #### BALLISTA
 BALLISTA_ATTACK_IMAGE_PATH = "Assets/Tower/Baliste/AnimAttack/"
+BALLISTA_SIZE = [135,135] #   pixel
 BALLISTA_NUMBER_FRAME_ATTACKING = 15
 BALLISTA_FIRING_FRAME = 5
 

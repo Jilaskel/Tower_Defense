@@ -1,5 +1,6 @@
 import pygame
 from utilitaries import *
+from tower import * 
 
 BASIC_TOWER_BUTTON_TAG = 1
 BALLISTA_BUTTON_TAG = 2
@@ -28,18 +29,32 @@ class Button(pygame.sprite.Sprite):
             super().__init__()
             self.current_image = pygame.image.load(path).convert_alpha()   
             self.rect = self.current_image.get_rect() 
-            self.posX = x  ## 170
-            self.posY = y  ## 100 
+            self.posX = x  
+            self.posY = y   
             self.rect.x = self.posX
             self.rect.y = self.posY   
 
             self.my_tag = tag
             if (self.my_tag==BASIC_TOWER_BUTTON_TAG):
-                self.compatible_grass = True
-                self.compatible_road = False
+                  self.compatible_grass = True
+                  self.compatible_road = False
+
+                  self.image_to_carry = pygame.image.load(BASIC_TOWER_IMAGE_PATH).convert_alpha()
+                  self.image_to_carry = pygame.transform.scale(self.image_to_carry,(BASIC_TOWER_SIZE[0],BASIC_TOWER_SIZE[1])) 
+
+                  self.range = BASIC_TOWER_RANGE*(BASIC_TOWER_SIZE[0]+BASIC_TOWER_SIZE[1])/2.0
+                  self.range_hitbox = Range_Hitbox(self,BASIC_TOWER_SIZE[0],BASIC_TOWER_SIZE[1],self.range,circular=True)  
+
             elif (self.my_tag==BALLISTA_BUTTON_TAG):
-                self.compatible_grass = False
-                self.compatible_road = True
+                  self.compatible_grass = False
+                  self.compatible_road = True
+
+                  self.image_to_carry = pygame.image.load(BALLISTA_ATTACK_IMAGE_PATH+"0001.png").convert_alpha()
+                  self.image_to_carry = pygame.transform.scale(self.image_to_carry,(BALLISTA_SIZE[0],BALLISTA_SIZE[1]))  
+
+                  self.range = BALLISTA_RANGE*(BALLISTA_SIZE[0]+BALLISTA_SIZE[1])/2.0
+                  self.range_hitbox = Range_Hitbox(self,BALLISTA_SIZE[0],BALLISTA_SIZE[1],self.range,circular=False)  
+
             else : 
                 self.compatible_grass = False
                 self.compatible_road = False               

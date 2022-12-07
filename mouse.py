@@ -12,13 +12,12 @@ class Mouse(pygame.sprite.Sprite):
         self.static_image = pygame.transform.scale(self.static_image,(MOUSE_SIZE[0],MOUSE_SIZE[1]))
         self.current_image = self.static_image
 
-        self.valid_box_image = pygame.image.load(MOUSE_VALID_BOX_IMAGE_PATH).convert_alpha()
         side = game.background.square_side
+        self.valid_box_image = pygame.image.load(MOUSE_VALID_BOX_IMAGE_PATH).convert_alpha()
         self.valid_box_image = pygame.transform.scale(self.valid_box_image,(side,side))       
         self.valid_box_image.set_alpha(MOUSE_VALID_BOX_IMAGE_ALPHA)
 
         self.not_valid_box_image = pygame.image.load(MOUSE_NOT_VALID_BOX_IMAGE_PATH).convert_alpha()
-        side = game.background.square_side
         self.not_valid_box_image = pygame.transform.scale(self.not_valid_box_image,(side,side))       
         self.not_valid_box_image.set_alpha(MOUSE_NOT_VALID_BOX_IMAGE_ALPHA)
 
@@ -50,10 +49,10 @@ class Mouse(pygame.sprite.Sprite):
 
             if ((self.hit_buttons) and (self.left_click_pressed)):
                 self.carrying = True
-                self.carried_image = self.hit_buttons[0].current_image.copy()
+                self.carried_image = self.hit_buttons[0].image_to_carry
                 self.carried_image.set_alpha(MOUSE_CARRIED_IMAGE_ALPHA)
 
-                self.carried_rect = self.hit_buttons[0].current_image.get_rect()
+                self.carried_rect = self.carried_image.get_rect()
                 self.carried_width = self.carried_rect.width
                 self.carried_height = self.carried_rect.height
 
@@ -91,6 +90,8 @@ class Mouse(pygame.sprite.Sprite):
         pygame.mouse.set_visible(False)
         window.blit(self.current_image, (self.posX, self.posY)) 
         if self.carrying:
+            hitbox = self.hit_buttons[0].range_hitbox
+            window.blit(hitbox.image, (self.carried_x+hitbox.offset[0], self.carried_y+hitbox.offset[1]))  # display range hitbow while dragging
             window.blit(self.carried_image, (self.carried_x, self.carried_y))
             if self.box_valid:
                 window.blit(self.valid_box_image, (self.x_box, self.y_box))

@@ -24,37 +24,78 @@ class Tower(pygame.sprite.Sprite):
 
 
 class Range_Hitbox(pygame.sprite.Sprite):
-      def __init__(self,tower,circular):
+      def __init__(self,tower,width,height,range,circular):
             super().__init__()
-            self.range = tower.range
+            self.range = range
             if circular:
                   self.circular = True
                   self.rect = pygame.Rect(tower.posX,tower.posY,tower.rect.width,tower.rect.height)
                   self.radius = self.range
-                  self.posX = tower.posX+tower.rect.width*0.5 - self.radius
-                  self.posY = tower.posY+tower.rect.height*0.5 - self.radius
+                  self.posX = tower.posX+width*0.5 - self.radius
+                  self.posY = tower.posY+height*0.5 - self.radius    
 
-            else:
-                  self.circular = False
-                  self.rect = pygame.Rect(tower.posX,tower.posY,tower.rect.width,tower.rect.height)   
-                  self.posX = tower.posX              
-                  self.posY = tower.posY              
-
-      def  load_and_resize_image(self):
-            if self.circular:
                   self.image = pygame.image.load(TOWER_CIRCLE_RANGE_IMAGE_PATH).convert_alpha()
                   self.image.set_alpha(TOWER_CIRCLE_RANGE_IMAGE_ALPHA)
-                  self.image = pygame.transform.scale(self.image,(self.range*2,self.range*2))
+                  self.image = pygame.transform.scale(self.image,(self.range*2,self.range*2))                                
             else:
+                  self.circular = False
+                  self.rect = pygame.Rect(tower.posX,tower.posY,width,height)   
+                  self.rect.x = tower.posX - self.range
+                  self.posX = self.rect.x
+                  self.rect.w = self.range              
+                  self.posY = tower.posY    
+
                   self.image = pygame.image.load(TOWER_RECT_RANGE_IMAGE_PATH).convert_alpha()
                   self.image.set_alpha(TOWER_RECT_RANGE_IMAGE_ALPHA) 
-                  self.image = pygame.transform.scale(self.image,(self.rect.width,self.rect.h))
+                  self.image = pygame.transform.scale(self.image,(self.rect.width,self.rect.h))         
+
+            self.offset = vec(self.posX-tower.posX,self.posY-tower.posY)
+
+class Basic_tower(Tower,pygame.sprite.Sprite):
+      def __init__(self,game,x,y):
+            pygame.sprite.Sprite.__init__(self)
+            self.static_image = pygame.image.load(BASIC_TOWER_IMAGE_PATH).convert_alpha()
+            self.static_image = pygame.transform.scale(self.static_image,(BASIC_TOWER_SIZE[0],BASIC_TOWER_SIZE[1]))        
+            self.current_image = self.static_image  
+            self.posX = x
+            self.posY = y
+
+            self.firing_period = BASIC_TOWER_FIRING_PERIOD
+            self.my_timer = self.firing_period*2
+
+            self.attacking = True
+            self.attack_finished = True
+
+            self.detected_ennemies = False
+            self.my_target = []
+            
+            self.rect = self.current_image.get_rect()
+            self.rect.x = self.posX
+            self.rect.y = self.posY
+
+            self.range = BASIC_TOWER_RANGE * (self.rect.width+self.rect.height)/2.0
+            self.range_hitbox = Range_Hitbox(self,self.rect.w,self.rect.h,self.range,circular=True)
+
+      def attack_and_reload(self,game):
+            if (self.attacking):
+                  self.attack_finished = False
+                  self.my_timer += game.timestep
+                  if self.my_timer>self.firing_period:
+                        self.my_timer = 0.0
+                        game.all_projectiles.add(Bolt(self.posX,self.posY,self.my_target))
+            else:
+                  if not(self.attack_finished):
+                        self.my_timer += game.timestep
+                        if self.my_timer>self.firing_period:
+                              self.my_timer = 2*self.firing_period
+                              self.attack_finished = True  
 
 class Ballista(Tower,pygame.sprite.Sprite):
       def __init__(self,game,x,y):
             pygame.sprite.Sprite.__init__(self)
             self.images_path = BALLISTA_ATTACK_IMAGE_PATH
-            self.static_image = pygame.image.load(self.images_path+"0001.png").convert_alpha()    
+            self.static_image = pygame.image.load(self.images_path+"0001.png").convert_alpha()
+            self.static_image = pygame.transform.scale(self.static_image,(BALLISTA_SIZE[0],BALLISTA_SIZE[1]))    
             self.current_image = self.static_image    
             self.posX = x
             self.posY = y
@@ -81,11 +122,7 @@ class Ballista(Tower,pygame.sprite.Sprite):
             self.rect.y = self.posY
 
             self.range = BALLISTA_RANGE*(self.rect.width+self.rect.height)/2.0
-            self.range_hitbox = Range_Hitbox(self,circular=False)
-            self.range_hitbox.rect.x = self.posX - self.range
-            self.range_hitbox.posX = self.range_hitbox.rect.x
-            self.range_hitbox.rect.w = self.range 
-            self.range_hitbox.load_and_resize_image()
+            self.range_hitbox = Range_Hitbox(self,self.rect.w,self.rect.h,self.range,circular=False)
 
 
       def attack_and_reload(self,game):
@@ -110,41 +147,4 @@ class Ballista(Tower,pygame.sprite.Sprite):
 
             self.current_image= self.image_attacking[self.anim_frame]
  
-class Basic_tower(Tower,pygame.sprite.Sprite):
-      def __init__(self,game,x,y):
-            pygame.sprite.Sprite.__init__(self)
-            self.static_image = pygame.image.load(BASIC_TOWER_IMAGE_PATH).convert_alpha()    
-            self.current_image = self.static_image  
-            self.posX = x
-            self.posY = y
 
-            self.firing_period = BASIC_TOWER_FIRING_PERIOD
-            self.my_timer = self.firing_period*2
-
-            self.attacking = True
-            self.attack_finished = True
-
-            self.detected_ennemies = False
-            self.my_target = []
-            
-            self.rect = self.current_image.get_rect()
-            self.rect.x = self.posX
-            self.rect.y = self.posY
-
-            self.range = BASIC_TOWER_RANGE * (self.rect.width+self.rect.height)/4.0
-            self.range_hitbox = Range_Hitbox(self,circular=True)
-            self.range_hitbox.load_and_resize_image()
-
-      def attack_and_reload(self,game):
-            if (self.attacking):
-                  self.attack_finished = False
-                  self.my_timer += game.timestep
-                  if self.my_timer>self.firing_period:
-                        self.my_timer = 0.0
-                        game.all_projectiles.add(Bolt(self.posX,self.posY,self.my_target))
-            else:
-                  if not(self.attack_finished):
-                        self.my_timer += game.timestep
-                        if self.my_timer>self.firing_period:
-                              self.my_timer = 2*self.firing_period
-                              self.attack_finished = True  
