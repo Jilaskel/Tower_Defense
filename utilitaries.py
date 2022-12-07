@@ -29,13 +29,14 @@ BACKGROUND_IMAGE_PATH = "Assets/Background/background1.png"
 #### MOUSE
 MOUSE_IMAGE_PATH = "Assets/Cursor/cursor4.png"
 MOUSE_SIZE = [40.8,50]  #   pixel
+MOUSE_RATIO_FOR_HITBOX = 1.0
+
+MOUSE_CARRIED_IMAGE_ALPHA = 100
 
 MOUSE_VALID_BOX_IMAGE_PATH = "Assets/Tower/Valid_boxes/valid.png"
 MOUSE_VALID_BOX_IMAGE_ALPHA = 150
 MOUSE_NOT_VALID_BOX_IMAGE_PATH = "Assets/Tower/Valid_boxes/not_valid.png"
 MOUSE_NOT_VALID_BOX_IMAGE_ALPHA = 150
-
-MOUSE_CARRIED_IMAGE_ALPHA = 100
 
 #### MENU
 MENU_BASIC_TOWER_BUTTON_IMAGE_PATH = "Assets/Tower/tower1.png"
@@ -63,6 +64,10 @@ GOBELIN_HITBOX_FACTOR = 1.0
     
  
 ###############     TOWERS     ###############
+TOWER_RECT_RANGE_IMAGE_PATH = "Assets/Tower/Range_boxes/rect_range.png"
+TOWER_RECT_RANGE_IMAGE_ALPHA = 100
+TOWER_CIRCLE_RANGE_IMAGE_PATH = "Assets/Tower/Range_boxes/circle_range.png"
+TOWER_CIRCLE_RANGE_IMAGE_ALPHA = 100
 
 #### BASIC_TOWER
 BASIC_TOWER_IMAGE_PATH = "Assets/Tower/tower1.png"

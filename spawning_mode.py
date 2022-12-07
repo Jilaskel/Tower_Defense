@@ -10,6 +10,7 @@ GOBELIN_TAG = 1
 class Spawning_mode():
     def __init__(self,game):
         self.spawning_margin = game.background.bush_width*SPAWNING_MARGIN_SPACE
+        
         if SPAWNING_WITH_SCRIPT:
             self.my_script = np.array([[2.0, GOBELIN_TAG, 1],     # temps en s, type, quantite
                         [8.0, GOBELIN_TAG, 2],

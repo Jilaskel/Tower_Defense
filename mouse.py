@@ -22,13 +22,13 @@ class Mouse(pygame.sprite.Sprite):
         self.not_valid_box_image = pygame.transform.scale(self.not_valid_box_image,(side,side))       
         self.not_valid_box_image.set_alpha(MOUSE_NOT_VALID_BOX_IMAGE_ALPHA)
 
-        self.ratio_for_hitbox = 1.0
+        self.ratio_for_hitbox = MOUSE_RATIO_FOR_HITBOX
 
         self.carrying = False
         self.box_valid = False
         self.box_not_valid = False
 
- #       self.carried_image = self.static_image
+        self.hit_towers = []
 
     def doing_stuff(self,game):
         (x,y) = pygame.mouse.get_pos()
@@ -46,7 +46,7 @@ class Mouse(pygame.sprite.Sprite):
 
 
         if not(self.carrying):
-            self.hit_buttons = pygame.sprite.spritecollide(self, game.menu.all_buttons, False,pygame.sprite.collide_rect_ratio(self.ratio_for_hitbox))
+            self.hit_buttons = pygame.sprite.spritecollide(self, game.menu.all_buttons, False, pygame.sprite.collide_rect_ratio(self.ratio_for_hitbox))
 
             if ((self.hit_buttons) and (self.left_click_pressed)):
                 self.carrying = True
@@ -80,13 +80,12 @@ class Mouse(pygame.sprite.Sprite):
                             game.all_towers.add(Ballista(game,self.x_box,self.y_box))
                 else:
                     self.box_not_valid = True
+        else: #display range?
+            self.hit_towers = pygame.sprite.spritecollide(self, game.all_towers, False, pygame.sprite.collide_rect_ratio(self.ratio_for_hitbox))
+                
 
         if not(self.left_click_pressed):
             self.carrying = False
-        
-
-
-
 
     def render(self):
         pygame.mouse.set_visible(False)
@@ -97,3 +96,6 @@ class Mouse(pygame.sprite.Sprite):
                 window.blit(self.valid_box_image, (self.x_box, self.y_box))
             elif self.box_not_valid:
                 window.blit(self.not_valid_box_image, (self.x_box, self.y_box))
+        else:
+            if self.hit_towers:
+                window.blit(self.hit_towers[0].range_hitbox.image, (self.hit_towers[0].range_hitbox.posX, self.hit_towers[0].range_hitbox.posY))

@@ -71,8 +71,6 @@ class Bolt(Projectile,pygame.sprite.Sprite):
                   for i in range (len(self.hit_ennemies)):
                         self.hit_ennemies[i].hp -= self.damage
 
-
-
       def render(self):
             window.blit(self.current_image, (self.posX, self.posY))  
  

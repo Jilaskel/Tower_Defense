@@ -37,7 +37,7 @@ class Gobelin(Ennemy,pygame.sprite.Sprite):
             self.my_timer = 0
 
             self.rect = self.current_image.get_rect()
-            self.radius = GOBELIN_HITBOX_FACTOR*(self.rect.width+self.rect.height)/2.0
+            self.radius = GOBELIN_HITBOX_FACTOR*(self.rect.width+self.rect.height)/4.0
             self.rect.x = self.posX
             self.rect.y = self.posY
             self.rect.width *= GOBELIN_HITBOX_FACTOR
