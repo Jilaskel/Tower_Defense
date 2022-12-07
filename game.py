@@ -28,25 +28,15 @@ class Game():
 
             self.menu = Menu(self)
 
-            self.mouse = Mouse()
+            self.mouse = Mouse(self)
 
             self.spawning_mode = Spawning_mode(self)
 
-            side = self.background.square_side
-            x_middle = self.background.bush_width + 6*self.background.square_side
-            y_middle = self.background.menu_height + 3*self.background.square_side
-
             self.all_towers = pygame.sprite.Group()
-
-            # self.all_towers.add(Ballista(self,x_middle+2*side,y_middle))
-
-            # self.all_towers.add(Basic_tower(self,x_middle-2*side,y_middle+3*self.background.square_side))
-            # self.all_towers.add(Basic_tower(self,x_middle+2*side,y_middle-3*self.background.square_side))
 
             self.all_projectiles = pygame.sprite.Group()
 
             self.all_ennemies = pygame.sprite.Group()
-            #self.all_ennemies.add(Gobelin(self.background.bush_width*0.1,y_middle))
 
       def deal_with_mouse(self):
             self.mouse.doing_stuff(self)

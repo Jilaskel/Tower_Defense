@@ -30,7 +30,14 @@ BACKGROUND_IMAGE_PATH = "Assets/Background/background1.png"
 MOUSE_IMAGE_PATH = "Assets/Cursor/cursor4.png"
 MOUSE_SIZE = [40.8,50]  #   pixel
 
-####MENU
+MOUSE_VALID_BOX_IMAGE_PATH = "Assets/Tower/Valid_boxes/valid.png"
+MOUSE_VALID_BOX_IMAGE_ALPHA = 150
+MOUSE_NOT_VALID_BOX_IMAGE_PATH = "Assets/Tower/Valid_boxes/not_valid.png"
+MOUSE_NOT_VALID_BOX_IMAGE_ALPHA = 150
+
+MOUSE_CARRIED_IMAGE_ALPHA = 100
+
+#### MENU
 MENU_BASIC_TOWER_BUTTON_IMAGE_PATH = "Assets/Tower/tower1.png"
 MENU_BALLISTA_BUTTON_IMAGE_PATH = "Assets/Tower/Baliste/AnimAttack/0001.png"
 
@@ -55,7 +62,6 @@ GOBELIN_VELOCITY = 0.2 # pixel by ms
 GOBELIN_HITBOX_FACTOR = 1.0
     
  
-
 ###############     TOWERS     ###############
 
 #### BASIC_TOWER
@@ -71,6 +77,7 @@ BALLISTA_FIRING_FRAME = 5
 
 BALLISTA_FIRING_PERIOD = 1800 # in ms
 BALLISTA_RANGE = 6.0 # multiplied by the image size
+
 
 ###############     PROJECTILES     ###############
 
