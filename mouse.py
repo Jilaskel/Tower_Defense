@@ -5,14 +5,14 @@ from tower import *
 
 
 class Mouse(pygame.sprite.Sprite):
-    def __init__(self,game):
+    def __init__(self):
         super().__init__()
 
         self.static_image = pygame.image.load(MOUSE_IMAGE_PATH).convert_alpha()  
         self.static_image = pygame.transform.scale(self.static_image,(MOUSE_SIZE[0],MOUSE_SIZE[1]))
         self.current_image = self.static_image
 
-        side = game.background.square_side
+        side = BACKGROUND_SQUARE_SIDE
         self.valid_box_image = pygame.image.load(MOUSE_VALID_BOX_IMAGE_PATH).convert_alpha()
         self.valid_box_image = pygame.transform.scale(self.valid_box_image,(side,side))       
         self.valid_box_image.set_alpha(MOUSE_VALID_BOX_IMAGE_ALPHA)

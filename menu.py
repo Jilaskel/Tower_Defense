@@ -28,6 +28,7 @@ class Button(pygame.sprite.Sprite):
       def __init__(self,path,x,y,tag):
             super().__init__()
             self.current_image = pygame.image.load(path).convert_alpha()   
+            self.current_image = pygame.transform.scale(self.current_image,(MENU_BUTTON_SIZE[0],MENU_BUTTON_SIZE[1])) 
             self.rect = self.current_image.get_rect() 
             self.posX = x  
             self.posY = y   

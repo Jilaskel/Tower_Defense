@@ -28,7 +28,7 @@ class Game():
 
             self.menu = Menu(self)
 
-            self.mouse = Mouse(self)
+            self.mouse = Mouse()
 
             self.spawning_mode = Spawning_mode(self)
 
@@ -48,6 +48,8 @@ class Game():
             for tower in self.all_towers:
                   tower.check_ennemies(self)
                   tower.attack_and_reload(self)
+            for ennemy in self.all_ennemies:
+                  ennemy.attack(self)
 
       def move_objects(self):
             for ennemy in self.all_ennemies:
@@ -59,7 +61,9 @@ class Game():
 
       def die(self):
             for ennemy in self.all_ennemies:
-                  ennemy.die(self)
+                  ennemy.die()
+            for tower in self.all_towers:
+                  tower.die()
 
       def render(self):
             self.background.render()

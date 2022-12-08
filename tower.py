@@ -19,6 +19,10 @@ class Tower(pygame.sprite.Sprite):
             else:
                   self.attacking = False
 
+      def die(self):
+            if (self.hp<=0):
+                  pygame.sprite.Sprite.kill(self)
+
       def render(self):
             window.blit(self.current_image, (self.posX, self.posY))
 
@@ -54,6 +58,10 @@ class Range_Hitbox(pygame.sprite.Sprite):
 class Basic_tower(Tower,pygame.sprite.Sprite):
       def __init__(self,game,x,y):
             pygame.sprite.Sprite.__init__(self)
+
+            self.hp_max = BASIC_TOWER_HP_MAX
+            self.hp = self.hp_max
+
             self.static_image = pygame.image.load(BASIC_TOWER_IMAGE_PATH).convert_alpha()
             self.static_image = pygame.transform.scale(self.static_image,(BASIC_TOWER_SIZE[0],BASIC_TOWER_SIZE[1]))        
             self.current_image = self.static_image  
@@ -93,6 +101,10 @@ class Basic_tower(Tower,pygame.sprite.Sprite):
 class Ballista(Tower,pygame.sprite.Sprite):
       def __init__(self,game,x,y):
             pygame.sprite.Sprite.__init__(self)
+
+            self.hp_max = BALLISTA_HP_MAX
+            self.hp = self.hp_max
+
             self.images_path = BALLISTA_ATTACK_IMAGE_PATH
             self.static_image = pygame.image.load(self.images_path+"0001.png").convert_alpha()
             self.static_image = pygame.transform.scale(self.static_image,(BALLISTA_SIZE[0],BALLISTA_SIZE[1]))    
@@ -110,7 +122,7 @@ class Ballista(Tower,pygame.sprite.Sprite):
             self.image_attacking = []
             for i in range(1,self.number_frame_attacking+1):
                   self.image_attacking.append(pygame.image.load(self.images_path+str(i).zfill(4)+".png").convert_alpha())   
-            self.firing_frame = BALLISTA_FIRING_FRAME
+            self.firing_frame = BALLISTA_FIRING_FRAME-1
             self.anim_frame = 0
             self.time_per_frame = self.firing_period/self.number_frame_attacking # in ms
 
