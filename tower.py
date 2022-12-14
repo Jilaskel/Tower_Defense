@@ -122,6 +122,8 @@ class Ballista(Tower,pygame.sprite.Sprite):
             self.image_attacking = []
             for i in range(1,self.number_frame_attacking+1):
                   self.image_attacking.append(pygame.image.load(self.images_path+str(i).zfill(4)+".png").convert_alpha())   
+                  self.image_attacking[i-1] = pygame.transform.scale(self.image_attacking[i-1],(BALLISTA_SIZE[0],BALLISTA_SIZE[1]))    
+
             self.firing_frame = BALLISTA_FIRING_FRAME-1
             self.anim_frame = 0
             self.time_per_frame = self.firing_period/self.number_frame_attacking # in ms

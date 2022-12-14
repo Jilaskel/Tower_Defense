@@ -13,7 +13,7 @@ class Ennemy(pygame.sprite.Sprite):
                   pygame.sprite.Sprite.kill(self)
 
       def render(self):
-            window.blit(self.current_image, (self.posX, self.posY)) 
+            window.blit(self.current_image, (self.posX+GOBELIN_OFFSET_X, self.posY+GOBELIN_OFFSET_Y)) 
 
 
 class Gobelin(Ennemy,pygame.sprite.Sprite):
@@ -21,6 +21,7 @@ class Gobelin(Ennemy,pygame.sprite.Sprite):
             pygame.sprite.Sprite.__init__(self)
  
             self.static_image = pygame.image.load(GOBELIN_TRANSITION_IMAGE_PATH+"001.png").convert_alpha()
+            self.static_image = pygame.transform.scale(self.static_image,(GOBELIN_TRANSITION_SIZE[0],GOBELIN_TRANSITION_SIZE[1]))        
             self.current_image = self.static_image
 
             self.hp_max = GOBELIN_HP_MAX
@@ -35,7 +36,9 @@ class Gobelin(Ennemy,pygame.sprite.Sprite):
             self.number_frame_walking = GOBELIN_NUMBER_FRAME_WALKING
             self.image_walking = []
             for i in range(1,self.number_frame_walking+1):
-                  self.image_walking.append(pygame.image.load(GOBELIN_WALKING_IMAGE_PATH+str(i).zfill(3)+".png").convert_alpha())   
+                  self.image_walking.append(pygame.image.load(GOBELIN_WALKING_IMAGE_PATH+str(i).zfill(3)+".png").convert_alpha())  
+                  self.image_walking[i-1] = pygame.transform.scale(self.image_walking[i-1],(GOBELIN_WALKING_SIZE[0],GOBELIN_WALKING_SIZE[1]))        
+
             self.move_frame = 0
             self.anim_total_time_w = GOBELIN_ANIMATION_WALKING_TOTAL_TIME  # in ms
             self.time_per_frame_w = self.anim_total_time_w/self.number_frame_walking # in ms
@@ -57,6 +60,7 @@ class Gobelin(Ennemy,pygame.sprite.Sprite):
             self.image_transition = []
             for i in range(1,self.number_frame_transition+1):
                   self.image_transition.append(pygame.image.load(GOBELIN_TRANSITION_IMAGE_PATH+str(i).zfill(3)+".png").convert_alpha()) 
+                  self.image_transition[i-1] = pygame.transform.scale(self.image_transition[i-1],(GOBELIN_TRANSITION_SIZE[0],GOBELIN_TRANSITION_SIZE[1]))
             self.transition_frame = 0      
             self.anim_total_time_t = GOBELIN_ANIMATION_TRANSITION_TOTAL_TIME  # in ms
             self.time_per_frame_t = self.anim_total_time_t/self.number_frame_transition # in ms
@@ -65,6 +69,7 @@ class Gobelin(Ennemy,pygame.sprite.Sprite):
             self.image_attacking = []
             for i in range(1,self.number_frame_attacking+1):
                   self.image_attacking.append(pygame.image.load(GOBELIN_ATTACKING_IMAGE_PATH+str(i).zfill(3)+".png").convert_alpha()) 
+                  self.image_attacking[i-1] = pygame.transform.scale(self.image_attacking[i-1],(GOBELIN_ATTACKING_SIZE[0],GOBELIN_ATTACKING_SIZE[1]))
             self.attack_frame = 0
             self.anim_total_time_a = GOBELIN_ANIMATION_ATTACKING_TOTAL_TIME  # in ms
             self.time_per_frame_a = self.anim_total_time_a/self.number_frame_attacking # in ms
@@ -88,8 +93,11 @@ class Gobelin(Ennemy,pygame.sprite.Sprite):
                   self.current_image= self.image_walking[self.move_frame]
 
       def attack(self,game):
-            self.detected_towers = pygame.sprite.spritecollide(self, game.all_towers, False)
-            if self.detected_towers:
+            self.detected_ennemies = pygame.sprite.spritecollide(self, game.all_towers, False)
+            if not self.detected_ennemies:
+                  self.detected_ennemies = pygame.sprite.spritecollide(self, game.base.all_gates, False)
+
+            if self.detected_ennemies:
                   self.attacking = True
                   self.my_timer += game.timestep
 
@@ -115,8 +123,8 @@ class Gobelin(Ennemy,pygame.sprite.Sprite):
                         self.current_image = self.image_attacking[self.attack_frame]
                         if (self.attack_frame==self.hitting_frame):
                               if not self.damage_dealt:
-                                    for i in range (len(self.detected_towers)):
-                                          self.detected_towers[i].hp -= self.damage
+                                    for i in range (len(self.detected_ennemies)):
+                                          self.detected_ennemies[i].hp -= self.damage
                                     self.damage_dealt = True 
                         else:
                               self.damage_dealt = False
