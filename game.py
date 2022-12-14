@@ -1,11 +1,12 @@
 import pygame
 from audio_mixer import *
 from background import *
+from grid import *
+from base import *
 from tower import *
 from ennemy import *
 from mouse import *
 from menu import *
-from grid import *
 from spawning_mode import *
 from utilitaries import *
 
@@ -31,6 +32,8 @@ class Game():
             self.mouse = Mouse()
 
             self.spawning_mode = Spawning_mode(self)
+
+            self.base = Base(self)
 
             self.all_towers = pygame.sprite.Group()
 
@@ -64,6 +67,8 @@ class Game():
                   ennemy.die()
             for tower in self.all_towers:
                   tower.die()
+            for gate in self.base.all_gates:
+                  gate.destroy()
 
       def render(self):
             self.background.render()
