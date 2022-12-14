@@ -6,6 +6,7 @@ import numpy as np
 
 
 GOBELIN_TAG = 1
+OGRE_TAG = 2
 
 class Spawning_mode():
     def __init__(self,game):
@@ -22,6 +23,8 @@ class Spawning_mode():
         else:
             self.number_gobelin_spawned = 1.0
             self.last_time_spawning_gobelin = SPAWNING_INITIAL_TIME - P1_GOBELIN_SPAWNING_PERIOD*self.number_gobelin_spawned            
+            self.number_ogre_spawned = 1.0
+            self.last_time_spawning_ogre = SPAWNING_INITIAL_TIME - P1_OGRE_SPAWNING_PERIOD*self.number_gobelin_spawned            
         
 
     def spawning_ennemies(self,game):
@@ -29,15 +32,22 @@ class Spawning_mode():
         if SPAWNING_WITH_SCRIPT:
             time_next_ennemy = self.my_script[self.line,0]
             if (time>time_next_ennemy):
-                self.spawn(game,GOBELIN_TAG,int(self.my_script[self.line,2]))
+                self.spawn(game,int(self.my_script[self.line,1]),int(self.my_script[self.line,2]))
                 self.line += 1
         else:
             if (time<(TIME_P1)):
+                
                 cooldown = P1_GOBELIN_SPAWNING_PERIOD*self.number_gobelin_spawned 
                 if ((time-self.last_time_spawning_gobelin)>cooldown):
                     self.last_time_spawning_gobelin = time
                     self.number_gobelin_spawned = random.randint(1,3)
                     self.spawn(game,GOBELIN_TAG,self.number_gobelin_spawned)
+
+                cooldown = P1_OGRE_SPAWNING_PERIOD*self.number_ogre_spawned 
+                if ((time-self.last_time_spawning_ogre)>cooldown):
+                    self.last_time_spawning_ogre = time
+                    self.number_ogre_spawned = random.randint(1,3)
+                    self.spawn(game,OGRE_TAG,self.number_ogre_spawned)
                         
 
     def spawn(self,game,TAG,number_of_ennemies):
@@ -54,3 +64,5 @@ class Spawning_mode():
             if (TAG==GOBELIN_TAG):
                 game.all_ennemies.add(Gobelin(x_path,y_path))
 
+            if (TAG==OGRE_TAG):
+                game.all_ennemies.add(OGRE(x_path,y_path))
