@@ -65,8 +65,8 @@ class Basic_tower(Tower,pygame.sprite.Sprite):
             self.static_image = pygame.image.load(BASIC_TOWER_IMAGE_PATH).convert_alpha()
             self.static_image = pygame.transform.scale(self.static_image,(BASIC_TOWER_SIZE[0],BASIC_TOWER_SIZE[1]))        
             self.current_image = self.static_image  
-            self.posX = x
-            self.posY = y
+            self.posX = x + BASIC_TOWER_OFFSET[0]
+            self.posY = y + BASIC_TOWER_OFFSET[1]
 
             self.firing_period = BASIC_TOWER_FIRING_PERIOD
             self.my_timer = self.firing_period*2
@@ -77,9 +77,14 @@ class Basic_tower(Tower,pygame.sprite.Sprite):
             self.detected_ennemies = False
             self.my_target = []
             
-            self.rect = self.current_image.get_rect()
-            self.rect.x = self.posX
-            self.rect.y = self.posY
+            # self.rect = self.current_image.get_rect()
+            # self.rect.x = self.posX
+            # self.rect.y = self.posY
+            self.hitbox_left = x
+            self.hitbox_top = y
+            self.hitbox_width = BACKGROUND_SQUARE_SIDE
+            self.hitbox_height = BACKGROUND_SQUARE_SIDE
+            self.rect = pygame.Rect(self.hitbox_left,self.hitbox_top,self.hitbox_width,self.hitbox_height)
 
             self.range = BASIC_TOWER_RANGE * (self.rect.width+self.rect.height)/2.0
             self.range_hitbox = Range_Hitbox(self,self.rect.w,self.rect.h,self.range,circular=True)
@@ -90,7 +95,7 @@ class Basic_tower(Tower,pygame.sprite.Sprite):
                   self.my_timer += game.timestep
                   if self.my_timer>self.firing_period:
                         self.my_timer = 0.0
-                        game.all_projectiles.add(Bolt(self.posX,self.posY,self.my_target))
+                        game.all_projectiles.add(Bolt(self.posX+BASIC_TOWER_FIRING_OFFSET[0],self.posY+BASIC_TOWER_FIRING_OFFSET[1],self.my_target))
             else:
                   if not(self.attack_finished):
                         self.my_timer += game.timestep
@@ -109,8 +114,8 @@ class Ballista(Tower,pygame.sprite.Sprite):
             self.static_image = pygame.image.load(self.images_path+"0001.png").convert_alpha()
             self.static_image = pygame.transform.scale(self.static_image,(BALLISTA_SIZE[0],BALLISTA_SIZE[1]))    
             self.current_image = self.static_image    
-            self.posX = x
-            self.posY = y
+            self.posX = x + BALLISTA_OFFSET[0]
+            self.posY = y + BALLISTA_OFFSET[1]
             self.number_frame_attacking = BALLISTA_NUMBER_FRAME_ATTACKING
 
             self.firing_period = BALLISTA_FIRING_PERIOD #in ms
@@ -131,9 +136,12 @@ class Ballista(Tower,pygame.sprite.Sprite):
             self.detected_ennemies = False
             self.my_target = []
 
-            self.rect = self.current_image.get_rect()
-            self.rect.x = self.posX
-            self.rect.y = self.posY
+            self.hitbox_left = x
+            self.hitbox_top = y
+            self.hitbox_width = BACKGROUND_SQUARE_SIDE
+            self.hitbox_height = BACKGROUND_SQUARE_SIDE
+            self.rect = pygame.Rect(self.hitbox_left,self.hitbox_top,self.hitbox_width,self.hitbox_height)
+            # self.rect = self.current_image.get_rect()
 
             self.range = BALLISTA_RANGE*(self.rect.width+self.rect.height)/2.0
             self.range_hitbox = Range_Hitbox(self,self.rect.w,self.rect.h,self.range,circular=False)
@@ -148,7 +156,7 @@ class Ballista(Tower,pygame.sprite.Sprite):
                         self.anim_frame = self.anim_frame%self.number_frame_attacking
                         self.my_timer = 0.0
                         if (self.anim_frame==self.firing_frame):
-                              game.all_projectiles.add(Bolt(self.posX,self.posY,self.my_target))
+                              game.all_projectiles.add(Bolt(self.posX+BALLISTA_FIRING_OFFSET[0],self.posY+BALLISTA_FIRING_OFFSET[1],self.my_target))
             else:
                   if not(self.attack_finished):
                         self.my_timer += game.timestep

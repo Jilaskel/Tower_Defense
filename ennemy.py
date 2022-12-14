@@ -13,7 +13,7 @@ class Ennemy(pygame.sprite.Sprite):
                   pygame.sprite.Sprite.kill(self)
 
       def render(self):
-            window.blit(self.current_image, (self.posX+GOBELIN_OFFSET_X, self.posY+GOBELIN_OFFSET_Y)) 
+            window.blit(self.current_image, (self.posX, self.posY)) 
 
 
 class Gobelin(Ennemy,pygame.sprite.Sprite):
@@ -21,15 +21,16 @@ class Gobelin(Ennemy,pygame.sprite.Sprite):
             pygame.sprite.Sprite.__init__(self)
  
             self.static_image = pygame.image.load(GOBELIN_TRANSITION_IMAGE_PATH+"001.png").convert_alpha()
-            self.static_image = pygame.transform.scale(self.static_image,(GOBELIN_TRANSITION_SIZE[0],GOBELIN_TRANSITION_SIZE[1]))        
+            self.static_image = pygame.transform.scale(self.static_image,(GOBELIN_SIZE[0],GOBELIN_SIZE[1]))        
             self.current_image = self.static_image
 
             self.hp_max = GOBELIN_HP_MAX
             self.hp = self.hp_max
             self.damage = GOBELIN_DAMAGE
 
-            self.posX = x     
-            self.posY = y     
+            self.posX = x + GOBELIN_OFFSET[0]     
+            self.posY = y + GOBELIN_OFFSET[1]   
+            self.center = vec(self.posX+GOBELIN_CENTER_VECTOR[0]*GOBELIN_SIZE[0],self.posY+GOBELIN_CENTER_VECTOR[0]*GOBELIN_SIZE[1]) 
             self.velocity = GOBELIN_VELOCITY # pixel by ms
             self.moving = False
 
@@ -37,7 +38,7 @@ class Gobelin(Ennemy,pygame.sprite.Sprite):
             self.image_walking = []
             for i in range(1,self.number_frame_walking+1):
                   self.image_walking.append(pygame.image.load(GOBELIN_WALKING_IMAGE_PATH+str(i).zfill(3)+".png").convert_alpha())  
-                  self.image_walking[i-1] = pygame.transform.scale(self.image_walking[i-1],(GOBELIN_WALKING_SIZE[0],GOBELIN_WALKING_SIZE[1]))        
+                  self.image_walking[i-1] = pygame.transform.scale(self.image_walking[i-1],(GOBELIN_SIZE[0],GOBELIN_SIZE[1]))        
 
             self.move_frame = 0
             self.anim_total_time_w = GOBELIN_ANIMATION_WALKING_TOTAL_TIME  # in ms
@@ -45,12 +46,15 @@ class Gobelin(Ennemy,pygame.sprite.Sprite):
 
             self.my_timer = 0
 
-            self.rect = self.current_image.get_rect()
-            self.radius = GOBELIN_HITBOX_FACTOR*(self.rect.width+self.rect.height)/4.0
-            self.rect.x = self.posX + (1-GOBELIN_HITBOX_FACTOR)*self.rect.width
-            self.rect.y = self.posY + (1-GOBELIN_HITBOX_FACTOR)*self.rect.height
-            self.rect.width *= GOBELIN_HITBOX_FACTOR
-            self.rect.height *= GOBELIN_HITBOX_FACTOR
+            self.hitbox_left = x
+            self.hitbox_top = y
+            #self.rect = self.current_image.get_rect()
+            self.radius = GOBELIN_HITBOX_FACTOR*(BACKGROUND_SQUARE_SIDE*2)/4.0
+            self.hitbox_left = self.hitbox_left + (1-GOBELIN_HITBOX_FACTOR)*BACKGROUND_SQUARE_SIDE*0.5
+            self.hitbox_top = self.hitbox_top + (1-GOBELIN_HITBOX_FACTOR)*BACKGROUND_SQUARE_SIDE*0.5
+            self.hitbox_width = BACKGROUND_SQUARE_SIDE*GOBELIN_HITBOX_FACTOR
+            self.hitbox_height = BACKGROUND_SQUARE_SIDE*GOBELIN_HITBOX_FACTOR
+            self.rect = pygame.Rect(self.hitbox_left,self.hitbox_top,self.hitbox_width,self.hitbox_height)
 
             self.ready_to_attack = False
             self.attacking = False
@@ -60,7 +64,7 @@ class Gobelin(Ennemy,pygame.sprite.Sprite):
             self.image_transition = []
             for i in range(1,self.number_frame_transition+1):
                   self.image_transition.append(pygame.image.load(GOBELIN_TRANSITION_IMAGE_PATH+str(i).zfill(3)+".png").convert_alpha()) 
-                  self.image_transition[i-1] = pygame.transform.scale(self.image_transition[i-1],(GOBELIN_TRANSITION_SIZE[0],GOBELIN_TRANSITION_SIZE[1]))
+                  self.image_transition[i-1] = pygame.transform.scale(self.image_transition[i-1],(GOBELIN_SIZE[0],GOBELIN_SIZE[1]))
             self.transition_frame = 0      
             self.anim_total_time_t = GOBELIN_ANIMATION_TRANSITION_TOTAL_TIME  # in ms
             self.time_per_frame_t = self.anim_total_time_t/self.number_frame_transition # in ms
@@ -69,7 +73,7 @@ class Gobelin(Ennemy,pygame.sprite.Sprite):
             self.image_attacking = []
             for i in range(1,self.number_frame_attacking+1):
                   self.image_attacking.append(pygame.image.load(GOBELIN_ATTACKING_IMAGE_PATH+str(i).zfill(3)+".png").convert_alpha()) 
-                  self.image_attacking[i-1] = pygame.transform.scale(self.image_attacking[i-1],(GOBELIN_ATTACKING_SIZE[0],GOBELIN_ATTACKING_SIZE[1]))
+                  self.image_attacking[i-1] = pygame.transform.scale(self.image_attacking[i-1],(GOBELIN_SIZE[0],GOBELIN_SIZE[1]))
             self.attack_frame = 0
             self.anim_total_time_a = GOBELIN_ANIMATION_ATTACKING_TOTAL_TIME  # in ms
             self.time_per_frame_a = self.anim_total_time_a/self.number_frame_attacking # in ms
@@ -81,8 +85,11 @@ class Gobelin(Ennemy,pygame.sprite.Sprite):
             else:
                   self.moving = True
                   self.ready_to_attack = False
-                  self.posX += self.velocity * game.timestep
-                  self.rect.x = self.posX
+                  dx = self.velocity * game.timestep
+                  self.posX += dx
+                  self.center[0] += dx
+                  self.hitbox_left += dx
+                  self.rect.x = self.hitbox_left
 
                   self.my_timer += game.timestep
                   if self.my_timer>self.time_per_frame_w:

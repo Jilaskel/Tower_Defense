@@ -34,6 +34,7 @@ class Bolt(Projectile,pygame.sprite.Sprite):
       def __init__(self,x,y,target):
             pygame.sprite.Sprite.__init__(self)
             self.inital_image = pygame.image.load(BOLT_IMAGE_PATH).convert_alpha()
+            self.inital_image = pygame.transform.scale(self.inital_image,(BOLT_SIZE[0],BOLT_SIZE[1]))
             self.current_image = self.inital_image
             self.initial_direction = vec(-1,0)
 
@@ -53,14 +54,18 @@ class Bolt(Projectile,pygame.sprite.Sprite):
             self.rect.x = self.posX
             self.rect.y = self.posY
 
+            # self.center = vec(self.posX+BOLT_CENTOR_VECTOR[0]*BOLT_SIZE[0],self.posY+BOLT_CENTOR_VECTOR[1]*BOLT_SIZE[1])
+
       def move(self,game):
             if (pygame.sprite.Sprite.alive(self.target)):
-                  self.direction = (self.target.posX - self.posX, self.target.posY - self.posY)   
+                  self.direction = (self.target.center[0] - self.posX, self.target.center[1] - self.posY)   
+                  # self.direction = (self.target.center[0] - self.center[0], self.target.center[1] - self.center[1])   
                   self.direction /= sqrt(self.direction[0]**2+self.direction[1]**2)     
             self.posX += self.velocity * game.timestep * self.direction[0]
             self.posY += self.velocity * game.timestep * self.direction[1]
             self.rect.x = self.posX
             self.rect.y = self.posY
+            # self.center += self.velocity * game.timestep * self.direction
             self.moving = True
             self.rotate()
 
