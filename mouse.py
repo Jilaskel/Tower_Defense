@@ -70,8 +70,8 @@ class Mouse(pygame.sprite.Sprite):
                 if (self.hit_boxes[0].grass and self.hit_buttons[0].compatible_grass):
                     self.box_valid = True
                     if not(self.left_click_pressed):
-                        if (self.hit_buttons[0].my_tag==BASIC_TOWER_BUTTON_TAG):
-                            game.all_towers.add(Basic_tower(game,self.x_box,self.y_box))
+                        if (self.hit_buttons[0].my_tag==ARCANE_TOWER_BUTTON_TAG):
+                            game.all_towers.add(Arcane_tower(game,self.x_box,self.y_box))
                 elif (self.hit_boxes[0].road and self.hit_buttons[0].compatible_road):
                     self.box_valid = True
                     if not(self.left_click_pressed):

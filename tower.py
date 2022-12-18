@@ -35,8 +35,8 @@ class Range_Hitbox(pygame.sprite.Sprite):
                   self.circular = True
                   self.rect = pygame.Rect(tower.posX,tower.posY,tower.rect.width,tower.rect.height)
                   self.radius = self.range
-                  self.posX = tower.posX+width*0.5 - self.radius
-                  self.posY = tower.posY+height*0.5 - self.radius    
+                  self.posX = tower.posX-ARCANE_TOWER_OFFSET[0]+width*0.5 - self.radius
+                  self.posY = tower.posY-ARCANE_TOWER_OFFSET[1]+height*0.5 - self.radius    
 
                   self.image = pygame.image.load(TOWER_CIRCLE_RANGE_IMAGE_PATH).convert_alpha()
                   self.image.set_alpha(TOWER_CIRCLE_RANGE_IMAGE_ALPHA)
@@ -55,20 +55,21 @@ class Range_Hitbox(pygame.sprite.Sprite):
 
             self.offset = vec(self.posX-tower.posX,self.posY-tower.posY)
 
-class Basic_tower(Tower,pygame.sprite.Sprite):
+class Arcane_tower(Tower,pygame.sprite.Sprite):
       def __init__(self,game,x,y):
             pygame.sprite.Sprite.__init__(self)
 
-            self.hp_max = BASIC_TOWER_HP_MAX
+            self.hp_max = ARCANE_TOWER_HP_MAX
             self.hp = self.hp_max
 
-            self.static_image = pygame.image.load(BASIC_TOWER_IMAGE_PATH).convert_alpha()
-            self.static_image = pygame.transform.scale(self.static_image,(BASIC_TOWER_SIZE[0],BASIC_TOWER_SIZE[1]))        
+            self.static_image = pygame.image.load(ARCANE_TOWER_IMAGE_PATH).convert_alpha()
+            # self.static_image = pygame.transform.scale(self.static_image,(ARCANE_TOWER_SIZE[0],ARCANE_TOWER_SIZE[1]))        
+            self.static_image = pygame.transform.scale(self.static_image,pygame.Vector2(self.static_image.get_size())*ARCANE_TOWER_SCALE_FACTOR)        
             self.current_image = self.static_image  
-            self.posX = x + BASIC_TOWER_OFFSET[0]
-            self.posY = y + BASIC_TOWER_OFFSET[1]
+            self.posX = x + ARCANE_TOWER_OFFSET[0]
+            self.posY = y + ARCANE_TOWER_OFFSET[1]
 
-            self.firing_period = BASIC_TOWER_FIRING_PERIOD
+            self.firing_period = ARCANE_TOWER_FIRING_PERIOD
             self.my_timer = self.firing_period*2
 
             self.attacking = True
@@ -86,7 +87,7 @@ class Basic_tower(Tower,pygame.sprite.Sprite):
             self.hitbox_height = BACKGROUND_SQUARE_SIDE
             self.rect = pygame.Rect(self.hitbox_left,self.hitbox_top,self.hitbox_width,self.hitbox_height)
 
-            self.range = BASIC_TOWER_RANGE * (self.rect.width+self.rect.height)/2.0
+            self.range = ARCANE_TOWER_RANGE * (self.rect.width+self.rect.height)/2.0
             self.range_hitbox = Range_Hitbox(self,self.rect.w,self.rect.h,self.range,circular=True)
 
       def attack_and_reload(self,game):
@@ -95,7 +96,7 @@ class Basic_tower(Tower,pygame.sprite.Sprite):
                   self.my_timer += game.timestep
                   if self.my_timer>self.firing_period:
                         self.my_timer = 0.0
-                        game.all_projectiles.add(Bolt(self.posX+BASIC_TOWER_FIRING_OFFSET[0],self.posY+BASIC_TOWER_FIRING_OFFSET[1],self.my_target))
+                        game.all_projectiles.add(Bolt(self.posX+ARCANE_TOWER_FIRING_OFFSET[0],self.posY+ARCANE_TOWER_FIRING_OFFSET[1],self.my_target))
             else:
                   if not(self.attack_finished):
                         self.my_timer += game.timestep

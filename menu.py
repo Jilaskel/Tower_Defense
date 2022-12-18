@@ -2,7 +2,7 @@ import pygame
 from utilitaries import *
 from tower import * 
 
-BASIC_TOWER_BUTTON_TAG = 1
+ARCANE_TOWER_BUTTON_TAG = 1
 BALLISTA_BUTTON_TAG = 2
 
 class Menu():
@@ -12,9 +12,9 @@ class Menu():
             self.margin = game.background.bush_width*2
             side = game.background.square_side
 
-            path = MENU_BASIC_TOWER_BUTTON_IMAGE_PATH
+            path = MENU_ARCANE_TOWER_BUTTON_IMAGE_PATH
             (x,y) = (self.margin,0)
-            self.all_buttons.add(Button(path,x,y,BASIC_TOWER_BUTTON_TAG))
+            self.all_buttons.add(Button(path,x,y,ARCANE_TOWER_BUTTON_TAG))
 
             path = MENU_BALLISTA_BUTTON_IMAGE_PATH
             (x,y) = (self.margin+1.5*side,0)
@@ -36,15 +36,16 @@ class Button(pygame.sprite.Sprite):
             self.rect.y = self.posY   
 
             self.my_tag = tag
-            if (self.my_tag==BASIC_TOWER_BUTTON_TAG):
+            if (self.my_tag==ARCANE_TOWER_BUTTON_TAG):
                   self.compatible_grass = True
                   self.compatible_road = False
 
-                  self.image_to_carry = pygame.image.load(BASIC_TOWER_IMAGE_PATH).convert_alpha()
-                  self.image_to_carry = pygame.transform.scale(self.image_to_carry,(BASIC_TOWER_SIZE[0],BASIC_TOWER_SIZE[1])) 
+                  self.image_to_carry = pygame.image.load(ARCANE_TOWER_IMAGE_PATH).convert_alpha()
+                  # self.image_to_carry = pygame.transform.scale(self.image_to_carry,(ARCANE_TOWER_SIZE[0],ARCANE_TOWER_SIZE[1])) 
+                  self.image_to_carry = pygame.transform.scale(self.image_to_carry,pygame.Vector2(self.image_to_carry.get_size())*ARCANE_TOWER_SCALE_FACTOR)
 
-                  self.range = BASIC_TOWER_RANGE*(BASIC_TOWER_SIZE[0]+BASIC_TOWER_SIZE[1])/2.0
-                  self.range_hitbox = Range_Hitbox(self,BASIC_TOWER_SIZE[0],BASIC_TOWER_SIZE[1],self.range,circular=True)  
+                  self.range = ARCANE_TOWER_RANGE*(BACKGROUND_SQUARE_SIDE+BACKGROUND_SQUARE_SIDE)/2.0
+                  self.range_hitbox = Range_Hitbox(self,BACKGROUND_SQUARE_SIDE,BACKGROUND_SQUARE_SIDE,self.range,circular=True)  
 
             elif (self.my_tag==BALLISTA_BUTTON_TAG):
                   self.compatible_grass = False
