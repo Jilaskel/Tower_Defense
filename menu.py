@@ -41,8 +41,7 @@ class Button(pygame.sprite.Sprite):
                   self.compatible_road = False
 
                   self.image_to_carry = pygame.image.load(ARCANE_TOWER_IMAGE_PATH).convert_alpha()
-                  # self.image_to_carry = pygame.transform.scale(self.image_to_carry,(ARCANE_TOWER_SIZE[0],ARCANE_TOWER_SIZE[1])) 
-                  self.image_to_carry = pygame.transform.scale(self.image_to_carry,pygame.Vector2(self.image_to_carry.get_size())*ARCANE_TOWER_SCALE_FACTOR)
+                  self.image_to_carry = pygame.transform.scale(self.image_to_carry,pygame.Vector2(self.image_to_carry.get_size())*ARCANE_TOWER_RESIZE_FACTOR)
 
                   self.range = ARCANE_TOWER_RANGE*(BACKGROUND_SQUARE_SIDE+BACKGROUND_SQUARE_SIDE)/2.0
                   self.range_hitbox = Range_Hitbox(self,BACKGROUND_SQUARE_SIDE,BACKGROUND_SQUARE_SIDE,self.range,circular=True)  
@@ -52,10 +51,10 @@ class Button(pygame.sprite.Sprite):
                   self.compatible_road = True
 
                   self.image_to_carry = pygame.image.load(BALLISTA_ATTACK_IMAGE_PATH+"0001.png").convert_alpha()
-                  self.image_to_carry = pygame.transform.scale(self.image_to_carry,(BALLISTA_SIZE[0],BALLISTA_SIZE[1]))  
+                  self.image_to_carry = pygame.transform.scale(self.image_to_carry,pygame.Vector2(self.image_to_carry.get_size())*BALLISTA_RESIZE_FACTOR)  
 
-                  self.range = BALLISTA_RANGE*(BALLISTA_SIZE[0]+BALLISTA_SIZE[1])/2.0
-                  self.range_hitbox = Range_Hitbox(self,BALLISTA_SIZE[0],BALLISTA_SIZE[1],self.range,circular=False)  
+                  self.range = BALLISTA_RANGE*(BACKGROUND_SQUARE_SIDE+BACKGROUND_SQUARE_SIDE)/2.0
+                  self.range_hitbox = Range_Hitbox(self,BACKGROUND_SQUARE_SIDE,BACKGROUND_SQUARE_SIDE,self.range,circular=False)  
 
             else : 
                 self.compatible_grass = False

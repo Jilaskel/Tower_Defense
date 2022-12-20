@@ -63,8 +63,7 @@ class Arcane_tower(Tower,pygame.sprite.Sprite):
             self.hp = self.hp_max
 
             self.static_image = pygame.image.load(ARCANE_TOWER_IMAGE_PATH).convert_alpha()
-            # self.static_image = pygame.transform.scale(self.static_image,(ARCANE_TOWER_SIZE[0],ARCANE_TOWER_SIZE[1]))        
-            self.static_image = pygame.transform.scale(self.static_image,pygame.Vector2(self.static_image.get_size())*ARCANE_TOWER_SCALE_FACTOR)        
+            self.static_image = pygame.transform.scale(self.static_image,pygame.Vector2(self.static_image.get_size())*ARCANE_TOWER_RESIZE_FACTOR)        
             self.current_image = self.static_image  
             self.posX = x + ARCANE_TOWER_OFFSET[0]
             self.posY = y + ARCANE_TOWER_OFFSET[1]
@@ -78,9 +77,6 @@ class Arcane_tower(Tower,pygame.sprite.Sprite):
             self.detected_ennemies = False
             self.my_target = []
             
-            # self.rect = self.current_image.get_rect()
-            # self.rect.x = self.posX
-            # self.rect.y = self.posY
             self.hitbox_left = x
             self.hitbox_top = y
             self.hitbox_width = BACKGROUND_SQUARE_SIDE
@@ -113,7 +109,7 @@ class Ballista(Tower,pygame.sprite.Sprite):
 
             self.images_path = BALLISTA_ATTACK_IMAGE_PATH
             self.static_image = pygame.image.load(self.images_path+"0001.png").convert_alpha()
-            self.static_image = pygame.transform.scale(self.static_image,(BALLISTA_SIZE[0],BALLISTA_SIZE[1]))    
+            self.static_image = pygame.transform.scale(self.static_image,pygame.Vector2(self.static_image.get_size())*BALLISTA_RESIZE_FACTOR)  
             self.current_image = self.static_image    
             self.posX = x + BALLISTA_OFFSET[0]
             self.posY = y + BALLISTA_OFFSET[1]
@@ -128,7 +124,8 @@ class Ballista(Tower,pygame.sprite.Sprite):
             self.image_attacking = []
             for i in range(1,self.number_frame_attacking+1):
                   self.image_attacking.append(pygame.image.load(self.images_path+str(i).zfill(4)+".png").convert_alpha())   
-                  self.image_attacking[i-1] = pygame.transform.scale(self.image_attacking[i-1],(BALLISTA_SIZE[0],BALLISTA_SIZE[1]))    
+                  self.image_attacking[i-1] = pygame.transform.scale(self.image_attacking[i-1],pygame.Vector2(self.image_attacking[i-1].get_size())*BALLISTA_RESIZE_FACTOR)
+
 
             self.firing_frame = BALLISTA_FIRING_FRAME-1
             self.anim_frame = 0
@@ -142,7 +139,6 @@ class Ballista(Tower,pygame.sprite.Sprite):
             self.hitbox_width = BACKGROUND_SQUARE_SIDE
             self.hitbox_height = BACKGROUND_SQUARE_SIDE
             self.rect = pygame.Rect(self.hitbox_left,self.hitbox_top,self.hitbox_width,self.hitbox_height)
-            # self.rect = self.current_image.get_rect()
 
             self.range = BALLISTA_RANGE*(self.rect.width+self.rect.height)/2.0
             self.range_hitbox = Range_Hitbox(self,self.rect.w,self.rect.h,self.range,circular=False)

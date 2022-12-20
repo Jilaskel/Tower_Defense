@@ -34,8 +34,9 @@ class Bolt(Projectile,pygame.sprite.Sprite):
       def __init__(self,x,y,target):
             pygame.sprite.Sprite.__init__(self)
             self.inital_image = pygame.image.load(BOLT_IMAGE_PATH).convert_alpha()
-            self.inital_image = pygame.transform.scale(self.inital_image,(BOLT_SIZE[0],BOLT_SIZE[1]))
+            self.inital_image = pygame.transform.scale(self.inital_image,pygame.Vector2(self.inital_image.get_size())*BOLT_RESIZE_FACTOR)        
             self.current_image = self.inital_image
+            self.image_size = pygame.Vector2(self.inital_image.get_size())
             self.initial_direction = vec(-1,0)
 
             self.damage = BOLT_DAMAGE
@@ -54,7 +55,7 @@ class Bolt(Projectile,pygame.sprite.Sprite):
             self.rect.x = self.posX
             self.rect.y = self.posY
 
-            # self.center = vec(self.posX+BOLT_CENTOR_VECTOR[0]*BOLT_SIZE[0],self.posY+BOLT_CENTOR_VECTOR[1]*BOLT_SIZE[1])
+            # self.center = vec(self.posX+BOLT_CENTOR_VECTOR[0]*self.image_size[0],self.posY+BOLT_CENTOR_VECTOR[1]*self.image_size[1])
 
       def move(self,game):
             if (pygame.sprite.Sprite.alive(self.target)):
