@@ -21,9 +21,9 @@ class Gobelin(Ennemy,pygame.sprite.Sprite):
             pygame.sprite.Sprite.__init__(self)
  
             self.static_image = pygame.image.load(GOBELIN_TRANSITION_IMAGE_PATH+"001.png").convert_alpha()
-            self.static_image = pygame.transform.scale(self.static_image,pygame.Vector2(self.static_image.get_size())*GOBELIN_RESIZE_FACTOR)             
+            self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*GOBELIN_RESIZE_FACTOR)             
             self.current_image = self.static_image
-            self.image_size = pygame.Vector2(self.static_image.get_size())
+            self.image_size = vec(self.static_image.get_size())
 
             self.hp_max = GOBELIN_HP_MAX
             self.hp = self.hp_max
@@ -39,7 +39,7 @@ class Gobelin(Ennemy,pygame.sprite.Sprite):
             self.image_walking = []
             for i in range(1,self.number_frame_walking+1):
                   self.image_walking.append(pygame.image.load(GOBELIN_WALKING_IMAGE_PATH+str(i).zfill(3)+".png").convert_alpha())  
-                  self.image_walking[i-1] = pygame.transform.scale(self.image_walking[i-1],pygame.Vector2(self.image_walking[i-1].get_size())*GOBELIN_RESIZE_FACTOR)
+                  self.image_walking[i-1] = pygame.transform.scale(self.image_walking[i-1],vec(self.image_walking[i-1].get_size())*GOBELIN_RESIZE_FACTOR)
             self.move_frame = 0
             self.anim_total_time_w = GOBELIN_ANIMATION_WALKING_TOTAL_TIME  # in ms
             self.time_per_frame_w = self.anim_total_time_w/self.number_frame_walking # in ms
@@ -64,7 +64,7 @@ class Gobelin(Ennemy,pygame.sprite.Sprite):
             self.image_transition = []
             for i in range(1,self.number_frame_transition+1):
                   self.image_transition.append(pygame.image.load(GOBELIN_TRANSITION_IMAGE_PATH+str(i).zfill(3)+".png").convert_alpha()) 
-                  self.image_transition[i-1] = pygame.transform.scale(self.image_transition[i-1],pygame.Vector2(self.image_transition[i-1].get_size())*GOBELIN_RESIZE_FACTOR)
+                  self.image_transition[i-1] = pygame.transform.scale(self.image_transition[i-1],vec(self.image_transition[i-1].get_size())*GOBELIN_RESIZE_FACTOR)
             self.transition_frame = 0      
             self.anim_total_time_t = GOBELIN_ANIMATION_TRANSITION_TOTAL_TIME  # in ms
             self.time_per_frame_t = self.anim_total_time_t/self.number_frame_transition # in ms
@@ -73,7 +73,7 @@ class Gobelin(Ennemy,pygame.sprite.Sprite):
             self.image_attacking = []
             for i in range(1,self.number_frame_attacking+1):
                   self.image_attacking.append(pygame.image.load(GOBELIN_ATTACKING_IMAGE_PATH+str(i).zfill(3)+".png").convert_alpha()) 
-                  self.image_attacking[i-1] = pygame.transform.scale(self.image_attacking[i-1],pygame.Vector2(self.image_attacking[i-1].get_size())*GOBELIN_RESIZE_FACTOR)
+                  self.image_attacking[i-1] = pygame.transform.scale(self.image_attacking[i-1],vec(self.image_attacking[i-1].get_size())*GOBELIN_RESIZE_FACTOR)
             self.attack_frame = 0
             self.anim_total_time_a = GOBELIN_ANIMATION_ATTACKING_TOTAL_TIME  # in ms
             self.time_per_frame_a = self.anim_total_time_a/self.number_frame_attacking # in ms
@@ -147,9 +147,9 @@ class OGRE(Ennemy,pygame.sprite.Sprite):
             pygame.sprite.Sprite.__init__(self)
  
             self.static_image = pygame.image.load(OGRE_TRANSITION_IMAGE_PATH+"001.png").convert_alpha()
-            self.static_image = pygame.transform.scale(self.static_image,pygame.Vector2(self.static_image.get_size())*OGRE_RESIZE_FACTOR)             
+            self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*OGRE_RESIZE_FACTOR)             
             self.current_image = self.static_image
-            self.image_size = pygame.Vector2(self.static_image.get_size())
+            self.image_size = vec(self.static_image.get_size())
 
             self.hp_max = OGRE_HP_MAX
             self.hp = self.hp_max
@@ -165,7 +165,7 @@ class OGRE(Ennemy,pygame.sprite.Sprite):
             self.image_walking = []
             for i in range(1,self.number_frame_walking+1):
                   self.image_walking.append(pygame.image.load(OGRE_WALKING_IMAGE_PATH+str(i).zfill(3)+".png").convert_alpha())  
-                  self.image_walking[i-1] = pygame.transform.scale(self.image_walking[i-1],pygame.Vector2(self.image_walking[i-1].get_size())*OGRE_RESIZE_FACTOR)
+                  self.image_walking[i-1] = pygame.transform.scale(self.image_walking[i-1],vec(self.image_walking[i-1].get_size())*OGRE_RESIZE_FACTOR)
             self.move_frame = 0
             self.anim_total_time_w = OGRE_ANIMATION_WALKING_TOTAL_TIME  # in ms
             self.time_per_frame_w = self.anim_total_time_w/self.number_frame_walking # in ms
@@ -190,7 +190,7 @@ class OGRE(Ennemy,pygame.sprite.Sprite):
             self.image_transition = []
             for i in range(1,self.number_frame_transition+1):
                   self.image_transition.append(pygame.image.load(OGRE_TRANSITION_IMAGE_PATH+str(i).zfill(3)+".png").convert_alpha()) 
-                  self.image_transition[i-1] = pygame.transform.scale(self.image_transition[i-1],pygame.Vector2(self.image_transition[i-1].get_size())*OGRE_RESIZE_FACTOR)
+                  self.image_transition[i-1] = pygame.transform.scale(self.image_transition[i-1],vec(self.image_transition[i-1].get_size())*OGRE_RESIZE_FACTOR)
             self.transition_frame = 0      
             self.anim_total_time_t = OGRE_ANIMATION_TRANSITION_TOTAL_TIME  # in ms
             self.time_per_frame_t = self.anim_total_time_t/self.number_frame_transition # in ms
@@ -199,7 +199,7 @@ class OGRE(Ennemy,pygame.sprite.Sprite):
             self.image_attacking = []
             for i in range(1,self.number_frame_attacking+1):
                   self.image_attacking.append(pygame.image.load(OGRE_ATTACKING_IMAGE_PATH+str(i).zfill(3)+".png").convert_alpha()) 
-                  self.image_attacking[i-1] = pygame.transform.scale(self.image_attacking[i-1],pygame.Vector2(self.image_attacking[i-1].get_size())*OGRE_RESIZE_FACTOR)
+                  self.image_attacking[i-1] = pygame.transform.scale(self.image_attacking[i-1],vec(self.image_attacking[i-1].get_size())*OGRE_RESIZE_FACTOR)
             self.attack_frame = 0
             self.anim_total_time_a = OGRE_ANIMATION_ATTACKING_TOTAL_TIME  # in ms
             self.time_per_frame_a = self.anim_total_time_a/self.number_frame_attacking # in ms

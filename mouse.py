@@ -9,7 +9,7 @@ class Mouse(pygame.sprite.Sprite):
         super().__init__()
 
         self.static_image = pygame.image.load(MOUSE_IMAGE_PATH).convert_alpha()  
-        self.static_image = pygame.transform.scale(self.static_image,pygame.Vector2(self.static_image.get_size())*MOUSE_RESIZE_FACTOR)        
+        self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*MOUSE_RESIZE_FACTOR)        
         self.current_image = self.static_image
 
         side = BACKGROUND_SQUARE_SIDE

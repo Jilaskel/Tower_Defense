@@ -51,9 +51,9 @@ class Bolt(Projectile,pygame.sprite.Sprite):
       def __init__(self,x,y,target):
             pygame.sprite.Sprite.__init__(self)
             self.inital_image = pygame.image.load(BOLT_IMAGE_PATH).convert_alpha()
-            self.inital_image = pygame.transform.scale(self.inital_image,pygame.Vector2(self.inital_image.get_size())*BOLT_RESIZE_FACTOR)        
+            self.inital_image = pygame.transform.scale(self.inital_image,vec(self.inital_image.get_size())*BOLT_RESIZE_FACTOR)        
             self.current_image = self.inital_image
-            self.image_size = pygame.Vector2(self.inital_image.get_size())
+            self.image_size = vec(self.inital_image.get_size())
             self.initial_direction = vec(-1,0)
             self.offset = vec(BOLT_CENTOR_VECTOR[0]*self.image_size[0],BOLT_CENTOR_VECTOR[1]*self.image_size[1])
 
@@ -92,9 +92,9 @@ class Arcane_bolt(Projectile,pygame.sprite.Sprite):
       def __init__(self,x,y,target):
             pygame.sprite.Sprite.__init__(self)
             self.inital_image = pygame.image.load(ARCANE_BOLT_IMAGE_PATH).convert_alpha()
-            self.inital_image = pygame.transform.scale(self.inital_image,pygame.Vector2(self.inital_image.get_size())*ARCANE_BOLT_RESIZE_FACTOR)        
+            self.inital_image = pygame.transform.scale(self.inital_image,vec(self.inital_image.get_size())*ARCANE_BOLT_RESIZE_FACTOR)        
             self.current_image = self.inital_image
-            self.image_size = pygame.Vector2(self.inital_image.get_size())
+            self.image_size = vec(self.inital_image.get_size())
             self.initial_direction = vec(-1,0)
             self.offset = vec(ARCANE_BOLT_CENTOR_VECTOR[0]*self.image_size[0],ARCANE_BOLT_CENTOR_VECTOR[1]*self.image_size[1])
 

@@ -15,6 +15,8 @@ RESIZE_COEFF = WINDOW_WIDTH/1920
 
 window = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 pygame.display.set_caption("You Shall Not Pass")
+pygame_icon = pygame.image.load('Assets/game_icon.png')
+pygame.display.set_icon(pygame_icon)
 
 ### FPS
 FPS = 60
@@ -43,7 +45,7 @@ MOUSE_NOT_VALID_BOX_IMAGE_ALPHA = 150
 
 #### MENU
 MENU_BUTTON_SIZE = [BACKGROUND_SQUARE_SIDE,BACKGROUND_SQUARE_SIDE]
-MENU_ARCANE_TOWER_BUTTON_IMAGE_PATH = "Assets/Tower/ToursMagique/Blanche/Frametest.png"
+MENU_ARCANE_TOWER_BUTTON_IMAGE_PATH = "Assets/Tower/ToursMagique/Blanche/Frametest2.png"
 MENU_BALLISTA_BUTTON_IMAGE_PATH = "Assets/Tower/Baliste/AnimAttack/0001.png"
 
 #### ENNEMIES SPAWNING 
