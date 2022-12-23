@@ -1,7 +1,7 @@
 import pygame
 from utilitaries import *
 
-class Base(pygame.sprite.Sprite):
+class Base():
     def __init__(self,game):  
         self.all_gates = pygame.sprite.Group()
 

@@ -33,7 +33,7 @@ class Range_Hitbox(pygame.sprite.Sprite):
             self.range = range
             if circular:
                   self.circular = True
-                  self.rect = pygame.Rect(tower.posX,tower.posY,tower.rect.width,tower.rect.height)
+                  self.rect = pygame.Rect(tower.posX-ARCANE_TOWER_OFFSET[0],tower.posY-ARCANE_TOWER_OFFSET[1],tower.rect.width,tower.rect.height)
                   self.radius = self.range
                   self.posX = tower.posX-ARCANE_TOWER_OFFSET[0]+width*0.5 - self.radius
                   self.posY = tower.posY-ARCANE_TOWER_OFFSET[1]+height*0.5 - self.radius    
@@ -92,7 +92,8 @@ class Arcane_tower(Tower,pygame.sprite.Sprite):
                   self.my_timer += game.timestep
                   if self.my_timer>self.firing_period:
                         self.my_timer = 0.0
-                        game.all_projectiles.add(Bolt(self.posX+ARCANE_TOWER_FIRING_OFFSET[0],self.posY+ARCANE_TOWER_FIRING_OFFSET[1],self.my_target))
+                        # game.all_projectiles.add(Bolt(self.posX+ARCANE_TOWER_FIRING_OFFSET[0],self.posY+ARCANE_TOWER_FIRING_OFFSET[1],self.my_target))
+                        game.all_projectiles.add(Arcane_bolt(self.posX+ARCANE_TOWER_FIRING_OFFSET[0],self.posY+ARCANE_TOWER_FIRING_OFFSET[1],self.my_target))
             else:
                   if not(self.attack_finished):
                         self.my_timer += game.timestep

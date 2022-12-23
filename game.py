@@ -4,6 +4,8 @@ from background import *
 from grid import *
 from base import *
 from tower import *
+from projectile import *
+from impact import * 
 from ennemy import *
 from mouse import *
 from menu import *
@@ -39,6 +41,8 @@ class Game():
 
             self.all_projectiles = pygame.sprite.Group()
 
+            self.all_impacts = pygame.sprite.Group()
+
             self.all_ennemies = pygame.sprite.Group()
 
       def deal_with_mouse(self):
@@ -62,6 +66,10 @@ class Game():
                   projectile.move(self)
                   projectile.check_impact(self)
 
+            for impact in self.all_impacts:
+                  impact.explode(self)
+                  impact.check_impact(self)
+
       def die(self):
             for ennemy in self.all_ennemies:
                   ennemy.die()
@@ -82,6 +90,9 @@ class Game():
 
             for ennemy in self.all_ennemies:
                   ennemy.render()
+
+            for impact in self.all_impacts:
+                  impact.render()
 
             self.mouse.render()
 
