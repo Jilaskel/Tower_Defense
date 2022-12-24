@@ -42,7 +42,7 @@ class Button(pygame.sprite.Sprite):
                   self.compatible_grass = True
                   self.compatible_road = False
 
-                  self.image_to_carry = pygame.image.load(ARCANE_TOWER_IMAGE_PATH).convert_alpha()
+                  self.image_to_carry = pygame.image.load(ARCANE_TOWER_ATTACK_IMAGE_PATH+"01.png").convert_alpha()
                   self.image_to_carry = pygame.transform.scale(self.image_to_carry,vec(self.image_to_carry.get_size())*ARCANE_TOWER_RESIZE_FACTOR)
 
                   self.range = ARCANE_TOWER_RANGE*(BACKGROUND_SQUARE_SIDE+BACKGROUND_SQUARE_SIDE)/2.0
