@@ -1,6 +1,6 @@
 import pygame
 from utilitaries import *
-from fonctions import *
+from functions import *
 
 class Ennemy(pygame.sprite.Sprite):
       def __init__(self,x,y):

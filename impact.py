@@ -1,6 +1,6 @@
 import pygame
 from utilitaries import *
-from fonctions import *
+from functions import *
 
 class Impact(pygame.sprite.Sprite):
     def __init__(self,game,x,y):

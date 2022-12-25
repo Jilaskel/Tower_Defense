@@ -36,7 +36,9 @@ FADE_UP_TIME = 3.0 # in seconds
 MUSIC_VOLUME = 0.1
 
 #### BACKGROUND
-BACKGROUND_IMAGE_PATH = "Assets/Background/background1.png"
+# BACKGROUND_IMAGE_PATH = "Assets/Background/background1.png"
+BACKGROUND_IMAGE_PATH = "Assets/Background/BackgroundNoGrassAsset.png"
+BACKGROUND_GRASS_ASSETS_PATH = "Assets/Background/GrassAsset/"
 BACKGROUND_SQUARE_SIDE = WINDOW_HEIGHT/8.0
 
 #### MOUSE

@@ -83,6 +83,9 @@ class Game():
             self.menu.render(0)
 
             for rendering_layer in range(TOTAL_NUMBER_RENDERING_LAYER):
+                  for asset_background in self.background.all_assets:
+                        asset_background.render(rendering_layer)
+
                   for tower in self.all_towers:
                         tower.render(rendering_layer)
 

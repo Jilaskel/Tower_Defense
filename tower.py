@@ -1,7 +1,7 @@
 import pygame
 from utilitaries import *
 from projectile import *
-from fonctions import *
+from functions import *
 
 class Tower(pygame.sprite.Sprite):
       def __init__(self,game,x,y):

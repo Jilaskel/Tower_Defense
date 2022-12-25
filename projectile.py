@@ -1,7 +1,7 @@
 import pygame
 from utilitaries import *
 from impact import * 
-from fonctions import *
+from functions import *
 from numpy import sqrt
 import numpy as np
 import math
