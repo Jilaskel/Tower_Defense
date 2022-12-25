@@ -23,12 +23,21 @@ class Background():
             r = RESIZE_COEFF
 
             self.all_assets = []
-            
+
             # list of arguments : image_name, posX, posY, resize_factor, rendering_layer
 
-            self.all_assets.append(Background_asset("BushBundle1.png",3*s,3*s,1*r,9))
-            self.all_assets.append(Background_asset("BushBundle2.png",4*s,3.8*s,1*r,13))
+            self.all_assets.append(Background_asset("BushBundle1_cropped.png",3*s,3.6*s,1*r,9))
+            self.all_assets.append(Background_asset("BushBundle2_cropped.png",1*s,4.6*s,1*r,13))
+            self.all_assets.append(Background_asset("BushBundle3_cropped.png",5*s,1.8*s,1*r,3))
+            self.all_assets.append(Background_asset("BushBundle4_cropped.png",6*s,2.6*s,1*r,7))
 
+            self.all_assets.append(Background_asset("GrassBundle1_cropped.png",5*s,5.3*s,1.0*r,14))
+            self.all_assets.append(Background_asset("GrassBundle3_cropped.png",6.5*s,6.7*s,0.7*r,19))
+            self.all_assets.append(Background_asset("GrassBundle4_cropped.png",10.2*s,2.6*s,0.6*r,7))
+            self.all_assets.append(Background_asset("GrassBundle6_cropped.png",9.8*s,5.4*s,0.7*r,15))
+
+            self.all_assets.append(Background_asset("RockBundle1_cropped.png",10.2*s,1.6*s,1.0*r,3))
+            self.all_assets.append(Background_asset("RockBundle2_cropped.png",0.8*s,6.8*s,1.0*r,19))
 
       def render(self,rendering_layer):
             if self.rendering_layer==rendering_layer:
