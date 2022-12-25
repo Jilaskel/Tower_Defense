@@ -1,6 +1,7 @@
 import pygame
 from utilitaries import *
 from projectile import *
+from fonctions import *
 
 class Tower(pygame.sprite.Sprite):
       def __init__(self,game,x,y):
@@ -37,8 +38,9 @@ class Tower(pygame.sprite.Sprite):
             if (self.hp<=0):
                   pygame.sprite.Sprite.kill(self)
 
-      def render(self):
-            window.blit(self.current_image, (self.posX, self.posY))
+      def render(self,rendering_layer):
+            if self.rendering_layer==rendering_layer:
+                  window.blit(self.current_image, (self.posX, self.posY))
 
 
 class Range_Hitbox(pygame.sprite.Sprite):
@@ -70,7 +72,7 @@ class Range_Hitbox(pygame.sprite.Sprite):
             self.offset = vec(self.posX-tower.posX,self.posY-tower.posY)
 
 class Arcane_tower(Tower,pygame.sprite.Sprite):
-      def __init__(self,game,x,y):
+      def __init__(self,x,y):
             pygame.sprite.Sprite.__init__(self)
 
             self.hp_max = ARCANE_TOWER_HP_MAX
@@ -81,6 +83,8 @@ class Arcane_tower(Tower,pygame.sprite.Sprite):
             self.current_image = self.static_image  
             self.posX = x + ARCANE_TOWER_OFFSET[0]
             self.posY = y + ARCANE_TOWER_OFFSET[1]
+            self.image_size = vec(self.static_image.get_size())
+            self.rendering_layer = compute_rendering_layer_number(self)
 
             self.firing_offset = ARCANE_TOWER_FIRING_OFFSET
             self.my_timer = 0
@@ -160,7 +164,7 @@ class Arcane_tower(Tower,pygame.sprite.Sprite):
 
 
 class Ballista(Tower,pygame.sprite.Sprite):
-      def __init__(self,game,x,y):
+      def __init__(self,x,y):
             pygame.sprite.Sprite.__init__(self)
 
             self.hp_max = BALLISTA_HP_MAX
@@ -171,6 +175,8 @@ class Ballista(Tower,pygame.sprite.Sprite):
             self.current_image = self.static_image    
             self.posX = x + BALLISTA_OFFSET[0]
             self.posY = y + BALLISTA_OFFSET[1]
+            self.image_size = vec(self.static_image.get_size())
+            self.rendering_layer = compute_rendering_layer_number(self)
 
             self.firing_offset = BALLISTA_FIRING_OFFSET
             self.my_timer = 0

@@ -1,6 +1,7 @@
 import pygame
 from utilitaries import *
 from impact import * 
+from fonctions import *
 from numpy import sqrt
 import numpy as np
 import math
@@ -34,7 +35,7 @@ class Projectile(pygame.sprite.Sprite):
                   else:
                         angle = -(2*math.pi-np.arccos(scalar_product))
             angle = math.degrees(angle)
-            self.current_image = pygame.transform.rotate(self.inital_image, angle)
+            self.current_image = pygame.transform.rotate(self.static_image, angle)
 
       def check_impact(self,game):
             self.hit_ennemies = pygame.sprite.spritecollide(self, game.all_ennemies, False,pygame.sprite.collide_rect_ratio(self.ratio_for_impact))
@@ -43,17 +44,18 @@ class Projectile(pygame.sprite.Sprite):
                   for i in range (len(self.hit_ennemies)):
                         self.hit_ennemies[i].hp -= self.damage
 
-      def render(self):
-            window.blit(self.current_image, (self.posX, self.posY))  
-            # window.blit(self.current_image, (self.posX-self.offset[0], self.posY-self.offset[1]))  
+      def render(self,rendering_layer):
+            if self.rendering_layer==rendering_layer:
+                  window.blit(self.current_image, (self.posX, self.posY))  
+                  # window.blit(self.current_image, (self.posX-self.offset[0], self.posY-self.offset[1]))  
 
 class Bolt(Projectile,pygame.sprite.Sprite):
       def __init__(self,x,y,target):
             pygame.sprite.Sprite.__init__(self)
-            self.inital_image = pygame.image.load(BOLT_IMAGE_PATH).convert_alpha()
-            self.inital_image = pygame.transform.scale(self.inital_image,vec(self.inital_image.get_size())*BOLT_RESIZE_FACTOR)        
-            self.current_image = self.inital_image
-            self.image_size = vec(self.inital_image.get_size())
+            self.static_image = pygame.image.load(BOLT_IMAGE_PATH).convert_alpha()
+            self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*BOLT_RESIZE_FACTOR)        
+            self.current_image = self.static_image
+            self.image_size = vec(self.static_image.get_size())
             self.initial_direction = vec(-1,0)
             self.offset = vec(BOLT_CENTOR_VECTOR[0]*self.image_size[0],BOLT_CENTOR_VECTOR[1]*self.image_size[1])
 
@@ -61,6 +63,8 @@ class Bolt(Projectile,pygame.sprite.Sprite):
 
             self.posX = x-self.offset[0]    
             self.posY = y-self.offset[1]    
+            self.rendering_layer = compute_rendering_layer_number(self)
+
             self.direction = vec(0,0)
             self.velocity = BOLT_VELOCITY  # pixel by ms
             self.moving = False
@@ -91,10 +95,10 @@ class Bolt(Projectile,pygame.sprite.Sprite):
 class Arcane_bolt(Projectile,pygame.sprite.Sprite):
       def __init__(self,x,y,target):
             pygame.sprite.Sprite.__init__(self)
-            self.inital_image = pygame.image.load(ARCANE_BOLT_IMAGE_PATH).convert_alpha()
-            self.inital_image = pygame.transform.scale(self.inital_image,vec(self.inital_image.get_size())*ARCANE_BOLT_RESIZE_FACTOR)        
-            self.current_image = self.inital_image
-            self.image_size = vec(self.inital_image.get_size())
+            self.static_image = pygame.image.load(ARCANE_BOLT_IMAGE_PATH).convert_alpha()
+            self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*ARCANE_BOLT_RESIZE_FACTOR)        
+            self.current_image = self.static_image
+            self.image_size = vec(self.static_image.get_size())
             self.initial_direction = vec(-1,0)
             self.offset = vec(ARCANE_BOLT_CENTOR_VECTOR[0]*self.image_size[0],ARCANE_BOLT_CENTOR_VECTOR[1]*self.image_size[1])
 
@@ -102,6 +106,8 @@ class Arcane_bolt(Projectile,pygame.sprite.Sprite):
 
             self.posX = x-self.offset[0]    
             self.posY = y-self.offset[1]    
+            self.rendering_layer = compute_rendering_layer_number(self)
+
             self.direction = vec(0,0)
             self.velocity = ARCANE_BOLT_VELOCITY  # pixel by ms
             self.moving = False

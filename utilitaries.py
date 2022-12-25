@@ -8,19 +8,27 @@ RUNNING = True
 START_WITH_SPACE_BAR = False
 
 ### RESOLUTION
-WINDOW_WIDTH = 1920*0.70
-WINDOW_HEIGHT = 1080*0.70
+# WINDOW_WIDTH = 1920*0.70
+# WINDOW_HEIGHT = 1080*0.70
+WINDOW_WIDTH = 1920*0.50
+WINDOW_HEIGHT = 1080*0.50
 
 RESIZE_COEFF = WINDOW_WIDTH/1920
 
 window = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
-pygame.display.set_caption("You Shall Not Pass")
-pygame_icon = pygame.image.load('Assets/game_icon.png')
+
+### GAME
+GAME_TITLE = "You Shall Not Pass"
+GAME_ICON_PATH = "Assets/game_icon.png"
+
+pygame.display.set_caption(GAME_TITLE)
+pygame_icon = pygame.image.load(GAME_ICON_PATH)
 pygame.display.set_icon(pygame_icon)
 
 ### FPS
 FPS = 60
 CLOCK = pygame.time.Clock() 
+TOTAL_NUMBER_RENDERING_LAYER = 25
 
 ### MUSIC
 MUSIC_FILE_PATH = "Audio/Music/Age_of_War_Theme_Soundtrack.mp3"
@@ -50,6 +58,7 @@ MENU_BALLISTA_BUTTON_IMAGE_PATH = "Assets/Tower/Baliste/AttackAnim/0001.png"
 
 #### ENNEMIES SPAWNING 
 SPAWNING_WITH_SCRIPT = False
+
 SPAWNING_MARGIN_SPACE = 0.1   ## *background.bush_width
 SPAWNING_INITIAL_TIME = 4.0 # in seconds
 

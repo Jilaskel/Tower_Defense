@@ -79,22 +79,23 @@ class Game():
                   gate.destroy()
 
       def render(self):
-            self.background.render()
-            self.menu.render()
+            self.background.render(0)
+            self.menu.render(0)
 
-            for tower in self.all_towers:
-                  tower.render()
+            for rendering_layer in range(TOTAL_NUMBER_RENDERING_LAYER):
+                  for tower in self.all_towers:
+                        tower.render(rendering_layer)
 
-            for projectile in self.all_projectiles:
-                  projectile.render()
+                  for projectile in self.all_projectiles:
+                        projectile.render(rendering_layer)
 
-            for ennemy in self.all_ennemies:
-                  ennemy.render()
+                  for ennemy in self.all_ennemies:
+                        ennemy.render(rendering_layer)
 
-            for impact in self.all_impacts:
-                  impact.render()
+                  for impact in self.all_impacts:
+                        impact.render(rendering_layer)
 
-            self.mouse.render()
+                  self.mouse.render(rendering_layer)
 
             pygame.display.update()
 

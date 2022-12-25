@@ -20,9 +20,12 @@ class Menu():
             (x,y) = (self.margin+1.5*side,0)
             self.all_buttons.add(Button(path,x,y,BALLISTA_BUTTON_TAG))
 
-      def render(self):
-            for button in self.all_buttons:
-                  button.render()
+            self.rendering_layer = 0
+
+      def render(self,rendering_layer):
+            if self.rendering_layer==rendering_layer:
+                  for button in self.all_buttons:
+                        button.render()
 
 class Button(pygame.sprite.Sprite):
       def __init__(self,path,x,y,tag):

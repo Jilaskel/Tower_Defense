@@ -29,6 +29,8 @@ class Mouse(pygame.sprite.Sprite):
 
         self.hit_towers = []
 
+        self.rendering_layer = TOTAL_NUMBER_RENDERING_LAYER-1
+
     def doing_stuff(self,game):
         (x,y) = pygame.mouse.get_pos()
         self.posX = x
@@ -71,12 +73,12 @@ class Mouse(pygame.sprite.Sprite):
                     self.box_valid = True
                     if not(self.left_click_pressed):
                         if (self.hit_buttons[0].my_tag==ARCANE_TOWER_BUTTON_TAG):
-                            game.all_towers.add(Arcane_tower(game,self.x_box,self.y_box))
+                            game.all_towers.add(Arcane_tower(self.x_box,self.y_box))
                 elif (self.hit_boxes[0].road and self.hit_buttons[0].compatible_road):
                     self.box_valid = True
                     if not(self.left_click_pressed):
                         if (self.hit_buttons[0].my_tag==BALLISTA_BUTTON_TAG):
-                            game.all_towers.add(Ballista(game,self.x_box,self.y_box))
+                            game.all_towers.add(Ballista(self.x_box,self.y_box))
                 else:
                     self.box_not_valid = True
         else: #display range?
@@ -86,17 +88,18 @@ class Mouse(pygame.sprite.Sprite):
         if not(self.left_click_pressed):
             self.carrying = False
 
-    def render(self):
-        pygame.mouse.set_visible(False)
-        window.blit(self.current_image, (self.posX, self.posY)) 
-        if self.carrying:
-            hitbox = self.hit_buttons[0].range_hitbox
-            window.blit(hitbox.image, (self.carried_x+hitbox.offset[0], self.carried_y+hitbox.offset[1]))  # display range hitbow while dragging
-            window.blit(self.carried_image, (self.carried_x, self.carried_y))
-            if self.box_valid:
-                window.blit(self.valid_box_image, (self.x_box, self.y_box))
-            elif self.box_not_valid:
-                window.blit(self.not_valid_box_image, (self.x_box, self.y_box))
-        else:
-            if self.hit_towers:
-                window.blit(self.hit_towers[0].range_hitbox.image, (self.hit_towers[0].range_hitbox.posX, self.hit_towers[0].range_hitbox.posY))
+    def render(self,rendering_layer):
+        if self.rendering_layer==rendering_layer:
+            pygame.mouse.set_visible(False)
+            window.blit(self.current_image, (self.posX, self.posY)) 
+            if self.carrying:
+                hitbox = self.hit_buttons[0].range_hitbox
+                window.blit(hitbox.image, (self.carried_x+hitbox.offset[0], self.carried_y+hitbox.offset[1]))  # display range hitbow while dragging
+                window.blit(self.carried_image, (self.carried_x, self.carried_y))
+                if self.box_valid:
+                    window.blit(self.valid_box_image, (self.x_box, self.y_box))
+                elif self.box_not_valid:
+                    window.blit(self.not_valid_box_image, (self.x_box, self.y_box))
+            else:
+                if self.hit_towers:
+                    window.blit(self.hit_towers[0].range_hitbox.image, (self.hit_towers[0].range_hitbox.posX, self.hit_towers[0].range_hitbox.posY))

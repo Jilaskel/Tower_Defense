@@ -1,19 +1,78 @@
 import pygame
 from utilitaries import *
+from fonctions import *
 
 class Ennemy(pygame.sprite.Sprite):
       def __init__(self,x,y):
             pass
 
-      def move(self,game):           
-            pass
+      def move(self,game):
+            if self.attacking:
+                  self.moving = False                  
+            else:
+                  self.moving = True
+                  self.ready_to_attack = False
+                  dx = self.velocity * game.timestep
+                  self.posX += dx
+                  self.center[0] += dx
+                  self.hitbox_left += dx
+                  self.rect.x = self.hitbox_left
+
+                  self.my_timer += game.timestep
+                  if self.my_timer>self.time_per_frame_w:
+                        self.move_frame += 1
+                        self.move_frame = self.move_frame%self.number_frame_walking
+                        self.my_timer = 0.0
+                                    
+                  self.current_image= self.image_walking[self.move_frame]
+
+      def attack(self,game):
+            self.detected_ennemies = pygame.sprite.spritecollide(self, game.all_towers, False)
+            if not self.detected_ennemies:
+                  self.detected_ennemies = pygame.sprite.spritecollide(self, game.base.all_gates, False)
+
+            if self.detected_ennemies:
+                  self.attacking = True
+                  self.my_timer += game.timestep
+
+                  if not self.ready_to_attack:
+                        if (self.move_frame != (self.stop_walking_frame-1)):
+                              if self.my_timer>self.time_per_frame_w:
+                                    self.move_frame += 1
+                                    self.move_frame = self.move_frame%self.number_frame_walking
+                                    self.my_timer = 0.0   
+                              self.current_image = self.image_walking[self.move_frame]
+                        else:
+                              if self.my_timer>self.time_per_frame_t:
+                                    self.transition_frame += 1
+                                    self.my_timer = 0.0  
+                              if (self.transition_frame==self.number_frame_transition-1):
+                                    self.ready_to_attack = True   
+                              self.current_image = self.image_transition[self.transition_frame]                                                
+                  else:
+                        if self.my_timer>self.time_per_frame_a:
+                              self.attack_frame += 1
+                              self.attack_frame = self.attack_frame%self.number_frame_attacking
+                              self.my_timer = 0.0
+                        self.current_image = self.image_attacking[self.attack_frame]
+                        if (self.attack_frame==self.hitting_frame):
+                              if not self.damage_dealt:
+                                    for i in range (len(self.detected_ennemies)):
+                                          self.detected_ennemies[i].hp -= self.damage
+                                    self.damage_dealt = True 
+                        else:
+                              self.damage_dealt = False
+                                                     
+            else:
+                  self.attacking = False
 
       def die(self):
             if (self.hp<=0):
                   pygame.sprite.Sprite.kill(self)
 
-      def render(self):
-            window.blit(self.current_image, (self.posX, self.posY)) 
+      def render(self,rendering_layer):
+            if self.rendering_layer==rendering_layer:
+                  window.blit(self.current_image, (self.posX, self.posY)) 
 
 
 class Gobelin(Ennemy,pygame.sprite.Sprite):
@@ -32,6 +91,8 @@ class Gobelin(Ennemy,pygame.sprite.Sprite):
             self.posX = x + GOBELIN_OFFSET[0]     
             self.posY = y + GOBELIN_OFFSET[1]   
             self.center = vec(self.posX+GOBELIN_CENTER_VECTOR[0]*self.image_size[0],self.posY+GOBELIN_CENTER_VECTOR[0]*self.image_size[1]) 
+            self.rendering_layer = compute_rendering_layer_number(self)
+
             self.velocity = GOBELIN_VELOCITY # pixel by ms
             self.moving = False
 
@@ -43,6 +104,7 @@ class Gobelin(Ennemy,pygame.sprite.Sprite):
             self.move_frame = 0
             self.anim_total_time_w = GOBELIN_ANIMATION_WALKING_TOTAL_TIME  # in ms
             self.time_per_frame_w = self.anim_total_time_w/self.number_frame_walking # in ms
+            self.stop_walking_frame = GOBELIN_STOP_WALKING_FRAME
 
             self.my_timer = 0
 
@@ -79,66 +141,6 @@ class Gobelin(Ennemy,pygame.sprite.Sprite):
             self.time_per_frame_a = self.anim_total_time_a/self.number_frame_attacking # in ms
             self.hitting_frame = GOBELIN_HITTING_FRAME -1
 
-      def move(self,game):
-            if self.attacking:
-                  self.moving = False                  
-            else:
-                  self.moving = True
-                  self.ready_to_attack = False
-                  dx = self.velocity * game.timestep
-                  self.posX += dx
-                  self.center[0] += dx
-                  self.hitbox_left += dx
-                  self.rect.x = self.hitbox_left
-
-                  self.my_timer += game.timestep
-                  if self.my_timer>self.time_per_frame_w:
-                        self.move_frame += 1
-                        self.move_frame = self.move_frame%self.number_frame_walking
-                        self.my_timer = 0.0
-                                    
-                  self.current_image= self.image_walking[self.move_frame]
-
-      def attack(self,game):
-            self.detected_ennemies = pygame.sprite.spritecollide(self, game.all_towers, False)
-            if not self.detected_ennemies:
-                  self.detected_ennemies = pygame.sprite.spritecollide(self, game.base.all_gates, False)
-
-            if self.detected_ennemies:
-                  self.attacking = True
-                  self.my_timer += game.timestep
-
-                  if not self.ready_to_attack:
-                        if (self.move_frame != (GOBELIN_STOP_WALKING_FRAME-1)):
-                              if self.my_timer>self.time_per_frame_w:
-                                    self.move_frame += 1
-                                    self.move_frame = self.move_frame%self.number_frame_walking
-                                    self.my_timer = 0.0   
-                              self.current_image = self.image_walking[self.move_frame]
-                        else:
-                              if self.my_timer>self.time_per_frame_t:
-                                    self.transition_frame += 1
-                                    self.my_timer = 0.0  
-                              if (self.transition_frame==self.number_frame_transition-1):
-                                    self.ready_to_attack = True   
-                              self.current_image = self.image_transition[self.transition_frame]                                                
-                  else:
-                        if self.my_timer>self.time_per_frame_a:
-                              self.attack_frame += 1
-                              self.attack_frame = self.attack_frame%self.number_frame_attacking
-                              self.my_timer = 0.0
-                        self.current_image = self.image_attacking[self.attack_frame]
-                        if (self.attack_frame==self.hitting_frame):
-                              if not self.damage_dealt:
-                                    for i in range (len(self.detected_ennemies)):
-                                          self.detected_ennemies[i].hp -= self.damage
-                                    self.damage_dealt = True 
-                        else:
-                              self.damage_dealt = False
-                                                     
-            else:
-                  self.attacking = False
-
 
  
  
@@ -158,6 +160,8 @@ class OGRE(Ennemy,pygame.sprite.Sprite):
             self.posX = x + OGRE_OFFSET[0]     
             self.posY = y + OGRE_OFFSET[1]   
             self.center = vec(self.posX+OGRE_CENTER_VECTOR[0]*self.image_size[0],self.posY+OGRE_CENTER_VECTOR[0]*self.image_size[1]) 
+            self.rendering_layer = compute_rendering_layer_number(self)
+
             self.velocity = OGRE_VELOCITY # pixel by ms
             self.moving = False
 
@@ -169,6 +173,7 @@ class OGRE(Ennemy,pygame.sprite.Sprite):
             self.move_frame = 0
             self.anim_total_time_w = OGRE_ANIMATION_WALKING_TOTAL_TIME  # in ms
             self.time_per_frame_w = self.anim_total_time_w/self.number_frame_walking # in ms
+            self.stop_walking_frame = OGRE_STOP_WALKING_FRAME
 
             self.my_timer = 0
 
@@ -205,62 +210,3 @@ class OGRE(Ennemy,pygame.sprite.Sprite):
             self.time_per_frame_a = self.anim_total_time_a/self.number_frame_attacking # in ms
             self.hitting_frame = OGRE_HITTING_FRAME -1
 
-      def move(self,game):
-            if self.attacking:
-                  self.moving = False                  
-            else:
-                  self.moving = True
-                  self.ready_to_attack = False
-                  dx = self.velocity * game.timestep
-                  self.posX += dx
-                  self.center[0] += dx
-                  self.hitbox_left += dx
-                  self.rect.x = self.hitbox_left
-
-                  self.my_timer += game.timestep
-                  if self.my_timer>self.time_per_frame_w:
-                        self.move_frame += 1
-                        self.move_frame = self.move_frame%self.number_frame_walking
-                        self.my_timer = 0.0
-                                    
-                  self.current_image= self.image_walking[self.move_frame]
-
-      def attack(self,game):
-            self.detected_ennemies = pygame.sprite.spritecollide(self, game.all_towers, False)
-            if not self.detected_ennemies:
-                  self.detected_ennemies = pygame.sprite.spritecollide(self, game.base.all_gates, False)
-
-            if self.detected_ennemies:
-                  self.attacking = True
-                  self.my_timer += game.timestep
-
-                  if not self.ready_to_attack:
-                        if (self.move_frame != (OGRE_STOP_WALKING_FRAME-1)):
-                              if self.my_timer>self.time_per_frame_w:
-                                    self.move_frame += 1
-                                    self.move_frame = self.move_frame%self.number_frame_walking
-                                    self.my_timer = 0.0   
-                              self.current_image = self.image_walking[self.move_frame]
-                        else:
-                              if self.my_timer>self.time_per_frame_t:
-                                    self.transition_frame += 1
-                                    self.my_timer = 0.0  
-                              if (self.transition_frame==self.number_frame_transition-1):
-                                    self.ready_to_attack = True   
-                              self.current_image = self.image_transition[self.transition_frame]                                                
-                  else:
-                        if self.my_timer>self.time_per_frame_a:
-                              self.attack_frame += 1
-                              self.attack_frame = self.attack_frame%self.number_frame_attacking
-                              self.my_timer = 0.0
-                        self.current_image = self.image_attacking[self.attack_frame]
-                        if (self.attack_frame==self.hitting_frame):
-                              if not self.damage_dealt:
-                                    for i in range (len(self.detected_ennemies)):
-                                          self.detected_ennemies[i].hp -= self.damage
-                                    self.damage_dealt = True 
-                        else:
-                              self.damage_dealt = False
-                                                     
-            else:
-                  self.attacking = False

@@ -1,5 +1,6 @@
 import pygame
 from utilitaries import *
+from fonctions import *
 
 class Impact(pygame.sprite.Sprite):
     def __init__(self,game,x,y):
@@ -13,18 +14,19 @@ class Impact(pygame.sprite.Sprite):
                 for i in range (len(self.hit_ennemies)):
                         self.hit_ennemies[i].hp -= self.damage
 
-    def render(self):
-        window.blit(self.current_image, (self.posX, self.posY))  
+    def render(self,rendering_layer):
+        if self.rendering_layer==rendering_layer:
+            window.blit(self.current_image, (self.posX, self.posY))  
 
 
 class Arcane_impact(Impact,pygame.sprite.Sprite):
     def __init__(self,projectile):
         pygame.sprite.Sprite.__init__(self)
 
-        self.inital_image = pygame.image.load(ARCANE_IMPACT_IMAGE_PATH+"001.png").convert_alpha()
-        self.inital_image = pygame.transform.scale(self.inital_image,vec(self.inital_image.get_size())*ARCANE_IMPACT_RESIZE_FACTOR)        
-        self.current_image = self.inital_image
-        self.image_size = vec(self.inital_image.get_size())
+        self.static_image = pygame.image.load(ARCANE_IMPACT_IMAGE_PATH+"001.png").convert_alpha()
+        self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*ARCANE_IMPACT_RESIZE_FACTOR)        
+        self.current_image = self.static_image
+        self.image_size = vec(self.static_image.get_size())
         self.offset = vec(ARCANE_IMPACT_CENTOR_VECTOR[0]*self.image_size[0],ARCANE_IMPACT_CENTOR_VECTOR[1]*self.image_size[1])
 
         self.number_frame = ARCANE_IMPACT_NUMBER_FRAME
@@ -44,6 +46,7 @@ class Arcane_impact(Impact,pygame.sprite.Sprite):
 
         self.posX = projectile.target.rect.center[0]-self.offset[0]
         self.posY = projectile.target.rect.center[1]-self.offset[1]
+        self.rendering_layer = compute_rendering_layer_number(self)
 
         self.rect = self.current_image.get_rect()
         self.rect.x = self.posX
