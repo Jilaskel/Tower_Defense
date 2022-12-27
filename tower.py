@@ -72,8 +72,10 @@ class Range_Hitbox(pygame.sprite.Sprite):
             self.offset = vec(self.posX-tower.posX,self.posY-tower.posY)
 
 class Arcane_tower(Tower,pygame.sprite.Sprite):
-      def __init__(self,x,y):
+      def __init__(self,game,x,y):
             pygame.sprite.Sprite.__init__(self)
+
+            game.gold.amount -= ARCANE_TOWER_PRICE
 
             self.hp_max = ARCANE_TOWER_HP_MAX
             self.hp = self.hp_max
@@ -164,8 +166,10 @@ class Arcane_tower(Tower,pygame.sprite.Sprite):
 
 
 class Ballista(Tower,pygame.sprite.Sprite):
-      def __init__(self,x,y):
+      def __init__(self,game,x,y):
             pygame.sprite.Sprite.__init__(self)
+
+            game.gold.amount -= BALLISTA_PRICE
 
             self.hp_max = BALLISTA_HP_MAX
             self.hp = self.hp_max

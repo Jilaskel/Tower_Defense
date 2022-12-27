@@ -9,6 +9,7 @@ from impact import *
 from ennemy import *
 from mouse import *
 from menu import *
+from gold import *
 from spawning_mode import *
 from utilitaries import *
 
@@ -30,6 +31,8 @@ class Game():
             self.grid = Grid(self)
 
             self.menu = Menu(self)
+
+            self.gold = Gold()
 
             self.mouse = Mouse()
 
@@ -72,7 +75,7 @@ class Game():
 
       def die(self):
             for ennemy in self.all_ennemies:
-                  ennemy.die()
+                  ennemy.die(self)
             for tower in self.all_towers:
                   tower.die()
             for gate in self.base.all_gates:
@@ -98,7 +101,9 @@ class Game():
                   for impact in self.all_impacts:
                         impact.render(rendering_layer)
 
-                  self.mouse.render(rendering_layer)
+            self.gold.render(rendering_layer)
+
+            self.mouse.render(rendering_layer)
 
             pygame.display.update()
 

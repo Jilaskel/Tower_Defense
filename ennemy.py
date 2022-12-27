@@ -66,9 +66,10 @@ class Ennemy(pygame.sprite.Sprite):
             else:
                   self.attacking = False
 
-      def die(self):
+      def die(self,game):
             if (self.hp<=0):
                   pygame.sprite.Sprite.kill(self)
+                  game.gold.amount += self.gold_earning
 
       def render(self,rendering_layer):
             if self.rendering_layer==rendering_layer:
@@ -87,6 +88,8 @@ class Gobelin(Ennemy,pygame.sprite.Sprite):
             self.hp_max = GOBELIN_HP_MAX
             self.hp = self.hp_max
             self.damage = GOBELIN_DAMAGE
+
+            self.gold_earning = GOBELIN_GOLD_EARNING
 
             self.posX = x + GOBELIN_OFFSET[0]     
             self.posY = y + GOBELIN_OFFSET[1]   
@@ -156,6 +159,8 @@ class OGRE(Ennemy,pygame.sprite.Sprite):
             self.hp_max = OGRE_HP_MAX
             self.hp = self.hp_max
             self.damage = OGRE_DAMAGE
+
+            self.gold_earning = OGRE_GOLD_EARNING
 
             self.posX = x + OGRE_OFFSET[0]     
             self.posY = y + OGRE_OFFSET[1]   

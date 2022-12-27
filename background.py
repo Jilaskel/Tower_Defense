@@ -33,7 +33,7 @@ class Background():
 
             self.all_assets.append(Background_asset("GrassBundle1_cropped.png",5*s,5.3*s,1.0*r,14))
             self.all_assets.append(Background_asset("GrassBundle3_cropped.png",6.5*s,6.7*s,0.7*r,19))
-            self.all_assets.append(Background_asset("GrassBundle4_cropped.png",10.2*s,2.6*s,0.6*r,7))
+            self.all_assets.append(Background_asset("GrassBundle4_cropped.png",10.2*s,3.0*s,0.4*r,7))
             self.all_assets.append(Background_asset("GrassBundle6_cropped.png",9.8*s,5.4*s,0.7*r,15))
 
             self.all_assets.append(Background_asset("RockBundle1_cropped.png",10.2*s,1.6*s,1.0*r,3))
