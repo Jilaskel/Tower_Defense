@@ -45,7 +45,7 @@ FONT_PATH = "Font/Kingcastle-0W8Kr.ttf"
 
 #### GOLD
 GOLD_RESERVE_IMAGE_PATH = "Assets/Gold/GoldReserve.png"  ## useless atm
-GOLD_GAIN_IMAGE_PATH = "Assets/Gold/GoldGain.png"
+GOLD_GAIN_IMAGE_PATH = "Assets/Gold/GoldGain.png"    ## useless atm
 GOLD_STARTING_AMOUNT = 20
 
 #### MOUSE
@@ -64,6 +64,7 @@ MOUSE_NOT_VALID_BOX_IMAGE_ALPHA = 150
 MENU_BUTTON_SIZE = [BACKGROUND_SQUARE_SIDE,BACKGROUND_SQUARE_SIDE]
 MENU_ARCANE_TOWER_BUTTON_IMAGE_PATH = "Assets/Menu/Buttons/arcane_tower_button_2.png"
 MENU_BALLISTA_BUTTON_IMAGE_PATH = "Assets/Menu/Buttons/ballista_button_2.png"
+
 MENU_GOLD_RESERVE_BUTTON_IMAGE_PATH = "Assets/Menu/Buttons/gold_reserve_button.png"
 MENU_GOLD_RESERVE_BUTTON_RESIZE_FACTOR = 0.33*RESIZE_COEFF
 
