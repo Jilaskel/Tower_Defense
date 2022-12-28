@@ -40,7 +40,7 @@ class Game():
 
             self.base = Base(self)
 
-            self.all_towers = pygame.sprite.Group()
+            self.all_towers = All_towers()
 
             self.all_projectiles = pygame.sprite.Group()
 
