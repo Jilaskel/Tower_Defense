@@ -62,7 +62,7 @@ class Spawning_mode():
             y_path = game.background.menu_height + side*(1+2*path_number) 
 
             if (TAG==GOBELIN_TAG):
-                game.all_ennemies.add(Gobelin(x_path,y_path))
+                game.all_ennemies.add_gobelin(x_path,y_path)
 
             if (TAG==OGRE_TAG):
-                game.all_ennemies.add(OGRE(x_path,y_path))
+                game.all_ennemies.add_ogre(x_path,y_path)

@@ -46,7 +46,7 @@ class Game():
 
             self.all_impacts = pygame.sprite.Group()
 
-            self.all_ennemies = pygame.sprite.Group()
+            self.all_ennemies = All_ennemies()
 
       def deal_with_mouse(self):
             self.mouse.doing_stuff(self)
