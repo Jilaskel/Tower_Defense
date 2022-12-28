@@ -12,7 +12,7 @@ class Menu():
             self.margin = game.background.bush_width*2
             side = game.background.square_side
 
-            self.font_menu_size = 30
+            self.font_menu_size = int(30*RESIZE_COEFF)
             self.font_menu_color = (0,0,0)
             self.font_menu = pygame.font.Font(FONT_PATH,self.font_menu_size)
 

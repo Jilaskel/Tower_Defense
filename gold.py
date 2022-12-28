@@ -6,7 +6,7 @@ class Gold():
     def __init__(self):
         self.amount = GOLD_STARTING_AMOUNT
 
-        self.font_gold_size = 50
+        self.font_gold_size = int(50*RESIZE_COEFF)
         self.font_gold_color = (0,0,0)
         self.font_gold = pygame.font.Font(FONT_PATH,self.font_gold_size)
 
