@@ -42,9 +42,9 @@ class Game():
 
             self.all_towers = All_towers()
 
-            self.all_projectiles = pygame.sprite.Group()
+            self.all_projectiles = All_projectiles()
 
-            self.all_impacts = pygame.sprite.Group()
+            self.all_impacts = All_impacts()
 
             self.all_ennemies = All_ennemies()
 

@@ -98,7 +98,7 @@ class Tower(pygame.sprite.Sprite):
                   self.my_timer += game.timestep
                   if self.my_timer>self.my_data.firing_period:
                         self.my_timer = 0.0
-                        game.all_projectiles.add(Bolt(self.posX+ARCANE_TOWER_FIRING_OFFSET[0],self.posY+ARCANE_TOWER_FIRING_OFFSET[1],self.my_target))
+                        game.all_projectiles.add_bolt(self.posX+ARCANE_TOWER_FIRING_OFFSET[0],self.posY+ARCANE_TOWER_FIRING_OFFSET[1],self.my_target)
             else:
                   if not(self.attack_finished):
                         self.my_timer += game.timestep
@@ -195,7 +195,7 @@ class Arcane_tower(Tower,pygame.sprite.Sprite):
                               self.anim_frame_a += 1
                               self.my_timer = 0.0
                               if (self.anim_frame_a==self.my_data.number_frame_attacking):
-                                    game.all_projectiles.add(Arcane_bolt(self.posX+self.my_data.firing_offset[0],self.posY+self.my_data.firing_offset[1],self.my_target))
+                                    game.all_projectiles.add_arcane_bolt(self.posX+self.my_data.firing_offset[0],self.posY+self.my_data.firing_offset[1],self.my_target)
                                     self.anim_frame_a = 0
                                     self.reloading = True
                                     self.current_image= self.my_data.image_reloading[self.anim_frame_r]
@@ -271,7 +271,7 @@ class Ballista(Tower,pygame.sprite.Sprite):
                               self.anim_frame_a += 1
                               self.my_timer = 0.0
                               if (self.anim_frame_a==self.my_data.number_frame_attacking):
-                                    game.all_projectiles.add(Bolt(self.posX+self.my_data.firing_offset[0],self.posY+self.my_data.firing_offset[1],self.my_target))
+                                    game.all_projectiles.add_bolt(self.posX+self.my_data.firing_offset[0],self.posY+self.my_data.firing_offset[1],self.my_target)
                                     self.anim_frame_a = 0
                                     self.reloading = True
                                     self.current_image= self.my_data.image_reloading[self.anim_frame_r]
