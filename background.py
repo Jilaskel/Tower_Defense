@@ -24,12 +24,12 @@ class Background():
 
             self.all_assets = []
 
-            # list of arguments : image_name, posX, posY, resize_factor, rendering_layer
+            # list of arguments : image_name, posX, posY, resize_factor, rendering_layer, (optional: flip = True)
 
             self.all_assets.append(Background_asset("BushBundle1_cropped.png",3*s,3.6*s,1*r,9))
             self.all_assets.append(Background_asset("BushBundle2_cropped.png",1*s,4.6*s,1*r,13))
             self.all_assets.append(Background_asset("BushBundle3_cropped.png",5*s,1.8*s,1*r,3))
-            self.all_assets.append(Background_asset("BushBundle4_cropped.png",6*s,2.6*s,1*r,7))
+            self.all_assets.append(Background_asset("BushBundle4_cropped.png",6*s,2.6*s,1*r,7,flip=True))
 
             self.all_assets.append(Background_asset("GrassBundle1_cropped.png",5*s,5.3*s,1.0*r,14))
             self.all_assets.append(Background_asset("GrassBundle3_cropped.png",6.5*s,6.7*s,0.7*r,19))
@@ -44,9 +44,11 @@ class Background():
                   window.blit(self.current_image, (self.posX, self.posY))    
 
 class Background_asset():
-      def __init__(self,image_name,posX,posY,resize_factor,rendering_layer):
+      def __init__(self,image_name,posX,posY,resize_factor,rendering_layer,flip=False):
             self.image = pygame.image.load(BACKGROUND_GRASS_ASSETS_PATH+image_name).convert_alpha()
             self.image = pygame.transform.scale(self.image,vec(self.image.get_size())*resize_factor) 
+            if flip:
+                  self.image = pygame.transform.flip(self.image, True, False)
             self.image_size = vec(self.image.get_size())
 
             self.posX = posX
