@@ -1,6 +1,7 @@
 import pygame
 from utilitaries import *
 from functions import *
+from dead_body import *
 
 class All_ennemies(pygame.sprite.Group):
       def __init__(self):
@@ -34,7 +35,6 @@ class Gobelin_data():
             for i in range(1,self.number_frame_walking+1):
                   self.image_walking.append(pygame.image.load(GOBELIN_WALKING_IMAGE_PATH+str(i).zfill(3)+".png").convert_alpha())  
                   self.image_walking[i-1] = pygame.transform.scale(self.image_walking[i-1],vec(self.image_walking[i-1].get_size())*GOBELIN_RESIZE_FACTOR)
-            self.move_frame = 0
             self.anim_total_time_w = GOBELIN_ANIMATION_WALKING_TOTAL_TIME  # in ms
             self.time_per_frame_w = self.anim_total_time_w/self.number_frame_walking # in ms
             self.stop_walking_frame = GOBELIN_STOP_WALKING_FRAME    
@@ -163,8 +163,8 @@ class Ennemy(pygame.sprite.Sprite):
 
       def die(self,game):
             if (self.hp<=0):
-                  pygame.sprite.Sprite.kill(self)
                   game.gold.amount += self.my_data.gold_earning
+                  pygame.sprite.Sprite.kill(self)
 
       def render(self,rendering_layer):
             if self.rendering_layer==rendering_layer:
@@ -209,7 +209,11 @@ class Gobelin(Ennemy,pygame.sprite.Sprite):
             self.attacking = False
             self.damage_dealt = False
 
- 
+      def die(self,game):
+            if (self.hp<=0):
+                  game.gold.amount += self.my_data.gold_earning 
+                  game.all_dead_bodies.add_dead_gobelin(self)
+                  pygame.sprite.Sprite.kill(self)
  
 class Ogre(Ennemy,pygame.sprite.Sprite):
       def __init__(self,all_e,x,y):
@@ -251,4 +255,8 @@ class Ogre(Ennemy,pygame.sprite.Sprite):
             self.damage_dealt = False
 
 
+      def die(self,game):
+            if (self.hp<=0):
+                  game.gold.amount += self.my_data.gold_earning
+                  pygame.sprite.Sprite.kill(self)
 
