@@ -7,6 +7,7 @@ from tower import *
 from projectile import *
 from impact import * 
 from ennemy import *
+from dead_body import *
 from mouse import *
 from menu import *
 from gold import *
@@ -48,6 +49,8 @@ class Game():
 
             self.all_ennemies = All_ennemies()
 
+            self.all_dead_bodies = All_dead_bodies()
+
       def deal_with_mouse(self):
             self.mouse.doing_stuff(self)
 
@@ -76,6 +79,8 @@ class Game():
       def die(self):
             for ennemy in self.all_ennemies:
                   ennemy.die(self)
+            for dead_body in self.all_dead_bodies:
+                  dead_body.fall(self)            
             for tower in self.all_towers:
                   tower.die()
             for gate in self.base.all_gates:
@@ -97,6 +102,9 @@ class Game():
 
                   for ennemy in self.all_ennemies:
                         ennemy.render(rendering_layer)
+
+                  for dead_body in self.all_dead_bodies:
+                        dead_body.render(rendering_layer)
 
                   for impact in self.all_impacts:
                         impact.render(rendering_layer)
