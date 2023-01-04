@@ -64,7 +64,8 @@ class Projectile(pygame.sprite.Sprite):
             self.moving = True
             self.rotate()
 
-            self.rendering_layer = compute_rendering_layer_number(self)
+            # self.rendering_layer = compute_rendering_layer_number(self)
+            self.rendering_layer = TOTAL_NUMBER_RENDERING_LAYER-3
 
       def rotate(self):
             scalar_product = self.my_data.initial_direction[0]*self.direction[0]+self.my_data.initial_direction[1]*self.direction[1]
