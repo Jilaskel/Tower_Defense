@@ -54,9 +54,8 @@ class Dead_body(pygame.sprite.Sprite):
             else:
                 pygame.sprite.Sprite.kill(self)
 
-    def render(self,rendering_layer):
-        if self.rendering_layer==rendering_layer:
-                window.blit(self.current_image, (self.posX, self.posY)) 
+    def render(self):
+        window.blit(self.current_image, (self.posX, self.posY))  
 
 class Dead_gobelin(Dead_body,pygame.sprite.Sprite):
       def __init__(self,all_d,gob_alive):

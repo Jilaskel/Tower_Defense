@@ -58,28 +58,26 @@ class Background():
             ### Fourth Grass
             self.all_assets.append(Background_asset("GrassBundle6_cropped.png",873*r,898*r,0.5*r,19,True))
             self.all_assets.append(Background_asset("GrassBundle1_cropped.png",1331*r,872*r,1*r,18))
-
-            self.all_assets.append(Background_asset("BushBundle4_cropped.png",123*r,990*r,1*r,21,True))
-            self.all_assets.append(Background_asset("GrassBundle3_cropped.png",1127*r,999*r,0.5*r,21))
+            self.all_assets.append(Background_asset("BushBundle4_cropped.png",123*r,900*r,1*r,18,True))
+            self.all_assets.append(Background_asset("GrassBundle3_cropped.png",1127*r,909*r,0.5*r,18))
             
 
-      def render(self,rendering_layer):
-            if self.rendering_layer==rendering_layer:
-                  window.blit(self.current_image, (self.posX, self.posY))    
+      def render(self):
+            window.blit(self.current_image, (self.posX, self.posY))    
+            
 
 class Background_asset():
       def __init__(self,image_name,posX,posY,resize_factor,rendering_layer,flip=False):
-            self.image = pygame.image.load(BACKGROUND_GRASS_ASSETS_PATH+image_name).convert_alpha()
-            self.image = pygame.transform.scale(self.image,vec(self.image.get_size())*resize_factor) 
+            self.current_image = pygame.image.load(BACKGROUND_GRASS_ASSETS_PATH+image_name).convert_alpha()
+            self.current_image = pygame.transform.scale(self.current_image,vec(self.current_image.get_size())*resize_factor) 
             if flip:
-                  self.image = pygame.transform.flip(self.image, True, False)
-            self.image_size = vec(self.image.get_size())
+                  self.current_image = pygame.transform.flip(self.current_image, True, False)
+            self.image_size = vec(self.current_image.get_size())
 
             self.posX = posX
             self.posY = posY
 
             self.rendering_layer = rendering_layer
 
-      def render(self,rendering_layer):
-            if self.rendering_layer==rendering_layer:
-                  window.blit(self.image, (self.posX, self.posY))   
+      def render(self):
+            window.blit(self.current_image, (self.posX, self.posY))   

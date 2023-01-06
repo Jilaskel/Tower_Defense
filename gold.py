@@ -14,10 +14,8 @@ class Gold():
         self.font_posY = 0.45 * BACKGROUND_SQUARE_SIDE
 
         self.rendering_layer = TOTAL_NUMBER_RENDERING_LAYER-1
+ 
 
-
-    def render(self,rendering_layer):
-        if self.rendering_layer==rendering_layer:
-            self.text_price =  self.font_gold.render(str(self.amount),True,self.font_gold_color) 
-            window.blit(self.text_price,(self.font_posX,self.font_posY))  
-
+    def render(self):
+        self.text_price =  self.font_gold.render(str(self.amount),True,self.font_gold_color) 
+        window.blit(self.text_price,(self.font_posX,self.font_posY)) 

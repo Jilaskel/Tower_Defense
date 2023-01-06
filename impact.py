@@ -43,9 +43,8 @@ class Impact(pygame.sprite.Sprite):
                 for i in range (len(self.hit_ennemies)):
                         self.hit_ennemies[i].hp -= self.damage
 
-    def render(self,rendering_layer):
-        if self.rendering_layer==rendering_layer:
-            window.blit(self.current_image, (self.posX, self.posY))  
+    def render(self):
+        window.blit(self.current_image, (self.posX, self.posY))  
 
 
 class Arcane_impact(Impact,pygame.sprite.Sprite):

@@ -166,9 +166,8 @@ class Ennemy(pygame.sprite.Sprite):
                   game.gold.amount += self.my_data.gold_earning
                   pygame.sprite.Sprite.kill(self)
 
-      def render(self,rendering_layer):
-            if self.rendering_layer==rendering_layer:
-                  window.blit(self.current_image, (self.posX, self.posY)) 
+      def render(self):
+            window.blit(self.current_image, (self.posX, self.posY))  
 
 
 class Gobelin(Ennemy,pygame.sprite.Sprite):
