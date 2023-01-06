@@ -139,6 +139,10 @@ OGRE_ATTACKING_IMAGE_PATH = "Assets/Ennemies/Ogre/AttackAnim/"
 OGRE_ANIMATION_ATTACKING_TOTAL_TIME = 300*3 # in ms
 OGRE_HITTING_FRAME = 13
 
+OGRE_NUMBER_FRAME_DEATH  = 20
+OGRE_DEATH_IMAGE_PATH = "Assets/Ennemies/Ogre/DeathAnim/"
+OGRE_ANIMATION_DEATH_TOTAL_TIME = 600 # in ms
+OGRE_FADING_TIME = 3000 # in ms
 
 ###############     TOWERS     ###############
 TOWER_RECT_RANGE_IMAGE_PATH = "Assets/Tower/Range_boxes/rect_range.png"

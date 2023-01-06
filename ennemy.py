@@ -256,6 +256,7 @@ class Ogre(Ennemy,pygame.sprite.Sprite):
 
       def die(self,game):
             if (self.hp<=0):
-                  game.gold.amount += self.my_data.gold_earning
+                  game.gold.amount += self.my_data.gold_earning 
+                  game.all_dead_bodies.add_dead_ogre(self)
                   pygame.sprite.Sprite.kill(self)
 
