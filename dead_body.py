@@ -29,6 +29,12 @@ class Dead_gobelin_data():
 
             self.fading_time = GOBELIN_FADING_TIME
 
+            self.number_frame_fading = 50
+            self.images_fading = []
+            for i in range(self.number_frame_fading):
+                self.images_fading.append(self.images[self.number_frame-1].convert_alpha())
+                self.images_fading[i].set_alpha(255-int(i*255/self.number_frame_fading))
+
 
 class Dead_body(pygame.sprite.Sprite):
     def __init__(self,e_alive):
@@ -44,8 +50,7 @@ class Dead_body(pygame.sprite.Sprite):
                 self.current_image= self.my_data.images[self.current_frame].convert_alpha()  
         else:
             if self.my_timer<self.my_data.fading_time:
-                self.current_image= self.my_data.images[self.current_frame-1].convert_alpha()
-                self.current_image.set_alpha(255-int(self.my_timer/self.my_data.fading_time*255))
+                self.current_image= self.my_data.images_fading[int(self.my_timer/self.my_data.fading_time*self.my_data.number_frame_fading)]
             else:
                 pygame.sprite.Sprite.kill(self)
 
