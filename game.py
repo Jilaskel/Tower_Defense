@@ -51,6 +51,8 @@ class Game():
 
             self.all_dead_bodies = All_dead_bodies()
 
+            self.all_gold_anim = All_gold_anim()
+
             self.object_to_render = []
 
       def deal_with_mouse(self):
@@ -109,6 +111,9 @@ class Game():
 
             for impact in self.all_impacts:
                   self.object_to_render.append(impact)
+
+            for gold_gain in self.all_gold_anim:
+                  self.object_to_render.append(gold_gain)
 
             self.object_to_render.append(self.gold)
 

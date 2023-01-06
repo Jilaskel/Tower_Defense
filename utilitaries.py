@@ -45,8 +45,14 @@ FONT_PATH = "Font/Kingcastle-0W8Kr.ttf"
 
 #### GOLD
 GOLD_RESERVE_IMAGE_PATH = "Assets/Gold/GoldReserve.png"  ## useless atm
-GOLD_GAIN_IMAGE_PATH = "Assets/Gold/GoldGain.png"    ## useless atm
 GOLD_STARTING_AMOUNT = 20
+
+GOLD_GAIN_IMAGE_PATH = "Assets/Gold/GoldGain.png"    
+GOLD_GAIN_RESIZE_FACTOR = 0.25
+GOLD_GAIN_FONT_SIZE = 50
+GOLD_GAIN_OFFSET = [0*RESIZE_COEFF, 0*RESIZE_COEFF]
+GOLD_GAIN_TIME = 1000  # in ms
+GOLD_GAIN_TRAVEL_VECTOR = [0*RESIZE_COEFF, 200*RESIZE_COEFF] 
 
 #### MOUSE
 MOUSE_IMAGE_PATH = "Assets/Cursor/cursor6.png"
