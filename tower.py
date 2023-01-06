@@ -110,9 +110,8 @@ class Tower(pygame.sprite.Sprite):
             if (self.hp<=0):
                   pygame.sprite.Sprite.kill(self)
 
-      def render(self,rendering_layer):
-            if self.rendering_layer==rendering_layer:
-                  window.blit(self.current_image, (self.posX, self.posY))
+      def render(self):
+            window.blit(self.current_image, (self.posX, self.posY))  
 
 
 class Range_Hitbox(pygame.sprite.Sprite):

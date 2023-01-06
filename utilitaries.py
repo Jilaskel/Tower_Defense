@@ -45,8 +45,14 @@ FONT_PATH = "Font/Kingcastle-0W8Kr.ttf"
 
 #### GOLD
 GOLD_RESERVE_IMAGE_PATH = "Assets/Gold/GoldReserve.png"  ## useless atm
-GOLD_GAIN_IMAGE_PATH = "Assets/Gold/GoldGain.png"    ## useless atm
 GOLD_STARTING_AMOUNT = 20
+
+GOLD_GAIN_IMAGE_PATH = "Assets/Gold/GoldGain.png"    
+GOLD_GAIN_RESIZE_FACTOR = 0.25
+GOLD_GAIN_FONT_SIZE = 50
+GOLD_GAIN_OFFSET = [0*RESIZE_COEFF, 0*RESIZE_COEFF]
+GOLD_GAIN_TIME = 1000  # in ms
+GOLD_GAIN_TRAVEL_VECTOR = [0*RESIZE_COEFF, 200*RESIZE_COEFF] 
 
 #### MOUSE
 MOUSE_IMAGE_PATH = "Assets/Cursor/cursor6.png"
@@ -139,6 +145,10 @@ OGRE_ATTACKING_IMAGE_PATH = "Assets/Ennemies/Ogre/AttackAnim/"
 OGRE_ANIMATION_ATTACKING_TOTAL_TIME = 300*3 # in ms
 OGRE_HITTING_FRAME = 13
 
+OGRE_NUMBER_FRAME_DEATH  = 20
+OGRE_DEATH_IMAGE_PATH = "Assets/Ennemies/Ogre/DeathAnim/"
+OGRE_ANIMATION_DEATH_TOTAL_TIME = 600 # in ms
+OGRE_FADING_TIME = 3000 # in ms
 
 ###############     TOWERS     ###############
 TOWER_RECT_RANGE_IMAGE_PATH = "Assets/Tower/Range_boxes/rect_range.png"

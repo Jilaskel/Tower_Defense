@@ -89,9 +89,8 @@ class Projectile(pygame.sprite.Sprite):
                   for i in range (len(self.hit_ennemies)):
                         self.hit_ennemies[i].hp -= self.my_data.damage
 
-      def render(self,rendering_layer):
-            if self.rendering_layer==rendering_layer:
-                  window.blit(self.current_image, (self.posX, self.posY))   
+      def render(self):
+            window.blit(self.current_image, (self.posX, self.posY))  
 
 class Arcane_bolt(Projectile,pygame.sprite.Sprite):
       def __init__(self,all_p,x,y,target):

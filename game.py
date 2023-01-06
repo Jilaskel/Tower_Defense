@@ -51,6 +51,10 @@ class Game():
 
             self.all_dead_bodies = All_dead_bodies()
 
+            self.all_gold_anim = All_gold_anim()
+
+            self.object_to_render = []
+
       def deal_with_mouse(self):
             self.mouse.doing_stuff(self)
 
@@ -87,33 +91,43 @@ class Game():
                   gate.destroy()
 
       def render(self):
-            self.background.render(0)
-            self.menu.render(0)
+            self.object_to_render.append(self.background)
+            self.object_to_render.append(self.menu)
 
-            for rendering_layer in range(TOTAL_NUMBER_RENDERING_LAYER):
-                  for asset_background in self.background.all_assets:
-                        asset_background.render(rendering_layer)
+            for asset_background in self.background.all_assets:
+                  self.object_to_render.append(asset_background)
 
-                  for tower in self.all_towers:
-                        tower.render(rendering_layer)
+            for tower in self.all_towers:
+                  self.object_to_render.append(tower)
 
-                  for projectile in self.all_projectiles:
-                        projectile.render(rendering_layer)
+            for projectile in self.all_projectiles:
+                  self.object_to_render.append(projectile)
 
-                  for ennemy in self.all_ennemies:
-                        ennemy.render(rendering_layer)
+            for ennemy in self.all_ennemies:
+                  self.object_to_render.append(ennemy)
 
-                  for dead_body in self.all_dead_bodies:
-                        dead_body.render(rendering_layer)
+            for dead_body in self.all_dead_bodies:
+                  self.object_to_render.append(dead_body)
 
-                  for impact in self.all_impacts:
-                        impact.render(rendering_layer)
+            for impact in self.all_impacts:
+                  self.object_to_render.append(impact)
 
-            self.gold.render(rendering_layer)
+            for gold_gain in self.all_gold_anim:
+                  self.object_to_render.append(gold_gain)
 
-            self.mouse.render(rendering_layer)
+            self.object_to_render.append(self.gold)
+
+            self.object_to_render.append(self.mouse)
+
+
+            self.object_to_render.sort(key =lambda object : object.rendering_layer)
+
+            for object in self.object_to_render:
+                  object.render()
 
             pygame.display.update()
+
+            self.object_to_render.clear()
 
       def advance_time(self):
             CLOCK.tick(FPS)

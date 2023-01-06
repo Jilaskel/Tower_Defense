@@ -166,9 +166,8 @@ class Ennemy(pygame.sprite.Sprite):
                   game.gold.amount += self.my_data.gold_earning
                   pygame.sprite.Sprite.kill(self)
 
-      def render(self,rendering_layer):
-            if self.rendering_layer==rendering_layer:
-                  window.blit(self.current_image, (self.posX, self.posY)) 
+      def render(self):
+            window.blit(self.current_image, (self.posX, self.posY))  
 
 
 class Gobelin(Ennemy,pygame.sprite.Sprite):
@@ -211,7 +210,7 @@ class Gobelin(Ennemy,pygame.sprite.Sprite):
 
       def die(self,game):
             if (self.hp<=0):
-                  game.gold.amount += self.my_data.gold_earning 
+                  game.gold.gold_gain(game,self,self.my_data.gold_earning)
                   game.all_dead_bodies.add_dead_gobelin(self)
                   pygame.sprite.Sprite.kill(self)
  
@@ -257,6 +256,8 @@ class Ogre(Ennemy,pygame.sprite.Sprite):
 
       def die(self,game):
             if (self.hp<=0):
-                  game.gold.amount += self.my_data.gold_earning
+                  game.gold.gold_gain(game,self,self.my_data.gold_earning)
+                  # game.gold.amount += self.my_data.gold_earning 
+                  game.all_dead_bodies.add_dead_ogre(self)
                   pygame.sprite.Sprite.kill(self)
 

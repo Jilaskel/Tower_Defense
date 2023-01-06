@@ -36,11 +36,10 @@ class Menu():
             self.gold_posY = 0*side
 
 
-      def render(self,rendering_layer):
-            if self.rendering_layer==rendering_layer:
-                  window.blit(self.gold_reserve_image,(self.gold_posX,self.gold_posY))
-                  for button in self.all_buttons:
-                        button.render(self)
+      def render(self):
+            window.blit(self.gold_reserve_image,(self.gold_posX,self.gold_posY))
+            for button in self.all_buttons:
+                  button.render(self)
 
 class Button(pygame.sprite.Sprite):
       def __init__(self,menu,path,x,y,tag):
