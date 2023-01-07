@@ -73,18 +73,16 @@ class Mouse(pygame.sprite.Sprite):
                     self.box_valid = True
                     if not(self.left_click_pressed):
                         if (self.hit_buttons[0].my_tag==ARCANE_TOWER_BUTTON_TAG) :
-                            if (game.gold.amount >= ARCANE_TOWER_PRICE):
-                                game.gold.amount -= ARCANE_TOWER_PRICE
-                                game.all_towers.add_arcane_tower(self.x_box,self.y_box)
+                            if (game.gold.amount >= self.hit_buttons[0].price):
+                                game.all_towers.add_arcane_tower(game,self.x_box,self.y_box)
                             # else:
                                 # message erreur
                 elif (self.hit_boxes[0].road and self.hit_buttons[0].compatible_road):
                     self.box_valid = True
                     if not(self.left_click_pressed):
                         if (self.hit_buttons[0].my_tag==BALLISTA_BUTTON_TAG):
-                            if (game.gold.amount >= BALLISTA_PRICE):
-                                game.gold.amount -= BALLISTA_PRICE
-                                game.all_towers.add_ballista(self.x_box,self.y_box)
+                            if (game.gold.amount >= self.hit_buttons[0].price):
+                                game.all_towers.add_ballista(game,self.x_box,self.y_box)
                             # else:
                                 # message erreur
                 else:

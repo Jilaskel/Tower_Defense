@@ -12,17 +12,19 @@ class All_towers(pygame.sprite.Group):
             
             self.ballista_data = Ballista_data()
 
-      def add_arcane_tower(self,x,y):
-            self.add(Arcane_tower(self,x,y))
+      def add_arcane_tower(self,game,x,y):
+            self.add(Arcane_tower(game,self,x,y))
 
-      def add_ballista(self,x,y):
-            self.add(Ballista(self,x,y))
+      def add_ballista(self,game,x,y):
+            self.add(Ballista(game,self,x,y))
 
 
 class Arcane_tower_data():
       def __init__(self):
 
             self.hp_max = ARCANE_TOWER_HP_MAX
+
+            self.gold_cost = -ARCANE_TOWER_PRICE
 
             self.static_image = pygame.image.load(ARCANE_TOWER_ATTACK_IMAGE_PATH+"01.png").convert_alpha()
             self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*ARCANE_TOWER_RESIZE_FACTOR)        
@@ -50,6 +52,8 @@ class Ballista_data():
       def __init__(self):
 
             self.hp_max = BALLISTA_HP_MAX
+
+            self.gold_cost = -BALLISTA_PRICE
 
             self.static_image = pygame.image.load(BALLISTA_ATTACK_IMAGE_PATH+"0001.png").convert_alpha()
             self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*BALLISTA_RESIZE_FACTOR)  
@@ -143,7 +147,7 @@ class Range_Hitbox(pygame.sprite.Sprite):
             self.offset = vec(self.posX-tower.posX,self.posY-tower.posY)
 
 class Arcane_tower(Tower,pygame.sprite.Sprite):
-      def __init__(self,all_t,x,y):
+      def __init__(self,game,all_t,x,y):
             pygame.sprite.Sprite.__init__(self)
 
             self.my_data = all_t.arcane_tower_data
@@ -154,6 +158,8 @@ class Arcane_tower(Tower,pygame.sprite.Sprite):
             self.posX = x + ARCANE_TOWER_OFFSET[0]
             self.posY = y + ARCANE_TOWER_OFFSET[1]
             self.image_size = self.my_data.image_size
+            self.center = vec(self.posX+self.image_size[0]*0.5,self.posY+self.image_size[1]*0.5)
+
             self.rendering_layer = compute_rendering_layer_number(self)
 
             self.my_timer = 0
@@ -175,6 +181,9 @@ class Arcane_tower(Tower,pygame.sprite.Sprite):
 
             self.range = ARCANE_TOWER_RANGE * (self.rect.width+self.rect.height)/2.0
             self.range_hitbox = Range_Hitbox(self,self.rect.w,self.rect.h,self.range,circular=True)
+
+            game.gold.gold_gain(game,self,self.my_data.gold_cost)
+
 
       def attack_and_reload(self,game):
             if (self.attacking):
@@ -218,7 +227,7 @@ class Arcane_tower(Tower,pygame.sprite.Sprite):
 
 
 class Ballista(Tower,pygame.sprite.Sprite):
-      def __init__(self,all_t,x,y):
+      def __init__(self,game,all_t,x,y):
             pygame.sprite.Sprite.__init__(self)
 
             self.my_data = all_t.ballista_data
@@ -229,6 +238,8 @@ class Ballista(Tower,pygame.sprite.Sprite):
             self.posX = x + BALLISTA_OFFSET[0]
             self.posY = y + BALLISTA_OFFSET[1]
             self.image_size = self.my_data.image_size
+            self.center = vec(self.posX+self.image_size[0]*0.5,self.posY+self.image_size[1]*0.5)
+
             self.rendering_layer = compute_rendering_layer_number(self)
 
             self.my_timer = 0
@@ -250,6 +261,8 @@ class Ballista(Tower,pygame.sprite.Sprite):
 
             self.range = BALLISTA_RANGE*(self.rect.width+self.rect.height)/2.0
             self.range_hitbox = Range_Hitbox(self,self.rect.w,self.rect.h,self.range,circular=False)
+
+            game.gold.gold_gain(game,self,self.my_data.gold_cost)
 
 
       def attack_and_reload(self,game):

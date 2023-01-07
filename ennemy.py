@@ -241,7 +241,6 @@ class Ogre(Ennemy,pygame.sprite.Sprite):
 
             self.hitbox_left = x
             self.hitbox_top = y
-            #self.rect = self.current_image.get_rect()
             self.radius = OGRE_HITBOX_FACTOR*(BACKGROUND_SQUARE_SIDE*2)/4.0
             self.hitbox_left = self.hitbox_left + (1-OGRE_HITBOX_FACTOR)*BACKGROUND_SQUARE_SIDE*0.5
             self.hitbox_top = self.hitbox_top + (1-OGRE_HITBOX_FACTOR)*BACKGROUND_SQUARE_SIDE*0.5
@@ -257,7 +256,6 @@ class Ogre(Ennemy,pygame.sprite.Sprite):
       def die(self,game):
             if (self.hp<=0):
                   game.gold.gold_gain(game,self,self.my_data.gold_earning)
-                  # game.gold.amount += self.my_data.gold_earning 
                   game.all_dead_bodies.add_dead_ogre(self)
                   pygame.sprite.Sprite.kill(self)
 

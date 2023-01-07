@@ -80,6 +80,9 @@ class Game():
                   impact.explode(self)
                   impact.check_impact(self)
 
+            for gold_gain in self.all_gold_anim.list:
+                  gold_gain.move(self)
+
       def die(self):
             for ennemy in self.all_ennemies:
                   ennemy.die(self)
@@ -112,7 +115,7 @@ class Game():
             for impact in self.all_impacts:
                   self.object_to_render.append(impact)
 
-            for gold_gain in self.all_gold_anim:
+            for gold_gain in self.all_gold_anim.list:
                   self.object_to_render.append(gold_gain)
 
             self.object_to_render.append(self.gold)
