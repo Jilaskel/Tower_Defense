@@ -51,10 +51,10 @@ class Gold_anim():
         self.my_data = all_g
 
         if amount>0:
-            self.font_gold_gain_color = (0,0,153)   ## green
+            self.font_gold_gain_color = GOLD_GAIN_POSITIVE_RGB   ## green
             self.my_sign = "+"
         else:
-            self.font_gold_gain_color = (153,0,0)   ## red
+            self.font_gold_gain_color = GOLD_GAIN_NEGATIVE_RGB   ## red
             self.my_sign = ""       
 
         self.amount = amount
