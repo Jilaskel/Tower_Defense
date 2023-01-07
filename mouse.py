@@ -61,8 +61,8 @@ class Mouse(pygame.sprite.Sprite):
         self.box_valid = False
         self.box_not_valid = False
         if self.carrying:
-            self.carried_x = self.posX - self.carried_width*0.5
-            self.carried_y = self.posY - self.carried_height*0.5
+            self.carried_x = self.posX - self.carried_width*0.4
+            self.carried_y = self.posY - self.carried_height*0.75
 
             self.hit_boxes = pygame.sprite.spritecollide(self, game.grid.all_boxes, False)
             
