@@ -33,11 +33,11 @@ class All_gold_anim():
           self.current_image = pygame.transform.scale(self.current_image,vec(self.current_image.get_size())*GOLD_GAIN_RESIZE_FACTOR)             
           self.image_size = vec(self.current_image.get_size())        
 
-          self.font_gold_gain_size = int(GOLD_GAIN_FONT_SIZE*RESIZE_COEFF)
+          self.font_gold_gain_size = int(GOLD_GAIN_FONT_SIZE)
           self.font_gold_gain = pygame.font.Font(FONT_PATH,self.font_gold_gain_size)
 
           self.offset = GOLD_GAIN_OFFSET  ## offset with the object center
-          self.offset_image = vec(0,-10)
+          self.offset_image = vec(0,-10)*RESIZE_COEFF
 
           self.time_anim = GOLD_GAIN_TIME
           self.anim_vector = GOLD_GAIN_TRAVEL_VECTOR
