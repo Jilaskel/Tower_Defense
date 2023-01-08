@@ -29,6 +29,8 @@ class All_towers(pygame.sprite.Group):
                   self.add_lightning_tower(game,x,y)
             elif (tag==ICE_TOWER_BUTTON_TAG):
                   self.add_ice_tower(game,x,y)
+            elif (tag==BALLISTA_BUTTON_TAG):
+                  self.add_ballista(game,x,y)
 
       def add_arcane_tower(self,game,x,y):
             self.add(Arcane_tower(game,self,x,y))

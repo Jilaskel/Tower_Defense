@@ -19,6 +19,9 @@ class Grid():
 class Box(pygame.sprite.Sprite):
     def __init__(self,x,y,side,grass):
             super().__init__()
+
+            self.occupied = False
+
             self.rect = pygame.Rect(x,y,side,side)
 
             self.posX = x

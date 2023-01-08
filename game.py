@@ -11,6 +11,7 @@ from dead_body import *
 from mouse import *
 from menu import *
 from gold import *
+from error_message import *
 from spawning_mode import *
 from utilitaries import *
 
@@ -53,6 +54,8 @@ class Game():
 
             self.all_gold_anim = All_gold_anim()
 
+            self.all_error_messages = All_error_message_anim()
+
             self.object_to_render = []
 
       def deal_with_mouse(self):
@@ -82,6 +85,9 @@ class Game():
 
             for gold_gain in self.all_gold_anim.list:
                   gold_gain.move(self)
+
+            for error_message in self.all_error_messages.list:
+                  error_message.move(self)
 
       def die(self):
             for ennemy in self.all_ennemies:
@@ -118,10 +124,12 @@ class Game():
             for gold_gain in self.all_gold_anim.list:
                   self.object_to_render.append(gold_gain)
 
+            for error_message in self.all_error_messages.list:
+                  self.object_to_render.append(error_message)
+
             self.object_to_render.append(self.gold)
 
             self.object_to_render.append(self.mouse)
-
 
             self.object_to_render.sort(key =lambda object : object.rendering_layer)
 

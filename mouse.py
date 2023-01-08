@@ -69,25 +69,39 @@ class Mouse(pygame.sprite.Sprite):
             if self.hit_boxes:
                 self.x_box = self.hit_boxes[0].posX
                 self.y_box = self.hit_boxes[0].posY
+
                 if (self.hit_boxes[0].grass and self.hit_buttons[0].compatible_grass):
-                    self.box_valid = True
-                    if not(self.left_click_pressed):
-                        if (game.gold.amount >= self.hit_buttons[0].price):
-                            game.all_towers.add_tower(game,self.x_box,self.y_box,self.hit_buttons[0].my_tag)
-                        # else:
-                            # message erreur
-                elif (self.hit_boxes[0].road and self.hit_buttons[0].compatible_road):
-                    self.box_valid = True
-                    if not(self.left_click_pressed):
-                        if (self.hit_buttons[0].my_tag==BALLISTA_BUTTON_TAG):
+                    if not(self.hit_boxes[0].occupied):
+                        self.box_valid = True
+                        if not(self.left_click_pressed):
                             if (game.gold.amount >= self.hit_buttons[0].price):
-                                game.all_towers.add_ballista(game,self.x_box,self.y_box)
-                            # else:
-                                # message erreur
+                                game.all_towers.add_tower(game,self.x_box,self.y_box,self.hit_buttons[0].my_tag)
+                                self.hit_boxes[0].occupied = True
+                            else:
+                                game.all_error_messages.add_error_message_anim("Not enough gold",self.x_box,self.y_box)
+                    else:
+                        self.box_not_valid = True
+                        if not(self.left_click_pressed):
+                            game.all_error_messages.add_error_message_anim("This spot has already been build",self.x_box,self.y_box)  
+
+                elif (self.hit_boxes[0].road and self.hit_buttons[0].compatible_road):
+                    if not(self.hit_boxes[0].occupied):
+                        self.box_valid = True
+                        if not(self.left_click_pressed):
+                            if (game.gold.amount >= self.hit_buttons[0].price):
+                                game.all_towers.add_tower(game,self.x_box,self.y_box,self.hit_buttons[0].my_tag)
+                                self.hit_boxes[0].occupied = True
+                            else:
+                                game.all_error_messages.add_error_message_anim("Not enough gold",self.x_box,self.y_box)
+                    else:
+                        self.box_not_valid = True
+                        if not(self.left_click_pressed):
+                            game.all_error_messages.add_error_message_anim("This spot has already been build",self.x_box,self.y_box)  
+
                 else:
                     self.box_not_valid = True
-                    # if not(self.left_click_pressed):
-                        # message erreur
+                    if not(self.left_click_pressed):
+                        game.all_error_messages.add_error_message_anim("Cannot be build here",self.x_box,self.y_box)
                          
         else: #display range?
             self.hit_towers = pygame.sprite.spritecollide(self, game.all_towers, False, pygame.sprite.collide_rect_ratio(self.ratio_for_hitbox))
