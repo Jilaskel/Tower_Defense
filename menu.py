@@ -2,9 +2,6 @@ import pygame
 from utilitaries import *
 from tower import * 
 
-ARCANE_TOWER_BUTTON_TAG = 1
-BALLISTA_BUTTON_TAG = 2
-
 class Menu():
       def __init__(self,game):
             self.all_buttons = pygame.sprite.Group()
@@ -22,8 +19,20 @@ class Menu():
             (x,y) = (self.margin,0)
             self.all_buttons.add(Button(self,path,x,y,ARCANE_TOWER_BUTTON_TAG))
 
-            path = MENU_BALLISTA_BUTTON_IMAGE_PATH
+            path = MENU_FIRE_TOWER_BUTTON_IMAGE_PATH
             (x,y) = (self.margin+1.0*side,0)
+            self.all_buttons.add(Button(self,path,x,y,FIRE_TOWER_BUTTON_TAG))
+
+            path = MENU_LIGHTNING_TOWER_BUTTON_IMAGE_PATH
+            (x,y) = (self.margin+2.0*side,0)
+            self.all_buttons.add(Button(self,path,x,y,LIGHTNING_TOWER_BUTTON_TAG))
+
+            path = MENU_ICE_TOWER_BUTTON_IMAGE_PATH
+            (x,y) = (self.margin+3.0*side,0)
+            self.all_buttons.add(Button(self,path,x,y,ICE_TOWER_BUTTON_TAG))
+
+            path = MENU_BALLISTA_BUTTON_IMAGE_PATH
+            (x,y) = (self.margin+4.0*side,0)
             self.all_buttons.add(Button(self,path,x,y,BALLISTA_BUTTON_TAG))
 
             self.rendering_layer = 0
@@ -68,6 +77,42 @@ class Button(pygame.sprite.Sprite):
                   self.range_hitbox = Range_Hitbox(self,BACKGROUND_SQUARE_SIDE,BACKGROUND_SQUARE_SIDE,self.range,circular=True)  
 
                   self.price = ARCANE_TOWER_PRICE 
+
+            elif (self.my_tag==FIRE_TOWER_BUTTON_TAG):
+                  self.compatible_grass = True
+                  self.compatible_road = False
+
+                  self.image_to_carry = pygame.image.load(FIRE_TOWER_ATTACK_IMAGE_PATH+"0001.png").convert_alpha()
+                  self.image_to_carry = pygame.transform.scale(self.image_to_carry,vec(self.image_to_carry.get_size())*FIRE_TOWER_RESIZE_FACTOR)
+
+                  self.range = FIRE_TOWER_RANGE*(BACKGROUND_SQUARE_SIDE+BACKGROUND_SQUARE_SIDE)/2.0
+                  self.range_hitbox = Range_Hitbox(self,BACKGROUND_SQUARE_SIDE,BACKGROUND_SQUARE_SIDE,self.range,circular=True)  
+
+                  self.price = FIRE_TOWER_PRICE 
+
+            elif (self.my_tag==LIGHTNING_TOWER_BUTTON_TAG):
+                  self.compatible_grass = True
+                  self.compatible_road = False
+
+                  self.image_to_carry = pygame.image.load(LIGHTNING_TOWER_ATTACK_IMAGE_PATH+"0001.png").convert_alpha()
+                  self.image_to_carry = pygame.transform.scale(self.image_to_carry,vec(self.image_to_carry.get_size())*LIGHTNING_TOWER_RESIZE_FACTOR)
+
+                  self.range = LIGHTNING_TOWER_RANGE*(BACKGROUND_SQUARE_SIDE+BACKGROUND_SQUARE_SIDE)/2.0
+                  self.range_hitbox = Range_Hitbox(self,BACKGROUND_SQUARE_SIDE,BACKGROUND_SQUARE_SIDE,self.range,circular=True)  
+
+                  self.price = LIGHTNING_TOWER_PRICE 
+
+            elif (self.my_tag==ICE_TOWER_BUTTON_TAG):
+                  self.compatible_grass = True
+                  self.compatible_road = False
+
+                  self.image_to_carry = pygame.image.load(ICE_TOWER_ATTACK_IMAGE_PATH+"0001.png").convert_alpha()
+                  self.image_to_carry = pygame.transform.scale(self.image_to_carry,vec(self.image_to_carry.get_size())*ICE_TOWER_RESIZE_FACTOR)
+
+                  self.range = ICE_TOWER_RANGE*(BACKGROUND_SQUARE_SIDE+BACKGROUND_SQUARE_SIDE)/2.0
+                  self.range_hitbox = Range_Hitbox(self,BACKGROUND_SQUARE_SIDE,BACKGROUND_SQUARE_SIDE,self.range,circular=True)  
+
+                  self.price = ICE_TOWER_PRICE 
 
             elif (self.my_tag==BALLISTA_BUTTON_TAG):
                   self.compatible_grass = False
