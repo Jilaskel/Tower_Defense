@@ -55,6 +55,8 @@ class Arcane_bolt_data():
             self.initial_direction = vec(-1,0)
             self.offset = vec(ARCANE_BOLT_CENTOR_VECTOR[0]*self.image_size[0],ARCANE_BOLT_CENTOR_VECTOR[1]*self.image_size[1])
 
+            self.impact_tag = ARCANE_TOWER_IMPACT_TAG
+
 class Fire_bolt_data():
       def __init__(self):
 
@@ -75,6 +77,8 @@ class Fire_bolt_data():
                   self.images[i-1] = pygame.transform.scale(self.images[i-1],vec(self.images[i-1].get_size())*FIRE_BOLT_RESIZE_FACTOR)
             self.anim_total_time = FIRE_BOLT_TOTAL_TIME  # in ms
             self.time_per_frame = self.anim_total_time/self.number_frame # in ms
+
+            self.impact_tag = FIRE_TOWER_IMPACT_TAG
 
 class Bolt_data():
       def __init__(self):      
@@ -131,13 +135,13 @@ class Projectile(pygame.sprite.Sprite):
             self.hit_ennemies = pygame.sprite.spritecollide(self, game.all_ennemies, False,pygame.sprite.collide_rect_ratio(self.my_data.ratio_for_impact))
             if self.hit_ennemies:
                   pygame.sprite.Sprite.kill(self)
-                  game.all_impacts.add_arcane_impact(self)
+                  game.all_impacts.add_impact(self,self.my_data.impact_tag)
             else:
                   ## if ennemy is dead while projectile was travelling, distance is computed with last ennemy position 
                   distance = np.sqrt((self.my_target_center[0] - self.center[0])**2 + (self.my_target_center[1] - self.center[1])**2)
                   if (distance<0.1*BACKGROUND_SQUARE_SIDE):
                         pygame.sprite.Sprite.kill(self)
-                        game.all_impacts.add_arcane_impact(self)  
+                        game.all_impacts.add_impact(self,self.my_data.impact_tag)  
 
       def render(self):
             window.blit(self.current_image, (self.posX, self.posY))  
