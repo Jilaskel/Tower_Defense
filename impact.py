@@ -6,6 +6,7 @@ ARCANE_TOWER_IMPACT_TAG = 1
 FIRE_TOWER_IMPACT_TAG = 2
 LIGHTNING_TOWER_IMPACT_TAG = 3
 ICE_TOWER_IMPACT_TAG = 4
+ROCK_IMPACT_TAG = 5
 
 
 class All_impacts(pygame.sprite.Group):
@@ -14,6 +15,7 @@ class All_impacts(pygame.sprite.Group):
 
             self.arcane_impact_data = Arcane_impact_data()
             self.fire_impact_data = Fire_impact_data()
+            self.rock_impact_data = Rock_impact_data()
 
       def add_impact(self,projectile,tag):
             if (tag==ARCANE_TOWER_IMPACT_TAG):
@@ -24,12 +26,17 @@ class All_impacts(pygame.sprite.Group):
                   self.add_arcane_impact(projectile)
             elif (tag==ICE_TOWER_IMPACT_TAG):
                   self.add_arcane_impact(projectile)            
+            elif (tag==ROCK_IMPACT_TAG):
+                  self.add_rock_impact(projectile)  
 
       def add_arcane_impact(self,projectile):
             self.add(Arcane_impact(self,projectile))
 
       def add_fire_impact(self,projectile):
             self.add(Fire_impact(self,projectile))
+
+      def add_rock_impact(self,projectile):
+            self.add(Rock_impact(self,projectile))
 
 class Arcane_impact_data():
       def __init__(self):
@@ -66,6 +73,24 @@ class Fire_impact_data():
         self.time_per_frame = self.anim_total_time/self.number_frame # in ms
 
         self.damage_frame = FIRE_IMPACT_DAMAGE_FRAME - 1
+
+class Rock_impact_data():
+      def __init__(self):
+
+        self.static_image = pygame.image.load(ROCK_IMPACT_IMAGE_PATH+"0001.png").convert_alpha()
+        self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*ROCK_IMPACT_RESIZE_FACTOR)        
+        self.image_size = vec(self.static_image.get_size())
+        self.offset = vec(ROCK_IMPACT_CENTOR_VECTOR[0]*self.image_size[0],ROCK_IMPACT_CENTOR_VECTOR[1]*self.image_size[1])
+
+        self.number_frame = ROCK_IMPACT_NUMBER_FRAME
+        self.images = []
+        for i in range(1,self.number_frame+1):
+                self.images.append(pygame.image.load(ROCK_IMPACT_IMAGE_PATH+str(i).zfill(4)+".png").convert_alpha())  
+                self.images[i-1] = pygame.transform.scale(self.images[i-1],vec(self.images[i-1].get_size())*ROCK_IMPACT_RESIZE_FACTOR)
+        self.anim_total_time = ROCK_IMPACT_TOTAL_TIME  # in ms
+        self.time_per_frame = self.anim_total_time/self.number_frame # in ms
+
+        self.damage_frame = ROCK_IMPACT_DAMAGE_FRAME - 1
 
 class Impact(pygame.sprite.Sprite):
     def __init__(self,projectile):
@@ -126,5 +151,14 @@ class Fire_impact(Impact,pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
 
         self.my_data = all_i.fire_impact_data
+
+        Impact.__init__(self,projectile)
+
+
+class Rock_impact(Impact,pygame.sprite.Sprite):
+    def __init__(self,all_i,projectile):
+        pygame.sprite.Sprite.__init__(self)
+
+        self.my_data = all_i.rock_impact_data
 
         Impact.__init__(self,projectile)

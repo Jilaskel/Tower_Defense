@@ -35,6 +35,9 @@ class Menu():
             (x,y) = (self.margin+4.0*side,0)
             self.all_buttons.add(Button(self,path,x,y,BALLISTA_BUTTON_TAG))
 
+            path = MENU_CATAPULT_BUTTON_IMAGE_PATH
+            (x,y) = (self.margin+5.0*side,0)
+            self.all_buttons.add(Button(self,path,x,y,CATAPULT_BUTTON_TAG))
             self.rendering_layer = 0
 
             path_gold = MENU_GOLD_RESERVE_BUTTON_IMAGE_PATH
@@ -122,9 +125,21 @@ class Button(pygame.sprite.Sprite):
                   self.image_to_carry = pygame.transform.scale(self.image_to_carry,vec(self.image_to_carry.get_size())*BALLISTA_RESIZE_FACTOR)  
 
                   self.range = BALLISTA_RANGE*(BACKGROUND_SQUARE_SIDE+BACKGROUND_SQUARE_SIDE)/2.0
-                  self.range_hitbox = Range_Hitbox(self,BACKGROUND_SQUARE_SIDE,BACKGROUND_SQUARE_SIDE,self.range,circular=False)  
+                  self.range_hitbox = Range_Hitbox(self,BACKGROUND_SQUARE_SIDE,BACKGROUND_SQUARE_SIDE,self.range,circular=False,tag="Ballista")  
 
                   self.price = BALLISTA_PRICE 
+
+            elif (self.my_tag==CATAPULT_BUTTON_TAG):
+                  self.compatible_grass = False
+                  self.compatible_road = True
+
+                  self.image_to_carry = pygame.image.load(CATAPULT_ATTACK_IMAGE_PATH+"0001.png").convert_alpha()
+                  self.image_to_carry = pygame.transform.scale(self.image_to_carry,vec(self.image_to_carry.get_size())*CATAPULT_RESIZE_FACTOR)  
+
+                  self.range = CATAPULT_RANGE*(BACKGROUND_SQUARE_SIDE+BACKGROUND_SQUARE_SIDE)/2.0
+                  self.range_hitbox = Range_Hitbox(self,BACKGROUND_SQUARE_SIDE,BACKGROUND_SQUARE_SIDE,self.range,circular=False,tag="Catapult")  
+
+                  self.price = CATAPULT_PRICE 
 
             else : 
                 self.compatible_grass = False

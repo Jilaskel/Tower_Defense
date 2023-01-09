@@ -8,6 +8,7 @@ FIRE_TOWER_BUTTON_TAG = 2
 LIGHTNING_TOWER_BUTTON_TAG = 3
 ICE_TOWER_BUTTON_TAG = 4
 BALLISTA_BUTTON_TAG = 5
+CATAPULT_BUTTON_TAG = 6
 
 class All_towers(pygame.sprite.Group):
       def __init__(self):
@@ -19,6 +20,7 @@ class All_towers(pygame.sprite.Group):
             self.ice_tower_data = Ice_tower_data()
                         
             self.ballista_data = Ballista_data()
+            self.catapult_data = Catapult_data()
 
       def add_tower(self,game,x,y,tag):
             if (tag==ARCANE_TOWER_BUTTON_TAG):
@@ -31,6 +33,8 @@ class All_towers(pygame.sprite.Group):
                   self.add_ice_tower(game,x,y)
             elif (tag==BALLISTA_BUTTON_TAG):
                   self.add_ballista(game,x,y)
+            elif (tag==CATAPULT_BUTTON_TAG):
+                  self.add_catapult(game,x,y)                  
 
       def add_arcane_tower(self,game,x,y):
             self.add(Arcane_tower(game,self,x,y))
@@ -47,6 +51,8 @@ class All_towers(pygame.sprite.Group):
       def add_ballista(self,game,x,y):
             self.add(Ballista(game,self,x,y))
 
+      def add_catapult(self,game,x,y):
+            self.add(Catapult(game,self,x,y))
 
 class Arcane_tower_data():
       def __init__(self):
@@ -212,6 +218,37 @@ class Ballista_data():
             self.anim_total_time_r = BALLISTA_ANIMATION_RELOADING_TOTAL_TIME
             self.time_per_frame_r = self.anim_total_time_r/self.number_frame_reloading # in ms
 
+class Catapult_data():
+      def __init__(self):
+
+            self.hp_max = CATAPULT_HP_MAX
+
+            self.gold_cost = -CATAPULT_PRICE
+
+            self.bolt_tag = CATAPULT_BOLT_TAG
+
+            self.static_image = pygame.image.load(CATAPULT_ATTACK_IMAGE_PATH+"0001.png").convert_alpha()
+            self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*CATAPULT_RESIZE_FACTOR)  
+            self.image_size = vec(self.static_image.get_size())
+
+            self.firing_offset = CATAPULT_FIRING_OFFSET
+
+            self.image_attacking = []
+            self.number_frame_attacking = CATAPULT_NUMBER_FRAME_ATTACKING
+            for i in range(1,self.number_frame_attacking+1):
+                  self.image_attacking.append(pygame.image.load(CATAPULT_ATTACK_IMAGE_PATH+str(i).zfill(4)+".png").convert_alpha())   
+                  self.image_attacking[i-1] = pygame.transform.scale(self.image_attacking[i-1],vec(self.image_attacking[i-1].get_size())*CATAPULT_RESIZE_FACTOR)
+            self.anim_total_time_a = CATAPULT_ANIMATION_ATTACKING_TOTAL_TIME
+            self.time_per_frame_a = self.anim_total_time_a/self.number_frame_attacking # in ms
+
+            self.image_reloading = []
+            offset_degeu = 5
+            self.number_frame_reloading = CATAPULT_NUMBER_FRAME_RELOADING
+            for i in range(1,self.number_frame_reloading+1):
+                  self.image_reloading.append(pygame.image.load(CATAPULT_RELOAD_IMAGE_PATH+str(i+offset_degeu).zfill(4)+".png").convert_alpha())   
+                  self.image_reloading[i-1] = pygame.transform.scale(self.image_reloading[i-1],vec(self.image_reloading[i-1].get_size())*CATAPULT_RESIZE_FACTOR)
+            self.anim_total_time_r = CATAPULT_ANIMATION_RELOADING_TOTAL_TIME
+            self.time_per_frame_r = self.anim_total_time_r/self.number_frame_reloading # in ms
 
 class Tower(pygame.sprite.Sprite):
       def __init__(self,game,x,y):
@@ -389,14 +426,51 @@ class Ballista(Tower,pygame.sprite.Sprite):
             self.rect = pygame.Rect(self.hitbox_left,self.hitbox_top,self.hitbox_width,self.hitbox_height)
 
             self.range = BALLISTA_RANGE*(self.rect.width+self.rect.height)/2.0
-            self.range_hitbox = Range_Hitbox(self,self.rect.w,self.rect.h,self.range,circular=False)
+            self.range_hitbox = Range_Hitbox(self,self.rect.w,self.rect.h,self.range,circular=False,tag="Ballista")
 
             game.gold.gold_gain(game,self,self.my_data.gold_cost)
 
+class Catapult(Tower,pygame.sprite.Sprite):
+      def __init__(self,game,all_t,x,y):
+            pygame.sprite.Sprite.__init__(self)
+
+            self.my_data = all_t.catapult_data
+
+            self.hp = self.my_data.hp_max
+
+            self.current_image = self.my_data.static_image    
+            self.posX = x + CATAPULT_OFFSET[0]
+            self.posY = y + CATAPULT_OFFSET[1]
+            self.image_size = self.my_data.image_size
+            self.center = vec(self.posX+self.image_size[0]*0.5,self.posY+self.image_size[1]*0.5)
+
+            self.rendering_layer = compute_rendering_layer_number(self)
+
+            self.my_timer = 0
+
+            self.attacking = True
+            self.reloading = False
+
+            self.anim_frame_a = 0
+            self.anim_frame_r = 0
+
+            self.detected_ennemies = False
+            self.my_target = []
+
+            self.hitbox_left = x
+            self.hitbox_top = y
+            self.hitbox_width = BACKGROUND_SQUARE_SIDE
+            self.hitbox_height = BACKGROUND_SQUARE_SIDE
+            self.rect = pygame.Rect(self.hitbox_left,self.hitbox_top,self.hitbox_width,self.hitbox_height)
+
+            self.range = CATAPULT_RANGE*(self.rect.width+self.rect.height)/2.0
+            self.range_hitbox = Range_Hitbox(self,self.rect.w,self.rect.h,self.range,circular=False,tag="Catapult")
+
+            game.gold.gold_gain(game,self,self.my_data.gold_cost)
 
             
 class Range_Hitbox(pygame.sprite.Sprite):
-      def __init__(self,tower,width,height,range,circular):
+      def __init__(self,tower,width,height,range,circular,tag="Ballista"):
             super().__init__()
             self.range = range
             if circular:
@@ -410,16 +484,29 @@ class Range_Hitbox(pygame.sprite.Sprite):
                   self.image.set_alpha(TOWER_CIRCLE_RANGE_IMAGE_ALPHA)
                   self.image = pygame.transform.scale(self.image,(self.range*2,self.range*2))                                
             else:
-                  self.circular = False
-                  self.rect = pygame.Rect(tower.posX,tower.posY,width,height)   
-                  self.rect.x = tower.posX - self.range
-                  self.posX = self.rect.x
-                  self.rect.w = self.range              
-                  self.posY = tower.posY    
+                  if tag=="Ballista":
+                        self.circular = False
+                        self.rect = pygame.Rect(tower.posX,tower.posY,width,height)   
+                        self.rect.x = tower.posX - self.range
+                        self.posX = self.rect.x
+                        self.rect.w = self.range              
+                        self.posY = tower.posY    
 
-                  self.image = pygame.image.load(TOWER_RECT_RANGE_IMAGE_PATH).convert_alpha()
-                  self.image.set_alpha(TOWER_RECT_RANGE_IMAGE_ALPHA) 
-                  self.image = pygame.transform.scale(self.image,(self.rect.width,self.rect.h))         
+                        self.image = pygame.image.load(TOWER_RECT_RANGE_IMAGE_PATH).convert_alpha()
+                        self.image.set_alpha(TOWER_RECT_RANGE_IMAGE_ALPHA) 
+                        self.image = pygame.transform.scale(self.image,(self.rect.width,self.rect.h))      
+                  elif tag=="Catapult":
+                        self.circular = False
+                        self.rect = pygame.Rect(tower.posX,tower.posY,width,height)   
+                        self.rect.x = tower.posX - self.range
+                        self.posX = self.rect.x
+                        self.rect.w = self.range - 2*BACKGROUND_SQUARE_SIDE              
+                        self.posY = tower.posY    
+
+                        self.image = pygame.image.load(TOWER_RECT_RANGE_IMAGE_PATH).convert_alpha()
+                        self.image.set_alpha(TOWER_RECT_RANGE_IMAGE_ALPHA) 
+                        self.image = pygame.transform.scale(self.image,(self.rect.width,self.rect.h))                          
+
 
             self.offset = vec(self.posX-tower.posX,self.posY-tower.posY)
 
