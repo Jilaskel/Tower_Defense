@@ -56,6 +56,8 @@ class Gobelin_data():
             self.time_per_frame_a = self.anim_total_time_a/self.number_frame_attacking # in ms
             self.hitting_frame = GOBELIN_HITTING_FRAME -1
 
+            self.dead_body_tag = DEAD_GOBELIN_TAG
+
 class Ogre_data():
       def __init__(self):
 
@@ -95,6 +97,7 @@ class Ogre_data():
             self.time_per_frame_a = self.anim_total_time_a/self.number_frame_attacking # in ms
             self.hitting_frame = OGRE_HITTING_FRAME -1
 
+            self.dead_body_tag = DEAD_OGRE_TAG
 
 
 class Ennemy(pygame.sprite.Sprite):
@@ -122,7 +125,8 @@ class Ennemy(pygame.sprite.Sprite):
                   self.current_image= self.my_data.image_walking[self.move_frame]
 
       def attack(self,game):
-            self.detected_ennemies = pygame.sprite.spritecollide(self, game.all_towers, False)
+            # self.detected_ennemies = pygame.sprite.spritecollide(self, game.all_towers, False)
+            self.detected_ennemies = pygame.sprite.spritecollide(self, game.all_towers.all_siege_engines, False)
             if not self.detected_ennemies:
                   self.detected_ennemies = pygame.sprite.spritecollide(self, game.base.all_gates, False)
 
@@ -163,7 +167,8 @@ class Ennemy(pygame.sprite.Sprite):
 
       def die(self,game):
             if (self.hp<=0):
-                  game.gold.amount += self.my_data.gold_earning
+                  game.gold.gold_gain(game,self,self.my_data.gold_earning)
+                  game.all_dead_bodies.add_dead_body(game,self,self.my_data.dead_body_tag)
                   pygame.sprite.Sprite.kill(self)
 
       def render(self):
@@ -209,11 +214,7 @@ class Gobelin(Ennemy,pygame.sprite.Sprite):
             self.attacking = False
             self.damage_dealt = False
 
-      def die(self,game):
-            if (self.hp<=0):
-                  game.gold.gold_gain(game,self,self.my_data.gold_earning)
-                  game.all_dead_bodies.add_dead_gobelin(self)
-                  pygame.sprite.Sprite.kill(self)
+
  
 class Ogre(Ennemy,pygame.sprite.Sprite):
       def __init__(self,all_e,x,y,rand_offset):
@@ -255,9 +256,6 @@ class Ogre(Ennemy,pygame.sprite.Sprite):
             self.damage_dealt = False
 
 
-      def die(self,game):
-            if (self.hp<=0):
-                  game.gold.gold_gain(game,self,self.my_data.gold_earning)
-                  game.all_dead_bodies.add_dead_ogre(self)
-                  pygame.sprite.Sprite.kill(self)
+
+
 

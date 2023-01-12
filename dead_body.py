@@ -1,6 +1,9 @@
 import pygame
 from utilitaries import *
 
+DEAD_GOBELIN_TAG = 1
+DEAD_OGRE_TAG = 2
+
 
 class All_dead_bodies(pygame.sprite.Group):
       def __init__(self):
@@ -10,11 +13,19 @@ class All_dead_bodies(pygame.sprite.Group):
 
             self.dead_ogre_data = Dead_ogre_data()
             
-      def add_dead_gobelin(self,el_alive):
+      def add_dead_body(self,game,el_alive,tag):
+            if (tag==DEAD_GOBELIN_TAG):
+                  self.add_dead_gobelin(game,el_alive)
+            elif (tag==DEAD_OGRE_TAG):
+                  self.add_dead_ogre(game,el_alive)
+
+      def add_dead_gobelin(self,game,el_alive):
             self.add(Dead_gobelin(self,el_alive))
+            # game.all_mixers.ennemy_mixer.falling_sound.play()
             
-      def add_dead_ogre(self,el_alive):
+      def add_dead_ogre(self,game,el_alive):
             self.add(Dead_ogre(self,el_alive))
+            # game.all_mixers.ennemy_mixer.falling_sound.play()
 
 class Dead_gobelin_data():
       def __init__(self):

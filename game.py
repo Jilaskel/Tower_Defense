@@ -26,7 +26,7 @@ class Game():
 
             self.has_started = False
 
-            self.mixer = Mixer()
+            self.all_mixers = All_mixers()
 
             self.background = Background()
 

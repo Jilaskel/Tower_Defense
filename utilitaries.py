@@ -345,3 +345,17 @@ ROCK_IMPACT_CENTOR_VECTOR = [0.51,0.78]
 ROCK_IMPACT_NUMBER_FRAME = 10
 ROCK_IMPACT_TOTAL_TIME = 600
 ROCK_IMPACT_DAMAGE_FRAME = 4
+
+
+
+###############     AUDIO     ###############
+AUDIO_EFFECTS_COEF = 1.0
+
+SOUND_BUILDING_PATH = "Audio/Other_effect/ES_Impact Wood Hit 6 - SFX Producer.mp3"
+SOUND_BUILDING_VOLUME = 0.1
+
+SOUND_FALLING_PATH = "Audio/Ennemy/ES_Body Fall Heavy Rustle 2 - SFX Producer.mp3"
+SOUND_FALLING_VOLUME = 0.1
+
+SOUND_ROCK_PATH = "Audio/Impact/ES_Rock Impact - SFX Producer.mp3"
+SOUND_ROCK_VOLUME = 0.05

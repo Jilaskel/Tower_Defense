@@ -17,26 +17,27 @@ class All_impacts(pygame.sprite.Group):
             self.fire_impact_data = Fire_impact_data()
             self.rock_impact_data = Rock_impact_data()
 
-      def add_impact(self,projectile,tag):
+      def add_impact(self,game,projectile,tag):
             if (tag==ARCANE_TOWER_IMPACT_TAG):
-                  self.add_arcane_impact(projectile)
+                  self.add_arcane_impact(game,projectile)
             elif (tag==FIRE_TOWER_IMPACT_TAG):
-                  self.add_fire_impact(projectile)
+                  self.add_fire_impact(game,projectile)
             elif (tag==LIGHTNING_TOWER_IMPACT_TAG):
-                  self.add_arcane_impact(projectile)
+                  self.add_arcane_impact(game,projectile)
             elif (tag==ICE_TOWER_IMPACT_TAG):
-                  self.add_arcane_impact(projectile)            
+                  self.add_arcane_impact(game,projectile)            
             elif (tag==ROCK_IMPACT_TAG):
-                  self.add_rock_impact(projectile)  
+                  self.add_rock_impact(game,projectile)  
 
-      def add_arcane_impact(self,projectile):
+      def add_arcane_impact(self,game,projectile):
             self.add(Arcane_impact(self,projectile))
 
-      def add_fire_impact(self,projectile):
+      def add_fire_impact(self,game,projectile):
             self.add(Fire_impact(self,projectile))
 
-      def add_rock_impact(self,projectile):
+      def add_rock_impact(self,game,projectile):
             self.add(Rock_impact(self,projectile))
+            game.all_mixers.impact_mixer.rock_sound.play()
 
 class Arcane_impact_data():
       def __init__(self):

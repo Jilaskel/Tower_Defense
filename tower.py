@@ -14,6 +14,8 @@ class All_towers(pygame.sprite.Group):
       def __init__(self):
             pygame.sprite.Group.__init__(self)   
 
+            self.all_siege_engines = All_siege_engines()
+
             self.arcane_tower_data = Arcane_tower_data()
             self.fire_tower_data = Fire_tower_data()
             self.lightning_tower_data = Lightning_tower_data()
@@ -34,7 +36,8 @@ class All_towers(pygame.sprite.Group):
             elif (tag==BALLISTA_BUTTON_TAG):
                   self.add_ballista(game,box)
             elif (tag==CATAPULT_BUTTON_TAG):
-                  self.add_catapult(game,box)                  
+                  self.add_catapult(game,box)      
+            game.all_mixers.mouse_mixer.building_sound.play()            
 
       def add_arcane_tower(self,game,box):
             self.add(Arcane_tower(game,self,box))
@@ -49,10 +52,18 @@ class All_towers(pygame.sprite.Group):
             self.add(Ice_tower(game,self,box))
 
       def add_ballista(self,game,box):
-            self.add(Ballista(game,self,box))
+            balliste = Ballista(game,self,box)
+            self.add(balliste)
+            self.all_siege_engines.add(balliste)
 
       def add_catapult(self,game,box):
-            self.add(Catapult(game,self,box))
+            catapulte = Catapult(game,self,box)
+            self.add(catapulte)
+            self.all_siege_engines.add(catapulte)
+
+class All_siege_engines(pygame.sprite.Group):
+      def __init__(self):
+            pygame.sprite.Group.__init__(self)  
 
 class Arcane_tower_data():
       def __init__(self):

@@ -153,13 +153,13 @@ class Projectile(pygame.sprite.Sprite):
             self.hit_ennemies = pygame.sprite.spritecollide(self, game.all_ennemies, False,pygame.sprite.collide_rect_ratio(self.my_data.ratio_for_impact))
             if self.hit_ennemies:
                   pygame.sprite.Sprite.kill(self)
-                  game.all_impacts.add_impact(self,self.my_data.impact_tag)
+                  game.all_impacts.add_impact(game,self,self.my_data.impact_tag)
             else:
                   ## if ennemy is dead while projectile was travelling, distance is computed with last ennemy position 
                   distance = np.sqrt((self.my_target_center[0] - self.center[0])**2 + (self.my_target_center[1] - self.center[1])**2)
                   if (distance<0.1*BACKGROUND_SQUARE_SIDE):
                         pygame.sprite.Sprite.kill(self)
-                        game.all_impacts.add_impact(self,self.my_data.impact_tag)  
+                        game.all_impacts.add_impact(game,self,self.my_data.impact_tag)  
 
       def render(self):
             window.blit(self.current_image, (self.posX, self.posY))  
@@ -311,7 +311,8 @@ class Rock(Projectile,pygame.sprite.Sprite):
             distance = np.sqrt((self.my_target_center[0] - self.center[0])**2 + (self.my_target_center[1] - self.center[1])**2)
             if (distance<0.1*BACKGROUND_SQUARE_SIDE):
                   pygame.sprite.Sprite.kill(self)
-                  game.all_impacts.add_impact(self,self.my_data.impact_tag)  
+                  game.all_impacts.add_impact(game,self,self.my_data.impact_tag)  
+
 
       def move(self,game):
             if (pygame.sprite.Sprite.alive(self.target)):
