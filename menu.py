@@ -12,6 +12,7 @@ class Menu():
             self.font_menu_size = int(30*RESIZE_COEFF)
             self.font_menu_color = (0,0,0)
             self.font_menu = pygame.font.Font(FONT_PATH,self.font_menu_size)
+            self.font_menu_enlarged = pygame.font.Font(FONT_PATH,int(self.font_menu_size*MOUSE_OVER_ENLARGED_COEFF))
 
             self.text_price_offset = vec(0.45,0.67)  # multiplied by the button image size
 
@@ -38,6 +39,7 @@ class Menu():
             path = MENU_CATAPULT_BUTTON_IMAGE_PATH
             (x,y) = (self.margin+5.0*side,0)
             self.all_buttons.add(Button(self,path,x,y,CATAPULT_BUTTON_TAG))
+
             self.rendering_layer = 0
 
             path_gold = MENU_GOLD_RESERVE_BUTTON_IMAGE_PATH
@@ -50,12 +52,24 @@ class Menu():
 
       def render(self):
             window.blit(self.gold_reserve_image,(self.gold_posX,self.gold_posY))
-            for button in self.all_buttons:
-                  button.render(self)
+            # mouse_over = False
+            # for button in self.all_buttons:
+            #       if not(button.mouse_over):
+            #             button.render(self)
+            #       else:
+            #             last_button_to_render = button
+            #             mouse_over = True
+
+            # if mouse_over:
+            #       last_button_to_render.render(self)
 
 class Button(pygame.sprite.Sprite):
       def __init__(self,menu,path,x,y,tag):
             super().__init__()
+
+            self.menu = menu
+            self.rendering_layer = 0
+
             self.current_image = pygame.image.load(path).convert_alpha()   
             image_size = vec(self.current_image.get_size())
             resize_ratio = min(MENU_BUTTON_SIZE[0]/image_size[0],MENU_BUTTON_SIZE[1]/image_size[1])
@@ -67,6 +81,13 @@ class Button(pygame.sprite.Sprite):
             self.posY = y   
             self.rect.x = self.posX
             self.rect.y = self.posY   
+
+            self.mouse_over = False
+            self.enlarged_image = pygame.image.load(path).convert_alpha()
+            self.enlarged_image = pygame.transform.scale(self.enlarged_image,self.image_size*MOUSE_OVER_ENLARGED_COEFF) 
+            self.enlarged_size = vec(self.enlarged_image.get_size()) 
+            self.enlarged_posX = self.posX - int((self.enlarged_size[0]-self.image_size[0])*0.5)
+            self.enlarged_posY = self.posY
 
             self.my_tag = tag
             if (self.my_tag==ARCANE_TOWER_BUTTON_TAG):
@@ -146,7 +167,15 @@ class Button(pygame.sprite.Sprite):
                 self.compatible_road = False         
 
             self.text_price =  menu.font_menu.render(str(self.price),True,menu.font_menu_color)     
+            self.text_price_enlarged =  menu.font_menu_enlarged.render(str(self.price),True,menu.font_menu_color)     
 
-      def render(self,menu):
-            window.blit(self.current_image, (self.posX, self.posY))     
-            window.blit(self.text_price,(self.posX+self.image_size[0]*menu.text_price_offset[0], self.posY+self.image_size[1]*menu.text_price_offset[1]))
+      def render(self):
+            if self.mouse_over:
+                  window.blit(self.enlarged_image, (self.enlarged_posX, self.enlarged_posY))    
+                  window.blit(self.text_price_enlarged,(self.enlarged_posX+self.enlarged_size[0]*self.menu.text_price_offset[0], self.enlarged_posY+self.enlarged_size[1]*self.menu.text_price_offset[1])) 
+            else:
+                  window.blit(self.current_image, (self.posX, self.posY))  
+                  window.blit(self.text_price,(self.posX+self.image_size[0]*self.menu.text_price_offset[0], self.posY+self.image_size[1]*self.menu.text_price_offset[1]))
+
+            self.mouse_over = False 
+            self.rendering_layer = 0  

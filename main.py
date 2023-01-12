@@ -25,7 +25,7 @@ thread2.waiting(thread1)
 game = thread1.game
 thread1.join()  # not sure, seems useless
 
-print("Start game")
+print("Starting game")
 while RUNNING:
       for event in pygame.event.get():
             if event.type == QUIT:

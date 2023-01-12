@@ -9,7 +9,7 @@ class myThread (threading.Thread):
       self.id = id
 
    def run(self):
-        print("Starting thread"+str(self.id))
+        # print("Starting thread"+str(self.id))
         if self.id == 1:
             self.load_game()    
             # while(True):
@@ -18,12 +18,12 @@ class myThread (threading.Thread):
         
 
    def load_game(self):
-        print("Start loading game")
+        print("Loading game")
         self.game = Game()
 
 
    def waiting(self,thread1):
-        print("Start waiting")
+        # print("Start waiting")
         self.loading_screen = Loading_screen()
         while (thread1.is_alive()):  # True as long as thread1 is in run()
             self.loading_screen.advance()
@@ -44,7 +44,7 @@ class Loading_screen():
         self.anim_total_time_w = GOBELIN_ANIMATION_WALKING_TOTAL_TIME  # in ms
         self.time_per_frame_w = self.anim_total_time_w/self.number_frame_walking # in ms  
 
-        self.font_size = int(140)
+        self.font_size = int(140*RESIZE_COEFF)
         self.font = pygame.font.Font(LOADING_FONT_PATH,self.font_size)
         self.font_color = (243,243,243)
 
@@ -62,11 +62,10 @@ class Loading_screen():
         window.fill((0,0,0))  # black background
         message = "Loading..."
         text = self.font.render(message,True,self.font_color)
-        window.blit(text, (680, 200))
+        window.blit(text, (680*RESIZE_COEFF, 200*RESIZE_COEFF))
         message = str(loading_progress.value) + "%"
         text = self.font.render(message,True,self.font_color)
-        window.blit(text, (820, 380))
-        window.blit(self.current_image, (850, 600))
-        pygame.display.flip()
-        # pygame.display.update()
+        window.blit(text, (820*RESIZE_COEFF, 380*RESIZE_COEFF))
+        window.blit(self.current_image, (850*RESIZE_COEFF, 600*RESIZE_COEFF))
+        pygame.display.update()
 

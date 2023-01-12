@@ -49,14 +49,17 @@ class Mouse(pygame.sprite.Sprite):
         if not(self.carrying):
             self.hit_buttons = pygame.sprite.spritecollide(self, game.menu.all_buttons, False, pygame.sprite.collide_rect_ratio(self.ratio_for_hitbox))
 
-            if ((self.hit_buttons) and (self.left_click_pressed)):
-                self.carrying = True
-                self.carried_image = self.hit_buttons[0].image_to_carry
-                self.carried_image.set_alpha(MOUSE_CARRIED_IMAGE_ALPHA)
+            if (self.hit_buttons):
+                self.hit_buttons[0].mouse_over = True
+                self.hit_buttons[0].rendering_layer = 22
+                if (self.left_click_pressed):
+                    self.carrying = True
+                    self.carried_image = self.hit_buttons[0].image_to_carry
+                    self.carried_image.set_alpha(MOUSE_CARRIED_IMAGE_ALPHA)
 
-                self.carried_rect = self.carried_image.get_rect()
-                self.carried_width = self.carried_rect.width
-                self.carried_height = self.carried_rect.height
+                    self.carried_rect = self.carried_image.get_rect()
+                    self.carried_width = self.carried_rect.width
+                    self.carried_height = self.carried_rect.height
 
         self.box_valid = False
         self.box_not_valid = False

@@ -123,6 +123,9 @@ class Game():
             self.object_to_render.append(self.background)
             self.object_to_render.append(self.menu)
 
+            for button in self.menu.all_buttons:
+                  self.object_to_render.append(button)
+
             for asset_background in self.background.all_assets:
                   self.object_to_render.append(asset_background)
 
