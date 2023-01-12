@@ -78,28 +78,28 @@ class Mouse(pygame.sprite.Sprite):
                         self.box_valid = True
                         if not(self.left_click_pressed):
                             if (game.gold.amount >= self.hit_buttons[0].price):
-                                game.all_towers.add_tower(game,self.x_box,self.y_box,self.hit_buttons[0].my_tag)
+                                game.all_towers.add_tower(game,self.hit_boxes[0],self.hit_buttons[0].my_tag)
                                 self.hit_boxes[0].occupied = True
                             else:
                                 game.all_error_messages.add_error_message_anim("Not enough gold",self.x_box,self.y_box)
                     else:
                         self.box_not_valid = True
                         if not(self.left_click_pressed):
-                            game.all_error_messages.add_error_message_anim("This spot has already been build",self.x_box,self.y_box)  
+                            game.all_error_messages.add_error_message_anim("This spot has already been built",self.x_box,self.y_box)  
 
                 elif (self.hit_boxes[0].road and self.hit_buttons[0].compatible_road):
                     if not(self.hit_boxes[0].occupied):
                         self.box_valid = True
                         if not(self.left_click_pressed):
                             if (game.gold.amount >= self.hit_buttons[0].price):
-                                game.all_towers.add_tower(game,self.x_box,self.y_box,self.hit_buttons[0].my_tag)
+                                game.all_towers.add_tower(game,self.hit_boxes[0],self.hit_buttons[0].my_tag)
                                 self.hit_boxes[0].occupied = True
                             else:
                                 game.all_error_messages.add_error_message_anim("Not enough gold",self.x_box,self.y_box)
                     else:
                         self.box_not_valid = True
                         if not(self.left_click_pressed):
-                            game.all_error_messages.add_error_message_anim("This spot has already been build",self.x_box,self.y_box)  
+                            game.all_error_messages.add_error_message_anim("This spot has already been built",self.x_box,self.y_box)  
 
                 else:
                     self.box_not_valid = True

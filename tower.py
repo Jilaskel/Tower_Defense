@@ -22,37 +22,37 @@ class All_towers(pygame.sprite.Group):
             self.ballista_data = Ballista_data()
             self.catapult_data = Catapult_data()
 
-      def add_tower(self,game,x,y,tag):
+      def add_tower(self,game,box,tag):
             if (tag==ARCANE_TOWER_BUTTON_TAG):
-                  self.add_arcane_tower(game,x,y)
+                  self.add_arcane_tower(game,box)
             elif (tag==FIRE_TOWER_BUTTON_TAG):
-                  self.add_fire_tower(game,x,y)
+                  self.add_fire_tower(game,box)
             elif (tag==LIGHTNING_TOWER_BUTTON_TAG):
-                  self.add_lightning_tower(game,x,y)
+                  self.add_lightning_tower(game,box)
             elif (tag==ICE_TOWER_BUTTON_TAG):
-                  self.add_ice_tower(game,x,y)
+                  self.add_ice_tower(game,box)
             elif (tag==BALLISTA_BUTTON_TAG):
-                  self.add_ballista(game,x,y)
+                  self.add_ballista(game,box)
             elif (tag==CATAPULT_BUTTON_TAG):
-                  self.add_catapult(game,x,y)                  
+                  self.add_catapult(game,box)                  
 
-      def add_arcane_tower(self,game,x,y):
-            self.add(Arcane_tower(game,self,x,y))
+      def add_arcane_tower(self,game,box):
+            self.add(Arcane_tower(game,self,box))
 
-      def add_fire_tower(self,game,x,y):
-            self.add(Fire_tower(game,self,x,y))
+      def add_fire_tower(self,game,box):
+            self.add(Fire_tower(game,self,box))
 
-      def add_lightning_tower(self,game,x,y):
-            self.add(Lightning_tower(game,self,x,y))
+      def add_lightning_tower(self,game,box):
+            self.add(Lightning_tower(game,self,box))
 
-      def add_ice_tower(self,game,x,y):
-            self.add(Ice_tower(game,self,x,y))
+      def add_ice_tower(self,game,box):
+            self.add(Ice_tower(game,self,box))
 
-      def add_ballista(self,game,x,y):
-            self.add(Ballista(game,self,x,y))
+      def add_ballista(self,game,box):
+            self.add(Ballista(game,self,box))
 
-      def add_catapult(self,game,x,y):
-            self.add(Catapult(game,self,x,y))
+      def add_catapult(self,game,box):
+            self.add(Catapult(game,self,box))
 
 class Arcane_tower_data():
       def __init__(self):
@@ -251,8 +251,12 @@ class Catapult_data():
             self.time_per_frame_r = self.anim_total_time_r/self.number_frame_reloading # in ms
 
 class Tower(pygame.sprite.Sprite):
-      def __init__(self,game,x,y):
-            # pass
+      def __init__(self,game,box):
+            
+            x = box.posX
+            y = box.posY
+            self.box = box
+
             self.hp = self.my_data.hp_max
       
             self.current_image = self.my_data.static_image  
@@ -354,47 +358,53 @@ class Tower(pygame.sprite.Sprite):
 
       def die(self):
             if (self.hp<=0):
+                  self.box.occupied = False
                   pygame.sprite.Sprite.kill(self)
+                  
 
       def render(self):
             window.blit(self.current_image, (self.posX, self.posY))  
 
 
 class Arcane_tower(Tower,pygame.sprite.Sprite):
-      def __init__(self,game,all_t,x,y):
+      def __init__(self,game,all_t,box):
             pygame.sprite.Sprite.__init__(self)
 
             self.my_data = all_t.arcane_tower_data
 
-            Tower.__init__(self,game,x,y)
+            Tower.__init__(self,game,box)
 
 class Fire_tower(Tower,pygame.sprite.Sprite):
-      def __init__(self,game,all_t,x,y):
+      def __init__(self,game,all_t,box):
             pygame.sprite.Sprite.__init__(self)
 
             self.my_data = all_t.fire_tower_data
 
-            Tower.__init__(self,game,x,y)
+            Tower.__init__(self,game,box)
 
 class Lightning_tower(Tower,pygame.sprite.Sprite):
-      def __init__(self,game,all_t,x,y):
+      def __init__(self,game,all_t,box):
             pygame.sprite.Sprite.__init__(self)
 
             self.my_data = all_t.lightning_tower_data
 
-            Tower.__init__(self,game,x,y)
+            Tower.__init__(self,game,box)
 
 class Ice_tower(Tower,pygame.sprite.Sprite):
-      def __init__(self,game,all_t,x,y):
+      def __init__(self,game,all_t,box):
             pygame.sprite.Sprite.__init__(self)
 
             self.my_data = all_t.ice_tower_data
 
-            Tower.__init__(self,game,x,y)
+            Tower.__init__(self,game,box)
 
 class Ballista(Tower,pygame.sprite.Sprite):
-      def __init__(self,game,all_t,x,y):
+      def __init__(self,game,all_t,box):
             pygame.sprite.Sprite.__init__(self)
+
+            x = box.posX
+            y = box.posY
+            self.box = box
 
             self.my_data = all_t.ballista_data
 
@@ -431,8 +441,12 @@ class Ballista(Tower,pygame.sprite.Sprite):
             game.gold.gold_gain(game,self,self.my_data.gold_cost)
 
 class Catapult(Tower,pygame.sprite.Sprite):
-      def __init__(self,game,all_t,x,y):
+      def __init__(self,game,all_t,box):
             pygame.sprite.Sprite.__init__(self)
+
+            x = box.posX
+            y = box.posY
+            self.box = box
 
             self.my_data = all_t.catapult_data
 
