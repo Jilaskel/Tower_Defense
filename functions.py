@@ -7,4 +7,5 @@ def compute_rendering_layer_number(object):
     side = BACKGROUND_SQUARE_SIDE
     y_obj = object.posY + object.image_size[1]*0.8
     number_of_layer = np.floor((y_obj-menu_height)/side)*3+2
+
     return number_of_layer

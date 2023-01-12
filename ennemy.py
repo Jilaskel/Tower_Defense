@@ -11,11 +11,11 @@ class All_ennemies(pygame.sprite.Group):
             
             self.ogre_data = Ogre_data()
 
-      def add_gobelin(self,x,y):
-            self.add(Gobelin(self,x,y))
+      def add_gobelin(self,x,y,rand_offset):
+            self.add(Gobelin(self,x,y,rand_offset))
 
-      def add_ogre(self,x,y):
-            self.add(Ogre(self,x,y))
+      def add_ogre(self,x,y,rand_offset):
+            self.add(Ogre(self,x,y,rand_offset))
 
 
 class Gobelin_data():
@@ -171,7 +171,7 @@ class Ennemy(pygame.sprite.Sprite):
 
 
 class Gobelin(Ennemy,pygame.sprite.Sprite):
-      def __init__(self,all_e,x,y):
+      def __init__(self,all_e,x,y,rand_offset):
             pygame.sprite.Sprite.__init__(self)
  
             self.my_data = all_e.gobelin_data
@@ -186,6 +186,7 @@ class Gobelin(Ennemy,pygame.sprite.Sprite):
             self.posY = y + GOBELIN_OFFSET[1]   
             self.center = vec(self.posX+GOBELIN_CENTER_VECTOR[0]*self.image_size[0],self.posY+GOBELIN_CENTER_VECTOR[0]*self.image_size[1]) 
             self.rendering_layer = compute_rendering_layer_number(self)
+            self.rendering_layer += rand_offset
 
             self.moving = False
 
@@ -215,7 +216,7 @@ class Gobelin(Ennemy,pygame.sprite.Sprite):
                   pygame.sprite.Sprite.kill(self)
  
 class Ogre(Ennemy,pygame.sprite.Sprite):
-      def __init__(self,all_e,x,y):
+      def __init__(self,all_e,x,y,rand_offset):
             pygame.sprite.Sprite.__init__(self)
  
             self.my_data = all_e.ogre_data
@@ -230,6 +231,7 @@ class Ogre(Ennemy,pygame.sprite.Sprite):
             self.posY = y + OGRE_OFFSET[1]   
             self.center = vec(self.posX+OGRE_CENTER_VECTOR[0]*self.image_size[0],self.posY+OGRE_CENTER_VECTOR[0]*self.image_size[1]) 
             self.rendering_layer = compute_rendering_layer_number(self)
+            self.rendering_layer += rand_offset
 
             self.moving = False
 
