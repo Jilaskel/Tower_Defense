@@ -37,9 +37,16 @@ class Ennemy_mixer():
 
 class Projectile_mixer():
     def __init__(self):
-        pass
+        
+        self.arcane_proj_sound = pygame.mixer.Sound(SOUND_ARCANE_PROJ_PATH)
+        self.arcane_proj_sound.set_volume(SOUND_ARCANE_PROJ_VOLUME*AUDIO_EFFECTS_COEF)
+
+
 class Impact_mixer():
     def __init__(self):
 
         self.rock_sound = pygame.mixer.Sound(SOUND_ROCK_PATH)
         self.rock_sound.set_volume(SOUND_ROCK_VOLUME*AUDIO_EFFECTS_COEF)
+
+        self.arcane_impact_sound = pygame.mixer.Sound(SOUND_ARCANE_IMPACT_PATH)
+        self.arcane_impact_sound.set_volume(SOUND_ARCANE_IMPACT_VOLUME*AUDIO_EFFECTS_COEF)

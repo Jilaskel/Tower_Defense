@@ -23,30 +23,31 @@ class All_projectiles(pygame.sprite.Group):
             self.bolt_data = Bolt_data()
             self.rock_data = Rock_data()
 
-      def add_bolt(self,game,x,y,tag):
+      def add_bolt(self,game,x,y,target,tag):
             if (tag==ARCANE_TOWER_BOLT_TAG):
-                  self.add_arcane_bolt(game,x,y)
+                  self.add_arcane_bolt(game,x,y,target)
             elif (tag==FIRE_TOWER_BOLT_TAG):
-                  self.add_fire_bolt(game,x,y)
+                  self.add_fire_bolt(game,x,y,target)
             elif (tag==LIGHTNING_TOWER_BOLT_TAG):
-                  self.add_arcane_bolt(game,x,y)
+                  self.add_arcane_bolt(game,x,y,target)
             elif (tag==ICE_TOWER_BOLT_TAG):
-                  self.add_arcane_bolt(game,x,y)
+                  self.add_arcane_bolt(game,x,y,target)
             elif (tag==BALLISTA_BOLT_TAG):
-                  self.add_ballista_bolt(game,x,y)
+                  self.add_ballista_bolt(game,x,y,target)
             elif (tag==CATAPULT_BOLT_TAG):
-                  self.add_catapult_rock(game,x,y)
+                  self.add_catapult_rock(game,x,y,target)
 
-      def add_arcane_bolt(self,x,y,target):
+      def add_arcane_bolt(self,game,x,y,target):
             self.add(Arcane_bolt(self,x,y,target))
+            game.all_mixers.projectile_mixer.arcane_proj_sound.play(maxtime=SOUND_ARCANE_PROJ_MAX_TIME)
 
-      def add_fire_bolt(self,x,y,target):
+      def add_fire_bolt(self,game,x,y,target):
             self.add(Fire_bolt(self,x,y,target))
 
-      def add_ballista_bolt(self,x,y,target):
+      def add_ballista_bolt(self,game,x,y,target):
             self.add(Bolt(self,x,y,target))
 
-      def add_catapult_rock(self,x,y,target):
+      def add_catapult_rock(self,game,x,y,target):
             self.add(Rock(self,x,y,target))
 
 class Arcane_bolt_data():

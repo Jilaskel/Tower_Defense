@@ -331,7 +331,7 @@ class Tower(pygame.sprite.Sprite):
                               self.anim_frame_a += 1
                               self.my_timer = 0.0
                               if (self.anim_frame_a==self.my_data.number_frame_attacking):
-                                    game.all_projectiles.add_bolt(self.posX+self.my_data.firing_offset[0],self.posY+self.my_data.firing_offset[1],self.my_target,self.my_data.bolt_tag)
+                                    game.all_projectiles.add_bolt(game,self.posX+self.my_data.firing_offset[0],self.posY+self.my_data.firing_offset[1],self.my_target,self.my_data.bolt_tag)
                                     self.anim_frame_a = 0
                                     self.reloading = True
                                     self.current_image= self.my_data.image_reloading[self.anim_frame_r]

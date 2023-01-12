@@ -21,11 +21,11 @@ class All_dead_bodies(pygame.sprite.Group):
 
       def add_dead_gobelin(self,game,el_alive):
             self.add(Dead_gobelin(self,el_alive))
-            # game.all_mixers.ennemy_mixer.falling_sound.play()
+            game.all_mixers.ennemy_mixer.falling_sound.play()
             
       def add_dead_ogre(self,game,el_alive):
             self.add(Dead_ogre(self,el_alive))
-            # game.all_mixers.ennemy_mixer.falling_sound.play()
+            game.all_mixers.ennemy_mixer.falling_sound.play()
 
 class Dead_gobelin_data():
       def __init__(self):

@@ -355,7 +355,15 @@ SOUND_BUILDING_PATH = "Audio/Other_effect/ES_Impact Wood Hit 6 - SFX Producer.mp
 SOUND_BUILDING_VOLUME = 0.1
 
 SOUND_FALLING_PATH = "Audio/Ennemy/ES_Body Fall Heavy Rustle 2 - SFX Producer.mp3"
-SOUND_FALLING_VOLUME = 0.1
+SOUND_FALLING_VOLUME = 0.0
 
 SOUND_ROCK_PATH = "Audio/Impact/ES_Rock Impact - SFX Producer.mp3"
 SOUND_ROCK_VOLUME = 0.05
+
+SOUND_ARCANE_PROJ_PATH = "Audio/Projectile/ES_Magic Transition 3.mp3"
+SOUND_ARCANE_PROJ_VOLUME = 0.1
+SOUND_ARCANE_PROJ_MAX_TIME = 1000  # in ms
+
+SOUND_ARCANE_IMPACT_PATH = "Audio/Impact/ES_Energy Blasts 9-zone-000.mp3"
+SOUND_ARCANE_IMPACT_VOLUME = 0.0
+SOUND_ARCANE_IMPACT_MAX_TIME = 0 # in ms

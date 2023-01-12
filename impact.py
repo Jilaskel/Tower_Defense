@@ -31,6 +31,7 @@ class All_impacts(pygame.sprite.Group):
 
       def add_arcane_impact(self,game,projectile):
             self.add(Arcane_impact(self,projectile))
+            game.all_mixers.impact_mixer.arcane_impact_sound.play(maxtime=SOUND_ARCANE_IMPACT_MAX_TIME)
 
       def add_fire_impact(self,game,projectile):
             self.add(Fire_impact(self,projectile))
