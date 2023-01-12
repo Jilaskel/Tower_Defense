@@ -37,29 +37,36 @@ class All_towers(pygame.sprite.Group):
                   self.add_ballista(game,box)
             elif (tag==CATAPULT_BUTTON_TAG):
                   self.add_catapult(game,box)      
-            game.all_mixers.mouse_mixer.building_sound.play()            
+          
 
       def add_arcane_tower(self,game,box):
             self.add(Arcane_tower(game,self,box))
+            game.all_mixers.mouse_mixer.building_rock_sound.play()  
 
       def add_fire_tower(self,game,box):
             self.add(Fire_tower(game,self,box))
+            game.all_mixers.mouse_mixer.building_rock_sound.play()
 
       def add_lightning_tower(self,game,box):
             self.add(Lightning_tower(game,self,box))
+            game.all_mixers.mouse_mixer.building_rock_sound.play()
 
       def add_ice_tower(self,game,box):
             self.add(Ice_tower(game,self,box))
+            game.all_mixers.mouse_mixer.building_rock_sound.play()
 
       def add_ballista(self,game,box):
             balliste = Ballista(game,self,box)
             self.add(balliste)
             self.all_siege_engines.add(balliste)
+            game.all_mixers.mouse_mixer.building_wood_sound.play()
 
       def add_catapult(self,game,box):
             catapulte = Catapult(game,self,box)
             self.add(catapulte)
             self.all_siege_engines.add(catapulte)
+            game.all_mixers.mouse_mixer.building_wood_sound.play()
+
 
 class All_siege_engines(pygame.sprite.Group):
       def __init__(self):

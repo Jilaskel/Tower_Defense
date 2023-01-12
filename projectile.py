@@ -5,6 +5,7 @@ from functions import *
 from numpy import sqrt
 import numpy as np
 import math
+import random
 
 ARCANE_TOWER_BOLT_TAG = 1
 FIRE_TOWER_BOLT_TAG = 2
@@ -43,9 +44,11 @@ class All_projectiles(pygame.sprite.Group):
 
       def add_fire_bolt(self,game,x,y,target):
             self.add(Fire_bolt(self,x,y,target))
+            game.all_mixers.projectile_mixer.fire_proj_sound.play(maxtime=SOUND_FIRE_PROJ_MAX_TIME)
 
       def add_ballista_bolt(self,game,x,y,target):
             self.add(Bolt(self,x,y,target))
+            random.choice(game.all_mixers.projectile_mixer.bolt_proj_list).play()
 
       def add_catapult_rock(self,game,x,y,target):
             self.add(Rock(self,x,y,target))

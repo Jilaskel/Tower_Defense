@@ -32,11 +32,6 @@ FPS = 60
 CLOCK = pygame.time.Clock() 
 TOTAL_NUMBER_RENDERING_LAYER = 25
 
-### MUSIC
-MUSIC_FILE_PATH = "Audio/Music/Age_of_War_Theme_Soundtrack.mp3"
-FADE_UP_TIME = 3.0 # in seconds
-MUSIC_VOLUME = 0.1
-
 #### BACKGROUND
 BACKGROUND_IMAGE_PATH = "Assets/Background/BackgroundNoGrassAsset_menu_2.png"
 BACKGROUND_GRASS_ASSETS_PATH = "Assets/Background/GrassAsset/"
@@ -349,21 +344,46 @@ ROCK_IMPACT_DAMAGE_FRAME = 4
 
 
 ###############     AUDIO     ###############
-AUDIO_EFFECTS_COEF = 1.0
+### MUSIC
+MUSIC_FILE_PATH = "Audio/Music/Age_of_War_Theme_Soundtrack.mp3"
+FADE_UP_TIME = 3.0 # in seconds
+# MUSIC_VOLUME = 0.075
+MUSIC_VOLUME = 0.0
 
-SOUND_BUILDING_PATH = "Audio/Other_effect/ES_Impact Wood Hit 6 - SFX Producer.mp3"
-SOUND_BUILDING_VOLUME = 0.1
+## SOUND
+
+AUDIO_EFFECTS_COEFF = 1.0
+
+SOUND_BUILDING_ROCK_PATH = "Audio/Other_effect/ES_Impact Wood Hit 6 - SFX Producer.mp3"
+SOUND_BUILDING_ROCK_VOLUME = 0.1
+
+SOUND_BUILDING_WOOD_PATH = "Audio/Other_effect/ES_Impact Wood 3.mp3"
+SOUND_BUILDING_WOOD_VOLUME = 0.2
 
 SOUND_FALLING_PATH = "Audio/Ennemy/ES_Body Fall Heavy Rustle 2 - SFX Producer.mp3"
 SOUND_FALLING_VOLUME = 0.0
 
+SOUND_OGRE_D_1_PATH = "Audio/Ennemy/ES_Monster Groan 14.mp3"
+SOUND_OGRE_D_2_PATH = "Audio/Ennemy/ES_Monster Groan 19.mp3"
+SOUND_OGRE_D_3_PATH = "Audio/Ennemy/ES_Monster Groan 32.mp3"
+SOUND_OGRE_D_VOLUME = 0.2
+
 SOUND_ROCK_PATH = "Audio/Impact/ES_Rock Impact - SFX Producer.mp3"
 SOUND_ROCK_VOLUME = 0.05
 
+SOUND_BOLT_PROJ_1_PATH = "Audio/Projectile/ES_Arrow Out Whooshing Release 4-zone-002.mp3"
+SOUND_BOLT_PROJ_2_PATH = "Audio/Projectile/ES_Arrow Out Whooshing Release 5-zone-001.mp3"
+SOUND_BOLT_PROJ_VOLUME = 0.1
+
 SOUND_ARCANE_PROJ_PATH = "Audio/Projectile/ES_Magic Transition 3.mp3"
-SOUND_ARCANE_PROJ_VOLUME = 0.1
+SOUND_ARCANE_PROJ_VOLUME = 0.05
 SOUND_ARCANE_PROJ_MAX_TIME = 1000  # in ms
+
+SOUND_FIRE_PROJ_PATH = "Audio/Projectile/ES_Fireball Burst 4.mp3"
+SOUND_FIRE_PROJ_VOLUME = 0.1
+SOUND_FIRE_PROJ_MAX_TIME = 1200  # in ms
 
 SOUND_ARCANE_IMPACT_PATH = "Audio/Impact/ES_Energy Blasts 9-zone-000.mp3"
 SOUND_ARCANE_IMPACT_VOLUME = 0.0
 SOUND_ARCANE_IMPACT_MAX_TIME = 0 # in ms
+

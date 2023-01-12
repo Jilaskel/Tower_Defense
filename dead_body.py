@@ -1,5 +1,6 @@
 import pygame
 from utilitaries import *
+import random
 
 DEAD_GOBELIN_TAG = 1
 DEAD_OGRE_TAG = 2
@@ -25,7 +26,7 @@ class All_dead_bodies(pygame.sprite.Group):
             
       def add_dead_ogre(self,game,el_alive):
             self.add(Dead_ogre(self,el_alive))
-            game.all_mixers.ennemy_mixer.falling_sound.play()
+            random.choice(game.all_mixers.ennemy_mixer.ogre_d_list).play()
 
 class Dead_gobelin_data():
       def __init__(self):
@@ -107,7 +108,7 @@ class Dead_gobelin(Dead_body,pygame.sprite.Sprite):
             self.posX = el_alive.posX      
             self.posY = el_alive.posY    
             self.center =  el_alive.center
-            self.rendering_layer = el_alive.rendering_layer-1
+            self.rendering_layer = el_alive.rendering_layer
 
             self.current_frame = 0
 
@@ -126,7 +127,7 @@ class Dead_ogre(Dead_body,pygame.sprite.Sprite):
             self.posX = el_alive.posX      
             self.posY = el_alive.posY    
             self.center =  el_alive.center
-            self.rendering_layer = el_alive.rendering_layer-1
+            self.rendering_layer = el_alive.rendering_layer
 
             self.current_frame = 0
 
