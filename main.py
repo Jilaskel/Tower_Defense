@@ -3,6 +3,7 @@ from pygame.locals import *
 import sys
 import time
 from game import *
+from thread import * 
  
  
 ############################# 
@@ -10,7 +11,21 @@ from game import *
 #############################
 
 game_has_started = False
-game = Game()
+
+threadLock = threading.Lock()
+
+thread1 = myThread(1)
+thread2 = myThread(2)
+
+# Start new Threads : call the run method
+thread1.start()
+thread2.start()
+
+thread2.waiting(thread1)
+game = thread1.game
+thread1.join()  # not sure, seems useless
+
+print("Start game")
 while RUNNING:
       for event in pygame.event.get():
             if event.type == QUIT:

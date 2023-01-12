@@ -30,31 +30,51 @@ class Game():
 
             self.background = Background()
 
+            loading_progress.value += 10
+
             self.grid = Grid(self)
 
             self.menu = Menu(self)
+
+            loading_progress.value += 10
 
             self.gold = Gold()
 
             self.mouse = Mouse()
 
+            loading_progress.value += 10
+
             self.spawning_mode = Spawning_mode(self)
 
             self.base = Base(self)
+
+            loading_progress.value += 10
 
             self.all_towers = All_towers()
 
             self.all_projectiles = All_projectiles()
 
+            loading_progress.value += 10
+
             self.all_impacts = All_impacts()
+
+            loading_progress.value += 10
 
             self.all_ennemies = All_ennemies()
 
+            loading_progress.value += 10
+
             self.all_dead_bodies = All_dead_bodies()
+
+            loading_progress.value += 10
 
             self.all_gold_anim = All_gold_anim()
 
+            loading_progress.value += 10
+
             self.all_error_messages = All_error_message_anim()
+
+            loading_progress.value += 10
 
             self.object_to_render = []
 

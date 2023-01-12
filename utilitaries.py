@@ -1,8 +1,10 @@
 import pygame
- 
+from globals import * 
 
 pygame.init()
 vec = pygame.math.Vector2 #2 for two dimensional
+
+loading_progress = Loading_progress()
 
 RUNNING = True
 START_WITH_SPACE_BAR = False
@@ -42,6 +44,8 @@ BACKGROUND_SQUARE_SIDE = WINDOW_HEIGHT/8.0
 
 #### FONT
 FONT_PATH = "Font/Kingcastle-0W8Kr.ttf"
+# LOADING_FONT_PATH = "Font/DragonFire-K7voy.ttf"
+LOADING_FONT_PATH = "Font/misc/Balgruf-d256.woff"
 
 #### GOLD
 GOLD_RESERVE_IMAGE_PATH = "Assets/Gold/GoldReserve.png"  ## useless atm
