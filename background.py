@@ -51,7 +51,7 @@ class Background():
             self.all_assets.append(Background_asset("Tree2.png",1000*r,430*r,0.4*r,9,True))
             
             ### Third Grass
-            self.all_assets.append(Background_asset("BushBundle3_cropped.png",79*r,631*r,1.25*r,13))
+            self.all_assets.append(Background_asset("BushBundle3_cropped.png",139*r,631*r,1.25*r,13))
             self.all_assets.append(Background_asset("Tree1.png",570*r,527*r,0.4*r,13))
             self.all_assets.append(Background_asset("BushBundle1_cropped.png",1009*r,607*r,1.0*r,13))
             self.all_assets.append(Background_asset("Tree3.png",1370*r,527*r,0.4*r,13))
@@ -70,6 +70,9 @@ class Background():
             self.all_assets.append(Background_asset("GrassBundle6_cropped.png",1127*r,889*r,0.5*r,18,True))
             self.all_assets.append(Background_asset("GrassBundle1_cropped.png",1331*r,872*r,1*r,18))
             
+
+            ### Bush 
+            self.all_assets.append(Background_asset("Broussaille.png",-0*r,self.menu_height,1*r,22))      
 
       def render(self):
             window.blit(self.current_image, (self.posX, self.posY))    
