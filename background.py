@@ -32,11 +32,14 @@ class Background():
             self.all_assets.append(Background_asset("BushBundle3_cropped.png",1336*r,90*r,1*r,1))
 
             self.all_assets.append(Background_asset("GrassBundle1_cropped.png",264*r,219*r,1*r,3))            
+            self.all_assets.append(Background_asset("Tree3.png",700*r,150*r,0.35*r,3,True))
             self.all_assets.append(Background_asset("BushBundle1_cropped.png",1092*r,211*r,1.0*r,3))
             self.all_assets.append(Background_asset("RockBundle1_cropped.png",1210*r,268*r,0.5*r,3))
+            self.all_assets.append(Background_asset("Tree2.png",1400*r,160*r,0.4*r,3))
 
             ### Second Grass
             self.all_assets.append(Background_asset("GrassBundle3_cropped.png",103*r,400*r,0.5*r,7))
+            self.all_assets.append(Background_asset("Tree1.png",220*r,300*r,0.35*r,7))
             self.all_assets.append(Background_asset("BushBundle4_cropped.png",446*r,354*r,1*r,6))
             self.all_assets.append(Background_asset("GrassBundle3_cropped.png",584*r,374*r,0.5*r,7,True))
             self.all_assets.append(Background_asset("RockBundle1_cropped.png",745*r,371*r,1.0*r,7))
@@ -45,21 +48,27 @@ class Background():
 
             self.all_assets.append(Background_asset("BushBundle1_cropped.png",294*r,463*r,1.0*r,9,True))
             self.all_assets.append(Background_asset("RockBundle2_cropped.png",394*r,520*r,1.0*r,9))
+            self.all_assets.append(Background_asset("Tree2.png",1000*r,430*r,0.4*r,9,True))
             
             ### Third Grass
             self.all_assets.append(Background_asset("BushBundle3_cropped.png",79*r,631*r,1.25*r,13))
+            self.all_assets.append(Background_asset("Tree1.png",570*r,527*r,0.4*r,13))
             self.all_assets.append(Background_asset("BushBundle1_cropped.png",1009*r,607*r,1.0*r,13))
+            self.all_assets.append(Background_asset("Tree3.png",1370*r,527*r,0.4*r,13))
 
+            self.all_assets.append(Background_asset("Tree3.png",410*r,707*r,0.35*r,15,True))
             self.all_assets.append(Background_asset("GrassBundle6_cropped.png",590*r,767*r,0.5*r,16))
             self.all_assets.append(Background_asset("BushBundle1_cropped.png",626*r,737*r,1.0*r,15))
             self.all_assets.append(Background_asset("RockBundle2_cropped.png",1154*r,785*r,1*r,16,True))
             self.all_assets.append(Background_asset("BushBundle4_cropped.png",1224*r,755*r,1*r,15))
 
             ### Fourth Grass
-            self.all_assets.append(Background_asset("GrassBundle6_cropped.png",873*r,898*r,0.5*r,19,True))
-            self.all_assets.append(Background_asset("GrassBundle1_cropped.png",1331*r,872*r,1*r,18))
             self.all_assets.append(Background_asset("BushBundle4_cropped.png",123*r,900*r,1*r,18,True))
-            self.all_assets.append(Background_asset("GrassBundle3_cropped.png",1127*r,909*r,0.5*r,18))
+            self.all_assets.append(Background_asset("Tree2.png",283*r,848*r,0.4*r,19,True))
+            self.all_assets.append(Background_asset("GrassBundle3_cropped.png",673*r,898*r,0.5*r,19))
+            self.all_assets.append(Background_asset("Tree1.png",973*r,808*r,0.4*r,19,True))
+            self.all_assets.append(Background_asset("GrassBundle6_cropped.png",1127*r,889*r,0.5*r,18,True))
+            self.all_assets.append(Background_asset("GrassBundle1_cropped.png",1331*r,872*r,1*r,18))
             
 
       def render(self):

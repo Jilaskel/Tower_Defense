@@ -347,8 +347,8 @@ ROCK_IMPACT_DAMAGE_FRAME = 4
 ### MUSIC
 MUSIC_FILE_PATH = "Audio/Music/Age_of_War_Theme_Soundtrack.mp3"
 FADE_UP_TIME = 3.0 # in seconds
-# MUSIC_VOLUME = 0.075
-MUSIC_VOLUME = 0.0
+MUSIC_VOLUME = 0.005
+# MUSIC_VOLUME = 0.0
 
 ## SOUND
 
