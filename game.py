@@ -129,6 +129,9 @@ class Game():
             for asset_background in self.background.all_assets:
                   self.object_to_render.append(asset_background)
 
+            for gate in self.base.all_gates:
+                  self.object_to_render.append(gate)
+
             for tower in self.all_towers:
                   self.object_to_render.append(tower)
 

@@ -72,7 +72,7 @@ class Background():
             
 
             ### Bush 
-            self.all_assets.append(Background_asset("Broussaille.png",-0*r,self.menu_height,1*r,22))      
+            self.all_assets.append(Background_asset("Broussaille.png",-40*r,self.menu_height,1*r,22))      
 
       def render(self):
             window.blit(self.current_image, (self.posX, self.posY))    

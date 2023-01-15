@@ -33,8 +33,9 @@ CLOCK = pygame.time.Clock()
 TOTAL_NUMBER_RENDERING_LAYER = 25
 
 #### BACKGROUND
-BACKGROUND_IMAGE_PATH = "Assets/Background/BackgroundNoGrassAsset_menu_2.png"
+BACKGROUND_IMAGE_PATH = "Assets/Background/BackgroundNoGrassAsset.png"
 BACKGROUND_GRASS_ASSETS_PATH = "Assets/Background/GrassAsset/"
+BACKGROUND_WALLS_ASSETS_PATH = "Assets/Background/Walls/"
 BACKGROUND_SQUARE_SIDE = WINDOW_HEIGHT/8.0
 
 #### FONT
@@ -100,7 +101,7 @@ P1_GOBELIN_SPAWNING_PERIOD = 2.0   ## in seconds
 P1_OGRE_SPAWNING_PERIOD = 4.0   ## in seconds
 
 ###############     BASE     ###############
-BASE_GATE_HP_MAX = 10000
+BASE_GATE_HP_MAX = 10
 
 
 ###############     ENNEMIES     ###############
