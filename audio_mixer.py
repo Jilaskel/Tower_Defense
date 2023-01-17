@@ -70,6 +70,20 @@ class Projectile_mixer():
         self.fire_proj_sound = pygame.mixer.Sound(SOUND_FIRE_PROJ_PATH)
         self.fire_proj_sound.set_volume(SOUND_FIRE_PROJ_VOLUME*AUDIO_EFFECTS_COEFF)
 
+        self.light_proj_sound_1 = pygame.mixer.Sound(SOUND_LIGHT_PROJ_1_PATH)
+        self.light_proj_sound_1.set_volume(SOUND_LIGHT_PROJ_VOLUME*AUDIO_EFFECTS_COEFF)
+        self.light_proj_sound_2 = pygame.mixer.Sound(SOUND_LIGHT_PROJ_2_PATH)
+        self.light_proj_sound_2.set_volume(SOUND_LIGHT_PROJ_VOLUME*AUDIO_EFFECTS_COEFF)
+        self.light_proj_sound_3 = pygame.mixer.Sound(SOUND_LIGHT_PROJ_3_PATH)
+        self.light_proj_sound_3.set_volume(SOUND_LIGHT_PROJ_VOLUME*AUDIO_EFFECTS_COEFF)
+        self.light_proj_sound_4 = pygame.mixer.Sound(SOUND_LIGHT_PROJ_4_PATH)
+        self.light_proj_sound_4.set_volume(SOUND_LIGHT_PROJ_VOLUME*AUDIO_EFFECTS_COEFF)
+        self.light_proj_list = []
+        self.light_proj_list.append(self.light_proj_sound_1)
+        self.light_proj_list.append(self.light_proj_sound_2)
+        self.light_proj_list.append(self.light_proj_sound_3)
+        self.light_proj_list.append(self.light_proj_sound_4)
+
 class Impact_mixer():
     def __init__(self):
 

@@ -110,7 +110,7 @@ class Ennemy(pygame.sprite.Sprite):
             else:
                   self.moving = True
                   self.ready_to_attack = False
-                  dx = self.my_data.velocity * game.timestep
+                  dx = self.velocity * game.timestep
                   self.posX += dx
                   self.center[0] += dx
                   self.hitbox_left += dx
@@ -183,6 +183,8 @@ class Gobelin(Ennemy,pygame.sprite.Sprite):
 
             self.hp = self.my_data.hp_max
 
+            self.velocity = self.my_data.velocity
+
             self.current_image = self.my_data.static_image
 
             self.image_size = self.my_data.image_size
@@ -223,6 +225,8 @@ class Ogre(Ennemy,pygame.sprite.Sprite):
             self.my_data = all_e.ogre_data
 
             self.hp = self.my_data.hp_max
+
+            self.velocity = self.my_data.velocity
 
             self.current_image = self.my_data.static_image
 

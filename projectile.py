@@ -20,6 +20,7 @@ class All_projectiles(pygame.sprite.Group):
 
             self.arcane_bolt_data = Arcane_bolt_data()
             self.fire_bolt_data = Fire_bolt_data()
+            self.light_bolt_data = Light_bolt_data()
             
             self.bolt_data = Bolt_data()
             self.rock_data = Rock_data()
@@ -30,7 +31,7 @@ class All_projectiles(pygame.sprite.Group):
             elif (tag==FIRE_TOWER_BOLT_TAG):
                   self.add_fire_bolt(game,x,y,target)
             elif (tag==LIGHTNING_TOWER_BOLT_TAG):
-                  self.add_arcane_bolt(game,x,y,target)
+                  self.add_lightning_bolt(game,x,y,target)
             elif (tag==ICE_TOWER_BOLT_TAG):
                   self.add_arcane_bolt(game,x,y,target)
             elif (tag==BALLISTA_BOLT_TAG):
@@ -45,6 +46,31 @@ class All_projectiles(pygame.sprite.Group):
       def add_fire_bolt(self,game,x,y,target):
             self.add(Fire_bolt(self,x,y,target))
             game.all_mixers.projectile_mixer.fire_proj_sound.play(maxtime=SOUND_FIRE_PROJ_MAX_TIME)
+
+      def add_lightning_bolt(self,game,x,y,target):
+            self.add(Light_bolt(self,x,y,target))
+            old_x = target.center[0]
+            old_y = target.center[1]
+            old_target = []
+            old_target.append(target)
+            distance_lim = LIGHTNING_TOWER_RANGE*BACKGROUND_SQUARE_SIDE
+            damage = LIGHTNING_BOLT_DAMAGE
+            for number_of_bounce in range(LIGHTNING_NUMBER_BOUNCE_MAX):
+                  distance_lim = distance_lim*(1-LIGHTNING_DECREASING_DISTANCE_BOUNCE_FACTOR)
+                  damage = damage*(1-LIGHTNING_DECREASING_DAMAGE_BOUNCE_FACTOR)
+                  for new_target in game.all_ennemies:
+                        if not(new_target in old_target):
+                              new_x = new_target.center[0]
+                              new_y = new_target.center[1]
+                              distance = np.sqrt((old_x - new_x)**2 + (old_y - new_y)**2)
+                              if (distance<(distance_lim)and(distance>0.1*BACKGROUND_SQUARE_SIDE)):
+                                    self.add(Light_bolt(self,old_x,old_y,new_target,damage)) 
+                                    old_x = new_x  
+                                    old_y = new_y
+                                    old_target.append(new_target)  
+                                    break
+
+            random.choice(game.all_mixers.projectile_mixer.light_proj_list).play()
 
       def add_ballista_bolt(self,game,x,y,target):
             self.add(Bolt(self,x,y,target))
@@ -91,6 +117,32 @@ class Fire_bolt_data():
 
             self.impact_tag = FIRE_TOWER_IMPACT_TAG
 
+class Light_bolt_data():
+      def __init__(self):
+
+            self.damage = LIGHTNING_BOLT_DAMAGE
+
+            self.static_image = pygame.image.load(LIGHTNING_BOLT_IMAGE_PATH+"light_2.png").convert_alpha()
+            self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*LIGHTNING_BOLT_RESIZE_FACTOR)  
+            self.image_size = vec(self.static_image.get_size())
+            self.initial_direction = vec(0,1)
+            self.offset = vec(LIGHTNING_BOLT_CENTOR_VECTOR[0]*self.image_size[0],LIGHTNING_BOLT_CENTOR_VECTOR[1]*self.image_size[1])
+
+            self.number_frame = LIGHTNING_BOLT_NUMBER_FRAME
+            self.images = []
+            for i in range(2,self.number_frame+2):
+                  self.images.append(pygame.image.load(LIGHTNING_BOLT_IMAGE_PATH+"light_"+str(i)+".png").convert_alpha())  
+                  # self.images[i-1] = pygame.transform.scale(self.images[i-1],vec(self.images[i-1].get_size())*LIGHTNING_BOLT_RESIZE_FACTOR)
+            self.images_fading = []
+            for i in range(4,self.number_frame+4):
+                  self.images_fading.append(pygame.image.load(LIGHTNING_BOLT_IMAGE_PATH+"light_"+str(i)+".png").convert_alpha())  
+            self.anim_total_time = LIGHTNING_BOLT_TOTAL_TIME  # in ms
+            self.time_per_frame = LIGHTNING_BOLT_TIME_PER_FRAME # in ms
+
+            self.short_images = []
+            self.short_images.append(pygame.image.load(LIGHTNING_BOLT_IMAGE_PATH+"light_1.png").convert_alpha())
+            self.short_images.append(pygame.transform.flip(self.short_images[0], True, False))
+
 class Bolt_data():
       def __init__(self):      
 
@@ -132,7 +184,6 @@ class Projectile(pygame.sprite.Sprite):
             self.rect.x = self.posX
             self.rect.y = self.posY
             self.center += self.my_data.velocity * game.timestep * self.direction
-            self.moving = True
             self.rotate(self.my_data.static_image)
 
             # self.rendering_layer = compute_rendering_layer_number(self)
@@ -184,7 +235,6 @@ class Arcane_bolt(Projectile,pygame.sprite.Sprite):
             self.rendering_layer = compute_rendering_layer_number(self)
 
             self.direction = vec(0,0)
-            self.moving = False  
 
             self.target = target
 
@@ -214,7 +264,6 @@ class Fire_bolt(Projectile,pygame.sprite.Sprite):
             self.rendering_layer = compute_rendering_layer_number(self)
 
             self.direction = vec(0,0)
-            self.moving = False  
 
             self.target = target
 
@@ -234,7 +283,6 @@ class Fire_bolt(Projectile,pygame.sprite.Sprite):
             self.rect.x = self.posX
             self.rect.y = self.posY
             self.center += self.my_data.velocity * game.timestep * self.direction
-            self.moving = True
 
             # self.rendering_layer = compute_rendering_layer_number(self)
             self.rendering_layer = TOTAL_NUMBER_RENDERING_LAYER-3
@@ -246,6 +294,125 @@ class Fire_bolt(Projectile,pygame.sprite.Sprite):
                   self.my_timer = 0.0
                               
             self.rotate(self.my_data.images[self.current_frame])  
+
+class Light_bolt(Projectile,pygame.sprite.Sprite):
+      def __init__(self,all_p,x,y,target,damage=LIGHTNING_BOLT_DAMAGE):
+            pygame.sprite.Sprite.__init__(self)
+
+            self.my_data = all_p.light_bolt_data
+
+            self.damage = damage
+
+            self.target = target
+
+            self.target.velocity = 0
+
+            self.posX = x    
+            self.posY = y   
+            self.pos = vec(x,y)
+
+            self.current_image = self.my_data.static_image
+
+            self.image_size = self.my_data.image_size
+            self.my_target_center = self.target.rect.center
+            distance = np.sqrt((self.my_target_center[0] - x)**2 + (self.my_target_center[1] - y)**2)
+            resize_ratio = distance/self.image_size[1]
+            self.current_image = pygame.transform.scale(self.current_image,self.image_size*resize_ratio)  
+
+            self.image_size = vec(self.current_image.get_size())
+            self.origin_pos = vec(LIGHTNING_BOLT_CENTOR_VECTOR[0]*self.image_size[0],self.posY+LIGHTNING_BOLT_CENTOR_VECTOR[1]*self.image_size[1])
+      
+            self.current_frame = 0
+
+            self.my_timer = 0
+            self.my_total_timer = 0
+
+            self.rendering_layer = compute_rendering_layer_number(self)
+
+            self.direction = vec(0,0)
+
+            self.damage_dealt = False
+
+      def move(self,game):  
+            distance = distance = np.sqrt((self.my_target_center[0] - self.posX)**2 + (self.my_target_center[1] - self.posY)**2)
+            if (self.my_total_timer < self.my_data.anim_total_time):
+                  if (pygame.sprite.Sprite.alive(self.target)):
+                        self.my_target_center = self.target.rect.center
+                        self.direction = (self.target.rect.center[0] - self.posX, self.target.rect.center[1] - self.posY)   
+                        self.direction /= sqrt(self.direction[0]**2+self.direction[1]**2) 
+
+                  
+                  self.my_timer += game.timestep
+                  if self.my_timer>self.my_data.time_per_frame:
+                        # self.current_frame += 1
+                        # self.current_frame = self.current_frame%self.my_data.number_frame
+                        self.current_frame = random.randint(0,1)
+                        self.my_timer = 0.0   
+                  if distance>2.0*BACKGROUND_SQUARE_SIDE:
+                        self.current_image = self.my_data.images[self.current_frame].convert_alpha()
+                  else:
+                        self.current_image = self.my_data.short_images[self.current_frame].convert_alpha()
+            else:
+                  self.my_timer += game.timestep
+                  if self.my_timer>(self.my_data.anim_total_time*0.5):
+                        self.current_frame += 1
+                        self.current_frame = min(1,self.current_frame)
+                        self.my_timer = 0.0 
+                  self.current_image = self.my_data.images_fading[self.current_frame].convert_alpha()
+
+
+            image_size = vec(self.current_image.get_size())
+            resize_ratio = distance/image_size[1]
+            self.current_image = pygame.transform.scale(self.current_image,image_size*resize_ratio)  
+
+            self.image_size = vec(self.current_image.get_size())
+            self.origin_pos = vec(LIGHTNING_BOLT_CENTOR_VECTOR[0]*self.image_size[0],LIGHTNING_BOLT_CENTOR_VECTOR[1]*self.image_size[1])
+
+            self.rotate(self.current_image)
+
+      def rotate(self,image):
+            scalar_product = self.my_data.initial_direction[0]*self.direction[0]+self.my_data.initial_direction[1]*self.direction[1]
+            if (self.direction[1]<self.my_data.initial_direction[1]):
+                  if (scalar_product > 0) : 
+                        angle = -np.arccos(scalar_product)
+                  else:
+                        angle = 2*math.pi-np.arccos(scalar_product)
+            else:
+                  if (scalar_product > 0) : 
+                        angle = np.arccos(scalar_product)
+                  else:
+                        angle = -(2*math.pi-np.arccos(scalar_product))
+            if (self.direction[0]>self.my_data.initial_direction[0]):
+                  angle = -angle
+
+
+            angle = math.degrees(angle)
+
+            image_rect = image.get_rect(topleft = (self.pos[0] - self.origin_pos[0], self.pos[1]-self.origin_pos[1]))
+            offset_center_to_pivot = self.pos - image_rect.center
+
+            rotated_offset = offset_center_to_pivot.rotate(-angle)
+
+            rotated_image_center = (self.pos[0] - rotated_offset.x, self.pos[1] - rotated_offset.y)
+
+            self.current_image = pygame.transform.rotate(image, angle)
+            self.rotated_image_rect = self.current_image.get_rect(center = rotated_image_center)
+
+
+      def check_impact(self,game):
+            self.my_total_timer +=  game.timestep 
+            if self.my_total_timer > 2*self.my_data.anim_total_time:
+                   pygame.sprite.Sprite.kill(self)
+            elif ((self.my_total_timer > self.my_data.anim_total_time) and not(self.damage_dealt)):
+                  self.target.velocity = self.target.my_data.velocity
+                  self.target.hp -= self.damage   
+                  self.damage_dealt = True
+                  self.current_frame = 0
+            elif (self.my_total_timer < self.my_data.anim_total_time):
+                  self.target.my_timer = 0
+
+      def render(self):
+            window.blit(self.current_image, self.rotated_image_rect)  
 
 class Bolt(Projectile,pygame.sprite.Sprite):
       def __init__(self,all_p,x,y,target):
@@ -263,7 +430,6 @@ class Bolt(Projectile,pygame.sprite.Sprite):
             self.rendering_layer = compute_rendering_layer_number(self)
 
             self.direction = vec(0,0)
-            self.moving = False
   
             self.target = target
 
@@ -297,7 +463,6 @@ class Rock(Projectile,pygame.sprite.Sprite):
             self.rendering_layer = compute_rendering_layer_number(self)
 
             self.direction = vec(0,0)
-            self.moving = False
   
             self.target = target
 
@@ -328,7 +493,6 @@ class Rock(Projectile,pygame.sprite.Sprite):
             self.rect.x = self.posX
             self.rect.y = self.posY
             self.center += self.my_data.velocity * game.timestep * self.direction
-            self.moving = True
             self.rotate(game,self.my_data.static_image)
 
             # self.rendering_layer = compute_rendering_layer_number(self)
