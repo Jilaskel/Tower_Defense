@@ -19,10 +19,20 @@ class All_mixers():
 class Music_mixer():
     def __init__(self):
         pygame.mixer.music.load(MUSIC_FILE_PATH)
-        start_time_ms = 0.0
-        fade_up_time_ms = int(FADE_UP_TIME*1000)  # need to be integer
-        pygame.mixer.music.play(-1,start_time_ms,fade_up_time_ms)  #infinite loop   # play(loops=0, start=0.0, fade_ms=0)
+        self.start_time_ms = 0.0
+        self.fade_up_time_ms = int(FADE_UP_TIME*1000)  # need to be integer
+        pygame.mixer.music.play(-1,self.start_time_ms,self.fade_up_time_ms)  #infinite loop   # play(loops=0, start=0.0, fade_ms=0)
         pygame.mixer.music.set_volume(MUSIC_VOLUME)
+
+    def rewind(self):
+        pygame.mixer.music.stop()
+        pygame.mixer.music.play(-1,self.start_time_ms,self.fade_up_time_ms)  #infinite loop   # play(loops=0, start=0.0, fade_ms=0)
+
+    def pause(self):
+        pygame.mixer.music.pause()
+
+    def unpause(self):
+        pygame.mixer.music.unpause()
 
     def set_music_volume(self,amount):
         pygame.mixer.music.set_volume(MUSIC_VOLUME*amount)

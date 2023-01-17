@@ -2,6 +2,7 @@ import pygame
 from pygame.locals import *
 import sys
 import time
+from starting_menu import *
 from game import *
 from thread import * 
  
@@ -26,6 +27,7 @@ game = thread1.game
 thread1.join()  # not sure, seems useless
 
 print("Starting game")
+starting_menu = Starting_menu(game)
 while RUNNING:
       for event in pygame.event.get():
             if event.type == QUIT:
@@ -33,24 +35,23 @@ while RUNNING:
                   RUNNING = False
                   sys.exit()
 
+      if (global_status.in_starting_menu):
 
-      if START_WITH_SPACE_BAR:
-            if event.type == pygame.KEYDOWN:
-                  if event.key == pygame.K_SPACE:
-                        game.has_started = True
-      else:
-            game.has_started = True
+            starting_menu.advance()
+            starting_menu.render()
 
-      game.deal_with_mouse()
+      elif (global_status.in_game):
 
-      if game.has_started:
-            game.spawning_ennemies()
-            game.fight()
-            game.move_objects()
-            game.die() 
+            game.deal_with_mouse()
 
-      game.render()
-      game.advance_time()
+            if game.is_running:
+                  game.spawning_ennemies()
+                  game.fight()
+                  game.move_objects()
+                  game.die() 
+
+            game.render()
+            game.advance_time()
 
 
     

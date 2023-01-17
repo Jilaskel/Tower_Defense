@@ -24,7 +24,7 @@ class Game():
             self.timestep = CLOCK.get_time()
             self.timer = 0.0
 
-            self.has_started = False
+            self.is_running = True
 
             self.all_mixers = All_mixers()
 
