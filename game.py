@@ -110,6 +110,14 @@ class Game():
             for error_message in self.all_error_messages.list:
                   error_message.move(self)
 
+            self.check_game_over()
+
+      def check_game_over(self):
+            for ennemy in self.all_ennemies:
+                  if (ennemy.posX>WINDOW_WIDTH):
+                        global_status.status = "Game Over"
+                        break
+
       def die(self):
             for ennemy in self.all_ennemies:
                   ennemy.die(self)
@@ -210,6 +218,8 @@ class Game():
                                     global_status.status = "In pause"
                               elif (global_status.status == "In pause"):
                                     global_status.status = "In game"
+                        if (event.key == K_g):
+                              global_status.status = "Game Over"
 
             
 

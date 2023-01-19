@@ -22,6 +22,7 @@ thread2.waiting(thread1)
 game = thread1.game
 starting_menu = thread1.starting_menu
 pause_menu = thread1.pause_menu
+game_over_menu = thread1.game_over_menu
 thread1.join()  # not sure, seems useless
 
 print("Starting game")
@@ -52,6 +53,12 @@ while RUNNING:
 
                   pause_menu.deal_with_mouse()                  
                   pause_menu.render()                  
+
+            case "Game Over":
+                  game.render(update=False)
+
+                  game_over_menu.deal_with_mouse()                  
+                  game_over_menu.render()  
 
             case "Quitting":
                   pygame.quit()

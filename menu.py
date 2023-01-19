@@ -1,5 +1,6 @@
 import pygame
 from utilitaries import *
+from functions import * 
 from tower import * 
 
 class Menu():
@@ -7,8 +8,11 @@ class Menu():
             self.all_buttons = pygame.sprite.Group()
             self.all_options_buttons = pygame.sprite.Group()
 
+            self.game = game
+
             self.margin = game.background.bush_width*6
             side = game.background.square_side
+            self.space = side
 
             self.font_menu_size = int(30*RESIZE_COEFF)
             self.font_menu_color = (0,0,0)
@@ -55,8 +59,30 @@ class Menu():
             self.gold_posY = 0*side
 
 
+            path_score = MENU_SCORE_BUTTON_IMAGE_PATH
+            self.score_reserve_image = pygame.image.load(path_score).convert_alpha()  
+            image_size = vec(self.score_reserve_image.get_size()) 
+            self.score_reserve_image = pygame.transform.scale(self.score_reserve_image,image_size*MENU_GOLD_RESERVE_BUTTON_RESIZE_FACTOR) 
+            self.score_posX = 0.075*side
+            self.score_posY = -0.075*side
+
+            self.font_score_size = int(35*RESIZE_COEFF)
+            self.font_score_color = (0,0,0)  ## black
+            self.font_score = pygame.font.Font(FONT_PATH,self.font_score_size)
+            self.font_posX = 0.45 * side
+            self.font_posY = 0.60 * side
+
       def render(self):
             window.blit(self.gold_reserve_image,(self.gold_posX,self.gold_posY))
+
+            window.blit(self.score_reserve_image,(self.score_posX,self.score_posY))
+            score = "Score"
+            txt = self.font_score.render(score,True,self.font_score_color)
+            window.blit(txt,(self.font_posX,self.font_posY-0.3*self.space))             
+            score = convert_time(self.game.timer)
+            txt = self.font_score.render(score,True,self.font_score_color)
+            window.blit(txt,(self.font_posX,self.font_posY)) 
+
             for opt_button in  self.all_options_buttons:
                   opt_button.render()
 

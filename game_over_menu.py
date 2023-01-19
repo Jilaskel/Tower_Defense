@@ -1,8 +1,10 @@
 import pygame
 from utilitaries import *
+from functions import *
 from starting_menu import * 
+from pause_menu import * 
 
-class Pause_menu():
+class Game_over_menu():
       def __init__(self,game):
             self.all_buttons = pygame.sprite.Group()
 
@@ -13,7 +15,7 @@ class Pause_menu():
             self.font_size = int(140*RESIZE_COEFF)
             self.font = pygame.font.Font(LOADING_FONT_PATH,self.font_size)
             self.font_color = (243,243,243)
-            title = "You Shall Not Pass"
+            title = "Game Over"
             self.title1 = self.font.render(title,True,self.font_color)
 
             self.background = pygame.image.load(PAUSE_MENU_BACKGROUND).convert_alpha()
@@ -36,14 +38,9 @@ class Pause_menu():
             path = STARTING_MENU_BUTTON_1_PATH
             resize_factor = 0.25
             x_m = WINDOW_WIDTH*0.5 - 1148*resize_factor*0.5*RESIZE_COEFF
-            (x,y) = (x_m,self.margin)
-            self.all_buttons.add(Button(self,path,x,y,"Resume",resize_factor,vec(0.30,0.30)))
 
-            (x,y) = (x_m,self.margin+1.0*space)
-            self.all_buttons.add(Button(self,path,x,y,"Restart",resize_factor,vec(0.30,0.30)))
- 
             (x,y) = (x_m,self.margin+2.0*space)
-            self.all_buttons.add(Button(self,path,x,y,"Parameters",resize_factor,vec(0.15,0.30)))
+            self.all_buttons.add(Button(self,path,x,y,"Restart",resize_factor,vec(0.30,0.30)))
 
             (x,y) = (x_m,self.margin+3.0*space)
             self.all_buttons.add(Button(self,path,x,y,"Back to menu",resize_factor,vec(0.10,0.30)))
@@ -70,63 +67,15 @@ class Pause_menu():
             x = WINDOW_WIDTH*0.5 - image_size[0]*0.5
             window.blit(self.pannel_image, (x, 250*RESIZE_COEFF))
 
+            message = "Your score is " + convert_time(self.game.timer)
+            txt = self.font_menu.render(message,True,self.font_menu_color)
+            image_size = vec(txt.get_size())
+            x = WINDOW_WIDTH*0.5 - image_size[0]*0.5
+            window.blit(txt, (x, self.margin))
+
             for button in self.all_buttons:
                   button.render()
 
             self.mouse.render()
             pygame.display.update()
 
-
-class Pause_mouse(pygame.sprite.Sprite):
-    def __init__(self,menu):
-        super().__init__()
-
-        self.menu = menu
-
-        self.static_image = pygame.image.load(MOUSE_IMAGE_PATH).convert_alpha()  
-        self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*MOUSE_RESIZE_FACTOR)        
-        self.current_image = self.static_image
-
-        self.ratio_for_hitbox = MOUSE_RATIO_FOR_HITBOX
-
-
-    def doing_stuff(self):
-        (x,y) = pygame.mouse.get_pos()
-        self.posX = x
-        self.posY = y
-
-        self.rect = self.current_image.get_rect()
-        self.rect.x = self.posX
-        self.rect.y = self.posY
-
-        self.state_mouse = pygame.mouse.get_pressed()
-        self.left_click_pressed = self.state_mouse[0]
-
-        self.hit_buttons = pygame.sprite.spritecollide(self, self.menu.all_buttons, False, pygame.sprite.collide_rect_ratio(self.ratio_for_hitbox))
-        if (self.hit_buttons):
-            self.hit_buttons[0].mouse_over = True
-            if (self.left_click_pressed):
-                  match self.hit_buttons[0].tag:
-                        case "Resume":
-                            global_status.status = "In game"
-
-                        case "Restart":
-                            self.menu.game.reset()
-                            self.menu.game.all_mixers.music_mixer.rewind()
-                            global_status.status = "In game"
-
-                        case "Parameters":
-                            pass
-
-                        case "Back to menu":
-                            self.menu.game.reset()
-                            self.menu.game.all_mixers.music_mixer.rewind()
-                            global_status.status = "Starting menu"
-
-                        case "Quit":
-                            global_status.status = "Quitting"
-
-
-    def render(self):
-        pygame.mouse.set_visible(False)
-        window.blit(self.current_image, (self.posX, self.posY)) 

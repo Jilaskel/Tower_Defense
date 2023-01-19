@@ -9,3 +9,21 @@ def compute_rendering_layer_number(object):
     number_of_layer = np.floor((y_obj-menu_height)/side)*3+2
 
     return number_of_layer
+
+def convert_time(mseconde):
+    seconde = mseconde/1000
+    hour = seconde /3600
+    seconde %= 3600
+    minute = seconde/60
+    seconde%=60
+
+    txt_hour = str(int(hour)).zfill(2)
+    txt_minute = str(int(minute)).zfill(2)
+    txt_seconde = str(int(seconde)).zfill(2)
+
+    if int(hour)>0:
+        format = txt_hour + ":" + txt_minute + ":" + txt_seconde
+    else:
+        format = txt_minute + ":" + txt_seconde
+
+    return format
