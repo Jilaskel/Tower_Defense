@@ -1,5 +1,7 @@
 import threading
 from game import * 
+from starting_menu import *
+from pause_menu import *
 import pygame
 from utilitaries import *
 
@@ -19,7 +21,12 @@ class myThread (threading.Thread):
 
    def load_game(self):
         print("Loading game")
+        
         self.game = Game()
+        self.starting_menu = Starting_menu(self.game)
+        self.pause_menu = Pause_menu(self.game)
+
+        loading_progress.value += 10
 
 
    def waiting(self,thread1):

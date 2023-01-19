@@ -32,19 +32,17 @@ class Starting_menu():
 
             path = STARTING_MENU_BUTTON_2_PATH
             (x,y) = (self.margin[0]+0.1*space,self.margin[1]-0.2*space)
-            self.all_buttons.add(Starting_button(self,path,x,y,"Play",0.20,vec(0.35,0.35)))
+            self.all_buttons.add(Button(self,path,x,y,"Play",0.20,vec(0.35,0.35)))
 
             path = STARTING_MENU_BUTTON_1_PATH
             (x,y) = (self.margin[0],self.margin[1]+1.0*space)
-            self.all_buttons.add(Starting_button(self,path,x,y,"Parameters",0.35,vec(0.15,0.30)))
+            self.all_buttons.add(Button(self,path,x,y,"Parameters",0.35,vec(0.15,0.30)))
 
             (x,y) = (self.margin[0],self.margin[1]+2.0*space)
-            self.all_buttons.add(Starting_button(self,path,x,y,"Credits",0.35,vec(0.30,0.30)))
+            self.all_buttons.add(Button(self,path,x,y,"Credits",0.35,vec(0.30,0.30)))
 
             (x,y) = (self.margin[0],self.margin[1]+3.0*space)
-            self.all_buttons.add(Starting_button(self,path,x,y,"Quit",0.35,vec(0.38,0.30)))
-
-            self.rendering_layer = 0
+            self.all_buttons.add(Button(self,path,x,y,"Quit",0.35,vec(0.38,0.30)))
 
             self.my_timer = 0
             self.anim_frame_r = 0
@@ -147,34 +145,30 @@ class Starting_mouse(pygame.sprite.Sprite):
         if (self.hit_buttons):
             self.hit_buttons[0].mouse_over = True
             if (self.left_click_pressed):
+                  match self.hit_buttons[0].tag:
+                        case "Play":
+                              global_status.status = "In game"
+                              self.menu.game.all_mixers.music_mixer.rewind()
 
-                  if (self.hit_buttons[0].tag=="Play"):
-                        global_status.in_starting_menu = False
-                        global_status.in_game= True
-                        self.menu.game.all_mixers.music_mixer.rewind()
+                        case "Parameters":
+                              pass
 
-                  elif (self.hit_buttons[0].tag=="Parameters"):
-                        pass
+                        case "Credits":
+                              pass
 
-                  elif (self.hit_buttons[0].tag=="Credits"):
-                        pass
-
-                  elif (self.hit_buttons[0].tag=="Quit"):
-                        pygame.quit()
-                        RUNNING = False
-                        sys.exit()
+                        case "Quit":
+                              global_status.status = "Quitting"
 
 
     def render(self):
         pygame.mouse.set_visible(False)
         window.blit(self.current_image, (self.posX, self.posY)) 
 
-class Starting_button(pygame.sprite.Sprite):
+class Button(pygame.sprite.Sprite):
       def __init__(self,menu,path,x,y,text,resize_r,text_offset):
             super().__init__()
 
             self.menu = menu
-            self.rendering_layer = 0
 
             self.current_image = pygame.image.load(path).convert_alpha()   
             image_size = vec(self.current_image.get_size())
@@ -212,4 +206,3 @@ class Starting_button(pygame.sprite.Sprite):
                   window.blit(self.text,(self.posX+self.image_size[0]*self.text_offset[0], self.posY+self.image_size[1]*self.text_offset[1]))
 
             self.mouse_over = False 
-            self.rendering_layer = 0  

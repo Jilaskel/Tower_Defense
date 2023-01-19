@@ -1,4 +1,5 @@
 import pygame
+from pygame.locals import *
 from audio_mixer import *
 from background import *
 from grid import *
@@ -8,7 +9,7 @@ from projectile import *
 from impact import * 
 from ennemy import *
 from dead_body import *
-from mouse import *
+from game_mouse import *
 from menu import *
 from gold import *
 from error_message import *
@@ -40,7 +41,7 @@ class Game():
 
             self.gold = Gold()
 
-            self.mouse = Mouse()
+            self.mouse = Game_mouse()
 
             loading_progress.value += 10
 
@@ -74,12 +75,11 @@ class Game():
 
             self.all_error_messages = All_error_message_anim()
 
-            loading_progress.value += 10
-
             self.object_to_render = []
 
       def deal_with_mouse(self):
             self.mouse.doing_stuff(self)
+
 
       def spawning_ennemies(self):
             self.spawning_mode.spawning_ennemies(self)
@@ -119,7 +119,7 @@ class Game():
             for gate in self.base.all_gates:
                   gate.destroy()
 
-      def render(self):
+      def render(self,update=True):
             self.object_to_render.append(self.background)
             self.object_to_render.append(self.menu)
 
@@ -155,23 +155,37 @@ class Game():
 
             self.object_to_render.append(self.gold)
 
-            self.object_to_render.append(self.mouse)
+            if (global_status.status == "In game"):
+                  self.object_to_render.append(self.mouse)
 
             self.object_to_render.sort(key =lambda object : object.rendering_layer)
 
             for object in self.object_to_render:
                   object.render()
 
-            pygame.display.update()
+            if update:
+                  pygame.display.update()
 
             self.object_to_render.clear()
 
       def advance_time(self):
-            CLOCK.tick(FPS)
-            self.timestep = CLOCK.get_time()
             self.timer += self.timestep
             #print(CLOCK.get_fps())
                   
+      def get_event(self):
+            CLOCK.tick(FPS)
+            self.timestep = CLOCK.get_time()
+
+            for event in pygame.event.get():
+                  if event.type == QUIT:
+                        global_status.status = "Quitting"
+                  if event.type == KEYDOWN:
+                        if ((event.key == K_ESCAPE) or (event.key == K_p)):
+                              if (global_status.status == "In game"):
+                                    global_status.status = "In pause"
+                              elif (global_status.status == "In pause"):
+                                    global_status.status = "In game"
+
             
 
 

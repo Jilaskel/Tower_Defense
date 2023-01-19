@@ -85,6 +85,9 @@ STARTING_MENU_BUTTON_2_PATH = "Assets/Menu/Buttons/starting_menu_button_2.png"
 
 STARTING_MOUSE_OVER_ENLARGED_COEFF = 1.25
 
+#### PAUSE MENU
+PAUSE_MENU_BACKGROUND = "Assets/Menu/pause_menu_background.png"
+
 #### MENU
 MENU_BUTTON_SIZE = [BACKGROUND_SQUARE_SIDE,BACKGROUND_SQUARE_SIDE]
 MENU_ARCANE_TOWER_BUTTON_IMAGE_PATH = "Assets/Menu/Buttons/arcane_tower_button.png"
@@ -93,6 +96,8 @@ MENU_ICE_TOWER_BUTTON_IMAGE_PATH = "Assets/Menu/Buttons/ice_tower_button.png"
 MENU_LIGHTNING_TOWER_BUTTON_IMAGE_PATH = "Assets/Menu/Buttons/lightning_tower_button.png"
 MENU_BALLISTA_BUTTON_IMAGE_PATH = "Assets/Menu/Buttons/ballista_button.png"
 MENU_CATAPULT_BUTTON_IMAGE_PATH = "Assets/Menu/Buttons/catapult_button.png"
+
+MENU_MENU_BUTTON_IMAGE_PATH = "Assets/Menu/Buttons/menu_button.png"
 
 MENU_GOLD_RESERVE_BUTTON_IMAGE_PATH = "Assets/Menu/Buttons/gold_reserve_button.png"
 MENU_GOLD_RESERVE_BUTTON_RESIZE_FACTOR = 0.33*RESIZE_COEFF
@@ -370,10 +375,8 @@ ROCK_IMPACT_DAMAGE_FRAME = 4
 MUSIC_FILE_PATH = "Audio/Music/Age_of_War_Theme_Soundtrack.mp3"
 FADE_UP_TIME = 3.0 # in seconds
 MUSIC_VOLUME = 0.05
-# MUSIC_VOLUME = 0.0
 
 ## SOUND
-
 AUDIO_EFFECTS_COEFF = 1.0
 
 SOUND_BUILDING_ROCK_PATH = "Audio/Other_effect/ES_Impact Wood Hit 6 - SFX Producer.mp3"

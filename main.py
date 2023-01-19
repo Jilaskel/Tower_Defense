@@ -1,9 +1,5 @@
 import pygame
-from pygame.locals import *
 import sys
-import time
-from starting_menu import *
-from game import *
 from thread import * 
  
  
@@ -24,35 +20,43 @@ thread2.start()
 
 thread2.waiting(thread1)
 game = thread1.game
+starting_menu = thread1.starting_menu
+pause_menu = thread1.pause_menu
 thread1.join()  # not sure, seems useless
 
 print("Starting game")
-starting_menu = Starting_menu(game)
+
 while RUNNING:
-      for event in pygame.event.get():
-            if event.type == QUIT:
-                  pygame.quit()
-                  RUNNING = False
-                  sys.exit()
 
-      if (global_status.in_starting_menu):
+      game.get_event()
 
-            starting_menu.advance()
-            starting_menu.render()
+      match global_status.status:
 
-      elif (global_status.in_game):
+            case "Starting menu":
+                  starting_menu.advance()
+                  starting_menu.render()
 
-            game.deal_with_mouse()
+            case "In game":
+                  game.deal_with_mouse()
 
-            if game.is_running:
                   game.spawning_ennemies()
                   game.fight()
                   game.move_objects()
                   game.die() 
 
-            game.render()
-            game.advance_time()
+                  game.render()
+                  game.advance_time()
 
+            case "In pause":
+                  game.render(update=False)
+
+                  pause_menu.deal_with_mouse()                  
+                  pause_menu.render()                  
+
+            case "Quitting":
+                  pygame.quit()
+                  RUNNING = False
+                  sys.exit()
 
     
  

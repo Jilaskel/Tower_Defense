@@ -5,8 +5,9 @@ from tower import *
 class Menu():
       def __init__(self,game):
             self.all_buttons = pygame.sprite.Group()
+            self.all_options_buttons = pygame.sprite.Group()
 
-            self.margin = game.background.bush_width*2
+            self.margin = game.background.bush_width*6
             side = game.background.square_side
 
             self.font_menu_size = int(30*RESIZE_COEFF)
@@ -18,27 +19,31 @@ class Menu():
 
             path = MENU_ARCANE_TOWER_BUTTON_IMAGE_PATH
             (x,y) = (self.margin,0)
-            self.all_buttons.add(Button(self,path,x,y,ARCANE_TOWER_BUTTON_TAG))
+            self.all_buttons.add(Tower_button(self,path,x,y,ARCANE_TOWER_BUTTON_TAG))
 
             path = MENU_FIRE_TOWER_BUTTON_IMAGE_PATH
             (x,y) = (self.margin+1.0*side,0)
-            self.all_buttons.add(Button(self,path,x,y,FIRE_TOWER_BUTTON_TAG))
+            self.all_buttons.add(Tower_button(self,path,x,y,FIRE_TOWER_BUTTON_TAG))
 
             path = MENU_LIGHTNING_TOWER_BUTTON_IMAGE_PATH
             (x,y) = (self.margin+2.0*side,0)
-            self.all_buttons.add(Button(self,path,x,y,LIGHTNING_TOWER_BUTTON_TAG))
+            self.all_buttons.add(Tower_button(self,path,x,y,LIGHTNING_TOWER_BUTTON_TAG))
 
             path = MENU_ICE_TOWER_BUTTON_IMAGE_PATH
             (x,y) = (self.margin+3.0*side,0)
-            self.all_buttons.add(Button(self,path,x,y,ICE_TOWER_BUTTON_TAG))
+            self.all_buttons.add(Tower_button(self,path,x,y,ICE_TOWER_BUTTON_TAG))
 
             path = MENU_BALLISTA_BUTTON_IMAGE_PATH
             (x,y) = (self.margin+4.0*side,0)
-            self.all_buttons.add(Button(self,path,x,y,BALLISTA_BUTTON_TAG))
+            self.all_buttons.add(Tower_button(self,path,x,y,BALLISTA_BUTTON_TAG))
 
             path = MENU_CATAPULT_BUTTON_IMAGE_PATH
             (x,y) = (self.margin+5.0*side,0)
-            self.all_buttons.add(Button(self,path,x,y,CATAPULT_BUTTON_TAG))
+            self.all_buttons.add(Tower_button(self,path,x,y,CATAPULT_BUTTON_TAG))
+
+            path = MENU_MENU_BUTTON_IMAGE_PATH
+            (x,y) = (self.margin+11.5*side,0)
+            self.all_options_buttons.add(Option_button(path,x,y,0.2,"menu"))
 
             self.rendering_layer = 0
 
@@ -52,18 +57,11 @@ class Menu():
 
       def render(self):
             window.blit(self.gold_reserve_image,(self.gold_posX,self.gold_posY))
-            # mouse_over = False
-            # for button in self.all_buttons:
-            #       if not(button.mouse_over):
-            #             button.render(self)
-            #       else:
-            #             last_button_to_render = button
-            #             mouse_over = True
+            for opt_button in  self.all_options_buttons:
+                  opt_button.render()
 
-            # if mouse_over:
-            #       last_button_to_render.render(self)
 
-class Button(pygame.sprite.Sprite):
+class Tower_button(pygame.sprite.Sprite):
       def __init__(self,menu,path,x,y,tag):
             super().__init__()
 
@@ -179,3 +177,44 @@ class Button(pygame.sprite.Sprite):
 
             self.mouse_over = False 
             self.rendering_layer = 0  
+
+
+class Option_button(pygame.sprite.Sprite):
+      def __init__(self,path,x,y,resize_r,tag):
+            super().__init__()
+
+            self.current_image = pygame.image.load(path).convert_alpha()   
+            image_size = vec(self.current_image.get_size())
+            resize_ratio = resize_r * RESIZE_COEFF
+            self.current_image = pygame.transform.scale(self.current_image,image_size*resize_ratio)  
+            self.image_size = vec(self.current_image.get_size())
+
+            self.rect = self.current_image.get_rect() 
+            self.posX = x  
+            self.posY = y   
+            self.rect.x = self.posX
+            self.rect.y = self.posY   
+
+            self.mouse_over = False
+            self.enlarged_image = pygame.image.load(path).convert_alpha()
+            self.enlarged_image = pygame.transform.scale(self.enlarged_image,self.image_size*STARTING_MOUSE_OVER_ENLARGED_COEFF) 
+            self.enlarged_size = vec(self.enlarged_image.get_size()) 
+            self.enlarged_posX = self.posX - int((self.enlarged_size[0]-self.image_size[0])*0.5)
+            # self.enlarged_posY = self.posY - int((self.enlarged_size[1]-self.image_size[1])*0.5)
+            self.enlarged_posY = self.posY
+
+            self.my_tag = tag
+
+      def action(self):
+            match self.my_tag:
+                  case menu:
+                        global_status.status = "In pause"
+
+
+      def render(self):
+            if self.mouse_over:
+                  window.blit(self.enlarged_image, (self.enlarged_posX, self.enlarged_posY))    
+            else:
+                  window.blit(self.current_image, (self.posX, self.posY))  
+
+            self.mouse_over = False 

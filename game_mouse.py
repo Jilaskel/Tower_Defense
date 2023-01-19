@@ -4,7 +4,7 @@ from menu import *
 from tower import *
 
 
-class Mouse(pygame.sprite.Sprite):
+class Game_mouse(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
 
@@ -108,14 +108,22 @@ class Mouse(pygame.sprite.Sprite):
                          
         else: #display range?
             self.hit_towers = pygame.sprite.spritecollide(self, game.all_towers, False, pygame.sprite.collide_rect_ratio(self.ratio_for_hitbox))
-                
+
+            self.hit_opt_buttons = pygame.sprite.spritecollide(self, game.menu.all_options_buttons, False, pygame.sprite.collide_rect_ratio(self.ratio_for_hitbox))
+            if (self.hit_opt_buttons):
+                self.hit_opt_buttons[0].mouse_over = True
+                if (self.left_click_pressed):   
+                        self.hit_opt_buttons[0].action()         
 
         if not(self.left_click_pressed):
             self.carrying = False
 
+
+
     def render(self):
         pygame.mouse.set_visible(False)
         window.blit(self.current_image, (self.posX, self.posY)) 
+
         if self.carrying:
             hitbox = self.hit_buttons[0].range_hitbox
             window.blit(hitbox.image, (self.carried_x+hitbox.offset[0], self.carried_y+hitbox.offset[1]))  # display range hitbow while dragging
