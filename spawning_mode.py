@@ -26,6 +26,12 @@ class Spawning_mode():
             self.number_ogre_spawned = 1.0
             self.last_time_spawning_ogre = SPAWNING_INITIAL_TIME - P1_OGRE_SPAWNING_PERIOD*self.number_gobelin_spawned            
         
+    def reset(self):
+        self.number_gobelin_spawned = 1.0
+        self.last_time_spawning_gobelin = SPAWNING_INITIAL_TIME - P1_GOBELIN_SPAWNING_PERIOD*self.number_gobelin_spawned            
+        self.number_ogre_spawned = 1.0
+        self.last_time_spawning_ogre = SPAWNING_INITIAL_TIME - P1_OGRE_SPAWNING_PERIOD*self.number_gobelin_spawned            
+            
 
     def spawning_ennemies(self,game):
         time = game.timer/1000.0  # in second

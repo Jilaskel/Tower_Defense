@@ -109,12 +109,16 @@ class Pause_mouse(pygame.sprite.Sprite):
                             global_status.status = "In game"
 
                         case "Restart":
-                            pass
+                            self.menu.game.reset()
+                            self.menu.game.all_mixers.music_mixer.rewind()
+                            global_status.status = "In game"
 
                         case "Parameters":
                             pass
 
                         case "Back to menu":
+                            self.menu.game.reset()
+                            self.menu.game.all_mixers.music_mixer.rewind()
                             global_status.status = "Starting menu"
 
                         case "Quit":

@@ -19,6 +19,9 @@ class Gold():
         self.amount += amount
         game.all_gold_anim.add_gold_anim(obj,amount)
 
+    def reset(self):
+        self.amount = GOLD_STARTING_AMOUNT
+
     def render(self):
         self.text_price =  self.font_gold.render(str(self.amount),True,self.font_gold_color) 
         window.blit(self.text_price,(self.font_posX,self.font_posY)) 

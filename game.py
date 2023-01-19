@@ -22,7 +22,8 @@ from utilitaries import *
 
 class Game():
       def __init__(self):
-            self.timestep = CLOCK.get_time()
+
+            self.timestep = 0.0
             self.timer = 0.0
 
             self.is_running = True
@@ -171,6 +172,30 @@ class Game():
       def advance_time(self):
             self.timer += self.timestep
             #print(CLOCK.get_fps())
+
+      def reset(self):
+
+            self.spawning_mode.reset()
+
+            self.gold.reset()
+
+            self.base.reset()
+
+            self.all_towers.empty()
+
+            self.all_projectiles.empty()
+
+            self.all_impacts.empty()
+
+            self.all_ennemies.empty()
+
+            self.all_dead_bodies.empty()
+
+            self.all_gold_anim.list.clear()
+
+            self.all_error_messages.list.clear()
+
+            self.timer = 0.0
                   
       def get_event(self):
             CLOCK.tick(FPS)

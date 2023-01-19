@@ -19,6 +19,11 @@ class Base():
         self.all_gates.add(Gate(self,self.x_walls,y[1],"mid"))
         self.all_gates.add(Gate(self,self.x_walls,y[2],"bot"))
 
+    def reset(self):
+        for gate in self.all_gates:
+            gate.hp = gate.hp_max
+            gate.opened = False            
+
           
 
 class Gate(pygame.sprite.Sprite):
