@@ -363,7 +363,8 @@ class Light_bolt(Projectile,pygame.sprite.Sprite):
 
             image_size = vec(self.current_image.get_size())
             resize_ratio = distance/image_size[1]
-            self.current_image = pygame.transform.scale(self.current_image,image_size*resize_ratio)  
+            # self.current_image = pygame.transform.scale(self.current_image,image_size*resize_ratio)  ## to preserve dimensions ratio
+            self.current_image = pygame.transform.scale(self.current_image,(image_size[0]*LIGHTNING_BOLT_RESIZE_FACTOR,image_size[1]*resize_ratio))  
 
             self.image_size = vec(self.current_image.get_size())
             self.origin_pos = vec(LIGHTNING_BOLT_CENTOR_VECTOR[0]*self.image_size[0],LIGHTNING_BOLT_CENTOR_VECTOR[1]*self.image_size[1])
