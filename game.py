@@ -220,7 +220,8 @@ class Game():
                                     global_status.status = "In game"
                         if (event.key == K_g):
                               global_status.status = "Game Over"
-
+                        if (event.key == K_n):
+                              self.gold.amount *= 2
             
 
 

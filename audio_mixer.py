@@ -94,6 +94,15 @@ class Projectile_mixer():
         self.light_proj_list.append(self.light_proj_sound_3)
         self.light_proj_list.append(self.light_proj_sound_4)
 
+
+        self.ice_bolt_proj_sound_1 = pygame.mixer.Sound(SOUND_ICE_BOLT_PROJ_1_PATH)
+        self.ice_bolt_proj_sound_1.set_volume(SOUND_ICE_BOLT_PROJ_VOLUME*AUDIO_EFFECTS_COEFF)
+        self.ice_bolt_proj_sound_2 = pygame.mixer.Sound(SOUND_ICE_BOLT_PROJ_2_PATH)
+        self.ice_bolt_proj_sound_2.set_volume(SOUND_ICE_BOLT_PROJ_VOLUME*AUDIO_EFFECTS_COEFF)
+        self.ice_bolt_proj_list = []
+        self.ice_bolt_proj_list.append(self.ice_bolt_proj_sound_1)
+        self.ice_bolt_proj_list.append(self.ice_bolt_proj_sound_2)
+
 class Impact_mixer():
     def __init__(self):
 

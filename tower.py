@@ -414,7 +414,50 @@ class Ice_tower(Tower,pygame.sprite.Sprite):
 
             self.my_data = all_t.ice_tower_data
 
+            self.firing = False
+
             Tower.__init__(self,game,box)
+
+      def attack_and_reload(self,game):
+            if not(self.firing):
+                  if (self.attacking):
+                        self.my_timer += game.timestep
+                        if self.reloading:
+                              if self.my_timer>self.my_data.time_per_frame_r:
+                                    self.anim_frame_r += 1
+                                    self.my_timer = 0.0
+                                    if (self.anim_frame_r==self.my_data.number_frame_reloading):
+                                          self.anim_frame_r = 0
+                                          self.reloading = False
+                                          self.current_image= self.my_data.image_attacking[self.anim_frame_a]
+                                    else:
+                                          self.current_image= self.my_data.image_reloading[self.anim_frame_r]
+                        else:
+                              if self.my_timer>self.my_data.time_per_frame_a:
+                                    self.anim_frame_a += 1
+                                    self.my_timer = 0.0
+                                    if (self.anim_frame_a==self.my_data.number_frame_attacking):
+                                          game.all_projectiles.add_bolt(game,self.posX+self.my_data.firing_offset[0],self.posY+self.my_data.firing_offset[1],self.my_target,self.my_data.bolt_tag,self)
+                                          self.anim_frame_a = 0
+                                          self.reloading = True
+                                          self.current_image= self.my_data.image_reloading[self.anim_frame_r]
+                                    else:
+                                          self.current_image= self.my_data.image_attacking[self.anim_frame_a]
+                  else:
+                        if self.reloading:
+                              self.my_timer += game.timestep
+                              if self.my_timer>self.my_data.time_per_frame_r:
+                                    self.anim_frame_r += 1
+                                    self.my_timer = 0.0
+                                    if (self.anim_frame_r==self.my_data.number_frame_reloading):
+                                          self.reloading = False   
+                                          self.anim_frame_r = 0
+                                          self.current_image= self.my_data.image_attacking[self.anim_frame_a]
+                                    else:
+                                          self.current_image= self.my_data.image_reloading[self.anim_frame_r]
+                        else:
+                              self.anim_frame_a = 0
+                              self.current_image= self.my_data.image_attacking[self.anim_frame_a]
 
 class Ballista(Tower,pygame.sprite.Sprite):
       def __init__(self,game,all_t,box):

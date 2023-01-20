@@ -21,11 +21,12 @@ class All_projectiles(pygame.sprite.Group):
             self.arcane_bolt_data = Arcane_bolt_data()
             self.fire_bolt_data = Fire_bolt_data()
             self.light_bolt_data = Light_bolt_data()
+            self.ice_bolt_data = Ice_bolt_data()
             
             self.bolt_data = Bolt_data()
             self.rock_data = Rock_data()
 
-      def add_bolt(self,game,x,y,target,tag):
+      def add_bolt(self,game,x,y,target,tag,tower=None):
             if (tag==ARCANE_TOWER_BOLT_TAG):
                   self.add_arcane_bolt(game,x,y,target)
             elif (tag==FIRE_TOWER_BOLT_TAG):
@@ -33,7 +34,7 @@ class All_projectiles(pygame.sprite.Group):
             elif (tag==LIGHTNING_TOWER_BOLT_TAG):
                   self.add_lightning_bolt(game,x,y,target)
             elif (tag==ICE_TOWER_BOLT_TAG):
-                  self.add_arcane_bolt(game,x,y,target)
+                  self.add_ice_bolt(game,x,y,target,tower)
             elif (tag==BALLISTA_BOLT_TAG):
                   self.add_ballista_bolt(game,x,y,target)
             elif (tag==CATAPULT_BOLT_TAG):
@@ -71,6 +72,10 @@ class All_projectiles(pygame.sprite.Group):
                                     break
 
             random.choice(game.all_mixers.projectile_mixer.light_proj_list).play()
+
+      def add_ice_bolt(self,game,x,y,target,tower):
+            self.add(Ice_bolt(self,x,y,target,tower))
+            random.choice(game.all_mixers.projectile_mixer.ice_bolt_proj_list).play()
 
       def add_ballista_bolt(self,game,x,y,target):
             self.add(Bolt(self,x,y,target))
@@ -132,7 +137,6 @@ class Light_bolt_data():
             self.images = []
             for i in range(2,self.number_frame+2):
                   self.images.append(pygame.image.load(LIGHTNING_BOLT_IMAGE_PATH+"light_"+str(i)+".png").convert_alpha())  
-                  # self.images[i-1] = pygame.transform.scale(self.images[i-1],vec(self.images[i-1].get_size())*LIGHTNING_BOLT_RESIZE_FACTOR)
             self.images_fading = []
             for i in range(4,self.number_frame+4):
                   self.images_fading.append(pygame.image.load(LIGHTNING_BOLT_IMAGE_PATH+"light_"+str(i)+".png").convert_alpha())  
@@ -142,6 +146,32 @@ class Light_bolt_data():
             self.short_images = []
             self.short_images.append(pygame.image.load(LIGHTNING_BOLT_IMAGE_PATH+"light_1.png").convert_alpha())
             self.short_images.append(pygame.transform.flip(self.short_images[0], True, False))
+
+class Ice_bolt_data():
+      def __init__(self):
+
+            self.damage = ICE_BOLT_DAMAGE
+            self.slowing_coeff = ICE_BOLT_SLOWING_COEFF
+
+            self.static_image = pygame.image.load(ICE_BOLT_IMAGE_PATH+"frost_ray_00.png").convert_alpha()
+            self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*ICE_BOLT_RESIZE_FACTOR)  
+            self.image_size = vec(self.static_image.get_size())
+            self.initial_direction = vec(0,1)
+            self.offset = vec(ICE_BOLT_CENTOR_VECTOR[0]*self.image_size[0],ICE_BOLT_CENTOR_VECTOR[1]*self.image_size[1])
+
+            self.number_frame = ICE_BOLT_NUMBER_FRAME
+            self.images = []
+            for i in range(0,self.number_frame):
+                  self.images.append(pygame.image.load(ICE_BOLT_IMAGE_PATH+"frost_ray_"+str(i).zfill(2)+".png").convert_alpha())  
+            self.time_per_frame = ICE_BOLT_TIME_PER_FRAME # in ms
+
+            self.images_fading = []
+            self.number_frame_fading = ICE_BOLT_NUMBER_FRAME_FADING
+            fading_number = 34
+            for i in range(fading_number,fading_number+self.number_frame_fading):
+                  self.images_fading.append(pygame.image.load(ICE_BOLT_IMAGE_PATH+"frost_ray_"+str(i).zfill(2)+".png").convert_alpha())  
+            self.anim_total_time_fading = ICE_BOLT_NUMBER_FRAME_FADING  # in ms
+            self.time_per_frame_fading = self.anim_total_time_fading/self.number_frame_fading # in ms
 
 class Bolt_data():
       def __init__(self):      
@@ -334,7 +364,7 @@ class Light_bolt(Projectile,pygame.sprite.Sprite):
             self.damage_dealt = False
 
       def move(self,game):  
-            distance = distance = np.sqrt((self.my_target_center[0] - self.posX)**2 + (self.my_target_center[1] - self.posY)**2)
+            distance = np.sqrt((self.my_target_center[0] - self.posX)**2 + (self.my_target_center[1] - self.posY)**2)
             if (self.my_total_timer < self.my_data.anim_total_time):
                   if (pygame.sprite.Sprite.alive(self.target)):
                         self.my_target_center = self.target.rect.center
@@ -411,6 +441,130 @@ class Light_bolt(Projectile,pygame.sprite.Sprite):
                   self.current_frame = 0
             elif (self.my_total_timer < self.my_data.anim_total_time):
                   self.target.my_timer = 0
+
+      def render(self):
+            window.blit(self.current_image, self.rotated_image_rect)  
+
+class Ice_bolt(Projectile,pygame.sprite.Sprite):
+      def __init__(self,all_p,x,y,target,tower):
+            pygame.sprite.Sprite.__init__(self)
+
+            self.my_data = all_p.ice_bolt_data
+
+            self.target = target
+            self.tower = tower
+            self.tower.firing = True
+
+            self.target.velocity *= self.my_data.slowing_coeff
+
+            self.posX = x    
+            self.posY = y   
+            self.pos = vec(x,y)
+
+            self.current_image = self.my_data.static_image
+
+            self.image_size = self.my_data.image_size
+            self.my_target_center = self.target.rect.center
+            self.distance = np.sqrt((self.my_target_center[0] - x)**2 + (self.my_target_center[1] - y)**2)
+            resize_ratio = self.distance/self.image_size[1]
+            self.current_image = pygame.transform.scale(self.current_image,self.image_size*resize_ratio)  
+
+            self.image_size = vec(self.current_image.get_size())
+            self.origin_pos = vec(ICE_BOLT_CENTOR_VECTOR[0]*self.image_size[0],self.posY+ICE_BOLT_CENTOR_VECTOR[1]*self.image_size[1])
+      
+            self.current_frame = 0
+
+            self.my_timer = 0
+            self.my_total_timer = 0
+
+            self.rendering_layer = compute_rendering_layer_number(self)
+
+            self.direction = vec(0,0)
+
+            self.fading = False
+
+      def move(self,game):  
+            if not(self.fading):
+                  self.my_target_center = self.target.rect.center
+                  self.distance = np.sqrt((self.my_target_center[0] - self.posX)**2 + (self.my_target_center[1] - self.posY)**2)
+
+                  self.my_target_center = self.target.rect.center
+                  self.direction = (self.target.rect.center[0] - self.posX, self.target.rect.center[1] - self.posY)   
+                  self.direction /= sqrt(self.direction[0]**2+self.direction[1]**2) 
+                  
+                  self.my_timer += game.timestep
+                  if self.my_timer>self.my_data.time_per_frame:
+                        self.current_frame += 1
+                        self.current_frame = self.current_frame%self.my_data.number_frame
+                        self.my_timer = 0.0   
+
+                  self.current_image = self.my_data.images[self.current_frame].convert_alpha()
+
+            else:
+                  self.my_timer += game.timestep
+                  if self.my_timer>(self.my_data.time_per_frame_fading):
+                        self.current_frame += 1
+                        self.my_timer = 0.0 
+
+                  if (self.current_frame>(self.my_data.number_frame_fading-1)):
+                        pygame.sprite.Sprite.kill(self)
+                  else:
+                        self.current_image= self.my_data.images_fading[self.current_frame].convert_alpha()
+
+
+
+            image_size = vec(self.current_image.get_size())
+            resize_ratio = self.distance/image_size[1]
+            # self.current_image = pygame.transform.scale(self.current_image,image_size*resize_ratio)  ## to preserve dimensions ratio
+            self.current_image = pygame.transform.scale(self.current_image,(image_size[0]*ICE_BOLT_RESIZE_FACTOR,image_size[1]*resize_ratio))  
+
+            self.image_size = vec(self.current_image.get_size())
+            self.origin_pos = vec(ICE_BOLT_CENTOR_VECTOR[0]*self.image_size[0],ICE_BOLT_CENTOR_VECTOR[1]*self.image_size[1])
+
+            self.rotate(self.current_image)
+
+      def rotate(self,image):
+            scalar_product = self.my_data.initial_direction[0]*self.direction[0]+self.my_data.initial_direction[1]*self.direction[1]
+            if (self.direction[1]<self.my_data.initial_direction[1]):
+                  if (scalar_product > 0) : 
+                        angle = -np.arccos(scalar_product)
+                  else:
+                        angle = 2*math.pi-np.arccos(scalar_product)
+            else:
+                  if (scalar_product > 0) : 
+                        angle = np.arccos(scalar_product)
+                  else:
+                        angle = -(2*math.pi-np.arccos(scalar_product))
+            if (self.direction[0]>self.my_data.initial_direction[0]):
+                  angle = -angle
+
+
+            angle = math.degrees(angle)
+
+            image_rect = image.get_rect(topleft = (self.pos[0] - self.origin_pos[0], self.pos[1]-self.origin_pos[1]))
+            offset_center_to_pivot = self.pos - image_rect.center
+
+            rotated_offset = offset_center_to_pivot.rotate(-angle)
+
+            rotated_image_center = (self.pos[0] - rotated_offset.x, self.pos[1] - rotated_offset.y)
+
+            self.current_image = pygame.transform.rotate(image, angle)
+            self.rotated_image_rect = self.current_image.get_rect(center = rotated_image_center)
+
+
+      def check_impact(self,game):
+            if not(self.fading): 
+                  if (not(pygame.sprite.Sprite.alive(self.target)) or (self.distance>(ICE_TOWER_RANGE*BACKGROUND_SQUARE_SIDE*1.2))):
+                        self.fading = True
+                        self.tower.firing = False
+                        self.tower.attacking = False
+                        self.current_frame = 0
+                        self.target.velocity = self.target.my_data.velocity
+                  else:
+                        self.target.hp -= self.my_data.damage*game.timestep/1000.0
+                        self.target.my_timer -= game.timestep*self.my_data.slowing_coeff
+
+                  
 
       def render(self):
             window.blit(self.current_image, self.rotated_image_rect)  
