@@ -64,6 +64,7 @@ class Game_mouse(pygame.sprite.Sprite):
         self.box_valid = False
         self.box_not_valid = False
         if self.carrying:
+            game.show_grid = True
             self.carried_x = self.posX - self.carried_width*0.4
             self.carried_y = self.posY - self.carried_height*0.75
 
@@ -117,6 +118,8 @@ class Game_mouse(pygame.sprite.Sprite):
 
         if not(self.left_click_pressed):
             self.carrying = False
+            game.show_grid = False
+
 
 
 

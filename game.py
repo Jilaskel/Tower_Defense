@@ -36,6 +36,8 @@ class Game():
 
             self.grid = Grid(self)
 
+            self.show_grid = False
+
             self.menu = Menu(self)
 
             loading_progress.value += 10
@@ -164,6 +166,10 @@ class Game():
 
             self.object_to_render.append(self.gold)
 
+            if (self.show_grid):
+                  for box in self.grid.all_boxes:
+                        self.object_to_render.append(box)
+
             if (global_status.status == "In game"):
                   self.object_to_render.append(self.mouse)
 
@@ -202,6 +208,9 @@ class Game():
             self.all_gold_anim.list.clear()
 
             self.all_error_messages.list.clear()
+
+            for box in self.grid.all_boxes:
+                  box.occupied = False
 
             self.timer = 0.0
                   

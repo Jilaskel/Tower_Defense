@@ -77,6 +77,7 @@ MOUSE_VALID_BOX_IMAGE_PATH = "Assets/Tower/Valid_boxes/valid.png"
 MOUSE_VALID_BOX_IMAGE_ALPHA = 150
 MOUSE_NOT_VALID_BOX_IMAGE_PATH = "Assets/Tower/Valid_boxes/not_valid.png"
 MOUSE_NOT_VALID_BOX_IMAGE_ALPHA = 150
+MOUSE_BOX_BORDER_IMAGE_PATH = "Assets/Tower/Valid_boxes/box_border_1.png"
 
 #### STARTING MENU
 STARTING_MENU_PANNEL_PATH = "Assets/Menu/Buttons/starting_menu_pannel.png"
