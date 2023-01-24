@@ -19,7 +19,7 @@ class Menu():
             self.font_menu = pygame.font.Font(FONT_PATH,self.font_menu_size)
             self.font_menu_enlarged = pygame.font.Font(FONT_PATH,int(self.font_menu_size*MOUSE_OVER_ENLARGED_COEFF))
 
-            self.text_price_offset = vec(0.45,0.67)  # multiplied by the button image size
+            self.text_price_offset = vec(0.40,0.67)  # multiplied by the button image size
 
             path = MENU_ARCANE_TOWER_BUTTON_IMAGE_PATH
             (x,y) = (self.margin,0)
@@ -47,7 +47,7 @@ class Menu():
 
             path = MENU_MENU_BUTTON_IMAGE_PATH
             (x,y) = (self.margin+11.5*side,0)
-            self.all_options_buttons.add(Option_button(path,x,y,0.2,"menu"))
+            self.all_options_buttons.add(Option_button(path,x,y,0.15,"menu"))
 
             self.rendering_layer = 0
 

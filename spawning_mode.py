@@ -7,6 +7,7 @@ import numpy as np
 
 GOBELIN_TAG = 1
 OGRE_TAG = 2
+DRAGON_TAG = 3
 
 class Spawning_mode():
     def __init__(self,game):
@@ -24,14 +25,17 @@ class Spawning_mode():
             self.number_gobelin_spawned = 1.0
             self.last_time_spawning_gobelin = SPAWNING_INITIAL_TIME - P1_GOBELIN_SPAWNING_PERIOD*self.number_gobelin_spawned            
             self.number_ogre_spawned = 1.0
-            self.last_time_spawning_ogre = SPAWNING_INITIAL_TIME - P1_OGRE_SPAWNING_PERIOD*self.number_gobelin_spawned            
-        
+            self.last_time_spawning_ogre = SPAWNING_INITIAL_TIME - P1_OGRE_SPAWNING_PERIOD*self.number_ogre_spawned            
+            self.number_dragon_spawned = 1.0
+            self.last_time_spawning_dragon = SPAWNING_INITIAL_TIME - P1_DRAGON_SPAWNING_PERIOD*self.number_dragon_spawned   
+
     def reset(self):
         self.number_gobelin_spawned = 1.0
         self.last_time_spawning_gobelin = SPAWNING_INITIAL_TIME - P1_GOBELIN_SPAWNING_PERIOD*self.number_gobelin_spawned            
         self.number_ogre_spawned = 1.0
         self.last_time_spawning_ogre = SPAWNING_INITIAL_TIME - P1_OGRE_SPAWNING_PERIOD*self.number_gobelin_spawned            
-            
+        self.number_dragon_spawned = 1.0
+        self.last_time_spawning_dragon = SPAWNING_INITIAL_TIME - P1_DRAGON_SPAWNING_PERIOD*self.number_dragon_spawned              
 
     def spawning_ennemies(self,game):
         time = game.timer/1000.0  # in second
@@ -54,7 +58,12 @@ class Spawning_mode():
                     self.last_time_spawning_ogre = time
                     self.number_ogre_spawned = random.randint(1,3)
                     self.spawn(game,OGRE_TAG,self.number_ogre_spawned)
-                        
+
+                cooldown = P1_DRAGON_SPAWNING_PERIOD*self.number_dragon_spawned 
+                if ((time-self.last_time_spawning_dragon)>cooldown):
+                    self.last_time_spawning_dragon = time
+                    self.number_dragon_spawned = random.randint(1,3)
+                    self.spawn(game,DRAGON_TAG,self.number_dragon_spawned)                        
 
     def spawn(self,game,TAG,number_of_ennemies):
         for i in range (number_of_ennemies):
@@ -75,3 +84,6 @@ class Spawning_mode():
 
             if (TAG==OGRE_TAG):
                 game.all_ennemies.add_ogre(x_path,y_path,rand_offset)
+
+            # if (TAG==DRAGON_TAG):
+            #     game.all_ennemies.add_dragon(x_path,y_path,rand_offset)

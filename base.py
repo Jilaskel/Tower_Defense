@@ -9,21 +9,21 @@ class Base():
 
         self.x_walls = game.background.bush_width + game.background.number_square_x*self.unit
         self.y_walls = game.background.menu_height
-        y = [0,0,0]
+        self.y_list = [0,0,0]
         j = 0
         for i in range(1,game.background.number_square_y,2):
-            y[j] = game.background.menu_height + i*self.unit
+            self.y_list[j] = game.background.menu_height + i*self.unit
             j += 1
             
-        self.all_gates.add(Gate(self,self.x_walls,y[0],"top"))
-        self.all_gates.add(Gate(self,self.x_walls,y[1],"mid"))
-        self.all_gates.add(Gate(self,self.x_walls,y[2],"bot"))
+        self.all_gates.add(Gate(self,self.x_walls,self.y_list[0],"top"))
+        self.all_gates.add(Gate(self,self.x_walls,self.y_list[1],"mid"))
+        self.all_gates.add(Gate(self,self.x_walls,self.y_list[2],"bot"))
 
     def reset(self):
-        for gate in self.all_gates:
-            gate.hp = gate.hp_max
-            gate.opened = False            
-
+        self.all_gates.empty()    
+        self.all_gates.add(Gate(self,self.x_walls,self.y_list[0],"top"))
+        self.all_gates.add(Gate(self,self.x_walls,self.y_list[1],"mid"))
+        self.all_gates.add(Gate(self,self.x_walls,self.y_list[2],"bot"))
           
 
 class Gate(pygame.sprite.Sprite):
@@ -32,8 +32,8 @@ class Gate(pygame.sprite.Sprite):
             side = BACKGROUND_SQUARE_SIDE
             self.rect = pygame.Rect(x,y,side,side)
 
-            self.posX = base.x_walls - 10*RESIZE_COEFF
-            self.posY = base.y_walls - 30*RESIZE_COEFF
+            self.posX = base.x_walls - 40*RESIZE_COEFF
+            self.posY = base.y_walls - 90*RESIZE_COEFF
 
             self.hp_max = BASE_GATE_HP_MAX
             self.hp = self.hp_max
@@ -56,7 +56,7 @@ class Gate(pygame.sprite.Sprite):
                 # pygame.sprite.Sprite.kill(self)
                 self.rect.x = -500
                 self.current_image = self.opened_image
-                self.posX -= 17*RESIZE_COEFF
+                self.posX -= 8*RESIZE_COEFF
                 self.opened = True
 
     def render(self):

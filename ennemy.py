@@ -11,12 +11,16 @@ class All_ennemies(pygame.sprite.Group):
             
             self.ogre_data = Ogre_data()
 
+            self.dragon_data = Dragon_data()
+
       def add_gobelin(self,x,y,rand_offset):
             self.add(Gobelin(self,x,y,rand_offset))
 
       def add_ogre(self,x,y,rand_offset):
             self.add(Ogre(self,x,y,rand_offset))
 
+      def add_dragon(self,x,y,rand_offset):
+            self.add(Dragon(self,x,y,rand_offset))
 
 class Gobelin_data():
       def __init__(self):
@@ -99,6 +103,48 @@ class Ogre_data():
 
             self.dead_body_tag = DEAD_OGRE_TAG
 
+
+class Dragon_data():
+      def __init__(self):
+
+            self.hp_max = DRAGON_HP_MAX
+            self.damage = DRAGON_DAMAGE
+            self.velocity = DRAGON_VELOCITY # pixel by ms
+            self.gold_earning = DRAGON_GOLD_EARNING
+
+            self.static_image = pygame.image.load(DRAGON_TRANSITION_IMAGE_PATH+"0001.png").convert_alpha()
+            self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*DRAGON_RESIZE_FACTOR)             
+            self.current_image = self.static_image
+            self.image_size = vec(self.static_image.get_size())
+
+            self.number_frame_walking = DRAGON_NUMBER_FRAME_WALKING
+            self.image_walking = []
+            for i in range(1,self.number_frame_walking+1):
+                  self.image_walking.append(pygame.image.load(DRAGON_WALKING_IMAGE_PATH+str(i).zfill(4)+".png").convert_alpha())  
+                  self.image_walking[i-1] = pygame.transform.scale(self.image_walking[i-1],vec(self.image_walking[i-1].get_size())*DRAGON_RESIZE_FACTOR)
+                  self.image_walking[i-1] = pygame.transform.flip(self.image_walking[i-1], True, False)
+            self.anim_total_time_w = DRAGON_ANIMATION_WALKING_TOTAL_TIME  # in ms
+            self.time_per_frame_w = self.anim_total_time_w/self.number_frame_walking # in ms
+            self.stop_walking_frame = DRAGON_STOP_WALKING_FRAME
+
+            # self.number_frame_transition = DRAGON_NUMBER_FRAME_TRANSITION
+            # self.image_transition = []
+            # for i in range(1,self.number_frame_transition+1):
+            #       self.image_transition.append(pygame.image.load(DRAGON_TRANSITION_IMAGE_PATH+str(i).zfill(3)+".png").convert_alpha()) 
+            #       self.image_transition[i-1] = pygame.transform.scale(self.image_transition[i-1],vec(self.image_transition[i-1].get_size())*DRAGON_RESIZE_FACTOR)
+            # self.anim_total_time_t = DRAGON_ANIMATION_TRANSITION_TOTAL_TIME  # in ms
+            # self.time_per_frame_t = self.anim_total_time_t/self.number_frame_transition # in ms
+
+            # self.number_frame_attacking = DRAGON_NUMBER_FRAME_ATTACKING 
+            # self.image_attacking = []
+            # for i in range(1,self.number_frame_attacking+1):
+            #       self.image_attacking.append(pygame.image.load(DRAGON_ATTACKING_IMAGE_PATH+str(i).zfill(3)+".png").convert_alpha()) 
+            #       self.image_attacking[i-1] = pygame.transform.scale(self.image_attacking[i-1],vec(self.image_attacking[i-1].get_size())*DRAGON_RESIZE_FACTOR)
+            # self.anim_total_time_a = DRAGON_ANIMATION_ATTACKING_TOTAL_TIME  # in ms
+            # self.time_per_frame_a = self.anim_total_time_a/self.number_frame_attacking # in ms
+            # self.hitting_frame = DRAGON_HITTING_FRAME -1
+
+            # self.dead_body_tag = DEAD_DRAGON_TAG
 
 class Ennemy(pygame.sprite.Sprite):
       def __init__(self,x,y):
@@ -260,6 +306,51 @@ class Ogre(Ennemy,pygame.sprite.Sprite):
             self.damage_dealt = False
 
 
+class Dragon(Ennemy,pygame.sprite.Sprite):
+      def __init__(self,all_e,x,y,rand_offset):
+            pygame.sprite.Sprite.__init__(self)
+ 
+            self.my_data = all_e.dragon_data
 
+            self.hp = self.my_data.hp_max
 
+            self.velocity = self.my_data.velocity
 
+            self.current_image = self.my_data.static_image
+
+            self.image_size = self.my_data.image_size
+
+            self.posX = x + DRAGON_OFFSET[0]     
+            self.posY = y + DRAGON_OFFSET[1]   
+            self.center = vec(self.posX+DRAGON_CENTER_VECTOR[0]*self.image_size[0],self.posY+DRAGON_CENTER_VECTOR[0]*self.image_size[1]) 
+            self.rendering_layer = compute_rendering_layer_number(self)
+            self.rendering_layer += rand_offset
+
+            self.moving = False
+
+            self.move_frame = 0
+            self.transition_frame = 0      
+            self.attack_frame = 0
+
+            self.my_timer = 0
+
+            self.hitbox_left = x
+            self.hitbox_top = y
+            self.radius = DRAGON_HITBOX_FACTOR*(BACKGROUND_SQUARE_SIDE*2)/4.0
+            self.hitbox_left = self.hitbox_left + (1-DRAGON_HITBOX_FACTOR)*BACKGROUND_SQUARE_SIDE*0.5
+            self.hitbox_top = self.hitbox_top + (1-DRAGON_HITBOX_FACTOR)*BACKGROUND_SQUARE_SIDE*0.5
+            self.hitbox_width = BACKGROUND_SQUARE_SIDE*DRAGON_HITBOX_FACTOR
+            self.hitbox_height = BACKGROUND_SQUARE_SIDE*DRAGON_HITBOX_FACTOR
+            self.rect = pygame.Rect(self.hitbox_left,self.hitbox_top,self.hitbox_width,self.hitbox_height)
+
+            self.ready_to_attack = False
+            self.attacking = False
+            self.damage_dealt = False
+
+      def attack(self,game):
+            pass
+
+      def die(self,game):
+            if (self.hp<=0):
+                  game.gold.gold_gain(game,self,self.my_data.gold_earning)
+                  pygame.sprite.Sprite.kill(self)

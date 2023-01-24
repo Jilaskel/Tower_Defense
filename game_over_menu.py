@@ -67,11 +67,17 @@ class Game_over_menu():
             x = WINDOW_WIDTH*0.5 - image_size[0]*0.5
             window.blit(self.pannel_image, (x, 250*RESIZE_COEFF))
 
-            message = "Your score is " + convert_time(self.game.timer)
+            message = "Your score is " 
+            txt = self.font_menu.render(message,True,self.font_menu_color)
+            image_size0 = vec(txt.get_size())
+            x = WINDOW_WIDTH*0.5 - image_size0[0]*0.5
+            window.blit(txt, (x, self.margin))
+
+            message = convert_time(self.game.timer)
             txt = self.font_menu.render(message,True,self.font_menu_color)
             image_size = vec(txt.get_size())
             x = WINDOW_WIDTH*0.5 - image_size[0]*0.5
-            window.blit(txt, (x, self.margin))
+            window.blit(txt, (x, self.margin+image_size0[1]*1.5))            
 
             for button in self.all_buttons:
                   button.render()

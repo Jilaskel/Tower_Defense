@@ -4,10 +4,13 @@ from utilitaries import *
 class Starting_menu():
       def __init__(self,game):
             self.all_buttons = pygame.sprite.Group()
+            self.all_buttons_credits = pygame.sprite.Group()
 
             self.game = game
 
             self.mouse = Starting_mouse(self)
+
+            self.status = "Starting"
 
             self.font_size = int(140*RESIZE_COEFF)
             self.font = pygame.font.Font(LOADING_FONT_PATH,self.font_size)
@@ -29,7 +32,11 @@ class Starting_menu():
             self.font_menu = pygame.font.Font(FONT_PATH,self.font_menu_size)
             self.font_menu_enlarged = pygame.font.Font(FONT_PATH,int(self.font_menu_size*STARTING_MOUSE_OVER_ENLARGED_COEFF))
 
+            self.font_credits_size = int(80*RESIZE_COEFF)
+            self.font_credits_color = (0,0,0)
+            self.font_credits = pygame.font.Font(LOADING_FONT_PATH,self.font_credits_size)
 
+            ## Starting menu
             path = STARTING_MENU_BUTTON_2_PATH
             (x,y) = (self.margin[0]+0.1*space,self.margin[1]-0.2*space)
             self.all_buttons.add(Button(self,path,x,y,"Play",0.20,vec(0.35,0.35)))
@@ -43,6 +50,11 @@ class Starting_menu():
 
             (x,y) = (self.margin[0],self.margin[1]+3.0*space)
             self.all_buttons.add(Button(self,path,x,y,"Quit",0.35,vec(0.38,0.30)))
+
+
+            ## Credits menu
+            (x,y) = (self.margin[0],self.margin[1]+3.0*space)
+            self.all_buttons_credits.add(Button(self,path,x,y,"Back to menu",0.35,vec(0.06,0.30)))
 
             self.my_timer = 0
             self.anim_frame_r = 0
@@ -99,6 +111,35 @@ class Starting_menu():
 
             self.mouse.doing_stuff()
 
+      def render_credits(self):
+            margin_x = WINDOW_WIDTH*0.77
+            margin_y = WINDOW_HEIGHT*0.20
+            space = 1.0
+
+            message = "Code:" 
+            txt = self.font_credits.render(message,True,self.font_credits_color)
+            image_size = vec(txt.get_size())
+            x = margin_x - image_size[0]*0.5
+            window.blit(txt, (x, margin_y))
+
+            message = "Thomas Fabbri"
+            txt = self.font_credits.render(message,True,self.font_credits_color)
+            image_size = vec(txt.get_size())
+            x = margin_x - image_size[0]*0.5
+            window.blit(txt, (x, margin_y+image_size[1]*space*1)) 
+
+            message = "Graphical Assets:"
+            txt = self.font_credits.render(message,True,self.font_credits_color)
+            image_size = vec(txt.get_size())
+            x = margin_x - image_size[0]*0.5
+            window.blit(txt, (x, margin_y+image_size[1]*space*2)) 
+
+            message = "Xavier Condamine"
+            txt = self.font_credits.render(message,True,self.font_credits_color)
+            image_size = vec(txt.get_size())
+            x = margin_x - image_size[0]*0.5
+            window.blit(txt, (x, margin_y+image_size[1]*space*3)) 
+
       def render(self):
             window.fill((0,0,0))
 
@@ -109,8 +150,14 @@ class Starting_menu():
 
             window.blit(self.pannel_image, (1050*RESIZE_COEFF, 50*RESIZE_COEFF))
 
-            for button in self.all_buttons:
-                  button.render()
+            match self.status:
+                  case "Starting":
+                        for button in self.all_buttons:
+                              button.render()
+                  case "Credits":
+                        self.render_credits()
+                        for button in self.all_buttons_credits:
+                              button.render()                  
 
             self.mouse.render()
             pygame.display.update()
@@ -128,36 +175,52 @@ class Starting_mouse(pygame.sprite.Sprite):
 
         self.ratio_for_hitbox = MOUSE_RATIO_FOR_HITBOX
 
+        self.has_been_pressed = False
+
 
     def doing_stuff(self):
-        (x,y) = pygame.mouse.get_pos()
-        self.posX = x
-        self.posY = y
+      (x,y) = pygame.mouse.get_pos()
+      self.posX = x
+      self.posY = y
 
-        self.rect = self.current_image.get_rect()
-        self.rect.x = self.posX
-        self.rect.y = self.posY
+      self.rect = self.current_image.get_rect()
+      self.rect.x = self.posX
+      self.rect.y = self.posY
 
-        self.state_mouse = pygame.mouse.get_pressed()
-        self.left_click_pressed = self.state_mouse[0]
+      self.state_mouse = pygame.mouse.get_pressed()
+      self.left_click_pressed = self.state_mouse[0]
 
-        self.hit_buttons = pygame.sprite.spritecollide(self, self.menu.all_buttons, False, pygame.sprite.collide_rect_ratio(self.ratio_for_hitbox))
-        if (self.hit_buttons):
-            self.hit_buttons[0].mouse_over = True
-            if (self.left_click_pressed):
-                  match self.hit_buttons[0].tag:
-                        case "Play":
-                              global_status.status = "In game"
-                              self.menu.game.all_mixers.music_mixer.rewind()
+      if not(self.has_been_pressed):
+            match self.menu.status:    
+                  case "Starting":
+                        self.hit_buttons = pygame.sprite.spritecollide(self, self.menu.all_buttons, False, pygame.sprite.collide_rect_ratio(self.ratio_for_hitbox))
+                  case "Credits":
+                        self.hit_buttons = pygame.sprite.spritecollide(self, self.menu.all_buttons_credits, False, pygame.sprite.collide_rect_ratio(self.ratio_for_hitbox))
 
-                        case "Parameters":
-                              pass
+            if (self.hit_buttons):
+                  self.hit_buttons[0].mouse_over = True
+                  if (self.left_click_pressed):
+                        self.has_been_pressed = True
+                        match self.hit_buttons[0].tag:
+                              case "Play":
+                                    global_status.status = "In game"
+                                    self.menu.game.all_mixers.music_mixer.rewind()
 
-                        case "Credits":
-                              pass
+                              case "Parameters":
+                                    pass
 
-                        case "Quit":
-                              global_status.status = "Quitting"
+                              case "Credits":
+                                    self.menu.status = "Credits"
+
+                              case "Back to menu":
+                                    self.menu.status = "Starting"
+
+                              case "Quit":
+                                    global_status.status = "Quitting"
+      else:
+            if not(self.left_click_pressed):
+                  self.has_been_pressed = False
+      
 
 
     def render(self):
