@@ -58,13 +58,15 @@ class All_towers(pygame.sprite.Group):
       def add_ballista(self,game,box):
             balliste = Ballista(game,self,box)
             self.add(balliste)
-            self.all_siege_engines.add(balliste)
+            if (box.rendering_layer!=23):       ## not on walls
+                  self.all_siege_engines.add(balliste)
             game.all_mixers.mouse_mixer.building_wood_sound.play()
 
       def add_catapult(self,game,box):
             catapulte = Catapult(game,self,box)
             self.add(catapulte)
-            self.all_siege_engines.add(catapulte)
+            if (box.rendering_layer!=23):       ## not on walls
+                  self.all_siege_engines.add(catapulte)
             game.all_mixers.mouse_mixer.building_wood_sound.play()
 
 
@@ -283,7 +285,10 @@ class Tower(pygame.sprite.Sprite):
             self.image_size = self.my_data.image_size
             self.center = vec(self.posX+self.image_size[0]*0.5,self.posY+self.image_size[1]*0.5)
 
-            self.rendering_layer = compute_rendering_layer_number(self)
+            if (box.rendering_layer==23):       ## on walls
+                  self.rendering_layer = 23
+            else:
+                  self.rendering_layer = compute_rendering_layer_number(self)
 
             self.my_timer = 0
 
@@ -477,7 +482,10 @@ class Ballista(Tower,pygame.sprite.Sprite):
             self.image_size = self.my_data.image_size
             self.center = vec(self.posX+self.image_size[0]*0.5,self.posY+self.image_size[1]*0.5)
 
-            self.rendering_layer = compute_rendering_layer_number(self)
+            if (box.rendering_layer==23):       ## on walls
+                  self.rendering_layer = 23
+            else:
+                  self.rendering_layer = compute_rendering_layer_number(self)
 
             self.my_timer = 0
 
@@ -519,7 +527,10 @@ class Catapult(Tower,pygame.sprite.Sprite):
             self.image_size = self.my_data.image_size
             self.center = vec(self.posX+self.image_size[0]*0.5,self.posY+self.image_size[1]*0.5)
 
-            self.rendering_layer = compute_rendering_layer_number(self)
+            if (box.rendering_layer==23):       ## on walls
+                  self.rendering_layer = 23
+            else:
+                  self.rendering_layer = compute_rendering_layer_number(self)
 
             self.my_timer = 0
 

@@ -20,9 +20,16 @@ class Grid():
                     self.all_boxes.add(Box(self,x,y,True))
                 else:
                     self.all_boxes.add(Box(self,x,y,False))
+            # if not(i%2==0):
+            #     x = game.background.bush_width + (game.background.number_square_x+0.5)*self.unit
+            #     y = game.background.menu_height + i*self.unit          
+            #     self.all_boxes.add(Box(self,x,y,False,rendering_layer=23))
+            x = game.background.bush_width + (game.background.number_square_x+0.5)*self.unit
+            y = game.background.menu_height + i*self.unit          
+            self.all_boxes.add(Box(self,x,y,False,rendering_layer=23))
 
 class Box(pygame.sprite.Sprite):
-    def __init__(self,grid,x,y,grass):
+    def __init__(self,grid,x,y,grass,rendering_layer=0):
             super().__init__()
 
             self.occupied = False
@@ -34,7 +41,10 @@ class Box(pygame.sprite.Sprite):
 
             self.current_image = grid.border_box_image
             self.image_size = vec(self.current_image.get_size())
-            self.rendering_layer = compute_rendering_layer_number(self)
+            if (rendering_layer==0):
+                self.rendering_layer = compute_rendering_layer_number(self)
+            else:
+                self.rendering_layer = rendering_layer
 
             if grass:
                 self.grass = True
