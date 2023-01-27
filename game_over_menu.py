@@ -77,7 +77,34 @@ class Game_over_menu():
             txt = self.font_menu.render(message,True,self.font_menu_color)
             image_size = vec(txt.get_size())
             x = WINDOW_WIDTH*0.5 - image_size[0]*0.5
-            window.blit(txt, (x, self.margin+image_size0[1]*1.5))            
+            window.blit(txt, (x, self.margin+image_size0[1]*1.25))         
+
+            if (self.game.timer>self.game.previous_best_score): 
+                  message = "New best score!! Previous was " 
+                  txt = self.font_menu.render(message,True,self.font_menu_color)
+                  image_size0 = vec(txt.get_size())
+                  x = WINDOW_WIDTH*0.5 - image_size0[0]*0.5
+                  window.blit(txt, (x, self.margin+image_size0[1]*2.75))
+
+                  message = convert_time(self.game.previous_best_score)
+                  txt = self.font_menu.render(message,True,self.font_menu_color)
+                  image_size = vec(txt.get_size())
+                  x = WINDOW_WIDTH*0.5 - image_size[0]*0.5
+                  window.blit(txt, (x, self.margin+image_size0[1]*4))  
+
+                  self.game.best_score = self.game.timer
+            else:
+                  message = "Best score is " 
+                  txt = self.font_menu.render(message,True,self.font_menu_color)
+                  image_size0 = vec(txt.get_size())
+                  x = WINDOW_WIDTH*0.5 - image_size0[0]*0.5
+                  window.blit(txt, (x, self.margin+image_size0[1]*2.75))
+
+                  message = convert_time(self.game.best_score)
+                  txt = self.font_menu.render(message,True,self.font_menu_color)
+                  image_size = vec(txt.get_size())
+                  x = WINDOW_WIDTH*0.5 - image_size[0]*0.5
+                  window.blit(txt, (x, self.margin+image_size0[1]*4))  
 
             for button in self.all_buttons:
                   button.render()

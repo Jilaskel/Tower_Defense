@@ -26,6 +26,8 @@ class Game():
 
             self.timestep = 0.0
             self.timer = 0.0
+            self.best_score = 0.0
+            self.previous_best_score = self.best_score
 
             self.is_running = True
 
@@ -221,6 +223,8 @@ class Game():
                   box.occupied = False
 
             self.timer = 0.0
+
+            self.previous_best_score = self.best_score
                   
       def get_event(self):
             CLOCK.tick(FPS)
