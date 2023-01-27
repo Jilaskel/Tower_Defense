@@ -5,7 +5,7 @@ import random
 import numpy as np
 
 
-GOBELIN_TAG = 1
+GOBLIN_TAG = 1
 OGRE_TAG = 2
 DRAGON_TAG = 3
 
@@ -14,26 +14,26 @@ class Spawning_mode():
         self.spawning_margin = game.background.bush_width*SPAWNING_MARGIN_SPACE
         
         if SPAWNING_WITH_SCRIPT:
-            self.my_script = np.array([[2.0, GOBELIN_TAG, 1],     # temps en s, type, quantite
-                        [8.0, GOBELIN_TAG, 2],
-                        [16.0, GOBELIN_TAG, 3],
-                        [20.0, GOBELIN_TAG, 3],
-                        [24.0, GOBELIN_TAG, 3],
-                        [100000, GOBELIN_TAG, 1]])
+            self.my_script = np.array([[2.0, GOBLIN_TAG, 1],     # temps en s, type, quantite
+                        [8.0, GOBLIN_TAG, 2],
+                        [16.0, GOBLIN_TAG, 3],
+                        [20.0, GOBLIN_TAG, 3],
+                        [24.0, GOBLIN_TAG, 3],
+                        [100000, GOBLIN_TAG, 1]])
             self.line = 0
         else:
-            self.number_gobelin_spawned = 1.0
-            self.last_time_spawning_gobelin = SPAWNING_INITIAL_TIME - P1_GOBELIN_SPAWNING_PERIOD*self.number_gobelin_spawned            
+            self.number_goblin_spawned = 1.0
+            self.last_time_spawning_goblin = SPAWNING_INITIAL_TIME - P1_GOBLIN_SPAWNING_PERIOD*self.number_goblin_spawned            
             self.number_ogre_spawned = 1.0
             self.last_time_spawning_ogre = SPAWNING_INITIAL_TIME - P1_OGRE_SPAWNING_PERIOD*self.number_ogre_spawned            
             self.number_dragon_spawned = 1.0
             self.last_time_spawning_dragon = SPAWNING_INITIAL_TIME - P1_DRAGON_SPAWNING_PERIOD*self.number_dragon_spawned   
 
     def reset(self):
-        self.number_gobelin_spawned = 1.0
-        self.last_time_spawning_gobelin = SPAWNING_INITIAL_TIME - P1_GOBELIN_SPAWNING_PERIOD*self.number_gobelin_spawned            
+        self.number_goblin_spawned = 1.0
+        self.last_time_spawning_goblin = SPAWNING_INITIAL_TIME - P1_GOBLIN_SPAWNING_PERIOD*self.number_goblin_spawned            
         self.number_ogre_spawned = 1.0
-        self.last_time_spawning_ogre = SPAWNING_INITIAL_TIME - P1_OGRE_SPAWNING_PERIOD*self.number_gobelin_spawned            
+        self.last_time_spawning_ogre = SPAWNING_INITIAL_TIME - P1_OGRE_SPAWNING_PERIOD*self.number_goblin_spawned            
         self.number_dragon_spawned = 1.0
         self.last_time_spawning_dragon = SPAWNING_INITIAL_TIME - P1_DRAGON_SPAWNING_PERIOD*self.number_dragon_spawned              
 
@@ -47,11 +47,11 @@ class Spawning_mode():
         else:
             if (time<(TIME_P1)):
                 
-                cooldown = P1_GOBELIN_SPAWNING_PERIOD*self.number_gobelin_spawned 
-                if ((time-self.last_time_spawning_gobelin)>cooldown):
-                    self.last_time_spawning_gobelin = time
-                    self.number_gobelin_spawned = random.randint(1,3)
-                    self.spawn(game,GOBELIN_TAG,self.number_gobelin_spawned)
+                cooldown = P1_GOBLIN_SPAWNING_PERIOD*self.number_goblin_spawned 
+                if ((time-self.last_time_spawning_goblin)>cooldown):
+                    self.last_time_spawning_goblin = time
+                    self.number_goblin_spawned = random.randint(1,3)
+                    self.spawn(game,GOBLIN_TAG,self.number_goblin_spawned)
 
                 cooldown = P1_OGRE_SPAWNING_PERIOD*self.number_ogre_spawned 
                 if ((time-self.last_time_spawning_ogre)>cooldown):
@@ -79,8 +79,8 @@ class Spawning_mode():
             rand_offset = random.randint(0,100)/100-0.5
             y_path = game.background.menu_height + side*(1+2*path_number) + rand_offset*side*0.5
 
-            if (TAG==GOBELIN_TAG):
-                game.all_ennemies.add_gobelin(x_path,y_path,rand_offset)
+            if (TAG==GOBLIN_TAG):
+                game.all_ennemies.add_goblin(x_path,y_path,rand_offset)
 
             if (TAG==OGRE_TAG):
                 game.all_ennemies.add_ogre(x_path,y_path,rand_offset)

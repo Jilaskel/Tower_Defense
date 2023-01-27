@@ -20,10 +20,11 @@ class Selected_object():
         self.font = pygame.font.Font(FONT_PATH,self.font_size)
         self.font_posX = 9.0 * side
         self.font_posY = 0.15 * side
+        self.spaceY = 0.20*side
 
         self.destroy_path = MENU_DESTROY_BUTTON_IMAGE_PATH
-        self.destroy_posX= 10*side
-        self.destroy_posY= 0.5*side
+        self.destroy_posX= 10.2*side
+        self.destroy_posY= 0.60*side
 
         self.destroyable = False
 
@@ -34,7 +35,7 @@ class Selected_object():
 
         if (hasattr(object,'destroy')) and (callable(object.destroy)):
             self.destroyable = True
-            self.destroy_button = Option_button(self.destroy_path,self.destroy_posX,self.destroy_posY,0.15,"destroy",object)
+            self.destroy_button = Option_button(self.destroy_path,self.destroy_posX,self.destroy_posY,0.10,"destroy",object)
             game.menu.all_options_buttons.add(self.destroy_button)
         else:
             self.destroyable = False
@@ -62,9 +63,13 @@ class Selected_object():
                 self.mini_image = pygame.transform.scale(self.mini_image,image_size*resize_ratio) 
                 window.blit(self.mini_image, (self.mini_posX,self.mini_posY))
 
-                txt = "HP :  " + str(int(self.obj.hp)) + " / " + str(int(self.obj.my_data.hp_max))
+                txt = self.obj.my_data.name
                 txt_hp = self.font.render(txt,True,self.font_color)
                 window.blit(txt_hp,(self.font_posX,self.font_posY)) 
+
+                txt = "HP :  " + str(int(self.obj.hp)) + " / " + str(int(self.obj.my_data.hp_max))
+                txt_hp = self.font.render(txt,True,self.font_color)
+                window.blit(txt_hp,(self.font_posX,self.font_posY+1.0*self.spaceY)) 
             else:
                 self.clear()
 

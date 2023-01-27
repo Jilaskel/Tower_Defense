@@ -45,12 +45,12 @@ class Loading_screen():
         self.my_timer = 0
         self.move_frame = 0
 
-        self.number_frame_walking = GOBELIN_NUMBER_FRAME_WALKING
+        self.number_frame_walking = GOBLIN_NUMBER_FRAME_WALKING
         self.image_walking = []
         for i in range(1,self.number_frame_walking+1):
-                self.image_walking.append(pygame.image.load(GOBELIN_WALKING_IMAGE_PATH+str(i).zfill(3)+".png").convert_alpha())  
+                self.image_walking.append(pygame.image.load(GOBLIN_WALKING_IMAGE_PATH+str(i).zfill(3)+".png").convert_alpha())  
                 self.image_walking[i-1] = pygame.transform.scale(self.image_walking[i-1],vec(self.image_walking[i-1].get_size())*RESIZE_COEFF)
-        self.anim_total_time_w = GOBELIN_ANIMATION_WALKING_TOTAL_TIME  # in ms
+        self.anim_total_time_w = GOBLIN_ANIMATION_WALKING_TOTAL_TIME  # in ms
         self.time_per_frame_w = self.anim_total_time_w/self.number_frame_walking # in ms  
 
         self.font_size = int(140*RESIZE_COEFF)

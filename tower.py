@@ -76,6 +76,7 @@ class All_siege_engines(pygame.sprite.Group):
 
 class Arcane_tower_data():
       def __init__(self):
+            self.name = "Arcane tower Lvl.1" 
 
             self.hp_max = ARCANE_TOWER_HP_MAX
 
@@ -109,7 +110,8 @@ class Arcane_tower_data():
 
 class Fire_tower_data():
       def __init__(self):
-
+            self.name = "Fire tower Lvl.1"
+            
             self.hp_max = FIRE_TOWER_HP_MAX
 
             self.gold_cost = -FIRE_TOWER_PRICE
@@ -142,6 +144,7 @@ class Fire_tower_data():
 
 class Lightning_tower_data():
       def __init__(self):
+            self.name = "Lightning tower Lvl.1"
 
             self.hp_max = LIGHTNING_TOWER_HP_MAX
 
@@ -175,6 +178,7 @@ class Lightning_tower_data():
 
 class Ice_tower_data():
       def __init__(self):
+            self.name = "Ice tower Lvl.1"
 
             self.hp_max = ICE_TOWER_HP_MAX
 
@@ -208,6 +212,7 @@ class Ice_tower_data():
 
 class Ballista_data():
       def __init__(self):
+            self.name = "Ballista"
 
             self.hp_max = BALLISTA_HP_MAX
 
@@ -240,6 +245,7 @@ class Ballista_data():
 
 class Catapult_data():
       def __init__(self):
+            self.name = "Catapult"
 
             self.hp_max = CATAPULT_HP_MAX
 

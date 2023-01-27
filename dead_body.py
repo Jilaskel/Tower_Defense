@@ -2,7 +2,7 @@ import pygame
 from utilitaries import *
 import random
 
-DEAD_GOBELIN_TAG = 1
+DEAD_GOBLIN_TAG = 1
 DEAD_OGRE_TAG = 2
 
 
@@ -10,40 +10,40 @@ class All_dead_bodies(pygame.sprite.Group):
       def __init__(self):
             pygame.sprite.Group.__init__(self)   
 
-            self.dead_gobelin_data = Dead_gobelin_data()
+            self.dead_goblin_data = Dead_goblin_data()
 
             self.dead_ogre_data = Dead_ogre_data()
             
       def add_dead_body(self,game,el_alive,tag):
-            if (tag==DEAD_GOBELIN_TAG):
-                  self.add_dead_gobelin(game,el_alive)
+            if (tag==DEAD_GOBLIN_TAG):
+                  self.add_dead_goblin(game,el_alive)
             elif (tag==DEAD_OGRE_TAG):
                   self.add_dead_ogre(game,el_alive)
 
-      def add_dead_gobelin(self,game,el_alive):
-            self.add(Dead_gobelin(self,el_alive))
+      def add_dead_goblin(self,game,el_alive):
+            self.add(Dead_goblin(self,el_alive))
             game.all_mixers.ennemy_mixer.falling_sound.play()
             
       def add_dead_ogre(self,game,el_alive):
             self.add(Dead_ogre(self,el_alive))
             random.choice(game.all_mixers.ennemy_mixer.ogre_d_list).play()
 
-class Dead_gobelin_data():
+class Dead_goblin_data():
       def __init__(self):
 
-            self.static_image = pygame.image.load(GOBELIN_DEATH_IMAGE_PATH+"0001.png").convert_alpha()
-            self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*GOBELIN_RESIZE_FACTOR)             
+            self.static_image = pygame.image.load(GOBLIN_DEATH_IMAGE_PATH+"0001.png").convert_alpha()
+            self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*GOBLIN_RESIZE_FACTOR)             
             self.image_size = vec(self.static_image.get_size())
 
-            self.number_frame = GOBELIN_NUMBER_FRAME_DEATH
+            self.number_frame = GOBLIN_NUMBER_FRAME_DEATH
             self.images = []
             for i in range(1,self.number_frame+1):
-                  self.images.append(pygame.image.load(GOBELIN_DEATH_IMAGE_PATH+str(i).zfill(4)+".png").convert_alpha())  
-                  self.images[i-1] = pygame.transform.scale(self.images[i-1],vec(self.images[i-1].get_size())*GOBELIN_RESIZE_FACTOR)
-            self.anim_total_time = GOBELIN_ANIMATION_DEATH_TOTAL_TIME  # in ms
+                  self.images.append(pygame.image.load(GOBLIN_DEATH_IMAGE_PATH+str(i).zfill(4)+".png").convert_alpha())  
+                  self.images[i-1] = pygame.transform.scale(self.images[i-1],vec(self.images[i-1].get_size())*GOBLIN_RESIZE_FACTOR)
+            self.anim_total_time = GOBLIN_ANIMATION_DEATH_TOTAL_TIME  # in ms
             self.time_per_frame = self.anim_total_time/self.number_frame # in ms
 
-            self.fading_time = GOBELIN_FADING_TIME
+            self.fading_time = GOBLIN_FADING_TIME
 
             self.number_frame_fading = 50
             self.images_fading = []
@@ -95,11 +95,11 @@ class Dead_body(pygame.sprite.Sprite):
     def render(self):
         window.blit(self.current_image, (self.posX, self.posY))  
 
-class Dead_gobelin(Dead_body,pygame.sprite.Sprite):
+class Dead_goblin(Dead_body,pygame.sprite.Sprite):
       def __init__(self,all_d,el_alive):
             pygame.sprite.Sprite.__init__(self)
 
-            self.my_data = all_d.dead_gobelin_data
+            self.my_data = all_d.dead_goblin_data
 
             self.current_image = self.my_data.static_image.convert_alpha()
 

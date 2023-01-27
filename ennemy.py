@@ -7,14 +7,14 @@ class All_ennemies(pygame.sprite.Group):
       def __init__(self):
             pygame.sprite.Group.__init__(self)   
 
-            self.gobelin_data = Gobelin_data()
+            self.goblin_data = Goblin_data()
             
             self.ogre_data = Ogre_data()
 
             self.dragon_data = Dragon_data()
 
-      def add_gobelin(self,x,y,rand_offset):
-            self.add(Gobelin(self,x,y,rand_offset))
+      def add_goblin(self,x,y,rand_offset):
+            self.add(Goblin(self,x,y,rand_offset))
 
       def add_ogre(self,x,y,rand_offset):
             self.add(Ogre(self,x,y,rand_offset))
@@ -22,48 +22,50 @@ class All_ennemies(pygame.sprite.Group):
       def add_dragon(self,x,y,rand_offset):
             self.add(Dragon(self,x,y,rand_offset))
 
-class Gobelin_data():
+class Goblin_data():
       def __init__(self):
+            self.name = "Goblin"
 
-            self.hp_max = GOBELIN_HP_MAX
-            self.damage = GOBELIN_DAMAGE
-            self.velocity = GOBELIN_VELOCITY # pixel by ms
-            self.gold_earning = GOBELIN_GOLD_EARNING     
+            self.hp_max = GOBLIN_HP_MAX
+            self.damage = GOBLIN_DAMAGE
+            self.velocity = GOBLIN_VELOCITY # pixel by ms
+            self.gold_earning = GOBLIN_GOLD_EARNING     
 
-            self.static_image = pygame.image.load(GOBELIN_TRANSITION_IMAGE_PATH+"001.png").convert_alpha()
-            self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*GOBELIN_RESIZE_FACTOR)             
+            self.static_image = pygame.image.load(GOBLIN_TRANSITION_IMAGE_PATH+"001.png").convert_alpha()
+            self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*GOBLIN_RESIZE_FACTOR)             
             self.image_size = vec(self.static_image.get_size())
 
-            self.number_frame_walking = GOBELIN_NUMBER_FRAME_WALKING
+            self.number_frame_walking = GOBLIN_NUMBER_FRAME_WALKING
             self.image_walking = []
             for i in range(1,self.number_frame_walking+1):
-                  self.image_walking.append(pygame.image.load(GOBELIN_WALKING_IMAGE_PATH+str(i).zfill(3)+".png").convert_alpha())  
-                  self.image_walking[i-1] = pygame.transform.scale(self.image_walking[i-1],vec(self.image_walking[i-1].get_size())*GOBELIN_RESIZE_FACTOR)
-            self.anim_total_time_w = GOBELIN_ANIMATION_WALKING_TOTAL_TIME  # in ms
+                  self.image_walking.append(pygame.image.load(GOBLIN_WALKING_IMAGE_PATH+str(i).zfill(3)+".png").convert_alpha())  
+                  self.image_walking[i-1] = pygame.transform.scale(self.image_walking[i-1],vec(self.image_walking[i-1].get_size())*GOBLIN_RESIZE_FACTOR)
+            self.anim_total_time_w = GOBLIN_ANIMATION_WALKING_TOTAL_TIME  # in ms
             self.time_per_frame_w = self.anim_total_time_w/self.number_frame_walking # in ms
-            self.stop_walking_frame = GOBELIN_STOP_WALKING_FRAME    
+            self.stop_walking_frame = GOBLIN_STOP_WALKING_FRAME    
 
-            self.number_frame_transition = GOBELIN_NUMBER_FRAME_TRANSITION
+            self.number_frame_transition = GOBLIN_NUMBER_FRAME_TRANSITION
             self.image_transition = []
             for i in range(1,self.number_frame_transition+1):
-                  self.image_transition.append(pygame.image.load(GOBELIN_TRANSITION_IMAGE_PATH+str(i).zfill(3)+".png").convert_alpha()) 
-                  self.image_transition[i-1] = pygame.transform.scale(self.image_transition[i-1],vec(self.image_transition[i-1].get_size())*GOBELIN_RESIZE_FACTOR)
-            self.anim_total_time_t = GOBELIN_ANIMATION_TRANSITION_TOTAL_TIME  # in ms
+                  self.image_transition.append(pygame.image.load(GOBLIN_TRANSITION_IMAGE_PATH+str(i).zfill(3)+".png").convert_alpha()) 
+                  self.image_transition[i-1] = pygame.transform.scale(self.image_transition[i-1],vec(self.image_transition[i-1].get_size())*GOBLIN_RESIZE_FACTOR)
+            self.anim_total_time_t = GOBLIN_ANIMATION_TRANSITION_TOTAL_TIME  # in ms
             self.time_per_frame_t = self.anim_total_time_t/self.number_frame_transition # in ms
 
-            self.number_frame_attacking = GOBELIN_NUMBER_FRAME_ATTACKING 
+            self.number_frame_attacking = GOBLIN_NUMBER_FRAME_ATTACKING 
             self.image_attacking = []
             for i in range(1,self.number_frame_attacking+1):
-                  self.image_attacking.append(pygame.image.load(GOBELIN_ATTACKING_IMAGE_PATH+str(i).zfill(3)+".png").convert_alpha()) 
-                  self.image_attacking[i-1] = pygame.transform.scale(self.image_attacking[i-1],vec(self.image_attacking[i-1].get_size())*GOBELIN_RESIZE_FACTOR)
-            self.anim_total_time_a = GOBELIN_ANIMATION_ATTACKING_TOTAL_TIME  # in ms
+                  self.image_attacking.append(pygame.image.load(GOBLIN_ATTACKING_IMAGE_PATH+str(i).zfill(3)+".png").convert_alpha()) 
+                  self.image_attacking[i-1] = pygame.transform.scale(self.image_attacking[i-1],vec(self.image_attacking[i-1].get_size())*GOBLIN_RESIZE_FACTOR)
+            self.anim_total_time_a = GOBLIN_ANIMATION_ATTACKING_TOTAL_TIME  # in ms
             self.time_per_frame_a = self.anim_total_time_a/self.number_frame_attacking # in ms
-            self.hitting_frame = GOBELIN_HITTING_FRAME -1
+            self.hitting_frame = GOBLIN_HITTING_FRAME -1
 
-            self.dead_body_tag = DEAD_GOBELIN_TAG
+            self.dead_body_tag = DEAD_GOBLIN_TAG
 
 class Ogre_data():
       def __init__(self):
+            self.name = "Ogre"
 
             self.hp_max = OGRE_HP_MAX
             self.damage = OGRE_DAMAGE
@@ -106,6 +108,7 @@ class Ogre_data():
 
 class Dragon_data():
       def __init__(self):
+            self.name = "Dragon"
 
             self.hp_max = DRAGON_HP_MAX
             self.damage = DRAGON_DAMAGE
@@ -221,11 +224,11 @@ class Ennemy(pygame.sprite.Sprite):
             window.blit(self.current_image, (self.posX, self.posY))  
 
 
-class Gobelin(Ennemy,pygame.sprite.Sprite):
+class Goblin(Ennemy,pygame.sprite.Sprite):
       def __init__(self,all_e,x,y,rand_offset):
             pygame.sprite.Sprite.__init__(self)
  
-            self.my_data = all_e.gobelin_data
+            self.my_data = all_e.goblin_data
 
             self.hp = self.my_data.hp_max
 
@@ -235,9 +238,9 @@ class Gobelin(Ennemy,pygame.sprite.Sprite):
 
             self.image_size = self.my_data.image_size
 
-            self.posX = x + GOBELIN_OFFSET[0]     
-            self.posY = y + GOBELIN_OFFSET[1]   
-            self.center = vec(self.posX+GOBELIN_CENTER_VECTOR[0]*self.image_size[0],self.posY+GOBELIN_CENTER_VECTOR[0]*self.image_size[1]) 
+            self.posX = x + GOBLIN_OFFSET[0]     
+            self.posY = y + GOBLIN_OFFSET[1]   
+            self.center = vec(self.posX+GOBLIN_CENTER_VECTOR[0]*self.image_size[0],self.posY+GOBLIN_CENTER_VECTOR[0]*self.image_size[1]) 
             self.rendering_layer = compute_rendering_layer_number(self)
             self.rendering_layer += rand_offset
 
@@ -251,11 +254,11 @@ class Gobelin(Ennemy,pygame.sprite.Sprite):
 
             self.hitbox_left = x
             self.hitbox_top = y
-            self.radius = GOBELIN_HITBOX_FACTOR*(BACKGROUND_SQUARE_SIDE*2)/4.0
-            self.hitbox_left = self.hitbox_left + (1-GOBELIN_HITBOX_FACTOR)*BACKGROUND_SQUARE_SIDE*0.5
-            self.hitbox_top = self.hitbox_top + (1-GOBELIN_HITBOX_FACTOR)*BACKGROUND_SQUARE_SIDE*0.5
-            self.hitbox_width = BACKGROUND_SQUARE_SIDE*GOBELIN_HITBOX_FACTOR
-            self.hitbox_height = BACKGROUND_SQUARE_SIDE*GOBELIN_HITBOX_FACTOR
+            self.radius = GOBLIN_HITBOX_FACTOR*(BACKGROUND_SQUARE_SIDE*2)/4.0
+            self.hitbox_left = self.hitbox_left + (1-GOBLIN_HITBOX_FACTOR)*BACKGROUND_SQUARE_SIDE*0.5
+            self.hitbox_top = self.hitbox_top + (1-GOBLIN_HITBOX_FACTOR)*BACKGROUND_SQUARE_SIDE*0.5
+            self.hitbox_width = BACKGROUND_SQUARE_SIDE*GOBLIN_HITBOX_FACTOR
+            self.hitbox_height = BACKGROUND_SQUARE_SIDE*GOBLIN_HITBOX_FACTOR
             self.rect = pygame.Rect(self.hitbox_left,self.hitbox_top,self.hitbox_width,self.hitbox_height)
 
             self.ready_to_attack = False
