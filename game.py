@@ -11,6 +11,7 @@ from ennemy import *
 from dead_body import *
 from game_mouse import *
 from menu import *
+from selected_object import * 
 from gold import *
 from error_message import *
 from spawning_mode import *
@@ -39,6 +40,8 @@ class Game():
             self.show_grid = False
 
             self.menu = Menu(self)
+
+            self.selected_object = Selected_object()
 
             loading_progress.value += 10
 
@@ -137,6 +140,9 @@ class Game():
             for button in self.menu.all_buttons:
                   self.object_to_render.append(button)
 
+            for button in self.menu.all_options_buttons:
+                  self.object_to_render.append(button)
+
             for asset_background in self.background.all_assets:
                   self.object_to_render.append(asset_background)
 
@@ -165,6 +171,8 @@ class Game():
                   self.object_to_render.append(error_message)
 
             self.object_to_render.append(self.gold)
+
+            self.object_to_render.append(self.selected_object)
 
             if (self.show_grid):
                   for box in self.grid.all_boxes:
@@ -218,7 +226,8 @@ class Game():
             CLOCK.tick(FPS)
             self.timestep = CLOCK.get_time()
 
-            for event in pygame.event.get():
+            self.all_events = pygame.event.get()
+            for event in self.all_events:
                   if event.type == QUIT:
                         global_status.status = "Quitting"
                   if event.type == KEYDOWN:

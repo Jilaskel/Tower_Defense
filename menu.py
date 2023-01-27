@@ -10,7 +10,7 @@ class Menu():
 
             self.game = game
 
-            self.margin = game.background.bush_width*6
+            self.margin = game.background.bush_width*5
             side = game.background.square_side
             self.space = side
 
@@ -58,11 +58,18 @@ class Menu():
             self.gold_posX = 11*side
             self.gold_posY = 0*side
 
+            path_score = MENU_SELECTION_IMAGE_PATH
+            self.selection_image = pygame.image.load(path_score).convert_alpha()  
+            image_size = vec(self.selection_image.get_size()) 
+            # self.selection_image = pygame.transform.scale(self.selection_image,image_size*MENU_SELECTION_RESIZE_FACTOR) 
+            self.selection_image = pygame.transform.scale(self.selection_image,MENU_SELECTION_SIZE) 
+            self.selection_posX = 7.80*side
+            self.selection_posY = 0.05*side
 
             path_score = MENU_SCORE_BUTTON_IMAGE_PATH
-            self.score_reserve_image = pygame.image.load(path_score).convert_alpha()  
-            image_size = vec(self.score_reserve_image.get_size()) 
-            self.score_reserve_image = pygame.transform.scale(self.score_reserve_image,image_size*MENU_GOLD_RESERVE_BUTTON_RESIZE_FACTOR) 
+            self.score_image = pygame.image.load(path_score).convert_alpha()  
+            image_size = vec(self.score_image.get_size()) 
+            self.score_image = pygame.transform.scale(self.score_image,image_size*MENU_GOLD_RESERVE_BUTTON_RESIZE_FACTOR) 
             self.score_posX = 0.075*side
             self.score_posY = -0.075*side
 
@@ -73,9 +80,10 @@ class Menu():
             self.font_posY = 0.60 * side
 
       def render(self):
+            window.blit(self.selection_image,(self.selection_posX,self.selection_posY))
             window.blit(self.gold_reserve_image,(self.gold_posX,self.gold_posY))
 
-            window.blit(self.score_reserve_image,(self.score_posX,self.score_posY))
+            window.blit(self.score_image,(self.score_posX,self.score_posY))
             score = "Score"
             txt = self.font_score.render(score,True,self.font_score_color)
             window.blit(txt,(self.font_posX,self.font_posY-0.3*self.space))             
@@ -83,8 +91,8 @@ class Menu():
             txt = self.font_score.render(score,True,self.font_score_color)
             window.blit(txt,(self.font_posX,self.font_posY)) 
 
-            for opt_button in  self.all_options_buttons:
-                  opt_button.render()
+            # for opt_button in  self.all_options_buttons:
+            #       opt_button.render()
 
 
 class Tower_button(pygame.sprite.Sprite):
@@ -206,7 +214,7 @@ class Tower_button(pygame.sprite.Sprite):
 
 
 class Option_button(pygame.sprite.Sprite):
-      def __init__(self,path,x,y,resize_r,tag):
+      def __init__(self,path,x,y,resize_r,tag,obj=None):
             super().__init__()
 
             self.current_image = pygame.image.load(path).convert_alpha()   
@@ -214,6 +222,8 @@ class Option_button(pygame.sprite.Sprite):
             resize_ratio = resize_r * RESIZE_COEFF
             self.current_image = pygame.transform.scale(self.current_image,image_size*resize_ratio)  
             self.image_size = vec(self.current_image.get_size())
+
+            self.rendering_layer = 24.1
 
             self.rect = self.current_image.get_rect() 
             self.posX = x  
@@ -230,11 +240,15 @@ class Option_button(pygame.sprite.Sprite):
             self.enlarged_posY = self.posY
 
             self.my_tag = tag
+            if (obj):
+                  self.obj = obj
 
       def action(self):
             match self.my_tag:
-                  case menu:
+                  case "menu":
                         global_status.status = "In pause"
+                  case "destroy":
+                        self.obj.destroy()
 
 
       def render(self):

@@ -1,4 +1,5 @@
 import pygame
+from pygame.locals import *
 from utilitaries import *
 from menu import * 
 from tower import *
@@ -29,7 +30,8 @@ class Game_mouse(pygame.sprite.Sprite):
 
         self.hit_towers = []
 
-        self.rendering_layer = TOTAL_NUMBER_RENDERING_LAYER-1
+        self.rendering_layer = TOTAL_NUMBER_RENDERING_LAYER
+
 
     def doing_stuff(self,game):
         (x,y) = pygame.mouse.get_pos()
@@ -45,6 +47,13 @@ class Game_mouse(pygame.sprite.Sprite):
         self.middle_click_pressed = self.state_mouse[1]
         self.right_click_pressed = self.state_mouse[2]
 
+        self.hit_object = None
+
+        self.left_cliked = False
+        for event in game.all_events:
+            if (event.type == MOUSEBUTTONDOWN):
+                if event.button==1:  
+                    self.left_cliked = True
 
         if not(self.carrying):
             self.hit_buttons = pygame.sprite.spritecollide(self, game.menu.all_buttons, False, pygame.sprite.collide_rect_ratio(self.ratio_for_hitbox))
@@ -60,6 +69,24 @@ class Game_mouse(pygame.sprite.Sprite):
                     self.carried_rect = self.carried_image.get_rect()
                     self.carried_width = self.carried_rect.width
                     self.carried_height = self.carried_rect.height
+            else:
+                if self.left_cliked:
+                    self.hit_object = pygame.sprite.spritecollide(self, game.all_towers, False, pygame.sprite.collide_rect_ratio(self.ratio_for_hitbox))
+                    if not(self.hit_object):
+                        self.hit_object = pygame.sprite.spritecollide(self, game.all_ennemies, False, pygame.sprite.collide_rect_ratio(self.ratio_for_hitbox))
+                    if self.hit_object:
+                        game.selected_object.update(game,self.hit_object[0])
+
+                if not self.hit_object:  ## not else because of mouse over
+                    self.hit_opt_buttons = pygame.sprite.spritecollide(self, game.menu.all_options_buttons, False, pygame.sprite.collide_rect_ratio(self.ratio_for_hitbox))
+                    if (self.hit_opt_buttons):
+                        self.hit_opt_buttons[0].mouse_over = True
+                        if self.left_cliked:
+                            self.hit_opt_buttons[0].action()   
+                    else:
+                        if self.left_cliked:
+                            game.selected_object.clear()
+          
 
         self.box_valid = False
         self.box_not_valid = False
@@ -109,12 +136,7 @@ class Game_mouse(pygame.sprite.Sprite):
                          
         else: #display range?
             self.hit_towers = pygame.sprite.spritecollide(self, game.all_towers, False, pygame.sprite.collide_rect_ratio(self.ratio_for_hitbox))
-
-            self.hit_opt_buttons = pygame.sprite.spritecollide(self, game.menu.all_options_buttons, False, pygame.sprite.collide_rect_ratio(self.ratio_for_hitbox))
-            if (self.hit_opt_buttons):
-                self.hit_opt_buttons[0].mouse_over = True
-                if (self.left_click_pressed):   
-                        self.hit_opt_buttons[0].action()         
+      
 
         if not(self.left_click_pressed):
             self.carrying = False

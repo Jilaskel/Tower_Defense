@@ -1,4 +1,5 @@
 import pygame
+from pygame.locals import *
 from utilitaries import *
 from starting_menu import * 
 
@@ -99,32 +100,31 @@ class Pause_mouse(pygame.sprite.Sprite):
         self.rect.x = self.posX
         self.rect.y = self.posY
 
-        self.state_mouse = pygame.mouse.get_pressed()
-        self.left_click_pressed = self.state_mouse[0]
-
         self.hit_buttons = pygame.sprite.spritecollide(self, self.menu.all_buttons, False, pygame.sprite.collide_rect_ratio(self.ratio_for_hitbox))
         if (self.hit_buttons):
             self.hit_buttons[0].mouse_over = True
-            if (self.left_click_pressed):
-                  match self.hit_buttons[0].tag:
-                        case "Resume":
-                            global_status.status = "In game"
+            for event in self.menu.game.all_events:
+                if (event.type == MOUSEBUTTONDOWN):
+                    if event.button==1: 
+                        match self.hit_buttons[0].tag:
+                                case "Resume":
+                                    global_status.status = "In game"
 
-                        case "Restart":
-                            self.menu.game.reset()
-                            self.menu.game.all_mixers.music_mixer.rewind()
-                            global_status.status = "In game"
+                                case "Restart":
+                                    self.menu.game.reset()
+                                    self.menu.game.all_mixers.music_mixer.rewind()
+                                    global_status.status = "In game"
 
-                        case "Parameters":
-                            pass
+                                case "Parameters":
+                                    pass
 
-                        case "Back to menu":
-                            self.menu.game.reset()
-                            self.menu.game.all_mixers.music_mixer.rewind()
-                            global_status.status = "Starting menu"
+                                case "Back to menu":
+                                    self.menu.game.reset()
+                                    self.menu.game.all_mixers.music_mixer.rewind()
+                                    global_status.status = "Starting menu"
 
-                        case "Quit":
-                            global_status.status = "Quitting"
+                                case "Quit":
+                                    global_status.status = "Quitting"
 
 
     def render(self):

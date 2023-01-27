@@ -383,7 +383,10 @@ class Tower(pygame.sprite.Sprite):
             if (self.hp<=0):
                   self.box.occupied = False
                   pygame.sprite.Sprite.kill(self)
-                  
+
+      def destroy(self):
+            self.box.occupied = False
+            pygame.sprite.Sprite.kill(self)                 
 
       def render(self):
             window.blit(self.current_image, (self.posX, self.posY))  

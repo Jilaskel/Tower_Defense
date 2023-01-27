@@ -20,10 +20,12 @@ class Grid():
                     self.all_boxes.add(Box(self,x,y,True))
                 else:
                     self.all_boxes.add(Box(self,x,y,False))
+            ## ON WALLS BUT ONLY ABOVE GATES
             # if not(i%2==0):
             #     x = game.background.bush_width + (game.background.number_square_x+0.5)*self.unit
             #     y = game.background.menu_height + i*self.unit          
             #     self.all_boxes.add(Box(self,x,y,False,rendering_layer=23))
+            ## ON WALLS EVERYWHERE
             x = game.background.bush_width + (game.background.number_square_x+0.5)*self.unit
             y = game.background.menu_height + i*self.unit          
             self.all_boxes.add(Box(self,x,y,False,rendering_layer=23))

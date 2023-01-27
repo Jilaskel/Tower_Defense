@@ -196,7 +196,10 @@ class Starting_mouse(pygame.sprite.Sprite):
                         self.hit_buttons = pygame.sprite.spritecollide(self, self.menu.all_buttons, False, pygame.sprite.collide_rect_ratio(self.ratio_for_hitbox))
                   case "Credits":
                         self.hit_buttons = pygame.sprite.spritecollide(self, self.menu.all_buttons_credits, False, pygame.sprite.collide_rect_ratio(self.ratio_for_hitbox))
-
+# Tried with correct method but it did not work well for some reason :
+#             for event in self.menu.all_events:
+#                   if (event.type == MOUSEBUTTONDOWN):
+#                         if event.button==1: 
             if (self.hit_buttons):
                   self.hit_buttons[0].mouse_over = True
                   if (self.left_click_pressed):
