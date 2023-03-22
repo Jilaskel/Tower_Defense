@@ -244,6 +244,8 @@ class Game():
                               global_status.status = "Game Over"
                         if (event.key == K_n):
                               self.gold.amount *= 2
+                        if (event.key == K_d):
+                              self.spawning_mode.spawn(self,DRAGON_TAG,1)
             
 
 

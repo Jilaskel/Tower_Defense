@@ -59,7 +59,7 @@ class Spawning_mode():
                     self.number_ogre_spawned = random.randint(1,3)
                     self.spawn(game,OGRE_TAG,self.number_ogre_spawned)
 
-                cooldown = P1_DRAGON_SPAWNING_PERIOD*self.number_dragon_spawned 
+                cooldown = P1_DRAGON_SPAWNING_PERIOD*self.number_dragon_spawned*1000 ## comment *0 to have normal spawning 
                 if ((time-self.last_time_spawning_dragon)>cooldown):
                     self.last_time_spawning_dragon = time
                     self.number_dragon_spawned = random.randint(1,3)
@@ -85,5 +85,5 @@ class Spawning_mode():
             if (TAG==OGRE_TAG):
                 game.all_ennemies.add_ogre(x_path,y_path,rand_offset)
 
-            # if (TAG==DRAGON_TAG):
-            #     game.all_ennemies.add_dragon(x_path,y_path,rand_offset)
+            if (TAG==DRAGON_TAG):
+                game.all_ennemies.add_dragon(x_path,y_path,rand_offset)

@@ -7,8 +7,6 @@ from thread import *
 ## MAIN LOOP
 #############################
 
-game_has_started = False
-
 threadLock = threading.Lock()
 
 thread1 = myThread(1)
