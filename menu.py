@@ -93,6 +93,7 @@ class Menu():
 
             # for opt_button in  self.all_options_buttons:
             #       opt_button.render()
+            # changed because it does not allow different rendering layer for buttons required when mouse over
 
 
 class Tower_button(pygame.sprite.Sprite):
@@ -133,6 +134,9 @@ class Tower_button(pygame.sprite.Sprite):
                   self.range_hitbox = Range_Hitbox(self,BACKGROUND_SQUARE_SIDE,BACKGROUND_SQUARE_SIDE,self.range,circular=True)  
 
                   self.price = ARCANE_TOWER_PRICE 
+
+                  # self.destroy_button = Option_button(self.destroy_path,self.destroy_posX,self.destroy_posY,0.10,"destroy",object)
+                  # menu.all_options_buttons.add(self.destroy_button)
 
             elif (self.my_tag==FIRE_TOWER_BUTTON_TAG):
                   self.compatible_grass = True
@@ -243,12 +247,12 @@ class Option_button(pygame.sprite.Sprite):
             if (obj):
                   self.obj = obj
 
-      def action(self):
+      def action(self,game):
             match self.my_tag:
                   case "menu":
                         global_status.status = "In pause"
                   case "destroy":
-                        self.obj.destroy()
+                        self.obj.destroy(game)
 
 
       def render(self):

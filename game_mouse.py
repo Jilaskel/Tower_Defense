@@ -82,7 +82,7 @@ class Game_mouse(pygame.sprite.Sprite):
                     if (self.hit_opt_buttons):
                         self.hit_opt_buttons[0].mouse_over = True
                         if self.left_cliked:
-                            self.hit_opt_buttons[0].action()   
+                            self.hit_opt_buttons[0].action(game)   
                     else:
                         if self.left_cliked:
                             game.selected_object.clear()

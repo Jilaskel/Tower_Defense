@@ -455,7 +455,7 @@ class Ice_bolt(Projectile,pygame.sprite.Sprite):
             self.tower = tower
             self.tower.firing = True
 
-            self.target.velocity *= self.my_data.slowing_coeff
+            self.target.velocity *= (1.0-self.my_data.slowing_coeff)
 
             self.posX = x    
             self.posY = y   

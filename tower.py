@@ -390,8 +390,9 @@ class Tower(pygame.sprite.Sprite):
                   self.box.occupied = False
                   pygame.sprite.Sprite.kill(self)
 
-      def destroy(self):
+      def destroy(self,game):
             self.box.occupied = False
+            game.gold.gold_gain(game,self,-int(self.my_data.gold_cost*GOLD_TOWER_REFUND_COEFF))
             pygame.sprite.Sprite.kill(self)                 
 
       def render(self):
