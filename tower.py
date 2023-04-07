@@ -4,12 +4,19 @@ from projectile import *
 from functions import *
 
 ARCANE_TOWER_BUTTON_TAG = 1
-FIRE_TOWER_BUTTON_TAG = 2
-LIGHTNING_TOWER_BUTTON_TAG = 3
-ICE_TOWER_BUTTON_TAG = 4
-BALLISTA_BUTTON_TAG = 5
-CATAPULT_BUTTON_TAG = 6
-ARCANE_TOWER_LVL2_BUTTON_TAG = 7
+ARCANE_TOWER_LVL2_BUTTON_TAG = 2
+ARCANE_TOWER_LVL3_BUTTON_TAG = 3
+FIRE_TOWER_BUTTON_TAG = 4
+FIRE_TOWER_LVL2_BUTTON_TAG = 5
+FIRE_TOWER_LVL3_BUTTON_TAG = 6
+LIGHTNING_TOWER_BUTTON_TAG = 7
+LIGHTNING_TOWER_LVL2_BUTTON_TAG = 8
+LIGHTNING_TOWER_LVL3_BUTTON_TAG = 9
+ICE_TOWER_BUTTON_TAG = 10
+ICE_TOWER_LVL2_BUTTON_TAG = 11
+ICE_TOWER_LVL3_BUTTON_TAG = 12
+BALLISTA_BUTTON_TAG = 13
+CATAPULT_BUTTON_TAG = 14
 
 
 class All_towers(pygame.sprite.Group):
@@ -20,6 +27,7 @@ class All_towers(pygame.sprite.Group):
 
             self.arcane_tower_data = Arcane_tower_data()
             self.arcane_tower_lvl2_data = Arcane_tower_lvl2_data()
+            self.arcane_tower_lvl3_data = Arcane_tower_lvl3_data()
             self.fire_tower_data = Fire_tower_data()
             self.lightning_tower_data = Lightning_tower_data()
             self.ice_tower_data = Ice_tower_data()
@@ -32,6 +40,8 @@ class All_towers(pygame.sprite.Group):
                   self.add_arcane_tower(game,box)
             elif (tag==ARCANE_TOWER_LVL2_BUTTON_TAG):
                   self.add_arcane_tower_lvl2(game,box)
+            elif (tag==ARCANE_TOWER_LVL3_BUTTON_TAG):
+                  self.add_arcane_tower_lvl3(game,box)
             elif (tag==FIRE_TOWER_BUTTON_TAG):
                   self.add_fire_tower(game,box)
             elif (tag==LIGHTNING_TOWER_BUTTON_TAG):
@@ -50,6 +60,10 @@ class All_towers(pygame.sprite.Group):
 
       def add_arcane_tower_lvl2(self,game,box):
             self.add(Arcane_tower_lvl2(game,self,box))
+            game.all_mixers.mouse_mixer.building_rock_sound.play()  
+
+      def add_arcane_tower_lvl3(self,game,box):
+            self.add(Arcane_tower_lvl3(game,self,box))
             game.all_mixers.mouse_mixer.building_rock_sound.play()  
 
       def add_fire_tower(self,game,box):
@@ -149,6 +163,40 @@ class Arcane_tower_lvl2_data():
                   self.image_reloading.append(pygame.image.load(ARCANE_TOWER_LVL2_ATTACK_IMAGE_PATH+str(self.number_frame_reloading-i+1).zfill(4)+".png").convert_alpha())   
                   self.image_reloading[i-1] = pygame.transform.scale(self.image_reloading[i-1],vec(self.image_reloading[i-1].get_size())*ARCANE_TOWER_LVL2_RESIZE_FACTOR)
             self.anim_total_time_r = ARCANE_TOWER_LVL2_ANIMATION_RELOADING_TOTAL_TIME
+            self.time_per_frame_r = self.anim_total_time_r/self.number_frame_reloading # in ms
+
+class Arcane_tower_lvl3_data():
+      def __init__(self):
+            self.name = "Arcane tower Lvl.3" 
+
+            self.hp_max = ARCANE_TOWER_LVL3_HP_MAX
+
+            self.gold_cost = -ARCANE_TOWER_LVL3_PRICE
+
+            self.bolt_tag = ARCANE_TOWER_BOLT_TAG
+
+            self.static_image = pygame.image.load(ARCANE_TOWER_LVL3_ATTACK_IMAGE_PATH+"0001.png").convert_alpha()
+            self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*ARCANE_TOWER_LVL3_RESIZE_FACTOR)        
+            self.image_size = vec(self.static_image.get_size())
+
+            self.image_offset = ARCANE_TOWER_LVL3_OFFSET
+            self.firing_offset = ARCANE_TOWER_LVL3_FIRING_OFFSET
+            self.range = ARCANE_TOWER_LVL3_RANGE
+
+            self.image_attacking = []
+            self.number_frame_attacking = ARCANE_TOWER_LVL3_NUMBER_FRAME_ATTACKING
+            for i in range(1,self.number_frame_attacking+1):
+                  self.image_attacking.append(pygame.image.load(ARCANE_TOWER_LVL3_ATTACK_IMAGE_PATH+str(i).zfill(4)+".png").convert_alpha())   
+                  self.image_attacking[i-1] = pygame.transform.scale(self.image_attacking[i-1],vec(self.image_attacking[i-1].get_size())*ARCANE_TOWER_LVL3_RESIZE_FACTOR)
+            self.anim_total_time_a = ARCANE_TOWER_LVL3_ANIMATION_ATTACKING_TOTAL_TIME
+            self.time_per_frame_a = self.anim_total_time_a/self.number_frame_attacking # in ms
+
+            self.image_reloading = []
+            self.number_frame_reloading = ARCANE_TOWER_LVL3_NUMBER_FRAME_ATTACKING
+            for i in range(1,self.number_frame_reloading+1):
+                  self.image_reloading.append(pygame.image.load(ARCANE_TOWER_LVL3_ATTACK_IMAGE_PATH+str(self.number_frame_reloading-i+1).zfill(4)+".png").convert_alpha())   
+                  self.image_reloading[i-1] = pygame.transform.scale(self.image_reloading[i-1],vec(self.image_reloading[i-1].get_size())*ARCANE_TOWER_LVL3_RESIZE_FACTOR)
+            self.anim_total_time_r = ARCANE_TOWER_LVL3_ANIMATION_RELOADING_TOTAL_TIME
             self.time_per_frame_r = self.anim_total_time_r/self.number_frame_reloading # in ms
 
 class Fire_tower_data():
@@ -455,6 +503,14 @@ class Arcane_tower_lvl2(Tower,pygame.sprite.Sprite):
             pygame.sprite.Sprite.__init__(self)
 
             self.my_data = all_t.arcane_tower_lvl2_data
+
+            Tower.__init__(self,game,box)
+
+class Arcane_tower_lvl3(Tower,pygame.sprite.Sprite):
+      def __init__(self,game,all_t,box):
+            pygame.sprite.Sprite.__init__(self)
+
+            self.my_data = all_t.arcane_tower_lvl3_data
 
             Tower.__init__(self,game,box)
 

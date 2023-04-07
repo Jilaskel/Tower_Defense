@@ -25,8 +25,10 @@ class Menu():
 
             self.text_price_offset = vec(0.60,0.67)  # multiplied by the button image size
             self.text_upgrade_price_offset = vec(0.55,0.05)  # multiplied by the button image size
+            self.text_lvl_max_offset = vec(0.80,0.05)  # multiplied by the button image size
 
             self.upgrade_button_image_path = MENU_UPGRADE_BUTTON_IMAGE_PATH
+            self.lvl_max_button_image_path = MENU_LVL_MAX_BUTTON_IMAGE_PATH
 
             self.rendering_layer = 0
 
@@ -117,6 +119,8 @@ class Tower_button(pygame.sprite.Sprite):
                   self.path = MENU_ARCANE_TOWER_BUTTON_IMAGE_PATH
             elif (self.my_tag==ARCANE_TOWER_LVL2_BUTTON_TAG):
                   self.path = MENU_ARCANE_TOWER_LVL2_BUTTON_IMAGE_PATH
+            elif (self.my_tag==ARCANE_TOWER_LVL3_BUTTON_TAG):
+                  self.path = MENU_ARCANE_TOWER_LVL3_BUTTON_IMAGE_PATH
             elif (self.my_tag==FIRE_TOWER_BUTTON_TAG):
                   self.path = MENU_FIRE_TOWER_BUTTON_IMAGE_PATH
             elif (self.my_tag==LIGHTNING_TOWER_BUTTON_TAG):
@@ -178,8 +182,26 @@ class Tower_button(pygame.sprite.Sprite):
 
                   self.price = ARCANE_TOWER_LVL2_PRICE 
 
-                  # self.upgrade_button = Option_button(menu,menu.upgrade_button_image_path,self.posX-0.02*self.rect.w,self.posY+1.05*self.rect.h,0.15,"upgrade",mouse_over_coeff=1.5,text=ARCANE_TOWER_LVL2_UPGRADE_COST,obj=self)
-                  # menu.all_options_buttons.add(self.upgrade_button)
+                  self.tag_to_upgrade = ARCANE_TOWER_LVL3_BUTTON_TAG
+                  self.upgrade_price = ARCANE_TOWER_LVL2_UPGRADE_COST
+                  self.upgrade_button = Option_button(menu,menu.upgrade_button_image_path,self.posX-0.02*self.rect.w,self.posY+1.05*self.rect.h,0.15,"upgrade",mouse_over_coeff=1.5,text=ARCANE_TOWER_LVL2_UPGRADE_COST,obj=self)
+                  menu.all_options_buttons.add(self.upgrade_button)
+
+            elif (self.my_tag==ARCANE_TOWER_LVL3_BUTTON_TAG):
+
+                  self.compatible_grass = True
+                  self.compatible_road = False
+
+                  self.image_to_carry = pygame.image.load(ARCANE_TOWER_LVL3_ATTACK_IMAGE_PATH+"0001.png").convert_alpha()
+                  self.image_to_carry = pygame.transform.scale(self.image_to_carry,vec(self.image_to_carry.get_size())*ARCANE_TOWER_LVL3_RESIZE_FACTOR)
+
+                  self.range = ARCANE_TOWER_LVL3_RANGE*(BACKGROUND_SQUARE_SIDE+BACKGROUND_SQUARE_SIDE)/2.0
+                  self.range_hitbox = Range_Hitbox(self,BACKGROUND_SQUARE_SIDE,BACKGROUND_SQUARE_SIDE,self.range,circular=True)  
+
+                  self.price = ARCANE_TOWER_LVL3_PRICE 
+
+                  self.upgrade_button = Option_button(menu,menu.lvl_max_button_image_path,self.posX-0.02*self.rect.w,self.posY+1.05*self.rect.h,0.15,"lvl_max",mouse_over_coeff=1.5,text="Lvl Max",obj=self)
+                  menu.all_options_buttons.add(self.upgrade_button)
 
             elif (self.my_tag==FIRE_TOWER_BUTTON_TAG):
 
@@ -307,6 +329,12 @@ class Option_button(pygame.sprite.Sprite):
                   self.text_size = vec(self.text_price.get_size())     
                   self.text_price_enlarged =  menu.font_menu_upgrade_enlarged.render(str(text),True,menu.font_menu_color)
                   self.text_size_enlarged = vec(self.text_price_enlarged.get_size())   
+                  match self.my_tag:
+                        case "upgrade":
+                              self.my_offset = self.menu.text_upgrade_price_offset
+                        case "lvl_max":
+                              self.my_offset = self.menu.text_lvl_max_offset
+                              # self.my_offset[0] = (self.image_size[0]-self.text_size[0])*0.5/self.image_size[0]
             else:
                   self.upgrade_cost = None
 
@@ -331,13 +359,13 @@ class Option_button(pygame.sprite.Sprite):
             if self.mouse_over:
                   window.blit(self.enlarged_image, (self.enlarged_posX, self.enlarged_posY)) 
                   if self.upgrade_cost:
-                        x_txt =  self.enlarged_posX+self.enlarged_size[0]*self.menu.text_upgrade_price_offset[0]-self.text_size_enlarged[0]
-                        window.blit(self.text_price_enlarged,(x_txt, self.enlarged_posY+self.enlarged_size[1]*self.menu.text_upgrade_price_offset[1])) 
+                        x_txt =  self.enlarged_posX+self.enlarged_size[0]*self.my_offset[0]-self.text_size_enlarged[0]
+                        window.blit(self.text_price_enlarged,(x_txt, self.enlarged_posY+self.enlarged_size[1]*self.my_offset[1])) 
             else:
                   window.blit(self.current_image, (self.posX, self.posY))  
                   if self.upgrade_cost:
-                        x_txt = self.posX+self.image_size[0]*self.menu.text_upgrade_price_offset[0]-self.text_size[0]
-                        window.blit(self.text_price,(x_txt, self.posY+self.image_size[1]*self.menu.text_upgrade_price_offset[1]))
+                        x_txt = self.posX+self.image_size[0]*self.my_offset[0]-self.text_size[0]
+                        window.blit(self.text_price,(x_txt, self.posY+self.image_size[1]*self.my_offset[1]))
 
             self.mouse_over = False 
             self.rendering_layer = 0  
