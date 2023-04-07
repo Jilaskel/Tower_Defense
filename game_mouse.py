@@ -81,6 +81,7 @@ class Game_mouse(pygame.sprite.Sprite):
                     self.hit_opt_buttons = pygame.sprite.spritecollide(self, game.menu.all_options_buttons, False, pygame.sprite.collide_rect_ratio(self.ratio_for_hitbox))
                     if (self.hit_opt_buttons):
                         self.hit_opt_buttons[0].mouse_over = True
+                        self.hit_opt_buttons[0].rendering_layer = 22
                         if self.left_cliked:
                             self.hit_opt_buttons[0].action(game)   
                     else:

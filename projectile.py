@@ -170,7 +170,7 @@ class Ice_bolt_data():
             fading_number = 34
             for i in range(fading_number,fading_number+self.number_frame_fading):
                   self.images_fading.append(pygame.image.load(ICE_BOLT_IMAGE_PATH+"frost_ray_"+str(i).zfill(2)+".png").convert_alpha())  
-            self.anim_total_time_fading = ICE_BOLT_NUMBER_FRAME_FADING  # in ms
+            self.anim_total_time_fading = ICE_BOLT_TOTAL_TIME_FADING  # in ms
             self.time_per_frame_fading = self.anim_total_time_fading/self.number_frame_fading # in ms
 
 class Bolt_data():

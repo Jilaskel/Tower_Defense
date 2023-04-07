@@ -35,7 +35,7 @@ class Selected_object():
 
         if (hasattr(object,'destroy')) and (callable(object.destroy)):
             self.destroyable = True
-            self.destroy_button = Option_button(self.destroy_path,self.destroy_posX,self.destroy_posY,0.10,"destroy",object)
+            self.destroy_button = Option_button(game.menu,self.destroy_path,self.destroy_posX,self.destroy_posY,0.10,"destroy",obj=object)
             game.menu.all_options_buttons.add(self.destroy_button)
         else:
             self.destroyable = False

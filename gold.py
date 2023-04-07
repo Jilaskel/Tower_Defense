@@ -10,7 +10,7 @@ class Gold():
         self.font_gold_color = (0,0,0)  ## black
         self.font_gold = pygame.font.Font(FONT_PATH,self.font_gold_size)
 
-        self.font_posX = 11.2 * BACKGROUND_SQUARE_SIDE
+        self.font_posX = 11.8 * BACKGROUND_SQUARE_SIDE
         self.font_posY = 0.45 * BACKGROUND_SQUARE_SIDE
 
         self.rendering_layer = TOTAL_NUMBER_RENDERING_LAYER-1
@@ -24,7 +24,9 @@ class Gold():
 
     def render(self):
         self.text_price =  self.font_gold.render(str(self.amount),True,self.font_gold_color) 
-        window.blit(self.text_price,(self.font_posX,self.font_posY)) 
+        text_size = vec(self.text_price.get_size())
+        x_txt = self.font_posX - text_size[0]
+        window.blit(self.text_price,(x_txt,self.font_posY)) 
 
 
 class All_gold_anim():
@@ -40,7 +42,7 @@ class All_gold_anim():
           self.font_gold_gain = pygame.font.Font(FONT_PATH,self.font_gold_gain_size)
 
           self.offset = GOLD_GAIN_OFFSET  ## offset with the object center
-          self.offset_image = vec(0,-10)*RESIZE_COEFF
+          self.offset_image = vec(-25,-10)*RESIZE_COEFF
 
           self.time_anim = GOLD_GAIN_TIME
           self.anim_vector = GOLD_GAIN_TRAVEL_VECTOR
@@ -63,11 +65,13 @@ class Gold_anim():
         self.amount = amount
 
         self.current_image = self.my_data.current_image
+        self.text_price =  self.my_data.font_gold_gain.render(self.my_sign+str(self.amount),True,self.font_gold_gain_color)
+        self.text_size =  vec(self.text_price.get_size())
 
-        self.font_posX =  obj.center[0] + all_g.offset[0]
+        self.font_posX =  obj.center[0] + all_g.offset[0] 
         self.font_posY =  obj.center[1] + all_g.offset[1]
 
-        self.posX = self.font_posX + self.my_data.offset_image[0]
+        self.posX = self.font_posX + self.text_size[0] + self.my_data.offset_image[0]
         self.posY = self.font_posY + self.my_data.offset_image[1]
 
         self.rendering_layer = TOTAL_NUMBER_RENDERING_LAYER-1
@@ -81,12 +85,11 @@ class Gold_anim():
             self.font_posX +=  self.my_data.anim_vector[0]*game.timestep/self.my_data.time_anim
             self.font_posY +=  self.my_data.anim_vector[1]*game.timestep/self.my_data.time_anim
 
-            self.posX = self.font_posX + self.my_data.offset_image[0]
+            self.posX = self.font_posX + self.text_size[0] + self.my_data.offset_image[0]
             self.posY = self.font_posY + self.my_data.offset_image[1]
         else:
             self.my_data.list.remove(self)
 
     def render(self):
         window.blit(self.current_image, (self.posX, self.posY))
-        self.text_price =  self.my_data.font_gold_gain.render(self.my_sign+str(self.amount),True,self.font_gold_gain_color) 
         window.blit(self.text_price,(self.font_posX,self.font_posY)) 

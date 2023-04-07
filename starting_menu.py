@@ -63,17 +63,17 @@ class Starting_menu():
             self.image_attacking = []
             self.number_frame_attacking = ARCANE_TOWER_NUMBER_FRAME_ATTACKING
             for i in range(1,self.number_frame_attacking+1):
-                  self.image_attacking.append(pygame.image.load(ARCANE_TOWER_ATTACK_IMAGE_PATH+str(i).zfill(2)+".png").convert_alpha())   
+                  self.image_attacking.append(pygame.image.load(ARCANE_TOWER_ATTACK_IMAGE_PATH+str(i).zfill(4)+".png").convert_alpha())   
                   self.image_attacking[i-1] = pygame.transform.scale(self.image_attacking[i-1],vec(self.image_attacking[i-1].get_size())*ARCANE_TOWER_RESIZE_FACTOR*2)
-            self.anim_total_time_a = ARCANE_TOWER_ANIMATION_ATTACKING_TOTAL_TIME*2
+            self.anim_total_time_a = ARCANE_TOWER_ANIMATION_ATTACKING_TOTAL_TIME
             self.time_per_frame_a = self.anim_total_time_a/self.number_frame_attacking # in ms
 
             self.image_reloading = []
-            self.number_frame_reloading = ARCANE_TOWER_NUMBER_FRAME_RELOADING
+            self.number_frame_reloading = ARCANE_TOWER_NUMBER_FRAME_ATTACKING
             for i in range(1,self.number_frame_reloading+1):
-                  self.image_reloading.append(pygame.image.load(ARCANE_TOWER_RELOAD_IMAGE_PATH+str(i).zfill(2)+".png").convert_alpha())   
+                  self.image_reloading.append(pygame.image.load(ARCANE_TOWER_ATTACK_IMAGE_PATH+str(self.number_frame_reloading-i+1).zfill(4)+".png").convert_alpha())   
                   self.image_reloading[i-1] = pygame.transform.scale(self.image_reloading[i-1],vec(self.image_reloading[i-1].get_size())*ARCANE_TOWER_RESIZE_FACTOR*2)
-            self.anim_total_time_r = ARCANE_TOWER_ANIMATION_RELOADING_TOTAL_TIME*2
+            self.anim_total_time_r = ARCANE_TOWER_ANIMATION_RELOADING_TOTAL_TIME
             self.time_per_frame_r = self.anim_total_time_r/self.number_frame_reloading # in ms
 
             self.reloading = False

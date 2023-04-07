@@ -203,9 +203,13 @@ class Game():
 
             self.gold.reset()
 
+            self.menu.reset()
+
             self.base.reset()
 
             self.all_towers.empty()
+
+            self.all_towers.all_siege_engines.empty()
 
             self.all_projectiles.empty()
 
