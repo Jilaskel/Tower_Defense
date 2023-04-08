@@ -46,6 +46,11 @@ class Mouse_mixer():
         self.building_wood_sound = pygame.mixer.Sound(SOUND_BUILDING_WOOD_PATH)
         self.building_wood_sound.set_volume(SOUND_BUILDING_WOOD_VOLUME*AUDIO_EFFECTS_COEFF)
 
+        self.gold_gain_sound = pygame.mixer.Sound(SOUND_GOLD_GAIN_PATH)
+        self.gold_gain_sound.set_volume(SOUND_GOLD_GAIN_VOLUME)
+        self.big_gold_gain_sound = pygame.mixer.Sound(SOUND_BIG_GOLD_GAIN_PATH)
+        self.big_gold_gain_sound.set_volume(SOUND_GOLD_GAIN_VOLUME)
+
 class Ennemy_mixer():
     def __init__(self):
 

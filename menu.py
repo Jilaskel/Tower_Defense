@@ -353,6 +353,8 @@ class Option_button(pygame.sprite.Sprite):
                               pygame.sprite.Sprite.kill(self)
                         else:
                               game.all_error_messages.add_error_message_anim("Not enough gold",self.posX,self.posY)
+                  case "lvl_max":
+                        game.all_error_messages.add_error_message_anim("No more upgrade !",self.posX,self.posY)
 
 
       def render(self):
