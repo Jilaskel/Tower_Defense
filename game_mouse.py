@@ -70,24 +70,41 @@ class Game_mouse(pygame.sprite.Sprite):
                     self.carried_width = self.carried_rect.width
                     self.carried_height = self.carried_rect.height
             else:
-                if self.left_cliked:
-                    self.hit_object = pygame.sprite.spritecollide(self, game.all_towers, False, pygame.sprite.collide_rect_ratio(self.ratio_for_hitbox))
-                    if not(self.hit_object):
-                        self.hit_object = pygame.sprite.spritecollide(self, game.all_ennemies, False, pygame.sprite.collide_rect_ratio(self.ratio_for_hitbox))
-                    if self.hit_object:
-                        game.selected_object.update(game,self.hit_object[0])
+                # if self.left_cliked:
+                #     self.hit_object = pygame.sprite.spritecollide(self, game.all_towers, False, pygame.sprite.collide_rect_ratio(self.ratio_for_hitbox))
+                #     if not(self.hit_object):
+                #         self.hit_object = pygame.sprite.spritecollide(self, game.all_ennemies, False, pygame.sprite.collide_rect_ratio(self.ratio_for_hitbox))
+                #     if self.hit_object:
+                #         game.selected_object.update(game,self.hit_object[0])
 
-                if not self.hit_object:  ## not else because of mouse over
-                    self.hit_opt_buttons = pygame.sprite.spritecollide(self, game.menu.all_options_buttons, False, pygame.sprite.collide_rect_ratio(self.ratio_for_hitbox))
-                    if (self.hit_opt_buttons):
-                        self.hit_opt_buttons[0].mouse_over = True
-                        self.hit_opt_buttons[0].rendering_layer = 22
-                        if self.left_cliked:
-                            self.hit_opt_buttons[0].action(game)   
-                    else:
-                        if self.left_cliked:
+                # if not self.hit_object:  ## not else because of mouse over
+                #     self.hit_opt_buttons = pygame.sprite.spritecollide(self, game.menu.all_options_buttons, False, pygame.sprite.collide_rect_ratio(self.ratio_for_hitbox))
+                #     if (self.hit_opt_buttons):
+                #         self.hit_opt_buttons[0].mouse_over = True
+                #         self.hit_opt_buttons[0].rendering_layer = 22
+                #         if self.left_cliked:
+                #             self.hit_opt_buttons[0].action(game)   
+                #     else:
+                #         if self.left_cliked:
+                #             game.selected_object.clear()
+
+
+                self.hit_opt_buttons = pygame.sprite.spritecollide(self, game.menu.all_options_buttons, False, pygame.sprite.collide_rect_ratio(self.ratio_for_hitbox))
+                if (self.hit_opt_buttons):
+                    self.hit_opt_buttons[0].mouse_over = True
+                    self.hit_opt_buttons[0].rendering_layer = 22
+                    if self.left_cliked:
+                        self.hit_opt_buttons[0].action(game)   
+                if not(self.hit_opt_buttons):
+                    if self.left_cliked:
+                        self.hit_object = pygame.sprite.spritecollide(self, game.all_towers, False, pygame.sprite.collide_rect_ratio(self.ratio_for_hitbox))
+                        if not(self.hit_object):
+                            self.hit_object = pygame.sprite.spritecollide(self, game.all_ennemies, False, pygame.sprite.collide_rect_ratio(self.ratio_for_hitbox))
+                        if self.hit_object:
+                            game.selected_object.update(game,self.hit_object[0])                        
+                        else:
                             game.selected_object.clear()
-          
+
 
         self.box_valid = False
         self.box_not_valid = False

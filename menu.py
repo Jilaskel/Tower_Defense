@@ -123,10 +123,22 @@ class Tower_button(pygame.sprite.Sprite):
                   self.path = MENU_ARCANE_TOWER_LVL3_BUTTON_IMAGE_PATH
             elif (self.my_tag==FIRE_TOWER_BUTTON_TAG):
                   self.path = MENU_FIRE_TOWER_BUTTON_IMAGE_PATH
+            elif (self.my_tag==FIRE_TOWER_LVL2_BUTTON_TAG):
+                  self.path = MENU_FIRE_TOWER_LVL2_BUTTON_IMAGE_PATH
+            elif (self.my_tag==FIRE_TOWER_LVL3_BUTTON_TAG):
+                  self.path = MENU_FIRE_TOWER_LVL3_BUTTON_IMAGE_PATH
             elif (self.my_tag==LIGHTNING_TOWER_BUTTON_TAG):
                   self.path = MENU_LIGHTNING_TOWER_BUTTON_IMAGE_PATH
+            elif (self.my_tag==LIGHTNING_TOWER_LVL2_BUTTON_TAG):
+                  self.path = MENU_LIGHTNING_TOWER_LVL2_BUTTON_IMAGE_PATH
+            elif (self.my_tag==LIGHTNING_TOWER_LVL3_BUTTON_TAG):
+                  self.path = MENU_LIGHTNING_TOWER_LVL3_BUTTON_IMAGE_PATH
             elif (self.my_tag==ICE_TOWER_BUTTON_TAG):
                   self.path = MENU_ICE_TOWER_BUTTON_IMAGE_PATH
+            elif (self.my_tag==ICE_TOWER_LVL2_BUTTON_TAG):
+                  self.path = MENU_ICE_TOWER_LVL2_BUTTON_IMAGE_PATH
+            elif (self.my_tag==ICE_TOWER_LVL3_BUTTON_TAG):
+                  self.path = MENU_ICE_TOWER_LVL3_BUTTON_IMAGE_PATH
             elif (self.my_tag==BALLISTA_BUTTON_TAG):
                   self.path = MENU_BALLISTA_BUTTON_IMAGE_PATH
             elif (self.my_tag==CATAPULT_BUTTON_TAG):
@@ -216,6 +228,45 @@ class Tower_button(pygame.sprite.Sprite):
 
                   self.price = FIRE_TOWER_PRICE 
 
+                  self.tag_to_upgrade = FIRE_TOWER_LVL2_BUTTON_TAG
+                  self.upgrade_price = FIRE_TOWER_UPGRADE_COST
+                  self.upgrade_button = Option_button(menu,menu.upgrade_button_image_path,self.posX-0.02*self.rect.w,self.posY+1.05*self.rect.h,0.15,"upgrade",mouse_over_coeff=1.5,text=FIRE_TOWER_UPGRADE_COST,obj=self)
+                  menu.all_options_buttons.add(self.upgrade_button)
+
+            elif (self.my_tag==FIRE_TOWER_LVL2_BUTTON_TAG):
+
+                  self.compatible_grass = True
+                  self.compatible_road = False
+
+                  self.image_to_carry = pygame.image.load(FIRE_TOWER_LVL2_ATTACK_IMAGE_PATH+"0001.png").convert_alpha()
+                  self.image_to_carry = pygame.transform.scale(self.image_to_carry,vec(self.image_to_carry.get_size())*FIRE_TOWER_LVL2_RESIZE_FACTOR)
+
+                  self.range = FIRE_TOWER_LVL2_RANGE*(BACKGROUND_SQUARE_SIDE+BACKGROUND_SQUARE_SIDE)/2.0
+                  self.range_hitbox = Range_Hitbox(self,BACKGROUND_SQUARE_SIDE,BACKGROUND_SQUARE_SIDE,self.range,circular=True)  
+
+                  self.price = FIRE_TOWER_LVL2_PRICE 
+
+                  self.tag_to_upgrade = FIRE_TOWER_LVL3_BUTTON_TAG
+                  self.upgrade_price = FIRE_TOWER_LVL2_UPGRADE_COST
+                  self.upgrade_button = Option_button(menu,menu.upgrade_button_image_path,self.posX-0.02*self.rect.w,self.posY+1.05*self.rect.h,0.15,"upgrade",mouse_over_coeff=1.5,text=FIRE_TOWER_LVL2_UPGRADE_COST,obj=self)
+                  menu.all_options_buttons.add(self.upgrade_button)
+
+            elif (self.my_tag==FIRE_TOWER_LVL3_BUTTON_TAG):
+
+                  self.compatible_grass = True
+                  self.compatible_road = False
+
+                  self.image_to_carry = pygame.image.load(FIRE_TOWER_LVL3_ATTACK_IMAGE_PATH+"0001.png").convert_alpha()
+                  self.image_to_carry = pygame.transform.scale(self.image_to_carry,vec(self.image_to_carry.get_size())*FIRE_TOWER_LVL3_RESIZE_FACTOR)
+
+                  self.range = FIRE_TOWER_LVL3_RANGE*(BACKGROUND_SQUARE_SIDE+BACKGROUND_SQUARE_SIDE)/2.0
+                  self.range_hitbox = Range_Hitbox(self,BACKGROUND_SQUARE_SIDE,BACKGROUND_SQUARE_SIDE,self.range,circular=True)  
+
+                  self.price = FIRE_TOWER_LVL3_PRICE 
+
+                  self.upgrade_button = Option_button(menu,menu.lvl_max_button_image_path,self.posX-0.02*self.rect.w,self.posY+1.05*self.rect.h,0.15,"lvl_max",mouse_over_coeff=1.5,text="Lvl Max",obj=self)
+                  menu.all_options_buttons.add(self.upgrade_button)
+
             elif (self.my_tag==LIGHTNING_TOWER_BUTTON_TAG):
 
                   self.compatible_grass = True
@@ -229,6 +280,45 @@ class Tower_button(pygame.sprite.Sprite):
 
                   self.price = LIGHTNING_TOWER_PRICE 
 
+                  self.tag_to_upgrade = LIGHTNING_TOWER_LVL2_BUTTON_TAG
+                  self.upgrade_price = LIGHTNING_TOWER_UPGRADE_COST
+                  self.upgrade_button = Option_button(menu,menu.upgrade_button_image_path,self.posX-0.02*self.rect.w,self.posY+1.05*self.rect.h,0.15,"upgrade",mouse_over_coeff=1.5,text=LIGHTNING_TOWER_UPGRADE_COST,obj=self)
+                  menu.all_options_buttons.add(self.upgrade_button)
+
+            elif (self.my_tag==LIGHTNING_TOWER_LVL2_BUTTON_TAG):
+
+                  self.compatible_grass = True
+                  self.compatible_road = False
+
+                  self.image_to_carry = pygame.image.load(LIGHTNING_TOWER_LVL2_ATTACK_IMAGE_PATH+"0001.png").convert_alpha()
+                  self.image_to_carry = pygame.transform.scale(self.image_to_carry,vec(self.image_to_carry.get_size())*LIGHTNING_TOWER_LVL2_RESIZE_FACTOR)
+
+                  self.range = LIGHTNING_TOWER_LVL2_RANGE*(BACKGROUND_SQUARE_SIDE+BACKGROUND_SQUARE_SIDE)/2.0
+                  self.range_hitbox = Range_Hitbox(self,BACKGROUND_SQUARE_SIDE,BACKGROUND_SQUARE_SIDE,self.range,circular=True)  
+
+                  self.price = LIGHTNING_TOWER_LVL2_PRICE 
+
+                  self.tag_to_upgrade = LIGHTNING_TOWER_LVL3_BUTTON_TAG
+                  self.upgrade_price = LIGHTNING_TOWER_LVL2_UPGRADE_COST
+                  self.upgrade_button = Option_button(menu,menu.upgrade_button_image_path,self.posX-0.02*self.rect.w,self.posY+1.05*self.rect.h,0.15,"upgrade",mouse_over_coeff=1.5,text=LIGHTNING_TOWER_LVL2_UPGRADE_COST,obj=self)
+                  menu.all_options_buttons.add(self.upgrade_button)
+
+            elif (self.my_tag==LIGHTNING_TOWER_LVL3_BUTTON_TAG):
+
+                  self.compatible_grass = True
+                  self.compatible_road = False
+
+                  self.image_to_carry = pygame.image.load(LIGHTNING_TOWER_LVL3_ATTACK_IMAGE_PATH+"0001.png").convert_alpha()
+                  self.image_to_carry = pygame.transform.scale(self.image_to_carry,vec(self.image_to_carry.get_size())*LIGHTNING_TOWER_LVL3_RESIZE_FACTOR)
+
+                  self.range = LIGHTNING_TOWER_LVL3_RANGE*(BACKGROUND_SQUARE_SIDE+BACKGROUND_SQUARE_SIDE)/2.0
+                  self.range_hitbox = Range_Hitbox(self,BACKGROUND_SQUARE_SIDE,BACKGROUND_SQUARE_SIDE,self.range,circular=True)  
+
+                  self.price = LIGHTNING_TOWER_LVL3_PRICE 
+
+                  self.upgrade_button = Option_button(menu,menu.lvl_max_button_image_path,self.posX-0.02*self.rect.w,self.posY+1.05*self.rect.h,0.15,"lvl_max",mouse_over_coeff=1.5,text="Lvl Max",obj=self)
+                  menu.all_options_buttons.add(self.upgrade_button)
+
             elif (self.my_tag==ICE_TOWER_BUTTON_TAG):
 
                   self.compatible_grass = True
@@ -241,6 +331,45 @@ class Tower_button(pygame.sprite.Sprite):
                   self.range_hitbox = Range_Hitbox(self,BACKGROUND_SQUARE_SIDE,BACKGROUND_SQUARE_SIDE,self.range,circular=True)  
 
                   self.price = ICE_TOWER_PRICE 
+
+                  self.tag_to_upgrade = ICE_TOWER_LVL2_BUTTON_TAG
+                  self.upgrade_price = ICE_TOWER_UPGRADE_COST
+                  self.upgrade_button = Option_button(menu,menu.upgrade_button_image_path,self.posX-0.02*self.rect.w,self.posY+1.05*self.rect.h,0.15,"upgrade",mouse_over_coeff=1.5,text=ICE_TOWER_UPGRADE_COST,obj=self)
+                  menu.all_options_buttons.add(self.upgrade_button)
+
+            elif (self.my_tag==ICE_TOWER_LVL2_BUTTON_TAG):
+
+                  self.compatible_grass = True
+                  self.compatible_road = False
+
+                  self.image_to_carry = pygame.image.load(ICE_TOWER_LVL2_ATTACK_IMAGE_PATH+"0001.png").convert_alpha()
+                  self.image_to_carry = pygame.transform.scale(self.image_to_carry,vec(self.image_to_carry.get_size())*ICE_TOWER_LVL2_RESIZE_FACTOR)
+
+                  self.range = ICE_TOWER_LVL2_RANGE*(BACKGROUND_SQUARE_SIDE+BACKGROUND_SQUARE_SIDE)/2.0
+                  self.range_hitbox = Range_Hitbox(self,BACKGROUND_SQUARE_SIDE,BACKGROUND_SQUARE_SIDE,self.range,circular=True)  
+
+                  self.price = ICE_TOWER_LVL2_PRICE 
+
+                  self.tag_to_upgrade = ICE_TOWER_LVL3_BUTTON_TAG
+                  self.upgrade_price = ICE_TOWER_LVL2_UPGRADE_COST
+                  self.upgrade_button = Option_button(menu,menu.upgrade_button_image_path,self.posX-0.02*self.rect.w,self.posY+1.05*self.rect.h,0.15,"upgrade",mouse_over_coeff=1.5,text=ICE_TOWER_LVL2_UPGRADE_COST,obj=self)
+                  menu.all_options_buttons.add(self.upgrade_button)
+
+            elif (self.my_tag==ICE_TOWER_LVL3_BUTTON_TAG):
+
+                  self.compatible_grass = True
+                  self.compatible_road = False
+
+                  self.image_to_carry = pygame.image.load(ICE_TOWER_LVL3_ATTACK_IMAGE_PATH+"0001.png").convert_alpha()
+                  self.image_to_carry = pygame.transform.scale(self.image_to_carry,vec(self.image_to_carry.get_size())*ICE_TOWER_LVL3_RESIZE_FACTOR)
+
+                  self.range = ICE_TOWER_LVL3_RANGE*(BACKGROUND_SQUARE_SIDE+BACKGROUND_SQUARE_SIDE)/2.0
+                  self.range_hitbox = Range_Hitbox(self,BACKGROUND_SQUARE_SIDE,BACKGROUND_SQUARE_SIDE,self.range,circular=True)  
+
+                  self.price = ICE_TOWER_LVL3_PRICE 
+
+                  self.upgrade_button = Option_button(menu,menu.lvl_max_button_image_path,self.posX-0.02*self.rect.w,self.posY+1.05*self.rect.h,0.15,"lvl_max",mouse_over_coeff=1.5,text="Lvl Max",obj=self)
+                  menu.all_options_buttons.add(self.upgrade_button)
 
             elif (self.my_tag==BALLISTA_BUTTON_TAG):
 
@@ -346,7 +475,7 @@ class Option_button(pygame.sprite.Sprite):
                         self.obj.destroy(game)
                   case "upgrade":
                         if (game.gold.amount >= self.obj.upgrade_price):
-                              (x,y) = (self.menu.margin,0)
+                              (x,y) = (self.obj.posX,self.obj.posY)
                               self.menu.all_buttons.add(Tower_button(self.menu,x,y,self.obj.tag_to_upgrade))
                               game.gold.gold_gain(game,self,-self.obj.upgrade_price)
                               pygame.sprite.Sprite.kill(self.obj)

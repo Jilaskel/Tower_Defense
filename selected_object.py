@@ -23,8 +23,8 @@ class Selected_object():
         self.spaceY = 0.20*side
 
         self.destroy_path = MENU_DESTROY_BUTTON_IMAGE_PATH
-        self.destroy_posX= 10.2*side
-        self.destroy_posY= 0.60*side
+        self.destroy_posX= 10.15*side
+        self.destroy_posY= 0.55*side
 
         self.destroyable = False
 

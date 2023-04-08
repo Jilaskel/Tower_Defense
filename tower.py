@@ -29,8 +29,14 @@ class All_towers(pygame.sprite.Group):
             self.arcane_tower_lvl2_data = Arcane_tower_lvl2_data()
             self.arcane_tower_lvl3_data = Arcane_tower_lvl3_data()
             self.fire_tower_data = Fire_tower_data()
+            self.fire_tower_lvl2_data = Fire_tower_lvl2_data()
+            self.fire_tower_lvl3_data = Fire_tower_lvl3_data()
             self.lightning_tower_data = Lightning_tower_data()
+            self.lightning_tower_lvl2_data = Lightning_tower_lvl2_data()
+            self.lightning_tower_lvl3_data = Lightning_tower_lvl3_data()
             self.ice_tower_data = Ice_tower_data()
+            self.ice_tower_lvl2_data = Ice_tower_lvl2_data()
+            self.ice_tower_lvl3_data = Ice_tower_lvl3_data()
                         
             self.ballista_data = Ballista_data()
             self.catapult_data = Catapult_data()
@@ -44,10 +50,22 @@ class All_towers(pygame.sprite.Group):
                   self.add_arcane_tower_lvl3(game,box)
             elif (tag==FIRE_TOWER_BUTTON_TAG):
                   self.add_fire_tower(game,box)
+            elif (tag==FIRE_TOWER_LVL2_BUTTON_TAG):
+                  self.add_fire_tower_lvl2(game,box)
+            elif (tag==FIRE_TOWER_LVL3_BUTTON_TAG):
+                  self.add_fire_tower_lvl3(game,box)
             elif (tag==LIGHTNING_TOWER_BUTTON_TAG):
                   self.add_lightning_tower(game,box)
+            elif (tag==LIGHTNING_TOWER_LVL2_BUTTON_TAG):
+                  self.add_lightning_tower_lvl2(game,box)
+            elif (tag==LIGHTNING_TOWER_LVL3_BUTTON_TAG):
+                  self.add_lightning_tower_lvl3(game,box)
             elif (tag==ICE_TOWER_BUTTON_TAG):
                   self.add_ice_tower(game,box)
+            elif (tag==ICE_TOWER_LVL2_BUTTON_TAG):
+                  self.add_ice_tower_lvl2(game,box)
+            elif (tag==ICE_TOWER_LVL3_BUTTON_TAG):
+                  self.add_ice_tower_lvl3(game,box)
             elif (tag==BALLISTA_BUTTON_TAG):
                   self.add_ballista(game,box)
             elif (tag==CATAPULT_BUTTON_TAG):
@@ -70,12 +88,36 @@ class All_towers(pygame.sprite.Group):
             self.add(Fire_tower(game,self,box))
             game.all_mixers.mouse_mixer.building_rock_sound.play()
 
+      def add_fire_tower_lvl2(self,game,box):
+            self.add(Fire_tower_lvl2(game,self,box))
+            game.all_mixers.mouse_mixer.building_rock_sound.play()
+
+      def add_fire_tower_lvl3(self,game,box):
+            self.add(Fire_tower_lvl3(game,self,box))
+            game.all_mixers.mouse_mixer.building_rock_sound.play()
+      
       def add_lightning_tower(self,game,box):
             self.add(Lightning_tower(game,self,box))
             game.all_mixers.mouse_mixer.building_rock_sound.play()
 
+      def add_lightning_tower_lvl2(self,game,box):
+            self.add(Lightning_tower_lvl2(game,self,box))
+            game.all_mixers.mouse_mixer.building_rock_sound.play()
+
+      def add_lightning_tower_lvl3(self,game,box):
+            self.add(Lightning_tower_lvl3(game,self,box))
+            game.all_mixers.mouse_mixer.building_rock_sound.play()
+
       def add_ice_tower(self,game,box):
             self.add(Ice_tower(game,self,box))
+            game.all_mixers.mouse_mixer.building_rock_sound.play()
+
+      def add_ice_tower_lvl2(self,game,box):
+            self.add(Ice_tower_lvl2(game,self,box))
+            game.all_mixers.mouse_mixer.building_rock_sound.play()
+
+      def add_ice_tower_lvl3(self,game,box):
+            self.add(Ice_tower_lvl3(game,self,box))
             game.all_mixers.mouse_mixer.building_rock_sound.play()
 
       def add_ballista(self,game,box):
@@ -233,6 +275,75 @@ class Fire_tower_data():
             self.anim_total_time_r = FIRE_TOWER_ANIMATION_RELOADING_TOTAL_TIME
             self.time_per_frame_r = self.anim_total_time_r/self.number_frame_reloading # in ms
 
+class Fire_tower_lvl2_data():
+      def __init__(self):
+            self.name = "Fire tower Lvl.2"
+            
+            self.hp_max = FIRE_TOWER_LVL2_HP_MAX
+
+            self.gold_cost = -FIRE_TOWER_LVL2_PRICE
+
+            self.bolt_tag = FIRE_TOWER_BOLT_TAG
+
+            self.static_image = pygame.image.load(FIRE_TOWER_LVL2_ATTACK_IMAGE_PATH+"0001.png").convert_alpha()
+            self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*FIRE_TOWER_LVL2_RESIZE_FACTOR)        
+            self.image_size = vec(self.static_image.get_size())
+
+            self.image_offset = FIRE_TOWER_LVL2_OFFSET
+            self.firing_offset = FIRE_TOWER_LVL2_FIRING_OFFSET
+            self.range = FIRE_TOWER_LVL2_RANGE
+
+            self.image_attacking = []
+            self.number_frame_attacking = FIRE_TOWER_LVL2_NUMBER_FRAME_ATTACKING
+            for i in range(1,self.number_frame_attacking+1):
+                  self.image_attacking.append(pygame.image.load(FIRE_TOWER_LVL2_ATTACK_IMAGE_PATH+str(i).zfill(4)+".png").convert_alpha())   
+                  self.image_attacking[i-1] = pygame.transform.scale(self.image_attacking[i-1],vec(self.image_attacking[i-1].get_size())*FIRE_TOWER_LVL2_RESIZE_FACTOR)
+            self.anim_total_time_a = FIRE_TOWER_LVL2_ANIMATION_ATTACKING_TOTAL_TIME
+            self.time_per_frame_a = self.anim_total_time_a/self.number_frame_attacking # in ms
+
+            self.image_reloading = []
+            self.number_frame_reloading = FIRE_TOWER_LVL2_NUMBER_FRAME_ATTACKING
+            for i in range(1,self.number_frame_reloading+1):
+                  self.image_reloading.append(pygame.image.load(FIRE_TOWER_LVL2_ATTACK_IMAGE_PATH+str(self.number_frame_reloading-i+1).zfill(4)+".png").convert_alpha())   
+                  self.image_reloading[i-1] = pygame.transform.scale(self.image_reloading[i-1],vec(self.image_reloading[i-1].get_size())*FIRE_TOWER_LVL2_RESIZE_FACTOR)
+            self.anim_total_time_r = FIRE_TOWER_LVL2_ANIMATION_RELOADING_TOTAL_TIME
+            self.time_per_frame_r = self.anim_total_time_r/self.number_frame_reloading # in ms
+
+
+class Fire_tower_lvl3_data():
+      def __init__(self):
+            self.name = "Fire tower Lvl.3"
+            
+            self.hp_max = FIRE_TOWER_LVL3_HP_MAX
+
+            self.gold_cost = -FIRE_TOWER_LVL3_PRICE
+
+            self.bolt_tag = FIRE_TOWER_BOLT_TAG
+
+            self.static_image = pygame.image.load(FIRE_TOWER_LVL3_ATTACK_IMAGE_PATH+"0001.png").convert_alpha()
+            self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*FIRE_TOWER_LVL3_RESIZE_FACTOR)        
+            self.image_size = vec(self.static_image.get_size())
+
+            self.image_offset = FIRE_TOWER_LVL3_OFFSET
+            self.firing_offset = FIRE_TOWER_LVL3_FIRING_OFFSET
+            self.range = FIRE_TOWER_LVL3_RANGE
+
+            self.image_attacking = []
+            self.number_frame_attacking = FIRE_TOWER_LVL3_NUMBER_FRAME_ATTACKING
+            for i in range(1,self.number_frame_attacking+1):
+                  self.image_attacking.append(pygame.image.load(FIRE_TOWER_LVL3_ATTACK_IMAGE_PATH+str(i).zfill(4)+".png").convert_alpha())   
+                  self.image_attacking[i-1] = pygame.transform.scale(self.image_attacking[i-1],vec(self.image_attacking[i-1].get_size())*FIRE_TOWER_LVL3_RESIZE_FACTOR)
+            self.anim_total_time_a = FIRE_TOWER_LVL3_ANIMATION_ATTACKING_TOTAL_TIME
+            self.time_per_frame_a = self.anim_total_time_a/self.number_frame_attacking # in ms
+
+            self.image_reloading = []
+            self.number_frame_reloading = FIRE_TOWER_LVL3_NUMBER_FRAME_ATTACKING
+            for i in range(1,self.number_frame_reloading+1):
+                  self.image_reloading.append(pygame.image.load(FIRE_TOWER_LVL3_ATTACK_IMAGE_PATH+str(self.number_frame_reloading-i+1).zfill(4)+".png").convert_alpha())   
+                  self.image_reloading[i-1] = pygame.transform.scale(self.image_reloading[i-1],vec(self.image_reloading[i-1].get_size())*FIRE_TOWER_LVL3_RESIZE_FACTOR)
+            self.anim_total_time_r = FIRE_TOWER_LVL3_ANIMATION_RELOADING_TOTAL_TIME
+            self.time_per_frame_r = self.anim_total_time_r/self.number_frame_reloading # in ms
+
 class Lightning_tower_data():
       def __init__(self):
             self.name = "Lightning tower Lvl.1"
@@ -267,6 +378,74 @@ class Lightning_tower_data():
             self.anim_total_time_r = LIGHTNING_TOWER_ANIMATION_RELOADING_TOTAL_TIME
             self.time_per_frame_r = self.anim_total_time_r/self.number_frame_reloading # in ms
 
+class Lightning_tower_lvl2_data():
+      def __init__(self):
+            self.name = "Lightning tower Lvl.2"
+
+            self.hp_max = LIGHTNING_TOWER_LVL2_HP_MAX
+
+            self.gold_cost = -LIGHTNING_TOWER_LVL2_PRICE
+
+            self.bolt_tag = LIGHTNING_TOWER_BOLT_TAG
+
+            self.static_image = pygame.image.load(LIGHTNING_TOWER_LVL2_ATTACK_IMAGE_PATH+"0001.png").convert_alpha()
+            self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*LIGHTNING_TOWER_LVL2_RESIZE_FACTOR)        
+            self.image_size = vec(self.static_image.get_size())
+
+            self.image_offset = LIGHTNING_TOWER_LVL2_OFFSET
+            self.firing_offset = LIGHTNING_TOWER_LVL2_FIRING_OFFSET
+            self.range = LIGHTNING_TOWER_LVL2_RANGE
+
+            self.image_attacking = []
+            self.number_frame_attacking = LIGHTNING_TOWER_LVL2_NUMBER_FRAME_ATTACKING
+            for i in range(1,self.number_frame_attacking+1):
+                  self.image_attacking.append(pygame.image.load(LIGHTNING_TOWER_LVL2_ATTACK_IMAGE_PATH+str(i).zfill(4)+".png").convert_alpha())   
+                  self.image_attacking[i-1] = pygame.transform.scale(self.image_attacking[i-1],vec(self.image_attacking[i-1].get_size())*LIGHTNING_TOWER_LVL2_RESIZE_FACTOR)
+            self.anim_total_time_a = LIGHTNING_TOWER_LVL2_ANIMATION_ATTACKING_TOTAL_TIME
+            self.time_per_frame_a = self.anim_total_time_a/self.number_frame_attacking # in ms
+
+            self.image_reloading = []
+            self.number_frame_reloading = LIGHTNING_TOWER_LVL2_NUMBER_FRAME_ATTACKING
+            for i in range(1,self.number_frame_reloading+1):
+                  self.image_reloading.append(pygame.image.load(LIGHTNING_TOWER_LVL2_ATTACK_IMAGE_PATH+str(self.number_frame_reloading-i+1).zfill(4)+".png").convert_alpha())   
+                  self.image_reloading[i-1] = pygame.transform.scale(self.image_reloading[i-1],vec(self.image_reloading[i-1].get_size())*LIGHTNING_TOWER_LVL2_RESIZE_FACTOR)
+            self.anim_total_time_r = LIGHTNING_TOWER_LVL2_ANIMATION_RELOADING_TOTAL_TIME
+            self.time_per_frame_r = self.anim_total_time_r/self.number_frame_reloading # in ms
+
+class Lightning_tower_lvl3_data():
+      def __init__(self):
+            self.name = "Lightning tower Lvl.3"
+
+            self.hp_max = LIGHTNING_TOWER_LVL3_HP_MAX
+
+            self.gold_cost = -LIGHTNING_TOWER_LVL3_PRICE
+
+            self.bolt_tag = LIGHTNING_TOWER_BOLT_TAG
+
+            self.static_image = pygame.image.load(LIGHTNING_TOWER_LVL3_ATTACK_IMAGE_PATH+"0001.png").convert_alpha()
+            self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*LIGHTNING_TOWER_LVL3_RESIZE_FACTOR)        
+            self.image_size = vec(self.static_image.get_size())
+
+            self.image_offset = LIGHTNING_TOWER_LVL3_OFFSET
+            self.firing_offset = LIGHTNING_TOWER_LVL3_FIRING_OFFSET
+            self.range = LIGHTNING_TOWER_LVL3_RANGE
+
+            self.image_attacking = []
+            self.number_frame_attacking = LIGHTNING_TOWER_LVL3_NUMBER_FRAME_ATTACKING
+            for i in range(1,self.number_frame_attacking+1):
+                  self.image_attacking.append(pygame.image.load(LIGHTNING_TOWER_LVL3_ATTACK_IMAGE_PATH+str(i).zfill(4)+".png").convert_alpha())   
+                  self.image_attacking[i-1] = pygame.transform.scale(self.image_attacking[i-1],vec(self.image_attacking[i-1].get_size())*LIGHTNING_TOWER_LVL3_RESIZE_FACTOR)
+            self.anim_total_time_a = LIGHTNING_TOWER_LVL3_ANIMATION_ATTACKING_TOTAL_TIME
+            self.time_per_frame_a = self.anim_total_time_a/self.number_frame_attacking # in ms
+
+            self.image_reloading = []
+            self.number_frame_reloading = LIGHTNING_TOWER_LVL3_NUMBER_FRAME_ATTACKING
+            for i in range(1,self.number_frame_reloading+1):
+                  self.image_reloading.append(pygame.image.load(LIGHTNING_TOWER_LVL3_ATTACK_IMAGE_PATH+str(self.number_frame_reloading-i+1).zfill(4)+".png").convert_alpha())   
+                  self.image_reloading[i-1] = pygame.transform.scale(self.image_reloading[i-1],vec(self.image_reloading[i-1].get_size())*LIGHTNING_TOWER_LVL3_RESIZE_FACTOR)
+            self.anim_total_time_r = LIGHTNING_TOWER_LVL3_ANIMATION_RELOADING_TOTAL_TIME
+            self.time_per_frame_r = self.anim_total_time_r/self.number_frame_reloading # in ms
+
 class Ice_tower_data():
       def __init__(self):
             self.name = "Ice tower Lvl.1"
@@ -299,6 +478,74 @@ class Ice_tower_data():
                   self.image_reloading.append(pygame.image.load(ICE_TOWER_ATTACK_IMAGE_PATH+str(self.number_frame_reloading-i+1).zfill(4)+".png").convert_alpha())   
                   self.image_reloading[i-1] = pygame.transform.scale(self.image_reloading[i-1],vec(self.image_reloading[i-1].get_size())*ICE_TOWER_RESIZE_FACTOR)
             self.anim_total_time_r = ICE_TOWER_ANIMATION_RELOADING_TOTAL_TIME
+            self.time_per_frame_r = self.anim_total_time_r/self.number_frame_reloading # in ms
+
+class Ice_tower_lvl2_data():
+      def __init__(self):
+            self.name = "Ice tower Lvl.2"
+
+            self.hp_max = ICE_TOWER_LVL2_HP_MAX
+
+            self.gold_cost = -ICE_TOWER_LVL2_PRICE
+
+            self.bolt_tag = ICE_TOWER_BOLT_TAG
+
+            self.static_image = pygame.image.load(ICE_TOWER_LVL2_ATTACK_IMAGE_PATH+"0001.png").convert_alpha()
+            self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*ICE_TOWER_LVL2_RESIZE_FACTOR)        
+            self.image_size = vec(self.static_image.get_size())
+
+            self.image_offset = ICE_TOWER_LVL2_OFFSET
+            self.firing_offset = ICE_TOWER_LVL2_FIRING_OFFSET
+            self.range = ICE_TOWER_LVL2_RANGE
+
+            self.image_attacking = []
+            self.number_frame_attacking = ICE_TOWER_LVL2_NUMBER_FRAME_ATTACKING
+            for i in range(1,self.number_frame_attacking+1):
+                  self.image_attacking.append(pygame.image.load(ICE_TOWER_LVL2_ATTACK_IMAGE_PATH+str(i).zfill(4)+".png").convert_alpha())   
+                  self.image_attacking[i-1] = pygame.transform.scale(self.image_attacking[i-1],vec(self.image_attacking[i-1].get_size())*ICE_TOWER_LVL2_RESIZE_FACTOR)
+            self.anim_total_time_a = ICE_TOWER_LVL2_ANIMATION_ATTACKING_TOTAL_TIME
+            self.time_per_frame_a = self.anim_total_time_a/self.number_frame_attacking # in ms
+
+            self.image_reloading = []
+            self.number_frame_reloading = ICE_TOWER_LVL2_NUMBER_FRAME_ATTACKING
+            for i in range(1,self.number_frame_reloading+1):
+                  self.image_reloading.append(pygame.image.load(ICE_TOWER_LVL2_ATTACK_IMAGE_PATH+str(self.number_frame_reloading-i+1).zfill(4)+".png").convert_alpha())   
+                  self.image_reloading[i-1] = pygame.transform.scale(self.image_reloading[i-1],vec(self.image_reloading[i-1].get_size())*ICE_TOWER_LVL2_RESIZE_FACTOR)
+            self.anim_total_time_r = ICE_TOWER_LVL2_ANIMATION_RELOADING_TOTAL_TIME
+            self.time_per_frame_r = self.anim_total_time_r/self.number_frame_reloading # in ms
+
+class Ice_tower_lvl3_data():
+      def __init__(self):
+            self.name = "Ice tower Lvl.2"
+
+            self.hp_max = ICE_TOWER_LVL3_HP_MAX
+
+            self.gold_cost = -ICE_TOWER_LVL3_PRICE
+
+            self.bolt_tag = ICE_TOWER_BOLT_TAG
+
+            self.static_image = pygame.image.load(ICE_TOWER_LVL3_ATTACK_IMAGE_PATH+"0001.png").convert_alpha()
+            self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*ICE_TOWER_LVL3_RESIZE_FACTOR)        
+            self.image_size = vec(self.static_image.get_size())
+
+            self.image_offset = ICE_TOWER_LVL3_OFFSET
+            self.firing_offset = ICE_TOWER_LVL3_FIRING_OFFSET
+            self.range = ICE_TOWER_LVL3_RANGE
+
+            self.image_attacking = []
+            self.number_frame_attacking = ICE_TOWER_LVL3_NUMBER_FRAME_ATTACKING
+            for i in range(1,self.number_frame_attacking+1):
+                  self.image_attacking.append(pygame.image.load(ICE_TOWER_LVL3_ATTACK_IMAGE_PATH+str(i).zfill(4)+".png").convert_alpha())   
+                  self.image_attacking[i-1] = pygame.transform.scale(self.image_attacking[i-1],vec(self.image_attacking[i-1].get_size())*ICE_TOWER_LVL3_RESIZE_FACTOR)
+            self.anim_total_time_a = ICE_TOWER_LVL3_ANIMATION_ATTACKING_TOTAL_TIME
+            self.time_per_frame_a = self.anim_total_time_a/self.number_frame_attacking # in ms
+
+            self.image_reloading = []
+            self.number_frame_reloading = ICE_TOWER_LVL3_NUMBER_FRAME_ATTACKING
+            for i in range(1,self.number_frame_reloading+1):
+                  self.image_reloading.append(pygame.image.load(ICE_TOWER_LVL3_ATTACK_IMAGE_PATH+str(self.number_frame_reloading-i+1).zfill(4)+".png").convert_alpha())   
+                  self.image_reloading[i-1] = pygame.transform.scale(self.image_reloading[i-1],vec(self.image_reloading[i-1].get_size())*ICE_TOWER_LVL3_RESIZE_FACTOR)
+            self.anim_total_time_r = ICE_TOWER_LVL3_ANIMATION_RELOADING_TOTAL_TIME
             self.time_per_frame_r = self.anim_total_time_r/self.number_frame_reloading # in ms
 
 class Ballista_data():
@@ -522,11 +769,43 @@ class Fire_tower(Tower,pygame.sprite.Sprite):
 
             Tower.__init__(self,game,box)
 
+class Fire_tower_lvl2(Tower,pygame.sprite.Sprite):
+      def __init__(self,game,all_t,box):
+            pygame.sprite.Sprite.__init__(self)
+
+            self.my_data = all_t.fire_tower_lvl2_data
+
+            Tower.__init__(self,game,box)
+
+class Fire_tower_lvl3(Tower,pygame.sprite.Sprite):
+      def __init__(self,game,all_t,box):
+            pygame.sprite.Sprite.__init__(self)
+
+            self.my_data = all_t.fire_tower_lvl3_data
+
+            Tower.__init__(self,game,box)
+
 class Lightning_tower(Tower,pygame.sprite.Sprite):
       def __init__(self,game,all_t,box):
             pygame.sprite.Sprite.__init__(self)
 
             self.my_data = all_t.lightning_tower_data
+
+            Tower.__init__(self,game,box)
+
+class Lightning_tower_lvl2(Tower,pygame.sprite.Sprite):
+      def __init__(self,game,all_t,box):
+            pygame.sprite.Sprite.__init__(self)
+
+            self.my_data = all_t.lightning_tower_lvl2_data
+
+            Tower.__init__(self,game,box)
+
+class Lightning_tower_lvl3(Tower,pygame.sprite.Sprite):
+      def __init__(self,game,all_t,box):
+            pygame.sprite.Sprite.__init__(self)
+
+            self.my_data = all_t.lightning_tower_lvl3_data
 
             Tower.__init__(self,game,box)
 
@@ -580,6 +859,26 @@ class Ice_tower(Tower,pygame.sprite.Sprite):
                         else:
                               self.anim_frame_a = 0
                               self.current_image= self.my_data.image_attacking[self.anim_frame_a]
+
+class Ice_tower_lvl2(Ice_tower,pygame.sprite.Sprite):
+      def __init__(self,game,all_t,box):
+            pygame.sprite.Sprite.__init__(self)
+
+            self.my_data = all_t.ice_tower_lvl2_data
+
+            self.firing = False
+
+            Tower.__init__(self,game,box)
+
+class Ice_tower_lvl3(Ice_tower,pygame.sprite.Sprite):
+      def __init__(self,game,all_t,box):
+            pygame.sprite.Sprite.__init__(self)
+
+            self.my_data = all_t.ice_tower_lvl3_data
+
+            self.firing = False
+
+            Tower.__init__(self,game,box)
 
 class Ballista(Tower,pygame.sprite.Sprite):
       def __init__(self,game,all_t,box):
