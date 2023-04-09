@@ -27,7 +27,7 @@ class Gold():
         self.amount = GOLD_STARTING_AMOUNT
 
     def render(self):
-        self.text_price =  self.font_gold.render(str(self.amount),True,self.font_gold_color) 
+        self.text_price =  self.font_gold.render(str(int(self.amount)),True,self.font_gold_color) 
         text_size = vec(self.text_price.get_size())
         x_txt = self.font_posX - text_size[0]
         window.blit(self.text_price,(x_txt,self.font_posY)) 

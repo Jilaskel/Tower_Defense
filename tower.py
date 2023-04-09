@@ -181,7 +181,7 @@ class Arcane_tower_lvl2_data():
 
             self.gold_cost = -ARCANE_TOWER_LVL2_PRICE
 
-            self.bolt_tag = ARCANE_TOWER_BOLT_TAG
+            self.bolt_tag = ARCANE_TOWER_LVL2_BOLT_TAG
 
             self.static_image = pygame.image.load(ARCANE_TOWER_LVL2_ATTACK_IMAGE_PATH+"0001.png").convert_alpha()
             self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*ARCANE_TOWER_LVL2_RESIZE_FACTOR)        
@@ -215,7 +215,7 @@ class Arcane_tower_lvl3_data():
 
             self.gold_cost = -ARCANE_TOWER_LVL3_PRICE
 
-            self.bolt_tag = ARCANE_TOWER_BOLT_TAG
+            self.bolt_tag = ARCANE_TOWER_LVL3_BOLT_TAG
 
             self.static_image = pygame.image.load(ARCANE_TOWER_LVL3_ATTACK_IMAGE_PATH+"0001.png").convert_alpha()
             self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*ARCANE_TOWER_LVL3_RESIZE_FACTOR)        
@@ -283,7 +283,7 @@ class Fire_tower_lvl2_data():
 
             self.gold_cost = -FIRE_TOWER_LVL2_PRICE
 
-            self.bolt_tag = FIRE_TOWER_BOLT_TAG
+            self.bolt_tag = FIRE_TOWER_LVL2_BOLT_TAG
 
             self.static_image = pygame.image.load(FIRE_TOWER_LVL2_ATTACK_IMAGE_PATH+"0001.png").convert_alpha()
             self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*FIRE_TOWER_LVL2_RESIZE_FACTOR)        
@@ -318,7 +318,7 @@ class Fire_tower_lvl3_data():
 
             self.gold_cost = -FIRE_TOWER_LVL3_PRICE
 
-            self.bolt_tag = FIRE_TOWER_BOLT_TAG
+            self.bolt_tag = FIRE_TOWER_LVL3_BOLT_TAG
 
             self.static_image = pygame.image.load(FIRE_TOWER_LVL3_ATTACK_IMAGE_PATH+"0001.png").convert_alpha()
             self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*FIRE_TOWER_LVL3_RESIZE_FACTOR)        
@@ -386,7 +386,7 @@ class Lightning_tower_lvl2_data():
 
             self.gold_cost = -LIGHTNING_TOWER_LVL2_PRICE
 
-            self.bolt_tag = LIGHTNING_TOWER_BOLT_TAG
+            self.bolt_tag = LIGHTNING_TOWER_LVL2_BOLT_TAG
 
             self.static_image = pygame.image.load(LIGHTNING_TOWER_LVL2_ATTACK_IMAGE_PATH+"0001.png").convert_alpha()
             self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*LIGHTNING_TOWER_LVL2_RESIZE_FACTOR)        
@@ -420,7 +420,7 @@ class Lightning_tower_lvl3_data():
 
             self.gold_cost = -LIGHTNING_TOWER_LVL3_PRICE
 
-            self.bolt_tag = LIGHTNING_TOWER_BOLT_TAG
+            self.bolt_tag = LIGHTNING_TOWER_LVL3_BOLT_TAG
 
             self.static_image = pygame.image.load(LIGHTNING_TOWER_LVL3_ATTACK_IMAGE_PATH+"0001.png").convert_alpha()
             self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*LIGHTNING_TOWER_LVL3_RESIZE_FACTOR)        
@@ -488,7 +488,7 @@ class Ice_tower_lvl2_data():
 
             self.gold_cost = -ICE_TOWER_LVL2_PRICE
 
-            self.bolt_tag = ICE_TOWER_BOLT_TAG
+            self.bolt_tag = ICE_TOWER_LVL2_BOLT_TAG
 
             self.static_image = pygame.image.load(ICE_TOWER_LVL2_ATTACK_IMAGE_PATH+"0001.png").convert_alpha()
             self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*ICE_TOWER_LVL2_RESIZE_FACTOR)        
@@ -522,7 +522,7 @@ class Ice_tower_lvl3_data():
 
             self.gold_cost = -ICE_TOWER_LVL3_PRICE
 
-            self.bolt_tag = ICE_TOWER_BOLT_TAG
+            self.bolt_tag = ICE_TOWER_LVL3_BOLT_TAG
 
             self.static_image = pygame.image.load(ICE_TOWER_LVL3_ATTACK_IMAGE_PATH+"0001.png").convert_alpha()
             self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*ICE_TOWER_LVL3_RESIZE_FACTOR)        
@@ -777,7 +777,68 @@ class Fire_tower_lvl2(Tower,pygame.sprite.Sprite):
 
             Tower.__init__(self,game,box)
 
-class Fire_tower_lvl3(Tower,pygame.sprite.Sprite):
+      def check_ennemies(self,game):
+            if self.range_hitbox.circular:
+                  self.detected_ennemies = pygame.sprite.spritecollide(self.range_hitbox, game.all_ennemies, False, pygame.sprite.collide_circle)
+            else:
+                  self.detected_ennemies = pygame.sprite.spritecollide(self.range_hitbox, game.all_ennemies, False)
+
+            if (self.detected_ennemies):
+                  self.attacking = True
+                  if not(self.my_target in self.detected_ennemies):
+                        self.my_target = self.detected_ennemies[0]
+                  if (len(self.detected_ennemies)>1):
+                        self.second_target = self.detected_ennemies[1]
+                  else:
+                        self.second_target = None
+            else:
+                  self.attacking = False
+                  self.second_target = None
+
+      def attack_and_reload(self,game):
+            if (self.attacking):
+                  self.my_timer += game.timestep
+                  if self.reloading:
+                        if self.my_timer>self.my_data.time_per_frame_r:
+                              self.anim_frame_r += 1
+                              self.my_timer = 0.0
+                              if (self.anim_frame_r==self.my_data.number_frame_reloading):
+                                    self.anim_frame_r = 0
+                                    self.reloading = False
+                                    self.current_image= self.my_data.image_attacking[self.anim_frame_a]
+                              else:
+                                    self.current_image= self.my_data.image_reloading[self.anim_frame_r]
+                  else:
+                        if self.my_timer>self.my_data.time_per_frame_a:
+                              self.anim_frame_a += 1
+                              self.my_timer = 0.0
+                              if (self.anim_frame_a==self.my_data.number_frame_attacking):
+                                    game.all_projectiles.add_bolt(game,self.posX+self.my_data.firing_offset[0],self.posY+self.my_data.firing_offset[1],self.my_target,self.my_data.bolt_tag)
+                                    if self.second_target:
+                                          game.all_projectiles.add_bolt(game,self.posX+self.my_data.firing_offset[0],self.posY+self.my_data.firing_offset[1],self.second_target,self.my_data.bolt_tag)
+                                    self.anim_frame_a = 0
+                                    self.reloading = True
+                                    self.current_image= self.my_data.image_reloading[self.anim_frame_r]
+                              else:
+                                    self.current_image= self.my_data.image_attacking[self.anim_frame_a]
+            else:
+                  if self.reloading:
+                        self.my_timer += game.timestep
+                        if self.my_timer>self.my_data.time_per_frame_r:
+                              self.anim_frame_r += 1
+                              self.my_timer = 0.0
+                              if (self.anim_frame_r==self.my_data.number_frame_reloading):
+                                    self.reloading = False   
+                                    self.anim_frame_r = 0
+                                    self.current_image= self.my_data.image_attacking[self.anim_frame_a]
+                              else:
+                                    self.current_image= self.my_data.image_reloading[self.anim_frame_r]
+                  else:
+                        self.anim_frame_a = 0
+                        self.current_image= self.my_data.image_attacking[self.anim_frame_a]
+
+
+class Fire_tower_lvl3(Fire_tower_lvl2,pygame.sprite.Sprite):
       def __init__(self,game,all_t,box):
             pygame.sprite.Sprite.__init__(self)
 

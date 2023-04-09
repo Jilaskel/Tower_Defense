@@ -23,9 +23,9 @@ class All_impacts(pygame.sprite.Group):
             elif (tag==FIRE_TOWER_IMPACT_TAG):
                   self.add_fire_impact(game,projectile)
             elif (tag==LIGHTNING_TOWER_IMPACT_TAG):
-                  self.add_arcane_impact(game,projectile)
+                  pass
             elif (tag==ICE_TOWER_IMPACT_TAG):
-                  self.add_arcane_impact(game,projectile)            
+                  pass            
             elif (tag==ROCK_IMPACT_TAG):
                   self.add_rock_impact(game,projectile)  
 

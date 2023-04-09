@@ -9,7 +9,7 @@ global_status = Global_status()
 
 RUNNING = True
 
-### RESOLUTION
+############### RESOLUTION
 WINDOW_WIDTH = 1920
 WINDOW_HEIGHT = 1080
 # WINDOW_WIDTH = 1920*0.50
@@ -19,7 +19,7 @@ RESIZE_COEFF = WINDOW_WIDTH/1920
 
 window = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 
-### GAME
+############### GAME
 GAME_TITLE = "You Shall Not Pass"
 GAME_ICON_PATH = "Assets/game_icon.png"
 
@@ -27,23 +27,38 @@ pygame.display.set_caption(GAME_TITLE)
 pygame_icon = pygame.image.load(GAME_ICON_PATH)
 pygame.display.set_icon(pygame_icon)
 
-### FPS
+################## FPS
 FPS = 60
 CLOCK = pygame.time.Clock() 
 TOTAL_NUMBER_RENDERING_LAYER = 25
 
-#### BACKGROUND
+##############################################################
+
+############### BACKGROUND
+
+##############################################################
+
 BACKGROUND_IMAGE_PATH = "Assets/Background/BackgroundNoGrassAsset.png"
 BACKGROUND_GRASS_ASSETS_PATH = "Assets/Background/GrassAsset/"
 BACKGROUND_WALLS_ASSETS_PATH = "Assets/Background/Walls/"
 BACKGROUND_SQUARE_SIDE = WINDOW_HEIGHT/8.0
 
-#### FONT
+##############################################################
+
+############### FONT
+
+##############################################################
+
 FONT_PATH = "Font/Kingcastle-0W8Kr.ttf"
 # LOADING_FONT_PATH = "Font/DragonFire-K7voy.ttf"
 LOADING_FONT_PATH = "Font/misc/Balgruf-d256.woff"
 
-#### GOLD
+##############################################################
+
+############### GOLD
+
+##############################################################
+
 GOLD_RESERVE_IMAGE_PATH = "Assets/Gold/GoldReserve.png"  ## useless atm
 GOLD_STARTING_AMOUNT = 2000
 GOLD_TOWER_REFUND_COEFF = 0.5
@@ -57,7 +72,12 @@ GOLD_GAIN_OFFSET = [0*RESIZE_COEFF, 0*RESIZE_COEFF]  ## offset with the center o
 GOLD_GAIN_TIME = 2000  # in ms
 GOLD_GAIN_TRAVEL_VECTOR = [0*RESIZE_COEFF, -100*RESIZE_COEFF] 
 
-#### ERROR MESSAGE
+##############################################################
+
+############### ERROR MESSAGE
+
+##############################################################
+
 ERROR_MESSAGE_IMAGE_PATH = "Assets/Error/error.png"
 ERROR_MESSAGE_RGB = (153,0,0)
 ERROR_MESSAGE_RESIZE_FACTOR = 0.1*RESIZE_COEFF
@@ -66,7 +86,12 @@ ERROR_MESSAGE_OFFSET = [0*RESIZE_COEFF, 0*RESIZE_COEFF]
 ERROR_MESSAGE_TIME = 2000
 ERROR_MESSAGE_TRAVEL_VECTOR = [0*RESIZE_COEFF, -100*RESIZE_COEFF]
 
-#### MOUSE
+##############################################################
+
+############### MOUSE
+
+##############################################################
+
 MOUSE_IMAGE_PATH = "Assets/Cursor/cursor6.png"
 MOUSE_RESIZE_FACTOR = 0.4*RESIZE_COEFF
 MOUSE_RATIO_FOR_HITBOX = 1.0
@@ -80,17 +105,32 @@ MOUSE_NOT_VALID_BOX_IMAGE_PATH = "Assets/Tower/Valid_boxes/not_valid.png"
 MOUSE_NOT_VALID_BOX_IMAGE_ALPHA = 150
 MOUSE_BOX_BORDER_IMAGE_PATH = "Assets/Tower/Valid_boxes/box_border_1.png"
 
-#### STARTING MENU
+##############################################################
+
+############### STARTING MENU
+
+##############################################################
+
 STARTING_MENU_PANNEL_PATH = "Assets/Menu/Buttons/starting_menu_pannel.png"
 STARTING_MENU_BUTTON_1_PATH = "Assets/Menu/Buttons/starting_menu_button.png"
 STARTING_MENU_BUTTON_2_PATH = "Assets/Menu/Buttons/starting_menu_button_2.png"
 
 STARTING_MOUSE_OVER_ENLARGED_COEFF = 1.25
 
-#### PAUSE MENU
+##############################################################
+
+############### PAUSE MENU
+
+##############################################################
+
 PAUSE_MENU_BACKGROUND = "Assets/Menu/pause_menu_background.png"
 
-#### MENU
+##############################################################
+
+############### MENU
+
+##############################################################
+
 # MENU_BUTTON_SIZE = [BACKGROUND_SQUARE_SIDE,BACKGROUND_SQUARE_SIDE]
 MENU_BUTTON_SIZE = [BACKGROUND_SQUARE_SIDE*0.75,BACKGROUND_SQUARE_SIDE*0.75]
 MENU_ARCANE_TOWER_BUTTON_IMAGE_PATH = "Assets/Menu/Buttons/arcane_tower_button.png"
@@ -122,7 +162,12 @@ MENU_DESTROY_BUTTON_IMAGE_PATH = "Assets/Menu/Buttons/menu_destroy.png"
 MENU_UPGRADE_BUTTON_IMAGE_PATH = "Assets/Menu/Buttons/menu_bar_upgrade.png"
 MENU_LVL_MAX_BUTTON_IMAGE_PATH = "Assets/Menu/Buttons/menu_bar.png"
 
-#### ENNEMIES SPAWNING 
+##############################################################
+
+############### ENNEMIES SPAWNING 
+
+##############################################################
+
 SPAWNING_WITH_SCRIPT = False
 
 SPAWNING_MARGIN_SPACE = 0.1   ## *background.bush_width
@@ -133,11 +178,19 @@ P1_GOBLIN_SPAWNING_PERIOD = 2.0   ## in seconds
 P1_OGRE_SPAWNING_PERIOD = 4.0   ## in seconds
 P1_DRAGON_SPAWNING_PERIOD = 10.0   ## in seconds
 
+##############################################################
+
 ###############     BASE     ###############
+
+##############################################################
+
 BASE_GATE_HP_MAX = 100
 
+##############################################################
 
 ###############     ENNEMIES     ###############
+
+##############################################################
 
 #### GOBLIN
 GOBLIN_HP_MAX = 20.0
@@ -219,7 +272,13 @@ DRAGON_NUMBER_FRAME_TRANSITION  = 4
 DRAGON_TRANSITION_IMAGE_PATH = "Assets/Ennemies/Dragon/FlightAnim/"
 DRAGON_ANIMATION_TRANSITION_TOTAL_TIME = 300 # in ms
 
+##############################################################
+
 ###############     TOWERS     ###############
+
+##############################################################
+
+
 TOWER_RECT_RANGE_IMAGE_PATH = "Assets/Tower/Range_boxes/rect_range.png"
 TOWER_RECT_RANGE_IMAGE_ALPHA = 100
 TOWER_CIRCLE_RANGE_IMAGE_PATH = "Assets/Tower/Range_boxes/circle_range.png"
@@ -229,6 +288,7 @@ TOWER_CIRCLE_RANGE_IMAGE_ALPHA = 100
 ARCANE_TOWER_HP_MAX = 20.0
 ARCANE_TOWER_RANGE = 2.5 # multiplied by the square side
 ARCANE_TOWER_PRICE = 10
+ARCANE_TOWER_DAMAGE = 10.0
 
 ARCANE_TOWER_ATTACK_IMAGE_PATH = "Assets/Tower/ToursMagique/Blanche/Niveau1/AttackAnim/"
 ARCANE_TOWER_NUMBER_FRAME_ATTACKING = 10
@@ -245,6 +305,7 @@ ARCANE_TOWER_UPGRADE_COST = 200
 ARCANE_TOWER_LVL2_HP_MAX = 20.0
 ARCANE_TOWER_LVL2_RANGE = 3.5 # multiplied by the square side
 ARCANE_TOWER_LVL2_PRICE = 200
+ARCANE_TOWER_LVL2_DAMAGE = 10.0
 
 ARCANE_TOWER_LVL2_ATTACK_IMAGE_PATH = "Assets/Tower/ToursMagique/Blanche/Niveau2/AttackAnim/"
 ARCANE_TOWER_LVL2_NUMBER_FRAME_ATTACKING = 10
@@ -261,6 +322,7 @@ ARCANE_TOWER_LVL2_UPGRADE_COST = 600
 ARCANE_TOWER_LVL3_HP_MAX = 20.0
 ARCANE_TOWER_LVL3_RANGE = 3.5 # multiplied by the square side
 ARCANE_TOWER_LVL3_PRICE = 400
+ARCANE_TOWER_LVL3_DAMAGE = 10.0
 
 ARCANE_TOWER_LVL3_ATTACK_IMAGE_PATH = "Assets/Tower/ToursMagique/Blanche/Niveau3/AttackAnim/"
 ARCANE_TOWER_LVL3_NUMBER_FRAME_ATTACKING = 10
@@ -276,6 +338,7 @@ ARCANE_TOWER_LVL3_FIRING_OFFSET = ARCANE_TOWER_FIRING_OFFSET
 FIRE_TOWER_HP_MAX = 20.0
 FIRE_TOWER_RANGE = 3.5 # multiplied by the square side
 FIRE_TOWER_PRICE = 10
+FIRE_TOWER_DAMAGE = 20.0
 
 FIRE_TOWER_ATTACK_IMAGE_PATH = "Assets/Tower/ToursMagique/Rouge/Niveau1/AttackAnim/"
 FIRE_TOWER_NUMBER_FRAME_ATTACKING = 10
@@ -292,6 +355,7 @@ FIRE_TOWER_UPGRADE_COST = 200
 FIRE_TOWER_LVL2_HP_MAX = 20.0
 FIRE_TOWER_LVL2_RANGE = 4.5 # multiplied by the square side
 FIRE_TOWER_LVL2_PRICE = 200
+FIRE_TOWER_LVL2_DAMAGE = 20.0
 
 FIRE_TOWER_LVL2_ATTACK_IMAGE_PATH = "Assets/Tower/ToursMagique/Rouge/Niveau2/AttackAnim/"
 FIRE_TOWER_LVL2_NUMBER_FRAME_ATTACKING = 10
@@ -308,6 +372,7 @@ FIRE_TOWER_LVL2_UPGRADE_COST = 600
 FIRE_TOWER_LVL3_HP_MAX = 20.0
 FIRE_TOWER_LVL3_RANGE = 4.5 # multiplied by the square side
 FIRE_TOWER_LVL3_PRICE = 400
+FIRE_TOWER_LVL3_DAMAGE = 20.0
 
 FIRE_TOWER_LVL3_ATTACK_IMAGE_PATH = "Assets/Tower/ToursMagique/Rouge/Niveau3/AttackAnim/"
 FIRE_TOWER_LVL3_NUMBER_FRAME_ATTACKING = 10
@@ -322,6 +387,7 @@ FIRE_TOWER_LVL3_FIRING_OFFSET = FIRE_TOWER_FIRING_OFFSET
 LIGHTNING_TOWER_HP_MAX = 20.0
 LIGHTNING_TOWER_RANGE = 3.0 # multiplied by the square side
 LIGHTNING_TOWER_PRICE = 10
+LIGHTNING_TOWER_DAMAGE = 60.0
 
 LIGHTNING_TOWER_ATTACK_IMAGE_PATH = "Assets/Tower/ToursMagique/Jaune/Niveau1/AttackAnim/"
 LIGHTNING_TOWER_NUMBER_FRAME_ATTACKING = 10
@@ -338,6 +404,7 @@ LIGHTNING_TOWER_UPGRADE_COST = 200
 LIGHTNING_TOWER_LVL2_HP_MAX = 20.0
 LIGHTNING_TOWER_LVL2_RANGE = 4.0 # multiplied by the square side
 LIGHTNING_TOWER_LVL2_PRICE = 200
+LIGHTNING_TOWER_LVL2_DAMAGE = 60.0
 
 LIGHTNING_TOWER_LVL2_ATTACK_IMAGE_PATH = "Assets/Tower/ToursMagique/Jaune/Niveau2/AttackAnim/"
 LIGHTNING_TOWER_LVL2_NUMBER_FRAME_ATTACKING = 10
@@ -354,6 +421,7 @@ LIGHTNING_TOWER_LVL2_UPGRADE_COST = 600
 LIGHTNING_TOWER_LVL3_HP_MAX = 20.0
 LIGHTNING_TOWER_LVL3_RANGE = 4.5 # multiplied by the square side
 LIGHTNING_TOWER_LVL3_PRICE = 400
+LIGHTNING_TOWER_LVL3_DAMAGE = 60.0
 
 LIGHTNING_TOWER_LVL3_ATTACK_IMAGE_PATH = "Assets/Tower/ToursMagique/Jaune/Niveau3/AttackAnim/"
 LIGHTNING_TOWER_LVL3_NUMBER_FRAME_ATTACKING = 10
@@ -368,6 +436,7 @@ LIGHTNING_TOWER_LVL3_FIRING_OFFSET = LIGHTNING_TOWER_FIRING_OFFSET
 ICE_TOWER_HP_MAX = 20.0
 ICE_TOWER_RANGE = 2.5 # multiplied by the square side
 ICE_TOWER_PRICE = 10
+ICE_TOWER_DAMAGE = 10 # per second
 
 ICE_TOWER_ATTACK_IMAGE_PATH = "Assets/Tower/ToursMagique/Bleue/Niveau1/AttackAnim/"
 ICE_TOWER_NUMBER_FRAME_ATTACKING = 10
@@ -384,6 +453,7 @@ ICE_TOWER_UPGRADE_COST = 200
 ICE_TOWER_LVL2_HP_MAX = 20.0
 ICE_TOWER_LVL2_RANGE = 2.5 # multiplied by the square side
 ICE_TOWER_LVL2_PRICE = 200
+ICE_TOWER_LVL2_DAMAGE = 10 # per second
 
 ICE_TOWER_LVL2_ATTACK_IMAGE_PATH = "Assets/Tower/ToursMagique/Bleue/Niveau2/AttackAnim/"
 ICE_TOWER_LVL2_NUMBER_FRAME_ATTACKING = 10
@@ -400,6 +470,7 @@ ICE_TOWER_LVL2_UPGRADE_COST = 600
 ICE_TOWER_LVL3_HP_MAX = 20.0
 ICE_TOWER_LVL3_RANGE = 2.5 # multiplied by the square side
 ICE_TOWER_LVL3_PRICE = 400
+ICE_TOWER_LVL3_DAMAGE = 10 # per second
 
 ICE_TOWER_LVL3_ATTACK_IMAGE_PATH = "Assets/Tower/ToursMagique/Bleue/Niveau3/AttackAnim/"
 ICE_TOWER_LVL3_NUMBER_FRAME_ATTACKING = 10
@@ -414,6 +485,7 @@ ICE_TOWER_LVL3_FIRING_OFFSET = ICE_TOWER_FIRING_OFFSET
 BALLISTA_HP_MAX = 20.0
 BALLISTA_RANGE = 6.0 # multiplied by the square side
 BALLISTA_PRICE = 5
+BALLISTA_DAMAGE = 10.0
 
 BALLISTA_ATTACK_IMAGE_PATH = "Assets/Tower/Baliste/AttackAnim/"
 BALLISTA_NUMBER_FRAME_ATTACKING = 5
@@ -430,6 +502,7 @@ BALLISTA_FIRING_OFFSET = [0* RESIZE_COEFF,40* RESIZE_COEFF]
 CATAPULT_HP_MAX = 20.0
 CATAPULT_RANGE = 8.0 # multiplied by the square side
 CATAPULT_PRICE = 5
+CATAPULT_DAMAGE = 20.0
 
 CATAPULT_ATTACK_IMAGE_PATH = "Assets/Tower/Catapult/AttackAnim/"
 CATAPULT_NUMBER_FRAME_ATTACKING = 5
@@ -442,7 +515,11 @@ CATAPULT_OFFSET = [0* RESIZE_COEFF,-20* RESIZE_COEFF]
 CATAPULT_RESIZE_FACTOR = 1.0*RESIZE_COEFF
 CATAPULT_FIRING_OFFSET = [40* RESIZE_COEFF,20* RESIZE_COEFF] 
 
+##############################################################
+
 ###############     PROJECTILES     ###############
+
+##############################################################
 
 #### BOLT
 BOLT_IMAGE_PATH = "Assets/Tower/Baliste/CarreauBaliste_cropped.png"
@@ -450,7 +527,7 @@ BOLT_RESIZE_FACTOR = 0.8*RESIZE_COEFF
 BOLT_CENTOR_VECTOR = [0.16,0.47]
 BOLT_RATIO_FOR_IMPACT = 0.5
 
-BOLT_DAMAGE = 10.0
+BOLT_DAMAGE = BALLISTA_DAMAGE
 BOLT_VELOCITY = 2.0 * RESIZE_COEFF # pixel by ms
 
 #### ROCK
@@ -458,7 +535,7 @@ ROCK_IMAGE_PATH = "Assets/Tower/Catapult/Rock_cropped.png"
 ROCK_RESIZE_FACTOR = 0.8*RESIZE_COEFF
 ROCK_CENTOR_VECTOR = [0.51,0.78]
 
-ROCK_DAMAGE = 20.0
+ROCK_DAMAGE = CATAPULT_DAMAGE
 ROCK_VELOCITY = 0.60 * RESIZE_COEFF # pixel by ms
 ROCK_ROTATION_SPEED  = 0.5 # rotation per second
 
@@ -468,8 +545,26 @@ ARCANE_BOLT_RESIZE_FACTOR = 0.5*RESIZE_COEFF
 ARCANE_BOLT_CENTOR_VECTOR = [0.14,0.5]
 ARCANE_BOLT_RATIO_FOR_IMPACT = 0.5
 
-ARCANE_BOLT_DAMAGE = 10.0
+ARCANE_BOLT_DAMAGE = ARCANE_TOWER_DAMAGE
 ARCANE_BOLT_VELOCITY = 0.75 * RESIZE_COEFF # pixel by ms
+
+#### ARCANE_BOLT_LVL2
+ARCANE_BOLT_LVL2_IMAGE_PATH = "Assets/Tower/ToursMagique/Blanche/projectile/arcane_proj.png"
+ARCANE_BOLT_LVL2_RESIZE_FACTOR = 0.5*RESIZE_COEFF
+ARCANE_BOLT_LVL2_CENTOR_VECTOR = [0.14,0.5]
+ARCANE_BOLT_LVL2_RATIO_FOR_IMPACT = 0.5
+
+ARCANE_BOLT_LVL2_DAMAGE = ARCANE_TOWER_LVL2_DAMAGE
+ARCANE_BOLT_LVL2_VELOCITY = 0.75 * RESIZE_COEFF # pixel by ms
+
+#### ARCANE_BOLT_LVL3
+ARCANE_BOLT_LVL3_IMAGE_PATH = "Assets/Tower/ToursMagique/Blanche/projectile/arcane_proj.png"
+ARCANE_BOLT_LVL3_RESIZE_FACTOR = 0.5*RESIZE_COEFF
+ARCANE_BOLT_LVL3_CENTOR_VECTOR = [0.14,0.5]
+ARCANE_BOLT_LVL3_RATIO_FOR_IMPACT = 0.5
+
+ARCANE_BOLT_LVL3_DAMAGE = ARCANE_TOWER_LVL3_DAMAGE
+ARCANE_BOLT_LVL3_VELOCITY = 0.75 * RESIZE_COEFF # pixel by ms
 
 #### FIRE_BOLT
 FIRE_BOLT_IMAGE_PATH = "Assets/Tower/ToursMagique/Rouge/ProjectileAnim/"
@@ -477,32 +572,84 @@ FIRE_BOLT_RESIZE_FACTOR = 0.25*RESIZE_COEFF
 FIRE_BOLT_CENTOR_VECTOR = [0.14,0.5]
 FIRE_BOLT_RATIO_FOR_IMPACT = 0.5
 
-FIRE_BOLT_DAMAGE = 20.0
+FIRE_BOLT_DAMAGE = FIRE_TOWER_DAMAGE
 FIRE_BOLT_VELOCITY = 0.25 * RESIZE_COEFF # pixel by ms
 
 FIRE_BOLT_NUMBER_FRAME = 5
 FIRE_BOLT_TOTAL_TIME = 200  # in ms
+
+#### FIRE_BOLT_LVL2
+FIRE_BOLT_LVL2_IMAGE_PATH = "Assets/Tower/ToursMagique/Rouge/ProjectileAnim/"
+FIRE_BOLT_LVL2_RESIZE_FACTOR = 0.25*RESIZE_COEFF
+FIRE_BOLT_LVL2_CENTOR_VECTOR = [0.14,0.5]
+FIRE_BOLT_LVL2_RATIO_FOR_IMPACT = 0.5
+
+FIRE_BOLT_LVL2_DAMAGE = FIRE_TOWER_LVL2_DAMAGE
+FIRE_BOLT_LVL2_VELOCITY = 0.25 * RESIZE_COEFF # pixel by ms
+
+FIRE_BOLT_LVL2_NUMBER_FRAME = 5
+FIRE_BOLT_LVL2_TOTAL_TIME = 200  # in ms
+
+#### FIRE_BOLT_LVL3
+FIRE_BOLT_LVL3_IMAGE_PATH = "Assets/Tower/ToursMagique/Rouge/ProjectileAnimLvl3/"
+FIRE_BOLT_LVL3_RESIZE_FACTOR = 0.25*RESIZE_COEFF
+FIRE_BOLT_LVL3_CENTOR_VECTOR = [0.14,0.5]
+FIRE_BOLT_LVL3_RATIO_FOR_IMPACT = 0.5
+
+FIRE_BOLT_LVL3_DAMAGE = FIRE_TOWER_LVL3_DAMAGE
+FIRE_BOLT_LVL3_VELOCITY = 0.25 * RESIZE_COEFF # pixel by ms
+
+FIRE_BOLT_LVL3_NUMBER_FRAME = 5
+FIRE_BOLT_LVL3_TOTAL_TIME = 200  # in ms
 
 #### LIGHTNING_BOLT
 LIGHTNING_BOLT_IMAGE_PATH = "Assets/Tower/ToursMagique/Jaune/ProjectileAnim/"
 LIGHTNING_BOLT_RESIZE_FACTOR = 0.5*RESIZE_COEFF  ## only for width
 LIGHTNING_BOLT_CENTOR_VECTOR = [0.5,0.0]
 
-LIGHTNING_BOLT_DAMAGE = 60
-LIGHTNING_NUMBER_BOUNCE_MAX = 3
-LIGHTNING_DECREASING_DISTANCE_BOUNCE_FACTOR = 0.2  # will decrease of X% at each bounce
-LIGHTNING_DECREASING_DAMAGE_BOUNCE_FACTOR = 0.25 # will decrease of X% at each bounce
+LIGHTNING_BOLT_DAMAGE = LIGHTNING_TOWER_DAMAGE
+LIGHTNING_BOLT_NUMBER_BOUNCE_MAX = 3
+LIGHTNING_BOLT_DECREASING_DISTANCE_BOUNCE_FACTOR = 0.2  # will decrease of X% at each bounce
+LIGHTNING_BOLT_DECREASING_DAMAGE_BOUNCE_FACTOR = 0.25 # will decrease of X% at each bounce
 
 LIGHTNING_BOLT_NUMBER_FRAME = 2
 LIGHTNING_BOLT_TIME_PER_FRAME = 50  # in ms
 LIGHTNING_BOLT_TOTAL_TIME = 500  # in ms
+
+#### LIGHTNING_BOLT_LVL2
+LIGHTNING_BOLT_LVL2_IMAGE_PATH = "Assets/Tower/ToursMagique/Jaune/ProjectileAnim/"
+LIGHTNING_BOLT_LVL2_RESIZE_FACTOR = 0.5*RESIZE_COEFF  ## only for width
+LIGHTNING_BOLT_LVL2_CENTOR_VECTOR = [0.5,0.0]
+
+LIGHTNING_BOLT_LVL2_DAMAGE = LIGHTNING_TOWER_LVL2_DAMAGE
+LIGHTNING_BOLT_LVL2_NUMBER_BOUNCE_MAX = 3
+LIGHTNING_BOLT_LVL2_DECREASING_DISTANCE_BOUNCE_FACTOR = 0.2  # will decrease of X% at each bounce
+LIGHTNING_BOLT_LVL2_DECREASING_DAMAGE_BOUNCE_FACTOR = 0.25 # will decrease of X% at each bounce
+
+LIGHTNING_BOLT_LVL2_NUMBER_FRAME = 2
+LIGHTNING_BOLT_LVL2_TIME_PER_FRAME = 50  # in ms
+LIGHTNING_BOLT_LVL2_TOTAL_TIME = 500  # in ms
+
+#### LIGHTNING_BOLT_LVL3
+LIGHTNING_BOLT_LVL3_IMAGE_PATH = "Assets/Tower/ToursMagique/Jaune/ProjectileAnim3/"
+LIGHTNING_BOLT_LVL3_RESIZE_FACTOR = 0.5*RESIZE_COEFF  ## only for width
+LIGHTNING_BOLT_LVL3_CENTOR_VECTOR = [0.5,0.0]
+
+LIGHTNING_BOLT_LVL3_DAMAGE = LIGHTNING_TOWER_LVL3_DAMAGE
+LIGHTNING_BOLT_LVL3_NUMBER_BOUNCE_MAX = 3
+LIGHTNING_BOLT_LVL3_DECREASING_DISTANCE_BOUNCE_FACTOR = 0.2  # will decrease of X% at each bounce
+LIGHTNING_BOLT_LVL3_DECREASING_DAMAGE_BOUNCE_FACTOR = 0.25 # will decrease of X% at each bounce
+
+LIGHTNING_BOLT_LVL3_NUMBER_FRAME = 2
+LIGHTNING_BOLT_LVL3_TIME_PER_FRAME = 50  # in ms
+LIGHTNING_BOLT_LVL3_TOTAL_TIME = 500  # in ms
 
 #### ICE_BOLT
 ICE_BOLT_IMAGE_PATH = "Assets/Tower/ToursMagique/Bleue/ProjectileAnim/"
 ICE_BOLT_RESIZE_FACTOR = 0.5*RESIZE_COEFF  ## only for width
 ICE_BOLT_CENTOR_VECTOR = [0.5,0.0]
 
-ICE_BOLT_DAMAGE = 10 # per seconds
+ICE_BOLT_DAMAGE = ICE_TOWER_DAMAGE # per second
 ICE_BOLT_SLOWING_COEFF = 0.5
 
 ICE_BOLT_NUMBER_FRAME = 11
@@ -510,7 +657,38 @@ ICE_BOLT_TIME_PER_FRAME = 100  # in ms
 ICE_BOLT_NUMBER_FRAME_FADING = 5
 ICE_BOLT_TOTAL_TIME_FADING = 500  # in ms
 
+#### ICE_BOLT_LVL2
+ICE_BOLT_LVL2_IMAGE_PATH = "Assets/Tower/ToursMagique/Bleue/ProjectileAnim/"
+ICE_BOLT_LVL2_RESIZE_FACTOR = 0.5*RESIZE_COEFF  ## only for width
+ICE_BOLT_LVL2_CENTOR_VECTOR = [0.5,0.0]
+
+ICE_BOLT_LVL2_DAMAGE = ICE_TOWER_LVL2_DAMAGE # per second
+ICE_BOLT_LVL2_SLOWING_COEFF = 0.5
+
+ICE_BOLT_LVL2_NUMBER_FRAME = 11
+ICE_BOLT_LVL2_TIME_PER_FRAME = 100  # in ms
+ICE_BOLT_LVL2_NUMBER_FRAME_FADING = 5
+ICE_BOLT_LVL2_TOTAL_TIME_FADING = 500  # in ms
+
+#### ICE_BOLT_LVL3
+ICE_BOLT_LVL3_IMAGE_PATH = "Assets/Tower/ToursMagique/Bleue/ProjectileAnim/"
+ICE_BOLT_LVL3_RESIZE_FACTOR = 0.5*RESIZE_COEFF  ## only for width
+ICE_BOLT_LVL3_CENTOR_VECTOR = [0.5,0.0]
+
+ICE_BOLT_LVL3_DAMAGE = ICE_TOWER_LVL3_DAMAGE # per second
+ICE_BOLT_LVL3_SLOWING_COEFF = 0.5
+
+ICE_BOLT_LVL3_NUMBER_FRAME = 11
+ICE_BOLT_LVL3_TIME_PER_FRAME = 100  # in ms
+ICE_BOLT_LVL3_NUMBER_FRAME_FADING = 5
+ICE_BOLT_LVL3_TOTAL_TIME_FADING = 500  # in ms
+
+##############################################################
+
 ###############     IMPACTS     ###############
+
+##############################################################
+
 
 #### ARCANE_IMPACT
 ARCANE_IMPACT_IMAGE_PATH = "Assets/Tower/ToursMagique/Blanche/impact/"
@@ -540,8 +718,12 @@ ROCK_IMPACT_TOTAL_TIME = 600
 ROCK_IMPACT_DAMAGE_FRAME = 4
 
 
+##############################################################
 
 ###############     AUDIO     ###############
+
+##############################################################
+
 ### MUSIC
 MUSIC_FILE_PATH = "Audio/Music/Age_of_War_Theme_Soundtrack.mp3"
 FADE_UP_TIME = 3.0 # in seconds
