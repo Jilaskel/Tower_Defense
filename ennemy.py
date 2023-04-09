@@ -35,6 +35,10 @@ class Goblin_data():
             self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*GOBLIN_RESIZE_FACTOR)             
             self.image_size = vec(self.static_image.get_size())
 
+            self.offset = GOBLIN_OFFSET
+            self.centor_vector = GOBLIN_CENTER_VECTOR
+            self.hitbox_factor = GOBLIN_HITBOX_FACTOR
+
             self.number_frame_walking = GOBLIN_NUMBER_FRAME_WALKING
             self.image_walking = []
             for i in range(1,self.number_frame_walking+1):
@@ -76,6 +80,10 @@ class Ogre_data():
             self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*OGRE_RESIZE_FACTOR)             
             self.current_image = self.static_image
             self.image_size = vec(self.static_image.get_size())
+
+            self.offset = OGRE_OFFSET
+            self.centor_vector = OGRE_CENTER_VECTOR
+            self.hitbox_factor = OGRE_HITBOX_FACTOR
 
             self.number_frame_walking = OGRE_NUMBER_FRAME_WALKING
             self.image_walking = []
@@ -120,6 +128,10 @@ class Dragon_data():
             self.current_image = self.static_image
             self.image_size = vec(self.static_image.get_size())
 
+            self.offset = DRAGON_OFFSET
+            self.centor_vector = DRAGON_CENTER_VECTOR
+            self.hitbox_factor = DRAGON_HITBOX_FACTOR
+
             self.number_frame_walking = DRAGON_NUMBER_FRAME_WALKING
             self.image_walking = []
             for i in range(1,self.number_frame_walking+1):
@@ -150,8 +162,44 @@ class Dragon_data():
             # self.dead_body_tag = DEAD_DRAGON_TAG
 
 class Ennemy(pygame.sprite.Sprite):
-      def __init__(self,x,y):
-            pass
+      def __init__(self,x,y,rand_offset):
+            self.hp = self.my_data.hp_max
+
+            self.velocity = self.my_data.velocity
+
+            self.current_image = self.my_data.static_image
+
+            self.image_size = self.my_data.image_size
+
+            self.posX = x + self.my_data.offset[0]     
+            self.posY = y + self.my_data.offset[1]   
+            self.center = vec(self.posX+self.my_data.centor_vector[0]*self.image_size[0],self.posY+self.my_data.centor_vector[0]*self.image_size[1]) 
+            self.rendering_layer = compute_rendering_layer_number(self)
+            self.rendering_layer += rand_offset
+
+            self.moving = False
+
+            self.move_frame = 0
+            self.transition_frame = 0      
+            self.attack_frame = 0
+
+            self.my_timer = 0
+
+            self.hitbox_left = x
+            self.hitbox_top = y
+            side = BACKGROUND_SQUARE_SIDE
+            self.radius = self.my_data.hitbox_factor*(side*2)/4.0
+            self.hitbox_left = self.hitbox_left + (1-self.my_data.hitbox_factor)*side*0.5
+            self.hitbox_top = self.hitbox_top + (1-self.my_data.hitbox_factor)*side*0.5
+            self.hitbox_width = side*self.my_data.hitbox_factor
+            self.hitbox_height = side*self.my_data.hitbox_factor
+            self.rect = pygame.Rect(self.hitbox_left,self.hitbox_top,self.hitbox_width,self.hitbox_height)
+
+            self.ready_to_attack = False
+            self.attacking = False
+            self.damage_dealt = False
+
+            self.iced = False
 
       def move(self,game):
             if self.attacking:
@@ -178,6 +226,8 @@ class Ennemy(pygame.sprite.Sprite):
             self.detected_ennemies = pygame.sprite.spritecollide(self, game.all_towers.all_siege_engines, False)
             if not self.detected_ennemies:
                   self.detected_ennemies = pygame.sprite.spritecollide(self, game.base.all_gates, False)
+            if not self.detected_ennemies:
+                  self.detected_ennemies = pygame.sprite.spritecollide(self, game.all_dead_bodies.all_iced_bodies, False)
 
             if self.detected_ennemies:
                   self.attacking = True
@@ -219,6 +269,8 @@ class Ennemy(pygame.sprite.Sprite):
                   game.gold.gold_gain(game,self,self.my_data.gold_earning)
                   game.all_dead_bodies.add_dead_body(game,self,self.my_data.dead_body_tag)
                   pygame.sprite.Sprite.kill(self)
+            else:
+                  self.iced = False
 
       def render(self):
             window.blit(self.current_image, (self.posX, self.posY))  
@@ -230,41 +282,7 @@ class Goblin(Ennemy,pygame.sprite.Sprite):
  
             self.my_data = all_e.goblin_data
 
-            self.hp = self.my_data.hp_max
-
-            self.velocity = self.my_data.velocity
-
-            self.current_image = self.my_data.static_image
-
-            self.image_size = self.my_data.image_size
-
-            self.posX = x + GOBLIN_OFFSET[0]     
-            self.posY = y + GOBLIN_OFFSET[1]   
-            self.center = vec(self.posX+GOBLIN_CENTER_VECTOR[0]*self.image_size[0],self.posY+GOBLIN_CENTER_VECTOR[0]*self.image_size[1]) 
-            self.rendering_layer = compute_rendering_layer_number(self)
-            self.rendering_layer += rand_offset
-
-            self.moving = False
-
-            self.move_frame = 0
-            self.transition_frame = 0      
-            self.attack_frame = 0
-
-            self.my_timer = 0
-
-            self.hitbox_left = x
-            self.hitbox_top = y
-            self.radius = GOBLIN_HITBOX_FACTOR*(BACKGROUND_SQUARE_SIDE*2)/4.0
-            self.hitbox_left = self.hitbox_left + (1-GOBLIN_HITBOX_FACTOR)*BACKGROUND_SQUARE_SIDE*0.5
-            self.hitbox_top = self.hitbox_top + (1-GOBLIN_HITBOX_FACTOR)*BACKGROUND_SQUARE_SIDE*0.5
-            self.hitbox_width = BACKGROUND_SQUARE_SIDE*GOBLIN_HITBOX_FACTOR
-            self.hitbox_height = BACKGROUND_SQUARE_SIDE*GOBLIN_HITBOX_FACTOR
-            self.rect = pygame.Rect(self.hitbox_left,self.hitbox_top,self.hitbox_width,self.hitbox_height)
-
-            self.ready_to_attack = False
-            self.attacking = False
-            self.damage_dealt = False
-
+            Ennemy.__init__(self,x,y,rand_offset)
 
  
 class Ogre(Ennemy,pygame.sprite.Sprite):
@@ -273,40 +291,7 @@ class Ogre(Ennemy,pygame.sprite.Sprite):
  
             self.my_data = all_e.ogre_data
 
-            self.hp = self.my_data.hp_max
-
-            self.velocity = self.my_data.velocity
-
-            self.current_image = self.my_data.static_image
-
-            self.image_size = self.my_data.image_size
-
-            self.posX = x + OGRE_OFFSET[0]     
-            self.posY = y + OGRE_OFFSET[1]   
-            self.center = vec(self.posX+OGRE_CENTER_VECTOR[0]*self.image_size[0],self.posY+OGRE_CENTER_VECTOR[0]*self.image_size[1]) 
-            self.rendering_layer = compute_rendering_layer_number(self)
-            self.rendering_layer += rand_offset
-
-            self.moving = False
-
-            self.move_frame = 0
-            self.transition_frame = 0      
-            self.attack_frame = 0
-
-            self.my_timer = 0
-
-            self.hitbox_left = x
-            self.hitbox_top = y
-            self.radius = OGRE_HITBOX_FACTOR*(BACKGROUND_SQUARE_SIDE*2)/4.0
-            self.hitbox_left = self.hitbox_left + (1-OGRE_HITBOX_FACTOR)*BACKGROUND_SQUARE_SIDE*0.5
-            self.hitbox_top = self.hitbox_top + (1-OGRE_HITBOX_FACTOR)*BACKGROUND_SQUARE_SIDE*0.5
-            self.hitbox_width = BACKGROUND_SQUARE_SIDE*OGRE_HITBOX_FACTOR
-            self.hitbox_height = BACKGROUND_SQUARE_SIDE*OGRE_HITBOX_FACTOR
-            self.rect = pygame.Rect(self.hitbox_left,self.hitbox_top,self.hitbox_width,self.hitbox_height)
-
-            self.ready_to_attack = False
-            self.attacking = False
-            self.damage_dealt = False
+            Ennemy.__init__(self,x,y,rand_offset)
 
 
 class Dragon(Ennemy,pygame.sprite.Sprite):
@@ -315,40 +300,7 @@ class Dragon(Ennemy,pygame.sprite.Sprite):
  
             self.my_data = all_e.dragon_data
 
-            self.hp = self.my_data.hp_max
-
-            self.velocity = self.my_data.velocity
-
-            self.current_image = self.my_data.static_image
-
-            self.image_size = self.my_data.image_size
-
-            self.posX = x + DRAGON_OFFSET[0]     
-            self.posY = y + DRAGON_OFFSET[1]   
-            self.center = vec(self.posX+DRAGON_CENTER_VECTOR[0]*self.image_size[0],self.posY+DRAGON_CENTER_VECTOR[0]*self.image_size[1]) 
-            self.rendering_layer = compute_rendering_layer_number(self)
-            self.rendering_layer += rand_offset
-
-            self.moving = False
-
-            self.move_frame = 0
-            self.transition_frame = 0      
-            self.attack_frame = 0
-
-            self.my_timer = 0
-
-            self.hitbox_left = x
-            self.hitbox_top = y
-            self.radius = DRAGON_HITBOX_FACTOR*(BACKGROUND_SQUARE_SIDE*2)/4.0
-            self.hitbox_left = self.hitbox_left + (1-DRAGON_HITBOX_FACTOR)*BACKGROUND_SQUARE_SIDE*0.5
-            self.hitbox_top = self.hitbox_top + (1-DRAGON_HITBOX_FACTOR)*BACKGROUND_SQUARE_SIDE*0.5
-            self.hitbox_width = BACKGROUND_SQUARE_SIDE*DRAGON_HITBOX_FACTOR
-            self.hitbox_height = BACKGROUND_SQUARE_SIDE*DRAGON_HITBOX_FACTOR
-            self.rect = pygame.Rect(self.hitbox_left,self.hitbox_top,self.hitbox_width,self.hitbox_height)
-
-            self.ready_to_attack = False
-            self.attacking = False
-            self.damage_dealt = False
+            Ennemy.__init__(self,x,y,rand_offset)
 
       def attack(self,game):
             pass

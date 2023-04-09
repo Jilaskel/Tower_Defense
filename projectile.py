@@ -101,13 +101,13 @@ class All_projectiles(pygame.sprite.Group):
             # game.all_mixers.projectile_mixer.fire_proj_sound.play(maxtime=SOUND_FIRE_PROJ_MAX_TIME)
 
       def add_lightning_bolt(self,game,x,y,target):
-            self.add(Light_bolt(self,x,y,target))
+            damage = LIGHTNING_BOLT_DAMAGE
+            self.add(Light_bolt(self,x,y,target,damage))
             old_x = target.center[0]
             old_y = target.center[1]
             old_target = []
             old_target.append(target)
             distance_lim = LIGHTNING_TOWER_RANGE*BACKGROUND_SQUARE_SIDE
-            damage = LIGHTNING_BOLT_DAMAGE
             for number_of_bounce in range(LIGHTNING_BOLT_NUMBER_BOUNCE_MAX):
                   distance_lim = distance_lim*(1-LIGHTNING_BOLT_DECREASING_DISTANCE_BOUNCE_FACTOR)
                   damage = damage*(1-LIGHTNING_BOLT_DECREASING_DAMAGE_BOUNCE_FACTOR)
@@ -126,13 +126,13 @@ class All_projectiles(pygame.sprite.Group):
             random.choice(game.all_mixers.projectile_mixer.light_proj_list).play()
 
       def add_lightning_bolt_lvl2(self,game,x,y,target):
-            self.add(Light_bolt_lvl2(self,x,y,target))
+            damage = LIGHTNING_BOLT_LVL2_DAMAGE
+            self.add(Light_bolt_lvl2(self,x,y,target,damage))
             old_x = target.center[0]
             old_y = target.center[1]
             old_target = []
             old_target.append(target)
             distance_lim = LIGHTNING_TOWER_LVL2_RANGE*BACKGROUND_SQUARE_SIDE
-            damage = LIGHTNING_BOLT_LVL2_DAMAGE
             for number_of_bounce in range(LIGHTNING_BOLT_LVL2_NUMBER_BOUNCE_MAX):
                   distance_lim = distance_lim*(1-LIGHTNING_BOLT_LVL2_DECREASING_DISTANCE_BOUNCE_FACTOR)
                   damage = damage*(1-LIGHTNING_BOLT_LVL2_DECREASING_DAMAGE_BOUNCE_FACTOR)
@@ -151,13 +151,13 @@ class All_projectiles(pygame.sprite.Group):
             random.choice(game.all_mixers.projectile_mixer.light_proj_list).play()
 
       def add_lightning_bolt_lvl3(self,game,x,y,target):
-            self.add(Light_bolt_lvl3(self,x,y,target))
+            damage = LIGHTNING_BOLT_LVL3_DAMAGE
+            self.add(Light_bolt_lvl3(self,x,y,target,damage))
             old_x = target.center[0]
             old_y = target.center[1]
             old_target = []
             old_target.append(target)
             distance_lim = LIGHTNING_TOWER_LVL3_RANGE*BACKGROUND_SQUARE_SIDE
-            damage = LIGHTNING_BOLT_LVL3_DAMAGE
             for number_of_bounce in range(LIGHTNING_BOLT_LVL3_NUMBER_BOUNCE_MAX):
                   distance_lim = distance_lim*(1-LIGHTNING_BOLT_LVL3_DECREASING_DISTANCE_BOUNCE_FACTOR)
                   damage = damage*(1-LIGHTNING_BOLT_LVL3_DECREASING_DAMAGE_BOUNCE_FACTOR)
@@ -413,6 +413,7 @@ class Ice_bolt_data():
             self.slowing_coeff = ICE_BOLT_SLOWING_COEFF
 
             self.static_image = pygame.image.load(ICE_BOLT_IMAGE_PATH+"frost_ray_00.png").convert_alpha()
+            self.resize_factor = ICE_BOLT_RESIZE_FACTOR
             self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*ICE_BOLT_RESIZE_FACTOR)  
             self.image_size = vec(self.static_image.get_size())
             self.initial_direction = vec(0,1)
@@ -434,6 +435,9 @@ class Ice_bolt_data():
             self.anim_total_time_fading = ICE_BOLT_TOTAL_TIME_FADING  # in ms
             self.time_per_frame_fading = self.anim_total_time_fading/self.number_frame_fading # in ms
 
+            self.range = ICE_TOWER_RANGE
+            self.freezing = ICE_BOLT_FREEZING
+
 class Ice_bolt_lvl2_data():
       def __init__(self):
 
@@ -441,6 +445,7 @@ class Ice_bolt_lvl2_data():
             self.slowing_coeff = ICE_BOLT_LVL2_SLOWING_COEFF
 
             self.static_image = pygame.image.load(ICE_BOLT_LVL2_IMAGE_PATH+"frost_ray_00.png").convert_alpha()
+            self.resize_factor = ICE_BOLT_LVL2_RESIZE_FACTOR
             self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*ICE_BOLT_LVL2_RESIZE_FACTOR)  
             self.image_size = vec(self.static_image.get_size())
             self.initial_direction = vec(0,1)
@@ -462,6 +467,9 @@ class Ice_bolt_lvl2_data():
             self.anim_total_time_fading = ICE_BOLT_LVL2_TOTAL_TIME_FADING  # in ms
             self.time_per_frame_fading = self.anim_total_time_fading/self.number_frame_fading # in ms
 
+            self.range = ICE_TOWER_LVL2_RANGE
+            self.freezing = ICE_BOLT_LVL2_FREEZING
+
 class Ice_bolt_lvl3_data():
       def __init__(self):
 
@@ -469,6 +477,7 @@ class Ice_bolt_lvl3_data():
             self.slowing_coeff = ICE_BOLT_LVL3_SLOWING_COEFF
 
             self.static_image = pygame.image.load(ICE_BOLT_LVL3_IMAGE_PATH+"frost_ray_00.png").convert_alpha()
+            self.resize_factor = ICE_BOLT_LVL2_RESIZE_FACTOR
             self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*ICE_BOLT_LVL3_RESIZE_FACTOR)  
             self.image_size = vec(self.static_image.get_size())
             self.initial_direction = vec(0,1)
@@ -489,6 +498,9 @@ class Ice_bolt_lvl3_data():
                   self.images_fading.append(pygame.image.load(ICE_BOLT_LVL3_IMAGE_PATH+"frost_ray_"+str(i).zfill(2)+".png").convert_alpha())  
             self.anim_total_time_fading = ICE_BOLT_LVL3_TOTAL_TIME_FADING  # in ms
             self.time_per_frame_fading = self.anim_total_time_fading/self.number_frame_fading # in ms
+
+            self.range = ICE_TOWER_LVL3_RANGE
+            self.freezing = ICE_BOLT_LVL3_FREEZING
 
 class Bolt_data():
       def __init__(self):      
@@ -759,14 +771,14 @@ class Fire_bolt_no_target(Projectile,pygame.sprite.Sprite):
                       pygame.sprite.Sprite.kill(self)
 
 class Light_bolt(Projectile,pygame.sprite.Sprite):
-      def __init__(self,all_p,x,y,target,damage=LIGHTNING_BOLT_DAMAGE):
+      def __init__(self,all_p,x,y,target,damage):
             pygame.sprite.Sprite.__init__(self)
 
             self.my_data = all_p.light_bolt_data
 
-            self.init(x,y,target,damage=LIGHTNING_BOLT_DAMAGE)
+            self.init(x,y,target,damage)
 
-      def init(self,x,y,target,damage=LIGHTNING_BOLT_DAMAGE):
+      def init(self,x,y,target,damage):
 
             self.damage = damage
 
@@ -973,7 +985,7 @@ class Ice_bolt(Projectile,pygame.sprite.Sprite):
             image_size = vec(self.current_image.get_size())
             resize_ratio = self.distance/image_size[1]
             # self.current_image = pygame.transform.scale(self.current_image,image_size*resize_ratio)  ## to preserve dimensions ratio
-            self.current_image = pygame.transform.scale(self.current_image,(image_size[0]*ICE_BOLT_RESIZE_FACTOR,image_size[1]*resize_ratio))  
+            self.current_image = pygame.transform.scale(self.current_image,(image_size[0]*self.my_data.resize_factor,image_size[1]*resize_ratio))  
 
             self.image_size = vec(self.current_image.get_size())
             self.origin_pos = vec(self.my_data.centor_vector[0]*self.image_size[0],self.my_data.centor_vector[1]*self.image_size[1])
@@ -1011,7 +1023,7 @@ class Ice_bolt(Projectile,pygame.sprite.Sprite):
 
       def check_impact(self,game):
             if not(self.fading): 
-                  if (not(pygame.sprite.Sprite.alive(self.target)) or (self.distance>(ICE_TOWER_RANGE*BACKGROUND_SQUARE_SIDE*1.2))):
+                  if (not(pygame.sprite.Sprite.alive(self.target)) or (self.distance>(self.my_data.range*BACKGROUND_SQUARE_SIDE*1.2))):
                         self.fading = True
                         self.tower.firing = False
                         self.tower.attacking = False
@@ -1020,8 +1032,8 @@ class Ice_bolt(Projectile,pygame.sprite.Sprite):
                   else:
                         self.target.hp -= self.my_data.damage*game.timestep/1000.0
                         self.target.my_timer -= game.timestep*self.my_data.slowing_coeff
-
-                  
+                        if self.my_data.freezing:
+                              self.target.iced = True                 
 
       def render(self):
             window.blit(self.current_image, self.rotated_image_rect)  
