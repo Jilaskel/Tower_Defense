@@ -65,6 +65,13 @@ class Goblin_data():
             self.time_per_frame_a = self.anim_total_time_a/self.number_frame_attacking # in ms
             self.hitting_frame = GOBLIN_HITTING_FRAME -1
 
+            self.number_frame_stun = GOBLIN_STUN_NUMBER_FRAME
+            self.image_stun = []
+            for i in range(1,self.number_frame_stun+1):
+                  self.image_stun.append(pygame.image.load(GOBLIN_STUN_IMAGE_PATH+str(i)+".png").convert_alpha()) 
+                  self.image_stun[i-1] = pygame.transform.scale(self.image_stun[i-1],vec(self.image_stun[i-1].get_size())*GOBLIN_RESIZE_FACTOR)            
+            self.time_per_frame_s = GOBLIN_STUN_TIME_PER_FRAME
+
             self.dead_body_tag = DEAD_GOBLIN_TAG
 
 class Ogre_data():
@@ -110,6 +117,13 @@ class Ogre_data():
             self.anim_total_time_a = OGRE_ANIMATION_ATTACKING_TOTAL_TIME  # in ms
             self.time_per_frame_a = self.anim_total_time_a/self.number_frame_attacking # in ms
             self.hitting_frame = OGRE_HITTING_FRAME -1
+
+            self.number_frame_stun = OGRE_STUN_NUMBER_FRAME
+            self.image_stun = []
+            for i in range(1,self.number_frame_stun+1):
+                  self.image_stun.append(pygame.image.load(OGRE_STUN_IMAGE_PATH+str(i)+".png").convert_alpha()) 
+                  self.image_stun[i-1] = pygame.transform.scale(self.image_stun[i-1],vec(self.image_stun[i-1].get_size())*OGRE_RESIZE_FACTOR)  
+            self.time_per_frame_s = OGRE_STUN_TIME_PER_FRAME
 
             self.dead_body_tag = DEAD_OGRE_TAG
 
@@ -182,6 +196,7 @@ class Ennemy(pygame.sprite.Sprite):
             self.move_frame = 0
             self.transition_frame = 0      
             self.attack_frame = 0
+            self.stun_frame = 0
 
             self.my_timer = 0
 
@@ -199,70 +214,86 @@ class Ennemy(pygame.sprite.Sprite):
             self.attacking = False
             self.damage_dealt = False
 
+            self.stun_time = 0.0
+            self.stunned = False
             self.iced = False
 
       def move(self,game):
-            if self.attacking:
-                  self.moving = False                  
-            else:
-                  self.moving = True
-                  self.ready_to_attack = False
-                  dx = self.velocity * game.timestep
-                  self.posX += dx
-                  self.center[0] += dx
-                  self.hitbox_left += dx
-                  self.rect.x = self.hitbox_left
+            if self.stun_time>0.0:
+                  self.stunned = True
+                  self.stun_time -= game.timestep
 
                   self.my_timer += game.timestep
-                  if self.my_timer>self.my_data.time_per_frame_w:
-                        self.move_frame += 1
-                        self.move_frame = self.move_frame%self.my_data.number_frame_walking
+                  if self.my_timer>self.my_data.time_per_frame_s:
+                        self.stun_frame += 1
+                        self.stun_frame = self.stun_frame%self.my_data.number_frame_stun
                         self.my_timer = 0.0
                                     
-                  self.current_image= self.my_data.image_walking[self.move_frame]
+                  self.current_image= self.my_data.image_stun[self.stun_frame]
+            else:
+                  self.stunned = False
+                  if self.attacking:
+                        self.moving = False                  
+                  else:
+                        self.moving = True
+                        self.ready_to_attack = False
+                        dx = self.velocity * game.timestep
+                        self.posX += dx
+                        self.center[0] += dx
+                        self.hitbox_left += dx
+                        self.rect.x = self.hitbox_left
+
+                        self.my_timer += game.timestep
+                        if self.my_timer>self.my_data.time_per_frame_w:
+                              self.move_frame += 1
+                              self.move_frame = self.move_frame%self.my_data.number_frame_walking
+                              self.my_timer = 0.0
+                                          
+                        self.current_image= self.my_data.image_walking[self.move_frame]
 
       def attack(self,game):
-            # self.detected_ennemies = pygame.sprite.spritecollide(self, game.all_towers, False)
-            self.detected_ennemies = pygame.sprite.spritecollide(self, game.all_towers.all_siege_engines, False)
-            if not self.detected_ennemies:
-                  self.detected_ennemies = pygame.sprite.spritecollide(self, game.base.all_gates, False)
-            if not self.detected_ennemies:
-                  self.detected_ennemies = pygame.sprite.spritecollide(self, game.all_dead_bodies.all_iced_bodies, False)
+            if not(self.stunned):
+                  # self.detected_ennemies = pygame.sprite.spritecollide(self, game.all_towers, False)
+                  self.detected_ennemies = pygame.sprite.spritecollide(self, game.all_towers.all_siege_engines, False)
+                  if not self.detected_ennemies:
+                        self.detected_ennemies = pygame.sprite.spritecollide(self, game.base.all_gates, False)
+                  if not self.detected_ennemies:
+                        self.detected_ennemies = pygame.sprite.spritecollide(self, game.all_dead_bodies.all_iced_bodies, False)
 
-            if self.detected_ennemies:
-                  self.attacking = True
-                  self.my_timer += game.timestep
+                  if self.detected_ennemies:
+                        self.attacking = True
+                        self.my_timer += game.timestep
 
-                  if not self.ready_to_attack:
-                        if (self.move_frame != (self.my_data.stop_walking_frame-1)):
-                              if self.my_timer>self.my_data.time_per_frame_w:
-                                    self.move_frame += 1
-                                    self.move_frame = self.move_frame%self.my_data.number_frame_walking
-                                    self.my_timer = 0.0   
-                              self.current_image = self.my_data.image_walking[self.move_frame]
+                        if not self.ready_to_attack:
+                              if (self.move_frame != (self.my_data.stop_walking_frame-1)):
+                                    if self.my_timer>self.my_data.time_per_frame_w:
+                                          self.move_frame += 1
+                                          self.move_frame = self.move_frame%self.my_data.number_frame_walking
+                                          self.my_timer = 0.0   
+                                    self.current_image = self.my_data.image_walking[self.move_frame]
+                              else:
+                                    if self.my_timer>self.my_data.time_per_frame_t:
+                                          self.transition_frame += 1
+                                          self.my_timer = 0.0  
+                                    if (self.transition_frame==self.my_data.number_frame_transition-1):
+                                          self.ready_to_attack = True   
+                                    self.current_image = self.my_data.image_transition[self.transition_frame]                                                
                         else:
-                              if self.my_timer>self.my_data.time_per_frame_t:
-                                    self.transition_frame += 1
-                                    self.my_timer = 0.0  
-                              if (self.transition_frame==self.my_data.number_frame_transition-1):
-                                    self.ready_to_attack = True   
-                              self.current_image = self.my_data.image_transition[self.transition_frame]                                                
+                              if self.my_timer>self.my_data.time_per_frame_a:
+                                    self.attack_frame += 1
+                                    self.attack_frame = self.attack_frame%self.my_data.number_frame_attacking
+                                    self.my_timer = 0.0
+                              self.current_image = self.my_data.image_attacking[self.attack_frame]
+                              if (self.attack_frame==self.my_data.hitting_frame):
+                                    if not self.damage_dealt:
+                                          for i in range (len(self.detected_ennemies)):
+                                                self.detected_ennemies[i].hp -= self.my_data.damage
+                                          self.damage_dealt = True 
+                              else:
+                                    self.damage_dealt = False
+                                                      
                   else:
-                        if self.my_timer>self.my_data.time_per_frame_a:
-                              self.attack_frame += 1
-                              self.attack_frame = self.attack_frame%self.my_data.number_frame_attacking
-                              self.my_timer = 0.0
-                        self.current_image = self.my_data.image_attacking[self.attack_frame]
-                        if (self.attack_frame==self.my_data.hitting_frame):
-                              if not self.damage_dealt:
-                                    for i in range (len(self.detected_ennemies)):
-                                          self.detected_ennemies[i].hp -= self.my_data.damage
-                                    self.damage_dealt = True 
-                        else:
-                              self.damage_dealt = False
-                                                     
-            else:
-                  self.attacking = False
+                        self.attacking = False
 
       def die(self,game):
             if (self.hp<=0):

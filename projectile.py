@@ -350,6 +350,8 @@ class Light_bolt_data():
             self.short_images.append(pygame.image.load(LIGHTNING_BOLT_IMAGE_PATH+"light_1.png").convert_alpha())
             self.short_images.append(pygame.transform.flip(self.short_images[0], True, False))
 
+            self.stun_time = LIGHTNING_BOLT_STUN_TIME
+
 class Light_bolt_lvl2_data():
       def __init__(self):
 
@@ -378,6 +380,8 @@ class Light_bolt_lvl2_data():
             self.short_images.append(pygame.image.load(LIGHTNING_BOLT_LVL2_IMAGE_PATH+"light_1.png").convert_alpha())
             self.short_images.append(pygame.transform.flip(self.short_images[0], True, False))
 
+            self.stun_time = LIGHTNING_BOLT_LVL2_STUN_TIME
+
 class Light_bolt_lvl3_data():
       def __init__(self):
 
@@ -405,6 +409,8 @@ class Light_bolt_lvl3_data():
             self.short_images = []
             self.short_images.append(pygame.image.load(LIGHTNING_BOLT_LVL3_IMAGE_PATH+"light_1.png").convert_alpha())
             self.short_images.append(pygame.transform.flip(self.short_images[0], True, False))
+
+            self.stun_time = LIGHTNING_BOLT_LVL3_STUN_TIME
 
 class Ice_bolt_data():
       def __init__(self):
@@ -885,7 +891,8 @@ class Light_bolt(Projectile,pygame.sprite.Sprite):
                    pygame.sprite.Sprite.kill(self)
             elif ((self.my_total_timer > self.my_data.anim_total_time) and not(self.damage_dealt)):
                   self.target.velocity = self.target.my_data.velocity
-                  self.target.hp -= self.damage   
+                  self.target.hp -= self.damage 
+                  self.target.stun_time = self.my_data.stun_time*1000  
                   self.damage_dealt = True
                   self.current_frame = 0
             elif (self.my_total_timer < self.my_data.anim_total_time):
