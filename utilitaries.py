@@ -176,6 +176,7 @@ SPAWNING_INITIAL_TIME = 4.0 # in seconds
 TIME_P1 = 1000000   ## time phase n1 in seconds
 P1_GOBLIN_SPAWNING_PERIOD = 2.0   ## in seconds
 P1_OGRE_SPAWNING_PERIOD = 4.0   ## in seconds
+P1_BLUE_NEC_SPAWNING_PERIOD = 2.0   ## in seconds
 P1_DRAGON_SPAWNING_PERIOD = 10.0   ## in seconds
 
 ##############################################################
@@ -267,6 +268,46 @@ OGRE_STUN_TIME_PER_FRAME = 100 # in ms
 OGRE_ICED_IMAGE_PATH =  "Assets/Ennemies/Ogre/OgreIced.png"
 OGRE_ICED_HP_MAX = 20.0
 OGRE_ICED_TIME_MAX = 10.0 # in second
+
+#### BLUE_NEC
+BLUE_NEC_HP_MAX = 60.0
+BLUE_NEC_DAMAGE = 10
+BLUE_NEC_VELOCITY = 0.1 * RESIZE_COEFF # pixel by ms
+BLUE_NEC_GOLD_EARNING = 10
+
+BLUE_NEC_REZ_RADIUS = 3.5
+BLUE_NEC_REZ_COOLDOWN = 5.0 # in second
+
+BLUE_NEC_HITBOX_FACTOR = 1.0
+BLUE_NEC_RESIZE_FACTOR = 0.5*RESIZE_COEFF
+BLUE_NEC_OFFSET = [0* RESIZE_COEFF,-20* RESIZE_COEFF] 
+BLUE_NEC_CENTER_VECTOR = [0.40, 0.56]
+
+BLUE_NEC_WALKING_IMAGE_PATH = "Assets/Ennemies/Necromancers/Blue_Necromancer/WalkAnim/"
+BLUE_NEC_NUMBER_FRAME_WALKING = 5
+BLUE_NEC_ANIMATION_WALKING_TOTAL_TIME = 900 # in ms
+
+BLUE_NEC_NUMBER_FRAME_ATTACKING  = 5
+BLUE_NEC_ATTACKING_IMAGE_PATH = "Assets/Ennemies/Necromancers/Blue_Necromancer/AttackAnim/"
+BLUE_NEC_ANIMATION_ATTACKING_TOTAL_TIME = 1500 # in ms
+BLUE_NEC_HITTING_FRAME = 3
+
+BLUE_NEC_NUMBER_FRAME_CASTING  = 5
+BLUE_NEC_CASTING_IMAGE_PATH = "Assets/Ennemies/Necromancers/Blue_Necromancer/SummonAnim/"
+BLUE_NEC_ANIMATION_CASTING_TOTAL_TIME = 1500 # in ms
+
+BLUE_NEC_NUMBER_FRAME_DEATH  = 5
+BLUE_NEC_DEATH_IMAGE_PATH = "Assets/Ennemies/Necromancers/Blue_Necromancer/DeathAnim/"
+BLUE_NEC_ANIMATION_DEATH_TOTAL_TIME = 300 # in ms
+BLUE_NEC_FADING_TIME = 30000 # in ms
+
+BLUE_NEC_STUN_NUMBER_FRAME = 10
+BLUE_NEC_STUN_IMAGE_PATH = "Assets/Ennemies/Necromancers/Blue_Necromancer/StunAnim/"
+BLUE_NEC_STUN_TIME_PER_FRAME = 100 # in ms
+
+BLUE_NEC_ICED_IMAGE_PATH =  "Assets/Ennemies/Necromancers/Blue_Necromancer/BlueNecroIced.png"
+BLUE_NEC_ICED_HP_MAX = 20.0
+BLUE_NEC_ICED_TIME_MAX = 10.0 # in second
 
 #### DRAGON
 DRAGON_HP_MAX = 60.0

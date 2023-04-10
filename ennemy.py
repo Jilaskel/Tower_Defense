@@ -2,15 +2,15 @@ import pygame
 from utilitaries import *
 from functions import *
 from dead_body import *
+from tower import * 
 
 class All_ennemies(pygame.sprite.Group):
       def __init__(self):
             pygame.sprite.Group.__init__(self)   
 
             self.goblin_data = Goblin_data()
-            
             self.ogre_data = Ogre_data()
-
+            self.blue_nec_data = Blue_nec_data()
             self.dragon_data = Dragon_data()
 
       def add_goblin(self,x,y,rand_offset):
@@ -18,6 +18,9 @@ class All_ennemies(pygame.sprite.Group):
 
       def add_ogre(self,x,y,rand_offset):
             self.add(Ogre(self,x,y,rand_offset))
+
+      def add_blue_nec(self,x,y,rand_offset):
+            self.add(Blue_Necromancer(self,x,y,rand_offset))
 
       def add_dragon(self,x,y,rand_offset):
             self.add(Dragon(self,x,y,rand_offset))
@@ -35,7 +38,7 @@ class Goblin_data():
             self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*GOBLIN_RESIZE_FACTOR)             
             self.image_size = vec(self.static_image.get_size())
 
-            self.offset = GOBLIN_OFFSET
+            self.image_offset = GOBLIN_OFFSET
             self.centor_vector = GOBLIN_CENTER_VECTOR
             self.hitbox_factor = GOBLIN_HITBOX_FACTOR
 
@@ -63,7 +66,7 @@ class Goblin_data():
                   self.image_attacking[i-1] = pygame.transform.scale(self.image_attacking[i-1],vec(self.image_attacking[i-1].get_size())*GOBLIN_RESIZE_FACTOR)
             self.anim_total_time_a = GOBLIN_ANIMATION_ATTACKING_TOTAL_TIME  # in ms
             self.time_per_frame_a = self.anim_total_time_a/self.number_frame_attacking # in ms
-            self.hitting_frame = GOBLIN_HITTING_FRAME -1
+            self.hitting_frame = GOBLIN_HITTING_FRAME - 1
 
             self.number_frame_stun = GOBLIN_STUN_NUMBER_FRAME
             self.image_stun = []
@@ -88,7 +91,7 @@ class Ogre_data():
             self.current_image = self.static_image
             self.image_size = vec(self.static_image.get_size())
 
-            self.offset = OGRE_OFFSET
+            self.image_offset = OGRE_OFFSET
             self.centor_vector = OGRE_CENTER_VECTOR
             self.hitbox_factor = OGRE_HITBOX_FACTOR
 
@@ -116,7 +119,7 @@ class Ogre_data():
                   self.image_attacking[i-1] = pygame.transform.scale(self.image_attacking[i-1],vec(self.image_attacking[i-1].get_size())*OGRE_RESIZE_FACTOR)
             self.anim_total_time_a = OGRE_ANIMATION_ATTACKING_TOTAL_TIME  # in ms
             self.time_per_frame_a = self.anim_total_time_a/self.number_frame_attacking # in ms
-            self.hitting_frame = OGRE_HITTING_FRAME -1
+            self.hitting_frame = OGRE_HITTING_FRAME - 1
 
             self.number_frame_stun = OGRE_STUN_NUMBER_FRAME
             self.image_stun = []
@@ -127,6 +130,63 @@ class Ogre_data():
 
             self.dead_body_tag = DEAD_OGRE_TAG
 
+
+class Blue_nec_data():
+      def __init__(self):
+            self.name = "Ice Necromancer"
+
+            self.hp_max = BLUE_NEC_HP_MAX
+            self.damage = BLUE_NEC_DAMAGE
+            self.velocity = BLUE_NEC_VELOCITY # pixel by ms
+            self.gold_earning = BLUE_NEC_GOLD_EARNING
+
+            self.rez_radius = BLUE_NEC_REZ_RADIUS*BACKGROUND_SQUARE_SIDE
+            self.rez_cd = BLUE_NEC_REZ_COOLDOWN*1000
+
+            self.static_image = pygame.image.load(BLUE_NEC_WALKING_IMAGE_PATH+"001.png").convert_alpha()
+            self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*BLUE_NEC_RESIZE_FACTOR)             
+            self.current_image = self.static_image
+            self.image_size = vec(self.static_image.get_size())
+
+            self.image_offset = BLUE_NEC_OFFSET
+            self.centor_vector = BLUE_NEC_CENTER_VECTOR
+            self.hitbox_factor = BLUE_NEC_HITBOX_FACTOR
+
+            self.number_frame_walking = BLUE_NEC_NUMBER_FRAME_WALKING
+            self.image_walking = []
+            for i in range(1,self.number_frame_walking+1):
+                  self.image_walking.append(pygame.image.load(BLUE_NEC_WALKING_IMAGE_PATH+str(i).zfill(3)+".png").convert_alpha())  
+                  self.image_walking[i-1] = pygame.transform.scale(self.image_walking[i-1],vec(self.image_walking[i-1].get_size())*BLUE_NEC_RESIZE_FACTOR)
+            self.anim_total_time_w = BLUE_NEC_ANIMATION_WALKING_TOTAL_TIME  # in ms
+            self.time_per_frame_w = self.anim_total_time_w/self.number_frame_walking # in ms
+
+            self.number_frame_attacking = BLUE_NEC_NUMBER_FRAME_ATTACKING 
+            self.image_attacking = []
+            for i in range(1,self.number_frame_attacking+1):
+                  self.image_attacking.append(pygame.image.load(BLUE_NEC_ATTACKING_IMAGE_PATH+str(i).zfill(3)+".png").convert_alpha()) 
+                  self.image_attacking[i-1] = pygame.transform.scale(self.image_attacking[i-1],vec(self.image_attacking[i-1].get_size())*BLUE_NEC_RESIZE_FACTOR)
+            self.anim_total_time_a = BLUE_NEC_ANIMATION_ATTACKING_TOTAL_TIME  # in ms
+            self.time_per_frame_a = self.anim_total_time_a/self.number_frame_attacking # in ms
+            self.hitting_frame = BLUE_NEC_HITTING_FRAME - 1
+
+            self.number_frame_casting = BLUE_NEC_NUMBER_FRAME_CASTING 
+            self.image_casting = []
+            for i in range(1,self.number_frame_casting+1):
+                  self.image_casting.append(pygame.image.load(BLUE_NEC_CASTING_IMAGE_PATH+str(i).zfill(3)+".png").convert_alpha()) 
+                  self.image_casting[i-1] = pygame.transform.scale(self.image_casting[i-1],vec(self.image_casting[i-1].get_size())*BLUE_NEC_RESIZE_FACTOR)
+            self.anim_total_time_c = BLUE_NEC_ANIMATION_CASTING_TOTAL_TIME  # in ms
+            self.time_per_frame_c = self.anim_total_time_a/self.number_frame_casting # in ms
+            self.casting_frame = 1
+
+
+            self.number_frame_stun = BLUE_NEC_STUN_NUMBER_FRAME
+            self.image_stun = []
+            for i in range(1,self.number_frame_stun+1):
+                  self.image_stun.append(pygame.image.load(BLUE_NEC_STUN_IMAGE_PATH+str(i)+".png").convert_alpha()) 
+                  self.image_stun[i-1] = pygame.transform.scale(self.image_stun[i-1],vec(self.image_stun[i-1].get_size())*BLUE_NEC_RESIZE_FACTOR)  
+            self.time_per_frame_s = BLUE_NEC_STUN_TIME_PER_FRAME
+
+            self.dead_body_tag = DEAD_BLUE_NEC_TAG
 
 class Dragon_data():
       def __init__(self):
@@ -142,7 +202,7 @@ class Dragon_data():
             self.current_image = self.static_image
             self.image_size = vec(self.static_image.get_size())
 
-            self.offset = DRAGON_OFFSET
+            self.image_offset = DRAGON_OFFSET
             self.centor_vector = DRAGON_CENTER_VECTOR
             self.hitbox_factor = DRAGON_HITBOX_FACTOR
 
@@ -185,8 +245,8 @@ class Ennemy(pygame.sprite.Sprite):
 
             self.image_size = self.my_data.image_size
 
-            self.posX = x + self.my_data.offset[0]     
-            self.posY = y + self.my_data.offset[1]   
+            self.posX = x + self.my_data.image_offset[0]     
+            self.posY = y + self.my_data.image_offset[1]   
             self.center = vec(self.posX+self.my_data.centor_vector[0]*self.image_size[0],self.posY+self.my_data.centor_vector[0]*self.image_size[1]) 
             self.rendering_layer = compute_rendering_layer_number(self)
             self.rendering_layer += rand_offset
@@ -212,7 +272,8 @@ class Ennemy(pygame.sprite.Sprite):
 
             self.ready_to_attack = False
             self.attacking = False
-            self.damage_dealt = False
+            self.casting = False
+            self.range_hitbox = None
 
             self.stun_time = 0.0
             self.stunned = False
@@ -232,7 +293,7 @@ class Ennemy(pygame.sprite.Sprite):
                   self.current_image= self.my_data.image_stun[self.stun_frame]
             else:
                   self.stunned = False
-                  if self.attacking:
+                  if self.attacking or self.casting:
                         self.moving = False                  
                   else:
                         self.moving = True
@@ -242,6 +303,11 @@ class Ennemy(pygame.sprite.Sprite):
                         self.center[0] += dx
                         self.hitbox_left += dx
                         self.rect.x = self.hitbox_left
+
+                        if self.range_hitbox:
+                              buff = self.range_hitbox.rect.x
+                              buff = buff + dx
+                              self.range_hitbox.rect.x = buff
 
                         self.my_timer += game.timestep
                         if self.my_timer>self.my_data.time_per_frame_w:
@@ -283,17 +349,17 @@ class Ennemy(pygame.sprite.Sprite):
                                     self.attack_frame += 1
                                     self.attack_frame = self.attack_frame%self.my_data.number_frame_attacking
                                     self.my_timer = 0.0
-                              self.current_image = self.my_data.image_attacking[self.attack_frame]
-                              if (self.attack_frame==self.my_data.hitting_frame):
-                                    if not self.damage_dealt:
+                                    if (self.attack_frame==self.my_data.hitting_frame):
                                           for i in range (len(self.detected_ennemies)):
                                                 self.detected_ennemies[i].hp -= self.my_data.damage
-                                          self.damage_dealt = True 
-                              else:
-                                    self.damage_dealt = False
+                              self.current_image = self.my_data.image_attacking[self.attack_frame]
+
                                                       
                   else:
                         self.attacking = False
+
+      def use_power(self,game):
+            pass
 
       def die(self,game):
             if (self.hp<=0):
@@ -306,6 +372,85 @@ class Ennemy(pygame.sprite.Sprite):
       def render(self):
             window.blit(self.current_image, (self.posX, self.posY))  
 
+
+class Necromancer(Ennemy,pygame.sprite.Sprite):
+      def __init__(self):
+            self.cast_frame = 0
+            self.rez_done = False
+            self.rez_timer = self.my_data.rez_cd*2
+            self.detected_bodies = None
+            self.image_offset = self.my_data.image_offset
+
+            self.range_hitbox = Range_Hitbox(self,self.rect.w,self.rect.h,self.my_data.rez_radius,circular=True)
+
+      def attack(self,game):
+            if (not(self.stunned) and not(self.casting)):
+                  # self.detected_ennemies = pygame.sprite.spritecollide(self, game.all_towers, False)
+                  self.detected_ennemies = pygame.sprite.spritecollide(self, game.all_towers.all_siege_engines, False)
+                  if not self.detected_ennemies:
+                        self.detected_ennemies = pygame.sprite.spritecollide(self, game.base.all_gates, False)
+                  if not self.detected_ennemies:
+                        self.detected_ennemies = pygame.sprite.spritecollide(self, game.all_dead_bodies.all_iced_bodies, False)
+
+                  if self.detected_ennemies:
+                        self.attacking = True
+                        self.my_timer += game.timestep
+
+                        if self.my_timer>self.my_data.time_per_frame_a:
+                              self.attack_frame += 1
+                              self.attack_frame = self.attack_frame%self.my_data.number_frame_attacking
+                              self.my_timer = 0.0
+                              if (self.attack_frame==self.my_data.hitting_frame):
+                                    for i in range (len(self.detected_ennemies)):
+                                          self.detected_ennemies[i].hp -= self.my_data.damage
+
+                        self.current_image = self.my_data.image_attacking[self.attack_frame]
+                              
+                  else:
+                        self.attacking = False
+
+      def rez_dead_bodies(self,game):
+            self.rez_timer += game.timestep
+            if (not(self.stunned) and (self.rez_timer>self.my_data.rez_cd)):
+                  self.detected_bodies = pygame.sprite.spritecollide(self.range_hitbox, game.all_dead_bodies.all_rezable_bodies, False, pygame.sprite.collide_circle)
+                  if self.detected_bodies:
+                        game.all_dead_bodies.all_rezable_bodies.remove(self.detected_bodies[0])
+
+            if self.detected_bodies:
+                  self.casting = True
+                  self.my_timer += game.timestep
+                  self.rez_timer = 0.0
+
+                  if self.my_timer>self.my_data.time_per_frame_c:
+                        self.cast_frame += 1
+                        self.my_timer = 0.0
+                  if (self.cast_frame<self.my_data.number_frame_casting):
+                        if (self.cast_frame==self.my_data.casting_frame):
+                              #rezing
+                              pass
+                  
+                        self.current_image = self.my_data.image_casting[self.cast_frame]
+
+                  else:
+                        pygame.sprite.Sprite.kill(self.detected_bodies[0])
+                        self.detected_bodies = None
+                        self.casting = False
+                        self.current_image = self.my_data.image_casting[self.cast_frame-1]
+
+            else:
+                  self.casting = False            
+
+class Blue_Necromancer(Necromancer,pygame.sprite.Sprite):
+      def __init__(self,all_e,x,y,rand_offset):
+            pygame.sprite.Sprite.__init__(self)
+ 
+            self.my_data = all_e.blue_nec_data
+
+            Ennemy.__init__(self,x,y,rand_offset)
+            Necromancer.__init__(self)
+
+      def use_power(self,game):
+            self.rez_dead_bodies(game)
 
 class Goblin(Ennemy,pygame.sprite.Sprite):
       def __init__(self,all_e,x,y,rand_offset):

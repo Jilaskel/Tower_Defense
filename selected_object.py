@@ -18,7 +18,7 @@ class Selected_object():
         self.font_size = int(25*RESIZE_COEFF)
         self.font_color = (0,0,0)  ## black
         self.font = pygame.font.Font(FONT_PATH,self.font_size)
-        self.font_posX = 9.0 * side
+        self.font_posX = 8.9 * side
         self.font_posY = 0.15 * side
         self.spaceY = 0.20*side
 

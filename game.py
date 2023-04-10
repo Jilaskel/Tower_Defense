@@ -98,6 +98,7 @@ class Game():
                   tower.attack_and_reload(self)
             for ennemy in self.all_ennemies:
                   ennemy.attack(self)
+                  ennemy.use_power(self)
 
       def move_objects(self):
             for ennemy in self.all_ennemies:

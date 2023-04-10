@@ -7,7 +7,12 @@ import numpy as np
 
 GOBLIN_TAG = 1
 OGRE_TAG = 2
-DRAGON_TAG = 3
+BLUE_NEC_TAG = 3
+RED_NEC_TAG = 4
+GREEN_NEC_TAG = 5
+KAMIKAZE_TAG = 6
+DRAGON_TAG = 7
+
 
 class Spawning_mode():
     def __init__(self,game):
@@ -25,7 +30,9 @@ class Spawning_mode():
             self.number_goblin_spawned = 1.0
             self.last_time_spawning_goblin = SPAWNING_INITIAL_TIME - P1_GOBLIN_SPAWNING_PERIOD*self.number_goblin_spawned            
             self.number_ogre_spawned = 1.0
-            self.last_time_spawning_ogre = SPAWNING_INITIAL_TIME - P1_OGRE_SPAWNING_PERIOD*self.number_ogre_spawned            
+            self.last_time_spawning_ogre = SPAWNING_INITIAL_TIME - P1_OGRE_SPAWNING_PERIOD*self.number_ogre_spawned 
+            self.number_blue_nec_spawned = 1.0
+            self.last_time_spawning_blue_nec = SPAWNING_INITIAL_TIME - P1_BLUE_NEC_SPAWNING_PERIOD*self.number_blue_nec_spawned             
             self.number_dragon_spawned = 1.0
             self.last_time_spawning_dragon = SPAWNING_INITIAL_TIME - P1_DRAGON_SPAWNING_PERIOD*self.number_dragon_spawned   
 
@@ -34,6 +41,8 @@ class Spawning_mode():
         self.last_time_spawning_goblin = SPAWNING_INITIAL_TIME - P1_GOBLIN_SPAWNING_PERIOD*self.number_goblin_spawned            
         self.number_ogre_spawned = 1.0
         self.last_time_spawning_ogre = SPAWNING_INITIAL_TIME - P1_OGRE_SPAWNING_PERIOD*self.number_goblin_spawned            
+        self.number_blue_nec_spawned = 1.0
+        self.last_time_spawning_blue_nec = SPAWNING_INITIAL_TIME - P1_BLUE_NEC_SPAWNING_PERIOD*self.number_blue_nec_spawned   
         self.number_dragon_spawned = 1.0
         self.last_time_spawning_dragon = SPAWNING_INITIAL_TIME - P1_DRAGON_SPAWNING_PERIOD*self.number_dragon_spawned              
 
@@ -47,17 +56,23 @@ class Spawning_mode():
         else:
             if (time<(TIME_P1)):
                 
-                cooldown = P1_GOBLIN_SPAWNING_PERIOD*self.number_goblin_spawned 
+                cooldown = P1_GOBLIN_SPAWNING_PERIOD*self.number_goblin_spawned*1000 
                 if ((time-self.last_time_spawning_goblin)>cooldown):
                     self.last_time_spawning_goblin = time
                     self.number_goblin_spawned = random.randint(1,3)
                     self.spawn(game,GOBLIN_TAG,self.number_goblin_spawned)
 
-                cooldown = P1_OGRE_SPAWNING_PERIOD*self.number_ogre_spawned 
+                cooldown = P1_OGRE_SPAWNING_PERIOD*self.number_ogre_spawned*1000 
                 if ((time-self.last_time_spawning_ogre)>cooldown):
                     self.last_time_spawning_ogre = time
                     self.number_ogre_spawned = random.randint(1,3)
                     self.spawn(game,OGRE_TAG,self.number_ogre_spawned)
+
+                cooldown = P1_BLUE_NEC_SPAWNING_PERIOD*self.number_blue_nec_spawned 
+                if ((time-self.last_time_spawning_blue_nec)>cooldown):
+                    self.last_time_spawning_blue_nec = time
+                    self.number_blue_nec_spawned = random.randint(1,3)
+                    self.spawn(game,BLUE_NEC_TAG,self.number_blue_nec_spawned)
 
                 cooldown = P1_DRAGON_SPAWNING_PERIOD*self.number_dragon_spawned*1000 ## comment *0 to have normal spawning 
                 if ((time-self.last_time_spawning_dragon)>cooldown):
@@ -76,7 +91,7 @@ class Spawning_mode():
             side = game.background.square_side
             
             # y_path = game.background.menu_height + side*(1+2*path_number) + (random.randint(0,1)-0.5)*side*0.5  #used for tests
-            rand_offset = random.randint(0,100)/100-0.5
+            rand_offset = random.random()-0.5
             y_path = game.background.menu_height + side*(1+2*path_number) + rand_offset*side*0.5
 
             if (TAG==GOBLIN_TAG):
@@ -84,6 +99,9 @@ class Spawning_mode():
 
             if (TAG==OGRE_TAG):
                 game.all_ennemies.add_ogre(x_path,y_path,rand_offset)
+
+            if (TAG==BLUE_NEC_TAG):
+                game.all_ennemies.add_blue_nec(x_path,y_path,rand_offset)
 
             if (TAG==DRAGON_TAG):
                 game.all_ennemies.add_dragon(x_path,y_path,rand_offset)

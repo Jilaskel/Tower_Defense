@@ -2,8 +2,14 @@ import pygame
 from utilitaries import *
 import random
 
+
 DEAD_GOBLIN_TAG = 1
 DEAD_OGRE_TAG = 2
+DEAD_BLUE_NEC_TAG = 3
+DEAD_RED_NEC_TAG = 4
+DEAD_GREEN_NEC_TAG = 5
+DEAD_KAMIKAZE_TAG = 6
+DEAD_DRAGON_TAG = 7
 
 
 class All_dead_bodies(pygame.sprite.Group):
@@ -11,16 +17,21 @@ class All_dead_bodies(pygame.sprite.Group):
             pygame.sprite.Group.__init__(self) 
 
             self.all_iced_bodies = All_iced_bodies()  
+            self.all_rezable_bodies = All_rezable_bodies()  
 
             self.dead_goblin_data = Dead_goblin_data()
-
             self.dead_ogre_data = Dead_ogre_data()
+            self.dead_blue_nec_data = Dead_blue_nec_data()
+
             
       def add_dead_body(self,game,emy_alive,tag):
             if (tag==DEAD_GOBLIN_TAG):
                   self.add_dead_goblin(game,emy_alive)
             elif (tag==DEAD_OGRE_TAG):
                   self.add_dead_ogre(game,emy_alive)
+            elif (tag==DEAD_BLUE_NEC_TAG):
+                  self.add_dead_blue_nec(game,emy_alive)
+
 
       def add_dead_goblin(self,game,emy_alive):
             self.add(Dead_goblin(self,emy_alive))
@@ -30,7 +41,16 @@ class All_dead_bodies(pygame.sprite.Group):
             self.add(Dead_ogre(self,emy_alive))
             random.choice(game.all_mixers.ennemy_mixer.ogre_d_list).play()
 
+      def add_dead_blue_nec(self,game,emy_alive):
+            self.add(Dead_blue_nec(self,emy_alive))
+            game.all_mixers.ennemy_mixer.falling_sound.play()
+
+
 class All_iced_bodies(pygame.sprite.Group):
+      def __init__(self):
+            pygame.sprite.Group.__init__(self) 
+
+class All_rezable_bodies(pygame.sprite.Group):
       def __init__(self):
             pygame.sprite.Group.__init__(self) 
 
@@ -64,7 +84,7 @@ class Dead_goblin_data():
 
             ## for selected obj
             self.hp_max = self.iced_hp_max
-            self.name = "Iced Dead Goblin"
+            self.name = "Iced Goblin"
 
 class Dead_ogre_data():
       def __init__(self):
@@ -96,8 +116,39 @@ class Dead_ogre_data():
 
             ## for selected obj
             self.hp_max = self.iced_hp_max
-            self.name = "Iced Dead Ogre"
+            self.name = "Iced Ogre"
 
+class Dead_blue_nec_data():
+      def __init__(self):
+
+            self.static_image = pygame.image.load(BLUE_NEC_DEATH_IMAGE_PATH+"001.png").convert_alpha()
+            self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*BLUE_NEC_RESIZE_FACTOR)             
+            self.image_size = vec(self.static_image.get_size())
+
+            self.number_frame = BLUE_NEC_NUMBER_FRAME_DEATH
+            self.images = []
+            for i in range(1,self.number_frame+1):
+                  self.images.append(pygame.image.load(BLUE_NEC_DEATH_IMAGE_PATH+str(i).zfill(3)+".png").convert_alpha())  
+                  self.images[i-1] = pygame.transform.scale(self.images[i-1],vec(self.images[i-1].get_size())*BLUE_NEC_RESIZE_FACTOR)
+            self.anim_total_time = BLUE_NEC_ANIMATION_DEATH_TOTAL_TIME  # in ms
+            self.time_per_frame = self.anim_total_time/self.number_frame # in ms
+
+            self.fading_time = BLUE_NEC_FADING_TIME
+
+            self.number_frame_fading = 50
+            self.images_fading = []
+            for i in range(self.number_frame_fading):
+                self.images_fading.append(self.images[self.number_frame-1].convert_alpha())
+                self.images_fading[i].set_alpha(255-int(i*255/self.number_frame_fading))
+
+            self.iced_image = pygame.image.load(BLUE_NEC_ICED_IMAGE_PATH).convert_alpha()
+            self.iced_image = pygame.transform.scale(self.iced_image,vec(self.iced_image.get_size())*BLUE_NEC_RESIZE_FACTOR) 
+            self.iced_time_max = BLUE_NEC_ICED_TIME_MAX
+            self.iced_hp_max = BLUE_NEC_ICED_HP_MAX
+
+            ## for selected obj
+            self.hp_max = self.iced_hp_max
+            self.name = "Iced Ice Necro"
 
 class Dead_body(pygame.sprite.Sprite):
     def __init__(self,all_d,emy_alive):
@@ -119,15 +170,19 @@ class Dead_body(pygame.sprite.Sprite):
             self.iced = emy_alive.iced
             if self.iced:
                   all_d.all_iced_bodies.add(self)
+            else:
+                  all_d.all_rezable_bodies.add(self)
 
             self.hp = self.my_data.iced_hp_max
             self.rect = emy_alive.rect
+            self.radius = emy_alive.radius
 
     def fall(self,game):
         self.my_timer += game.timestep
         if (self.hp<0):
               self.iced = False
               self.all_d.all_iced_bodies.remove(self)
+              self.all_d.all_rezable_bodies.add(self)
 
         if (self.iced):
             if (self.my_timer<self.my_data.iced_time_max*1000):
@@ -166,5 +221,13 @@ class Dead_ogre(Dead_body,pygame.sprite.Sprite):
             pygame.sprite.Sprite.__init__(self)
 
             self.my_data = all_d.dead_ogre_data
+
+            Dead_body.__init__(self,all_d,emy_alive)
+
+class Dead_blue_nec(Dead_body,pygame.sprite.Sprite):
+      def __init__(self,all_d,emy_alive):
+            pygame.sprite.Sprite.__init__(self)
+
+            self.my_data = all_d.dead_blue_nec_data
 
             Dead_body.__init__(self,all_d,emy_alive)

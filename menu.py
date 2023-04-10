@@ -172,6 +172,7 @@ class Tower_button(pygame.sprite.Sprite):
                   self.image_to_carry = pygame.transform.scale(self.image_to_carry,vec(self.image_to_carry.get_size())*ARCANE_TOWER_RESIZE_FACTOR)
 
                   self.range = ARCANE_TOWER_RANGE*(BACKGROUND_SQUARE_SIDE+BACKGROUND_SQUARE_SIDE)/2.0
+                  self.image_offset = ARCANE_TOWER_OFFSET
                   self.range_hitbox = Range_Hitbox(self,BACKGROUND_SQUARE_SIDE,BACKGROUND_SQUARE_SIDE,self.range,circular=True)  
 
                   self.price = ARCANE_TOWER_PRICE 
@@ -190,6 +191,7 @@ class Tower_button(pygame.sprite.Sprite):
                   self.image_to_carry = pygame.transform.scale(self.image_to_carry,vec(self.image_to_carry.get_size())*ARCANE_TOWER_LVL2_RESIZE_FACTOR)
 
                   self.range = ARCANE_TOWER_LVL2_RANGE*(BACKGROUND_SQUARE_SIDE+BACKGROUND_SQUARE_SIDE)/2.0
+                  self.image_offset = ARCANE_TOWER_OFFSET
                   self.range_hitbox = Range_Hitbox(self,BACKGROUND_SQUARE_SIDE,BACKGROUND_SQUARE_SIDE,self.range,circular=True)  
 
                   self.price = ARCANE_TOWER_LVL2_PRICE 
@@ -208,6 +210,7 @@ class Tower_button(pygame.sprite.Sprite):
                   self.image_to_carry = pygame.transform.scale(self.image_to_carry,vec(self.image_to_carry.get_size())*ARCANE_TOWER_LVL3_RESIZE_FACTOR)
 
                   self.range = ARCANE_TOWER_LVL3_RANGE*(BACKGROUND_SQUARE_SIDE+BACKGROUND_SQUARE_SIDE)/2.0
+                  self.image_offset = ARCANE_TOWER_OFFSET
                   self.range_hitbox = Range_Hitbox(self,BACKGROUND_SQUARE_SIDE,BACKGROUND_SQUARE_SIDE,self.range,circular=True)  
 
                   self.price = ARCANE_TOWER_LVL3_PRICE 
@@ -224,6 +227,7 @@ class Tower_button(pygame.sprite.Sprite):
                   self.image_to_carry = pygame.transform.scale(self.image_to_carry,vec(self.image_to_carry.get_size())*FIRE_TOWER_RESIZE_FACTOR)
 
                   self.range = FIRE_TOWER_RANGE*(BACKGROUND_SQUARE_SIDE+BACKGROUND_SQUARE_SIDE)/2.0
+                  self.image_offset = ARCANE_TOWER_OFFSET
                   self.range_hitbox = Range_Hitbox(self,BACKGROUND_SQUARE_SIDE,BACKGROUND_SQUARE_SIDE,self.range,circular=True)  
 
                   self.price = FIRE_TOWER_PRICE 
@@ -242,6 +246,7 @@ class Tower_button(pygame.sprite.Sprite):
                   self.image_to_carry = pygame.transform.scale(self.image_to_carry,vec(self.image_to_carry.get_size())*FIRE_TOWER_LVL2_RESIZE_FACTOR)
 
                   self.range = FIRE_TOWER_LVL2_RANGE*(BACKGROUND_SQUARE_SIDE+BACKGROUND_SQUARE_SIDE)/2.0
+                  self.image_offset = ARCANE_TOWER_OFFSET
                   self.range_hitbox = Range_Hitbox(self,BACKGROUND_SQUARE_SIDE,BACKGROUND_SQUARE_SIDE,self.range,circular=True)  
 
                   self.price = FIRE_TOWER_LVL2_PRICE 
@@ -260,6 +265,7 @@ class Tower_button(pygame.sprite.Sprite):
                   self.image_to_carry = pygame.transform.scale(self.image_to_carry,vec(self.image_to_carry.get_size())*FIRE_TOWER_LVL3_RESIZE_FACTOR)
 
                   self.range = FIRE_TOWER_LVL3_RANGE*(BACKGROUND_SQUARE_SIDE+BACKGROUND_SQUARE_SIDE)/2.0
+                  self.image_offset = ARCANE_TOWER_OFFSET
                   self.range_hitbox = Range_Hitbox(self,BACKGROUND_SQUARE_SIDE,BACKGROUND_SQUARE_SIDE,self.range,circular=True)  
 
                   self.price = FIRE_TOWER_LVL3_PRICE 
@@ -276,6 +282,7 @@ class Tower_button(pygame.sprite.Sprite):
                   self.image_to_carry = pygame.transform.scale(self.image_to_carry,vec(self.image_to_carry.get_size())*LIGHTNING_TOWER_RESIZE_FACTOR)
 
                   self.range = LIGHTNING_TOWER_RANGE*(BACKGROUND_SQUARE_SIDE+BACKGROUND_SQUARE_SIDE)/2.0
+                  self.image_offset = ARCANE_TOWER_OFFSET
                   self.range_hitbox = Range_Hitbox(self,BACKGROUND_SQUARE_SIDE,BACKGROUND_SQUARE_SIDE,self.range,circular=True)  
 
                   self.price = LIGHTNING_TOWER_PRICE 
@@ -293,7 +300,8 @@ class Tower_button(pygame.sprite.Sprite):
                   self.image_to_carry = pygame.image.load(LIGHTNING_TOWER_LVL2_ATTACK_IMAGE_PATH+"0001.png").convert_alpha()
                   self.image_to_carry = pygame.transform.scale(self.image_to_carry,vec(self.image_to_carry.get_size())*LIGHTNING_TOWER_LVL2_RESIZE_FACTOR)
 
-                  self.range = LIGHTNING_TOWER_LVL2_RANGE*(BACKGROUND_SQUARE_SIDE+BACKGROUND_SQUARE_SIDE)/2.0
+                  self.range = LIGHTNING_TOWER_LVL2_RANGE*(BACKGROUND_SQUARE_SIDE+BACKGROUND_SQUARE_SIDE)/2.
+                  self.image_offset = ARCANE_TOWER_OFFSET
                   self.range_hitbox = Range_Hitbox(self,BACKGROUND_SQUARE_SIDE,BACKGROUND_SQUARE_SIDE,self.range,circular=True)  
 
                   self.price = LIGHTNING_TOWER_LVL2_PRICE 
@@ -312,6 +320,7 @@ class Tower_button(pygame.sprite.Sprite):
                   self.image_to_carry = pygame.transform.scale(self.image_to_carry,vec(self.image_to_carry.get_size())*LIGHTNING_TOWER_LVL3_RESIZE_FACTOR)
 
                   self.range = LIGHTNING_TOWER_LVL3_RANGE*(BACKGROUND_SQUARE_SIDE+BACKGROUND_SQUARE_SIDE)/2.0
+                  self.image_offset = ARCANE_TOWER_OFFSET
                   self.range_hitbox = Range_Hitbox(self,BACKGROUND_SQUARE_SIDE,BACKGROUND_SQUARE_SIDE,self.range,circular=True)  
 
                   self.price = LIGHTNING_TOWER_LVL3_PRICE 
@@ -328,6 +337,7 @@ class Tower_button(pygame.sprite.Sprite):
                   self.image_to_carry = pygame.transform.scale(self.image_to_carry,vec(self.image_to_carry.get_size())*ICE_TOWER_RESIZE_FACTOR)
 
                   self.range = ICE_TOWER_RANGE*(BACKGROUND_SQUARE_SIDE+BACKGROUND_SQUARE_SIDE)/2.0
+                  self.image_offset = ARCANE_TOWER_OFFSET
                   self.range_hitbox = Range_Hitbox(self,BACKGROUND_SQUARE_SIDE,BACKGROUND_SQUARE_SIDE,self.range,circular=True)  
 
                   self.price = ICE_TOWER_PRICE 
@@ -346,6 +356,7 @@ class Tower_button(pygame.sprite.Sprite):
                   self.image_to_carry = pygame.transform.scale(self.image_to_carry,vec(self.image_to_carry.get_size())*ICE_TOWER_LVL2_RESIZE_FACTOR)
 
                   self.range = ICE_TOWER_LVL2_RANGE*(BACKGROUND_SQUARE_SIDE+BACKGROUND_SQUARE_SIDE)/2.0
+                  self.image_offset = ARCANE_TOWER_OFFSET
                   self.range_hitbox = Range_Hitbox(self,BACKGROUND_SQUARE_SIDE,BACKGROUND_SQUARE_SIDE,self.range,circular=True)  
 
                   self.price = ICE_TOWER_LVL2_PRICE 
@@ -364,6 +375,7 @@ class Tower_button(pygame.sprite.Sprite):
                   self.image_to_carry = pygame.transform.scale(self.image_to_carry,vec(self.image_to_carry.get_size())*ICE_TOWER_LVL3_RESIZE_FACTOR)
 
                   self.range = ICE_TOWER_LVL3_RANGE*(BACKGROUND_SQUARE_SIDE+BACKGROUND_SQUARE_SIDE)/2.0
+                  self.image_offset = ARCANE_TOWER_OFFSET
                   self.range_hitbox = Range_Hitbox(self,BACKGROUND_SQUARE_SIDE,BACKGROUND_SQUARE_SIDE,self.range,circular=True)  
 
                   self.price = ICE_TOWER_LVL3_PRICE 

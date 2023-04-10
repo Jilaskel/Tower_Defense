@@ -626,6 +626,7 @@ class Tower(pygame.sprite.Sprite):
             self.current_image = self.my_data.static_image  
             self.posX = x + self.my_data.image_offset[0]
             self.posY = y + self.my_data.image_offset[1]
+            self.image_offset = self.my_data.image_offset   ## for range hitbox beacause it is also used in menu....
             self.image_size = self.my_data.image_size
             self.center = vec(self.posX+self.image_size[0]*0.5,self.posY+self.image_size[1]*0.5)
 
@@ -1037,11 +1038,12 @@ class Range_Hitbox(pygame.sprite.Sprite):
             super().__init__()
             self.range = range
             if circular:
+                  self.image_offset = tower.image_offset
                   self.circular = True
-                  self.rect = pygame.Rect(tower.posX-ARCANE_TOWER_OFFSET[0],tower.posY-ARCANE_TOWER_OFFSET[1],tower.rect.width,tower.rect.height)
+                  self.rect = pygame.Rect(tower.posX-self.image_offset[0],tower.posY-self.image_offset[1],tower.rect.width,tower.rect.height)
                   self.radius = self.range
-                  self.posX = tower.posX-ARCANE_TOWER_OFFSET[0]+width*0.5 - self.radius
-                  self.posY = tower.posY-ARCANE_TOWER_OFFSET[1]+height*0.5 - self.radius    
+                  self.posX = tower.posX-self.image_offset[0]+width*0.5 - self.radius
+                  self.posY = tower.posY-self.image_offset[1]+height*0.5 - self.radius    
 
                   self.image = pygame.image.load(TOWER_CIRCLE_RANGE_IMAGE_PATH).convert_alpha()
                   self.image.set_alpha(TOWER_CIRCLE_RANGE_IMAGE_ALPHA)
