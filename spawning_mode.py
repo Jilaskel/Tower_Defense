@@ -56,13 +56,13 @@ class Spawning_mode():
         else:
             if (time<(TIME_P1)):
                 
-                cooldown = P1_GOBLIN_SPAWNING_PERIOD*self.number_goblin_spawned*1000 
+                cooldown = P1_GOBLIN_SPAWNING_PERIOD*self.number_goblin_spawned 
                 if ((time-self.last_time_spawning_goblin)>cooldown):
                     self.last_time_spawning_goblin = time
                     self.number_goblin_spawned = random.randint(1,3)
                     self.spawn(game,GOBLIN_TAG,self.number_goblin_spawned)
 
-                cooldown = P1_OGRE_SPAWNING_PERIOD*self.number_ogre_spawned*1000 
+                cooldown = P1_OGRE_SPAWNING_PERIOD*self.number_ogre_spawned 
                 if ((time-self.last_time_spawning_ogre)>cooldown):
                     self.last_time_spawning_ogre = time
                     self.number_ogre_spawned = random.randint(1,3)
