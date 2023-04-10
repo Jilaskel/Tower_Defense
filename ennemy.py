@@ -34,7 +34,7 @@ class Ennemy_data():
             self.velocity = self.my_dict["VELOCITY"] # pixel by ms
             self.gold_earning = self.my_dict["GOLD_EARNING"]     
 
-            self.static_image = pygame.image.load(self.my_dict["TRANSITION_IMAGE_PATH"]+"001.png").convert_alpha()
+            self.static_image = pygame.image.load(self.my_dict["WALKING_IMAGE_PATH"]+"001.png").convert_alpha()
             self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*self.my_dict["RESIZE_FACTOR"])             
             self.image_size = vec(self.static_image.get_size())
 
@@ -49,7 +49,6 @@ class Ennemy_data():
                   self.image_walking[i-1] = pygame.transform.scale(self.image_walking[i-1],vec(self.image_walking[i-1].get_size())*self.my_dict["RESIZE_FACTOR"])
             self.anim_total_time_w = self.my_dict["ANIMATION_WALKING_TOTAL_TIME"]  # in ms
             self.time_per_frame_w = self.anim_total_time_w/self.number_frame_walking # in ms
-            self.stop_walking_frame = self.my_dict["STOP_WALKING_FRAME"]    
 
             self.number_frame_attacking = self.my_dict["NUMBER_FRAME_ATTACKING"] 
             self.image_attacking = []
@@ -69,6 +68,8 @@ class Ennemy_data():
 
 
       def init_transition_data(self):
+            self.stop_walking_frame = self.my_dict["STOP_WALKING_FRAME"]    
+
             self.number_frame_transition = self.my_dict["NUMBER_FRAME_TRANSITION"]
             self.image_transition = []
             for i in range(1,self.number_frame_transition+1):
@@ -76,6 +77,19 @@ class Ennemy_data():
                   self.image_transition[i-1] = pygame.transform.scale(self.image_transition[i-1],vec(self.image_transition[i-1].get_size())*self.my_dict["RESIZE_FACTOR"])
             self.anim_total_time_t = self.my_dict["ANIMATION_TRANSITION_TOTAL_TIME"]  # in ms
             self.time_per_frame_t = self.anim_total_time_t/self.number_frame_transition # in ms
+
+      def init_casting_data(self):
+            self.number_frame_casting = self.my_dict["NUMBER_FRAME_CASTING"] 
+            self.image_casting = []
+            for i in range(1,self.number_frame_casting+1):
+                  self.image_casting.append(pygame.image.load(self.my_dict["CASTING_IMAGE_PATH"]+str(i).zfill(3)+".png").convert_alpha()) 
+                  self.image_casting[i-1] = pygame.transform.scale(self.image_casting[i-1],vec(self.image_casting[i-1].get_size())*self.my_dict["RESIZE_FACTOR"])
+            self.anim_total_time_c = self.my_dict["ANIMATION_CASTING_TOTAL_TIME"]  # in ms
+            self.time_per_frame_c = self.anim_total_time_a/self.number_frame_casting # in ms
+            self.casting_frame = 1
+
+            self.rez_radius = self.my_dict["REZ_RADIUS"]*BACKGROUND_SQUARE_SIDE
+            self.rez_cd = self.my_dict["REZ_COOLDOWN"]*1000
 
 class Goblin_data(Ennemy_data):
       def __init__(self):
@@ -86,164 +100,52 @@ class Goblin_data(Ennemy_data):
 
             self.dead_body_tag = DEAD_GOBLIN_TAG
 
-
-class Ogre_data():
+class Ogre_data(Ennemy_data):
       def __init__(self):
-            self.name = "Ogre"
+            self.my_dict = OGRE_DICT
 
-            self.hp_max = OGRE_HP_MAX
-            self.damage = OGRE_DAMAGE
-            self.velocity = OGRE_VELOCITY # pixel by ms
-            self.gold_earning = OGRE_GOLD_EARNING
-
-            self.static_image = pygame.image.load(OGRE_TRANSITION_IMAGE_PATH+"001.png").convert_alpha()
-            self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*OGRE_RESIZE_FACTOR)             
-            self.current_image = self.static_image
-            self.image_size = vec(self.static_image.get_size())
-
-            self.image_offset = OGRE_OFFSET
-            self.centor_vector = OGRE_CENTER_VECTOR
-            self.hitbox_factor = OGRE_HITBOX_FACTOR
-
-            self.number_frame_walking = OGRE_NUMBER_FRAME_WALKING
-            self.image_walking = []
-            for i in range(1,self.number_frame_walking+1):
-                  self.image_walking.append(pygame.image.load(OGRE_WALKING_IMAGE_PATH+str(i).zfill(3)+".png").convert_alpha())  
-                  self.image_walking[i-1] = pygame.transform.scale(self.image_walking[i-1],vec(self.image_walking[i-1].get_size())*OGRE_RESIZE_FACTOR)
-            self.anim_total_time_w = OGRE_ANIMATION_WALKING_TOTAL_TIME  # in ms
-            self.time_per_frame_w = self.anim_total_time_w/self.number_frame_walking # in ms
-            self.stop_walking_frame = OGRE_STOP_WALKING_FRAME
-
-            self.number_frame_transition = OGRE_NUMBER_FRAME_TRANSITION
-            self.image_transition = []
-            for i in range(1,self.number_frame_transition+1):
-                  self.image_transition.append(pygame.image.load(OGRE_TRANSITION_IMAGE_PATH+str(i).zfill(3)+".png").convert_alpha()) 
-                  self.image_transition[i-1] = pygame.transform.scale(self.image_transition[i-1],vec(self.image_transition[i-1].get_size())*OGRE_RESIZE_FACTOR)
-            self.anim_total_time_t = OGRE_ANIMATION_TRANSITION_TOTAL_TIME  # in ms
-            self.time_per_frame_t = self.anim_total_time_t/self.number_frame_transition # in ms
-
-            self.number_frame_attacking = OGRE_NUMBER_FRAME_ATTACKING 
-            self.image_attacking = []
-            for i in range(1,self.number_frame_attacking+1):
-                  self.image_attacking.append(pygame.image.load(OGRE_ATTACKING_IMAGE_PATH+str(i).zfill(3)+".png").convert_alpha()) 
-                  self.image_attacking[i-1] = pygame.transform.scale(self.image_attacking[i-1],vec(self.image_attacking[i-1].get_size())*OGRE_RESIZE_FACTOR)
-            self.anim_total_time_a = OGRE_ANIMATION_ATTACKING_TOTAL_TIME  # in ms
-            self.time_per_frame_a = self.anim_total_time_a/self.number_frame_attacking # in ms
-            self.hitting_frame = OGRE_HITTING_FRAME - 1
-
-            self.number_frame_stun = OGRE_STUN_NUMBER_FRAME
-            self.image_stun = []
-            for i in range(1,self.number_frame_stun+1):
-                  self.image_stun.append(pygame.image.load(OGRE_STUN_IMAGE_PATH+str(i)+".png").convert_alpha()) 
-                  self.image_stun[i-1] = pygame.transform.scale(self.image_stun[i-1],vec(self.image_stun[i-1].get_size())*OGRE_RESIZE_FACTOR)  
-            self.time_per_frame_s = OGRE_STUN_TIME_PER_FRAME
+            Ennemy_data.__init__(self)
+            self.init_transition_data()
 
             self.dead_body_tag = DEAD_OGRE_TAG
 
-
-class Blue_nec_data():
+class Blue_nec_data(Ennemy_data):
       def __init__(self):
-            self.name = "Ice Necromancer"
+            self.my_dict = BLUE_NEC_DICT
 
-            self.hp_max = BLUE_NEC_HP_MAX
-            self.damage = BLUE_NEC_DAMAGE
-            self.velocity = BLUE_NEC_VELOCITY # pixel by ms
-            self.gold_earning = BLUE_NEC_GOLD_EARNING
-
-            self.rez_radius = BLUE_NEC_REZ_RADIUS*BACKGROUND_SQUARE_SIDE
-            self.rez_cd = BLUE_NEC_REZ_COOLDOWN*1000
-
-            self.static_image = pygame.image.load(BLUE_NEC_WALKING_IMAGE_PATH+"001.png").convert_alpha()
-            self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*BLUE_NEC_RESIZE_FACTOR)             
-            self.current_image = self.static_image
-            self.image_size = vec(self.static_image.get_size())
-
-            self.image_offset = BLUE_NEC_OFFSET
-            self.centor_vector = BLUE_NEC_CENTER_VECTOR
-            self.hitbox_factor = BLUE_NEC_HITBOX_FACTOR
-
-            self.number_frame_walking = BLUE_NEC_NUMBER_FRAME_WALKING
-            self.image_walking = []
-            for i in range(1,self.number_frame_walking+1):
-                  self.image_walking.append(pygame.image.load(BLUE_NEC_WALKING_IMAGE_PATH+str(i).zfill(3)+".png").convert_alpha())  
-                  self.image_walking[i-1] = pygame.transform.scale(self.image_walking[i-1],vec(self.image_walking[i-1].get_size())*BLUE_NEC_RESIZE_FACTOR)
-            self.anim_total_time_w = BLUE_NEC_ANIMATION_WALKING_TOTAL_TIME  # in ms
-            self.time_per_frame_w = self.anim_total_time_w/self.number_frame_walking # in ms
-
-            self.number_frame_attacking = BLUE_NEC_NUMBER_FRAME_ATTACKING 
-            self.image_attacking = []
-            for i in range(1,self.number_frame_attacking+1):
-                  self.image_attacking.append(pygame.image.load(BLUE_NEC_ATTACKING_IMAGE_PATH+str(i).zfill(3)+".png").convert_alpha()) 
-                  self.image_attacking[i-1] = pygame.transform.scale(self.image_attacking[i-1],vec(self.image_attacking[i-1].get_size())*BLUE_NEC_RESIZE_FACTOR)
-            self.anim_total_time_a = BLUE_NEC_ANIMATION_ATTACKING_TOTAL_TIME  # in ms
-            self.time_per_frame_a = self.anim_total_time_a/self.number_frame_attacking # in ms
-            self.hitting_frame = BLUE_NEC_HITTING_FRAME - 1
-
-            self.number_frame_casting = BLUE_NEC_NUMBER_FRAME_CASTING 
-            self.image_casting = []
-            for i in range(1,self.number_frame_casting+1):
-                  self.image_casting.append(pygame.image.load(BLUE_NEC_CASTING_IMAGE_PATH+str(i).zfill(3)+".png").convert_alpha()) 
-                  self.image_casting[i-1] = pygame.transform.scale(self.image_casting[i-1],vec(self.image_casting[i-1].get_size())*BLUE_NEC_RESIZE_FACTOR)
-            self.anim_total_time_c = BLUE_NEC_ANIMATION_CASTING_TOTAL_TIME  # in ms
-            self.time_per_frame_c = self.anim_total_time_a/self.number_frame_casting # in ms
-            self.casting_frame = 1
-
-
-            self.number_frame_stun = BLUE_NEC_STUN_NUMBER_FRAME
-            self.image_stun = []
-            for i in range(1,self.number_frame_stun+1):
-                  self.image_stun.append(pygame.image.load(BLUE_NEC_STUN_IMAGE_PATH+str(i)+".png").convert_alpha()) 
-                  self.image_stun[i-1] = pygame.transform.scale(self.image_stun[i-1],vec(self.image_stun[i-1].get_size())*BLUE_NEC_RESIZE_FACTOR)  
-            self.time_per_frame_s = BLUE_NEC_STUN_TIME_PER_FRAME
+            Ennemy_data.__init__(self)
+            self.init_casting_data()
 
             self.dead_body_tag = DEAD_BLUE_NEC_TAG
 
 class Dragon_data():
       def __init__(self):
-            self.name = "Dragon"
+            self.my_dict = DRAGON_DICT
 
-            self.hp_max = DRAGON_HP_MAX
-            self.damage = DRAGON_DAMAGE
-            self.velocity = DRAGON_VELOCITY # pixel by ms
-            self.gold_earning = DRAGON_GOLD_EARNING
+            self.name = self.my_dict["NAME"]
 
-            self.static_image = pygame.image.load(DRAGON_TRANSITION_IMAGE_PATH+"0001.png").convert_alpha()
-            self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*DRAGON_RESIZE_FACTOR)             
-            self.current_image = self.static_image
+            self.hp_max = self.my_dict["HP_MAX"]
+            self.velocity = self.my_dict["VELOCITY"] # pixel by ms
+            self.gold_earning = self.my_dict["GOLD_EARNING"]     
+
+            self.static_image = pygame.image.load(self.my_dict["WALKING_IMAGE_PATH"]+"0001.png").convert_alpha()
+            self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*self.my_dict["RESIZE_FACTOR"])             
             self.image_size = vec(self.static_image.get_size())
 
-            self.image_offset = DRAGON_OFFSET
-            self.centor_vector = DRAGON_CENTER_VECTOR
-            self.hitbox_factor = DRAGON_HITBOX_FACTOR
+            self.image_offset = self.my_dict["OFFSET"]
+            self.centor_vector = self.my_dict["CENTER_VECTOR"]
+            self.hitbox_factor = self.my_dict["HITBOX_FACTOR"]
 
-            self.number_frame_walking = DRAGON_NUMBER_FRAME_WALKING
+            self.number_frame_walking = self.my_dict["NUMBER_FRAME_WALKING"]
             self.image_walking = []
             for i in range(1,self.number_frame_walking+1):
-                  self.image_walking.append(pygame.image.load(DRAGON_WALKING_IMAGE_PATH+str(i).zfill(4)+".png").convert_alpha())  
-                  self.image_walking[i-1] = pygame.transform.scale(self.image_walking[i-1],vec(self.image_walking[i-1].get_size())*DRAGON_RESIZE_FACTOR)
+                  self.image_walking.append(pygame.image.load(self.my_dict["WALKING_IMAGE_PATH"]+str(i).zfill(4)+".png").convert_alpha())  
+                  self.image_walking[i-1] = pygame.transform.scale(self.image_walking[i-1],vec(self.image_walking[i-1].get_size())*self.my_dict["RESIZE_FACTOR"])
                   self.image_walking[i-1] = pygame.transform.flip(self.image_walking[i-1], True, False)
-            self.anim_total_time_w = DRAGON_ANIMATION_WALKING_TOTAL_TIME  # in ms
+            self.anim_total_time_w = self.my_dict["ANIMATION_WALKING_TOTAL_TIME"]  # in ms
             self.time_per_frame_w = self.anim_total_time_w/self.number_frame_walking # in ms
-            self.stop_walking_frame = DRAGON_STOP_WALKING_FRAME
 
-            # self.number_frame_transition = DRAGON_NUMBER_FRAME_TRANSITION
-            # self.image_transition = []
-            # for i in range(1,self.number_frame_transition+1):
-            #       self.image_transition.append(pygame.image.load(DRAGON_TRANSITION_IMAGE_PATH+str(i).zfill(3)+".png").convert_alpha()) 
-            #       self.image_transition[i-1] = pygame.transform.scale(self.image_transition[i-1],vec(self.image_transition[i-1].get_size())*DRAGON_RESIZE_FACTOR)
-            # self.anim_total_time_t = DRAGON_ANIMATION_TRANSITION_TOTAL_TIME  # in ms
-            # self.time_per_frame_t = self.anim_total_time_t/self.number_frame_transition # in ms
-
-            # self.number_frame_attacking = DRAGON_NUMBER_FRAME_ATTACKING 
-            # self.image_attacking = []
-            # for i in range(1,self.number_frame_attacking+1):
-            #       self.image_attacking.append(pygame.image.load(DRAGON_ATTACKING_IMAGE_PATH+str(i).zfill(3)+".png").convert_alpha()) 
-            #       self.image_attacking[i-1] = pygame.transform.scale(self.image_attacking[i-1],vec(self.image_attacking[i-1].get_size())*DRAGON_RESIZE_FACTOR)
-            # self.anim_total_time_a = DRAGON_ANIMATION_ATTACKING_TOTAL_TIME  # in ms
-            # self.time_per_frame_a = self.anim_total_time_a/self.number_frame_attacking # in ms
-            # self.hitting_frame = DRAGON_HITTING_FRAME -1
-
-            # self.dead_body_tag = DEAD_DRAGON_TAG
+            self.dead_body_tag = DEAD_DRAGON_TAG
 
 class Ennemy(pygame.sprite.Sprite):
       def __init__(self,x,y,rand_offset):
@@ -489,6 +391,7 @@ class Dragon(Ennemy,pygame.sprite.Sprite):
             Ennemy.__init__(self,x,y,rand_offset)
 
       def attack(self,game):
+            self.stun_time = 0.0
             pass
 
       def die(self,game):
