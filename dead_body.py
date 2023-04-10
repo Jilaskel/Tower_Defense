@@ -56,20 +56,21 @@ class All_rezable_bodies(pygame.sprite.Group):
 
 class Dead_goblin_data():
       def __init__(self):
+            self.my_dict = GOBLIN_DICT
 
-            self.static_image = pygame.image.load(GOBLIN_DEATH_IMAGE_PATH+"0001.png").convert_alpha()
-            self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*GOBLIN_RESIZE_FACTOR)             
+            self.static_image = pygame.image.load(self.my_dict["DEATH_IMAGE_PATH"]+"0001.png").convert_alpha()
+            self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*self.my_dict["RESIZE_FACTOR"])             
             self.image_size = vec(self.static_image.get_size())
 
-            self.number_frame = GOBLIN_NUMBER_FRAME_DEATH
+            self.number_frame = self.my_dict["NUMBER_FRAME_DEATH"]
             self.images = []
             for i in range(1,self.number_frame+1):
-                  self.images.append(pygame.image.load(GOBLIN_DEATH_IMAGE_PATH+str(i).zfill(4)+".png").convert_alpha())  
-                  self.images[i-1] = pygame.transform.scale(self.images[i-1],vec(self.images[i-1].get_size())*GOBLIN_RESIZE_FACTOR)
-            self.anim_total_time = GOBLIN_ANIMATION_DEATH_TOTAL_TIME  # in ms
+                  self.images.append(pygame.image.load(self.my_dict["DEATH_IMAGE_PATH"]+str(i).zfill(4)+".png").convert_alpha())  
+                  self.images[i-1] = pygame.transform.scale(self.images[i-1],vec(self.images[i-1].get_size())*self.my_dict["RESIZE_FACTOR"])
+            self.anim_total_time = self.my_dict["ANIMATION_DEATH_TOTAL_TIME"]  # in ms
             self.time_per_frame = self.anim_total_time/self.number_frame # in ms
 
-            self.fading_time = GOBLIN_FADING_TIME
+            self.fading_time = self.my_dict["FADING_TIME"]
 
             self.number_frame_fading = 50
             self.images_fading = []
@@ -77,14 +78,14 @@ class Dead_goblin_data():
                 self.images_fading.append(self.images[self.number_frame-1].convert_alpha())
                 self.images_fading[i].set_alpha(255-int(i*255/self.number_frame_fading))
 
-            self.iced_image = pygame.image.load(GOBLIN_ICED_IMAGE_PATH).convert_alpha()
-            self.iced_image = pygame.transform.scale(self.iced_image,vec(self.iced_image.get_size())*GOBLIN_RESIZE_FACTOR) 
-            self.iced_time_max = GOBLIN_ICED_TIME_MAX
-            self.iced_hp_max = GOBLIN_ICED_HP_MAX
+            self.iced_image = pygame.image.load(self.my_dict["ICED_IMAGE_PATH"]).convert_alpha()
+            self.iced_image = pygame.transform.scale(self.iced_image,vec(self.iced_image.get_size())*self.my_dict["RESIZE_FACTOR"]) 
+            self.iced_time_max = self.my_dict["ICED_TIME_MAX"]
+            self.iced_hp_max = self.my_dict["ICED_HP_MAX"]
 
             ## for selected obj
             self.hp_max = self.iced_hp_max
-            self.name = "Iced Goblin"
+            self.name = self.my_dict["ICED_NAME"]
 
 class Dead_ogre_data():
       def __init__(self):

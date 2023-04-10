@@ -25,57 +25,67 @@ class All_ennemies(pygame.sprite.Group):
       def add_dragon(self,x,y,rand_offset):
             self.add(Dragon(self,x,y,rand_offset))
 
-class Goblin_data():
+class Ennemy_data():
       def __init__(self):
-            self.name = "Goblin"
+            self.name = self.my_dict["NAME"]
 
-            self.hp_max = GOBLIN_HP_MAX
-            self.damage = GOBLIN_DAMAGE
-            self.velocity = GOBLIN_VELOCITY # pixel by ms
-            self.gold_earning = GOBLIN_GOLD_EARNING     
+            self.hp_max = self.my_dict["HP_MAX"]
+            self.damage = self.my_dict["DAMAGE"]
+            self.velocity = self.my_dict["VELOCITY"] # pixel by ms
+            self.gold_earning = self.my_dict["GOLD_EARNING"]     
 
-            self.static_image = pygame.image.load(GOBLIN_TRANSITION_IMAGE_PATH+"001.png").convert_alpha()
-            self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*GOBLIN_RESIZE_FACTOR)             
+            self.static_image = pygame.image.load(self.my_dict["TRANSITION_IMAGE_PATH"]+"001.png").convert_alpha()
+            self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*self.my_dict["RESIZE_FACTOR"])             
             self.image_size = vec(self.static_image.get_size())
 
-            self.image_offset = GOBLIN_OFFSET
-            self.centor_vector = GOBLIN_CENTER_VECTOR
-            self.hitbox_factor = GOBLIN_HITBOX_FACTOR
+            self.image_offset = self.my_dict["OFFSET"]
+            self.centor_vector = self.my_dict["CENTER_VECTOR"]
+            self.hitbox_factor = self.my_dict["HITBOX_FACTOR"]
 
-            self.number_frame_walking = GOBLIN_NUMBER_FRAME_WALKING
+            self.number_frame_walking = self.my_dict["NUMBER_FRAME_WALKING"]
             self.image_walking = []
             for i in range(1,self.number_frame_walking+1):
-                  self.image_walking.append(pygame.image.load(GOBLIN_WALKING_IMAGE_PATH+str(i).zfill(3)+".png").convert_alpha())  
-                  self.image_walking[i-1] = pygame.transform.scale(self.image_walking[i-1],vec(self.image_walking[i-1].get_size())*GOBLIN_RESIZE_FACTOR)
-            self.anim_total_time_w = GOBLIN_ANIMATION_WALKING_TOTAL_TIME  # in ms
+                  self.image_walking.append(pygame.image.load(self.my_dict["WALKING_IMAGE_PATH"]+str(i).zfill(3)+".png").convert_alpha())  
+                  self.image_walking[i-1] = pygame.transform.scale(self.image_walking[i-1],vec(self.image_walking[i-1].get_size())*self.my_dict["RESIZE_FACTOR"])
+            self.anim_total_time_w = self.my_dict["ANIMATION_WALKING_TOTAL_TIME"]  # in ms
             self.time_per_frame_w = self.anim_total_time_w/self.number_frame_walking # in ms
-            self.stop_walking_frame = GOBLIN_STOP_WALKING_FRAME    
+            self.stop_walking_frame = self.my_dict["STOP_WALKING_FRAME"]    
 
-            self.number_frame_transition = GOBLIN_NUMBER_FRAME_TRANSITION
-            self.image_transition = []
-            for i in range(1,self.number_frame_transition+1):
-                  self.image_transition.append(pygame.image.load(GOBLIN_TRANSITION_IMAGE_PATH+str(i).zfill(3)+".png").convert_alpha()) 
-                  self.image_transition[i-1] = pygame.transform.scale(self.image_transition[i-1],vec(self.image_transition[i-1].get_size())*GOBLIN_RESIZE_FACTOR)
-            self.anim_total_time_t = GOBLIN_ANIMATION_TRANSITION_TOTAL_TIME  # in ms
-            self.time_per_frame_t = self.anim_total_time_t/self.number_frame_transition # in ms
-
-            self.number_frame_attacking = GOBLIN_NUMBER_FRAME_ATTACKING 
+            self.number_frame_attacking = self.my_dict["NUMBER_FRAME_ATTACKING"] 
             self.image_attacking = []
             for i in range(1,self.number_frame_attacking+1):
-                  self.image_attacking.append(pygame.image.load(GOBLIN_ATTACKING_IMAGE_PATH+str(i).zfill(3)+".png").convert_alpha()) 
-                  self.image_attacking[i-1] = pygame.transform.scale(self.image_attacking[i-1],vec(self.image_attacking[i-1].get_size())*GOBLIN_RESIZE_FACTOR)
-            self.anim_total_time_a = GOBLIN_ANIMATION_ATTACKING_TOTAL_TIME  # in ms
+                  self.image_attacking.append(pygame.image.load(self.my_dict["ATTACKING_IMAGE_PATH"]+str(i).zfill(3)+".png").convert_alpha()) 
+                  self.image_attacking[i-1] = pygame.transform.scale(self.image_attacking[i-1],vec(self.image_attacking[i-1].get_size())*self.my_dict["RESIZE_FACTOR"])
+            self.anim_total_time_a = self.my_dict["ANIMATION_ATTACKING_TOTAL_TIME"]  # in ms
             self.time_per_frame_a = self.anim_total_time_a/self.number_frame_attacking # in ms
-            self.hitting_frame = GOBLIN_HITTING_FRAME - 1
+            self.hitting_frame = self.my_dict["HITTING_FRAME"] - 1
 
-            self.number_frame_stun = GOBLIN_STUN_NUMBER_FRAME
+            self.number_frame_stun = self.my_dict["STUN_NUMBER_FRAME"]
             self.image_stun = []
             for i in range(1,self.number_frame_stun+1):
-                  self.image_stun.append(pygame.image.load(GOBLIN_STUN_IMAGE_PATH+str(i)+".png").convert_alpha()) 
-                  self.image_stun[i-1] = pygame.transform.scale(self.image_stun[i-1],vec(self.image_stun[i-1].get_size())*GOBLIN_RESIZE_FACTOR)            
-            self.time_per_frame_s = GOBLIN_STUN_TIME_PER_FRAME
+                  self.image_stun.append(pygame.image.load(self.my_dict["STUN_IMAGE_PATH"]+str(i)+".png").convert_alpha()) 
+                  self.image_stun[i-1] = pygame.transform.scale(self.image_stun[i-1],vec(self.image_stun[i-1].get_size())*self.my_dict["RESIZE_FACTOR"])            
+            self.time_per_frame_s = self.my_dict["STUN_TIME_PER_FRAME"]
+
+
+      def init_transition_data(self):
+            self.number_frame_transition = self.my_dict["NUMBER_FRAME_TRANSITION"]
+            self.image_transition = []
+            for i in range(1,self.number_frame_transition+1):
+                  self.image_transition.append(pygame.image.load(self.my_dict["TRANSITION_IMAGE_PATH"]+str(i).zfill(3)+".png").convert_alpha()) 
+                  self.image_transition[i-1] = pygame.transform.scale(self.image_transition[i-1],vec(self.image_transition[i-1].get_size())*self.my_dict["RESIZE_FACTOR"])
+            self.anim_total_time_t = self.my_dict["ANIMATION_TRANSITION_TOTAL_TIME"]  # in ms
+            self.time_per_frame_t = self.anim_total_time_t/self.number_frame_transition # in ms
+
+class Goblin_data(Ennemy_data):
+      def __init__(self):
+            self.my_dict = GOBLIN_DICT
+
+            Ennemy_data.__init__(self)
+            self.init_transition_data()
 
             self.dead_body_tag = DEAD_GOBLIN_TAG
+
 
 class Ogre_data():
       def __init__(self):
