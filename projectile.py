@@ -441,7 +441,7 @@ class Ice_bolt_data():
             self.anim_total_time_fading = ICE_BOLT_TOTAL_TIME_FADING  # in ms
             self.time_per_frame_fading = self.anim_total_time_fading/self.number_frame_fading # in ms
 
-            self.range = ICE_TOWER_RANGE
+            self.range = ICE_BOLT_RANGE
             self.freezing = ICE_BOLT_FREEZING
 
 class Ice_bolt_lvl2_data():
@@ -473,7 +473,7 @@ class Ice_bolt_lvl2_data():
             self.anim_total_time_fading = ICE_BOLT_LVL2_TOTAL_TIME_FADING  # in ms
             self.time_per_frame_fading = self.anim_total_time_fading/self.number_frame_fading # in ms
 
-            self.range = ICE_TOWER_LVL2_RANGE
+            self.range = ICE_BOLT_LVL2_RANGE
             self.freezing = ICE_BOLT_LVL2_FREEZING
 
 class Ice_bolt_lvl3_data():
@@ -505,7 +505,7 @@ class Ice_bolt_lvl3_data():
             self.anim_total_time_fading = ICE_BOLT_LVL3_TOTAL_TIME_FADING  # in ms
             self.time_per_frame_fading = self.anim_total_time_fading/self.number_frame_fading # in ms
 
-            self.range = ICE_TOWER_LVL3_RANGE
+            self.range = ICE_BOLT_LVL3_RANGE
             self.freezing = ICE_BOLT_LVL3_FREEZING
 
 class Bolt_data():

@@ -64,16 +64,16 @@ class Menu():
 
       def add_buttons(self):
             (x,y) = (self.margin,0)
-            self.all_buttons.add(Tower_button(self,x,y,ARCANE_TOWER_BUTTON_TAG))
+            self.all_buttons.add(Tower_button(self,x,y,ARCANE_TOWER_LVL1_BUTTON_TAG))
 
             (x,y) = (self.margin+1.0*self.space,0)
-            self.all_buttons.add(Tower_button(self,x,y,FIRE_TOWER_BUTTON_TAG))
+            self.all_buttons.add(Tower_button(self,x,y,FIRE_TOWER_LVL1_BUTTON_TAG))
 
             (x,y) = (self.margin+2.0*self.space,0)
-            self.all_buttons.add(Tower_button(self,x,y,LIGHTNING_TOWER_BUTTON_TAG))
+            self.all_buttons.add(Tower_button(self,x,y,LIGHTNING_TOWER_LVL1_BUTTON_TAG))
 
             (x,y) = (self.margin+3.0*self.space,0)
-            self.all_buttons.add(Tower_button(self,x,y,ICE_TOWER_BUTTON_TAG))
+            self.all_buttons.add(Tower_button(self,x,y,ICE_TOWER_LVL1_BUTTON_TAG))
 
             (x,y) = (self.margin+4.0*self.space,0)
             self.all_buttons.add(Tower_button(self,x,y,BALLISTA_BUTTON_TAG))
@@ -115,25 +115,25 @@ class Tower_button(pygame.sprite.Sprite):
             self.rendering_layer = 0
             self.my_tag = tag
 
-            if (self.my_tag==ARCANE_TOWER_BUTTON_TAG):
+            if (self.my_tag==ARCANE_TOWER_LVL1_BUTTON_TAG):
                   self.path = MENU_ARCANE_TOWER_BUTTON_IMAGE_PATH
             elif (self.my_tag==ARCANE_TOWER_LVL2_BUTTON_TAG):
                   self.path = MENU_ARCANE_TOWER_LVL2_BUTTON_IMAGE_PATH
             elif (self.my_tag==ARCANE_TOWER_LVL3_BUTTON_TAG):
                   self.path = MENU_ARCANE_TOWER_LVL3_BUTTON_IMAGE_PATH
-            elif (self.my_tag==FIRE_TOWER_BUTTON_TAG):
+            elif (self.my_tag==FIRE_TOWER_LVL1_BUTTON_TAG):
                   self.path = MENU_FIRE_TOWER_BUTTON_IMAGE_PATH
             elif (self.my_tag==FIRE_TOWER_LVL2_BUTTON_TAG):
                   self.path = MENU_FIRE_TOWER_LVL2_BUTTON_IMAGE_PATH
             elif (self.my_tag==FIRE_TOWER_LVL3_BUTTON_TAG):
                   self.path = MENU_FIRE_TOWER_LVL3_BUTTON_IMAGE_PATH
-            elif (self.my_tag==LIGHTNING_TOWER_BUTTON_TAG):
+            elif (self.my_tag==LIGHTNING_TOWER_LVL1_BUTTON_TAG):
                   self.path = MENU_LIGHTNING_TOWER_BUTTON_IMAGE_PATH
             elif (self.my_tag==LIGHTNING_TOWER_LVL2_BUTTON_TAG):
                   self.path = MENU_LIGHTNING_TOWER_LVL2_BUTTON_IMAGE_PATH
             elif (self.my_tag==LIGHTNING_TOWER_LVL3_BUTTON_TAG):
                   self.path = MENU_LIGHTNING_TOWER_LVL3_BUTTON_IMAGE_PATH
-            elif (self.my_tag==ICE_TOWER_BUTTON_TAG):
+            elif (self.my_tag==ICE_TOWER_LVL1_BUTTON_TAG):
                   self.path = MENU_ICE_TOWER_BUTTON_IMAGE_PATH
             elif (self.my_tag==ICE_TOWER_LVL2_BUTTON_TAG):
                   self.path = MENU_ICE_TOWER_LVL2_BUTTON_IMAGE_PATH
@@ -163,251 +163,265 @@ class Tower_button(pygame.sprite.Sprite):
             self.enlarged_posX = self.posX - int((self.enlarged_size[0]-self.image_size[0])*0.5)
             self.enlarged_posY = self.posY
             
-            if (self.my_tag==ARCANE_TOWER_BUTTON_TAG):
+            if (self.my_tag==ARCANE_TOWER_LVL1_BUTTON_TAG):
+                  self.my_dict = ARCANE_TOWER_LVL1_DICT
 
                   self.compatible_grass = True
                   self.compatible_road = False
 
-                  self.image_to_carry = pygame.image.load(ARCANE_TOWER_ATTACK_IMAGE_PATH+"0001.png").convert_alpha()
-                  self.image_to_carry = pygame.transform.scale(self.image_to_carry,vec(self.image_to_carry.get_size())*ARCANE_TOWER_RESIZE_FACTOR)
+                  self.image_to_carry = pygame.image.load(self.my_dict["ATTACK_IMAGE_PATH"]+"0001.png").convert_alpha()
+                  self.image_to_carry = pygame.transform.scale(self.image_to_carry,vec(self.image_to_carry.get_size())*self.my_dict["RESIZE_FACTOR"])
 
-                  self.range = ARCANE_TOWER_RANGE*(BACKGROUND_SQUARE_SIDE+BACKGROUND_SQUARE_SIDE)/2.0
-                  self.image_offset = ARCANE_TOWER_OFFSET
+                  self.range = self.my_dict["RANGE"]*(BACKGROUND_SQUARE_SIDE+BACKGROUND_SQUARE_SIDE)/2.0
+                  self.image_offset = self.my_dict["OFFSET"]
                   self.range_hitbox = Range_Hitbox(self,BACKGROUND_SQUARE_SIDE,BACKGROUND_SQUARE_SIDE,self.range,circular=True)  
 
-                  self.price = ARCANE_TOWER_PRICE 
+                  self.price = self.my_dict["PRICE"] 
 
                   self.tag_to_upgrade = ARCANE_TOWER_LVL2_BUTTON_TAG
-                  self.upgrade_price = ARCANE_TOWER_UPGRADE_COST
-                  self.upgrade_button = Option_button(menu,menu.upgrade_button_image_path,self.posX-0.02*self.rect.w,self.posY+1.05*self.rect.h,0.15,"upgrade",mouse_over_coeff=1.5,text=ARCANE_TOWER_UPGRADE_COST,obj=self)
+                  self.upgrade_price = self.my_dict["UPGRADE_COST"]
+                  self.upgrade_button = Option_button(menu,menu.upgrade_button_image_path,self.posX-0.02*self.rect.w,self.posY+1.05*self.rect.h,0.15,"upgrade",mouse_over_coeff=1.5,text=self.upgrade_price,obj=self)
                   menu.all_options_buttons.add(self.upgrade_button)
 
             elif (self.my_tag==ARCANE_TOWER_LVL2_BUTTON_TAG):
+                  self.my_dict = ARCANE_TOWER_LVL2_DICT
 
                   self.compatible_grass = True
                   self.compatible_road = False
 
-                  self.image_to_carry = pygame.image.load(ARCANE_TOWER_LVL2_ATTACK_IMAGE_PATH+"0001.png").convert_alpha()
-                  self.image_to_carry = pygame.transform.scale(self.image_to_carry,vec(self.image_to_carry.get_size())*ARCANE_TOWER_LVL2_RESIZE_FACTOR)
+                  self.image_to_carry = pygame.image.load(self.my_dict["ATTACK_IMAGE_PATH"]+"0001.png").convert_alpha()
+                  self.image_to_carry = pygame.transform.scale(self.image_to_carry,vec(self.image_to_carry.get_size())*self.my_dict["RESIZE_FACTOR"])
 
-                  self.range = ARCANE_TOWER_LVL2_RANGE*(BACKGROUND_SQUARE_SIDE+BACKGROUND_SQUARE_SIDE)/2.0
-                  self.image_offset = ARCANE_TOWER_OFFSET
+                  self.range = self.my_dict["RANGE"]*(BACKGROUND_SQUARE_SIDE+BACKGROUND_SQUARE_SIDE)/2.0
+                  self.image_offset = self.my_dict["OFFSET"]
                   self.range_hitbox = Range_Hitbox(self,BACKGROUND_SQUARE_SIDE,BACKGROUND_SQUARE_SIDE,self.range,circular=True)  
 
-                  self.price = ARCANE_TOWER_LVL2_PRICE 
+                  self.price = self.my_dict["PRICE"] 
 
                   self.tag_to_upgrade = ARCANE_TOWER_LVL3_BUTTON_TAG
-                  self.upgrade_price = ARCANE_TOWER_LVL2_UPGRADE_COST
-                  self.upgrade_button = Option_button(menu,menu.upgrade_button_image_path,self.posX-0.02*self.rect.w,self.posY+1.05*self.rect.h,0.15,"upgrade",mouse_over_coeff=1.5,text=ARCANE_TOWER_LVL2_UPGRADE_COST,obj=self)
+                  self.upgrade_price = self.my_dict["UPGRADE_COST"]
+                  self.upgrade_button = Option_button(menu,menu.upgrade_button_image_path,self.posX-0.02*self.rect.w,self.posY+1.05*self.rect.h,0.15,"upgrade",mouse_over_coeff=1.5,text=self.upgrade_price,obj=self)
                   menu.all_options_buttons.add(self.upgrade_button)
 
             elif (self.my_tag==ARCANE_TOWER_LVL3_BUTTON_TAG):
+                  self.my_dict = ARCANE_TOWER_LVL3_DICT
 
                   self.compatible_grass = True
                   self.compatible_road = False
 
-                  self.image_to_carry = pygame.image.load(ARCANE_TOWER_LVL3_ATTACK_IMAGE_PATH+"0001.png").convert_alpha()
-                  self.image_to_carry = pygame.transform.scale(self.image_to_carry,vec(self.image_to_carry.get_size())*ARCANE_TOWER_LVL3_RESIZE_FACTOR)
+                  self.image_to_carry = pygame.image.load(self.my_dict["ATTACK_IMAGE_PATH"]+"0001.png").convert_alpha()
+                  self.image_to_carry = pygame.transform.scale(self.image_to_carry,vec(self.image_to_carry.get_size())*self.my_dict["RESIZE_FACTOR"])
 
-                  self.range = ARCANE_TOWER_LVL3_RANGE*(BACKGROUND_SQUARE_SIDE+BACKGROUND_SQUARE_SIDE)/2.0
-                  self.image_offset = ARCANE_TOWER_OFFSET
+                  self.range = self.my_dict["RANGE"]*(BACKGROUND_SQUARE_SIDE+BACKGROUND_SQUARE_SIDE)/2.0
+                  self.image_offset = self.my_dict["OFFSET"]
                   self.range_hitbox = Range_Hitbox(self,BACKGROUND_SQUARE_SIDE,BACKGROUND_SQUARE_SIDE,self.range,circular=True)  
 
-                  self.price = ARCANE_TOWER_LVL3_PRICE 
+                  self.price = self.my_dict["PRICE"] 
 
                   self.upgrade_button = Option_button(menu,menu.lvl_max_button_image_path,self.posX-0.02*self.rect.w,self.posY+1.05*self.rect.h,0.15,"lvl_max",mouse_over_coeff=1.5,text="Lvl Max",obj=self)
                   menu.all_options_buttons.add(self.upgrade_button)
 
-            elif (self.my_tag==FIRE_TOWER_BUTTON_TAG):
+            elif (self.my_tag==FIRE_TOWER_LVL1_BUTTON_TAG):
+                  self.my_dict = FIRE_TOWER_LVL1_DICT
 
                   self.compatible_grass = True
                   self.compatible_road = False
 
-                  self.image_to_carry = pygame.image.load(FIRE_TOWER_ATTACK_IMAGE_PATH+"0001.png").convert_alpha()
-                  self.image_to_carry = pygame.transform.scale(self.image_to_carry,vec(self.image_to_carry.get_size())*FIRE_TOWER_RESIZE_FACTOR)
+                  self.image_to_carry = pygame.image.load(self.my_dict["ATTACK_IMAGE_PATH"]+"0001.png").convert_alpha()
+                  self.image_to_carry = pygame.transform.scale(self.image_to_carry,vec(self.image_to_carry.get_size())*self.my_dict["RESIZE_FACTOR"])
 
-                  self.range = FIRE_TOWER_RANGE*(BACKGROUND_SQUARE_SIDE+BACKGROUND_SQUARE_SIDE)/2.0
-                  self.image_offset = ARCANE_TOWER_OFFSET
+                  self.range = self.my_dict["RANGE"]*(BACKGROUND_SQUARE_SIDE+BACKGROUND_SQUARE_SIDE)/2.0
+                  self.image_offset = self.my_dict["OFFSET"]
                   self.range_hitbox = Range_Hitbox(self,BACKGROUND_SQUARE_SIDE,BACKGROUND_SQUARE_SIDE,self.range,circular=True)  
 
-                  self.price = FIRE_TOWER_PRICE 
+                  self.price = self.my_dict["PRICE"] 
 
                   self.tag_to_upgrade = FIRE_TOWER_LVL2_BUTTON_TAG
-                  self.upgrade_price = FIRE_TOWER_UPGRADE_COST
-                  self.upgrade_button = Option_button(menu,menu.upgrade_button_image_path,self.posX-0.02*self.rect.w,self.posY+1.05*self.rect.h,0.15,"upgrade",mouse_over_coeff=1.5,text=FIRE_TOWER_UPGRADE_COST,obj=self)
+                  self.upgrade_price = self.my_dict["UPGRADE_COST"]
+                  self.upgrade_button = Option_button(menu,menu.upgrade_button_image_path,self.posX-0.02*self.rect.w,self.posY+1.05*self.rect.h,0.15,"upgrade",mouse_over_coeff=1.5,text=self.upgrade_price,obj=self)
                   menu.all_options_buttons.add(self.upgrade_button)
 
             elif (self.my_tag==FIRE_TOWER_LVL2_BUTTON_TAG):
+                  self.my_dict = FIRE_TOWER_LVL2_DICT
 
                   self.compatible_grass = True
                   self.compatible_road = False
 
-                  self.image_to_carry = pygame.image.load(FIRE_TOWER_LVL2_ATTACK_IMAGE_PATH+"0001.png").convert_alpha()
-                  self.image_to_carry = pygame.transform.scale(self.image_to_carry,vec(self.image_to_carry.get_size())*FIRE_TOWER_LVL2_RESIZE_FACTOR)
+                  self.image_to_carry = pygame.image.load(self.my_dict["ATTACK_IMAGE_PATH"]+"0001.png").convert_alpha()
+                  self.image_to_carry = pygame.transform.scale(self.image_to_carry,vec(self.image_to_carry.get_size())*self.my_dict["RESIZE_FACTOR"])
 
-                  self.range = FIRE_TOWER_LVL2_RANGE*(BACKGROUND_SQUARE_SIDE+BACKGROUND_SQUARE_SIDE)/2.0
-                  self.image_offset = ARCANE_TOWER_OFFSET
+                  self.range = self.my_dict["RANGE"]*(BACKGROUND_SQUARE_SIDE+BACKGROUND_SQUARE_SIDE)/2.0
+                  self.image_offset = self.my_dict["OFFSET"]
                   self.range_hitbox = Range_Hitbox(self,BACKGROUND_SQUARE_SIDE,BACKGROUND_SQUARE_SIDE,self.range,circular=True)  
 
-                  self.price = FIRE_TOWER_LVL2_PRICE 
+                  self.price = self.my_dict["PRICE"] 
 
                   self.tag_to_upgrade = FIRE_TOWER_LVL3_BUTTON_TAG
-                  self.upgrade_price = FIRE_TOWER_LVL2_UPGRADE_COST
-                  self.upgrade_button = Option_button(menu,menu.upgrade_button_image_path,self.posX-0.02*self.rect.w,self.posY+1.05*self.rect.h,0.15,"upgrade",mouse_over_coeff=1.5,text=FIRE_TOWER_LVL2_UPGRADE_COST,obj=self)
+                  self.upgrade_price = self.my_dict["UPGRADE_COST"]
+                  self.upgrade_button = Option_button(menu,menu.upgrade_button_image_path,self.posX-0.02*self.rect.w,self.posY+1.05*self.rect.h,0.15,"upgrade",mouse_over_coeff=1.5,text=self.upgrade_price,obj=self)
                   menu.all_options_buttons.add(self.upgrade_button)
 
             elif (self.my_tag==FIRE_TOWER_LVL3_BUTTON_TAG):
+                  self.my_dict = FIRE_TOWER_LVL3_DICT
 
                   self.compatible_grass = True
                   self.compatible_road = False
 
-                  self.image_to_carry = pygame.image.load(FIRE_TOWER_LVL3_ATTACK_IMAGE_PATH+"0001.png").convert_alpha()
-                  self.image_to_carry = pygame.transform.scale(self.image_to_carry,vec(self.image_to_carry.get_size())*FIRE_TOWER_LVL3_RESIZE_FACTOR)
+                  self.image_to_carry = pygame.image.load(self.my_dict["ATTACK_IMAGE_PATH"]+"0001.png").convert_alpha()
+                  self.image_to_carry = pygame.transform.scale(self.image_to_carry,vec(self.image_to_carry.get_size())*self.my_dict["RESIZE_FACTOR"])
 
-                  self.range = FIRE_TOWER_LVL3_RANGE*(BACKGROUND_SQUARE_SIDE+BACKGROUND_SQUARE_SIDE)/2.0
-                  self.image_offset = ARCANE_TOWER_OFFSET
+                  self.range = self.my_dict["RANGE"]*(BACKGROUND_SQUARE_SIDE+BACKGROUND_SQUARE_SIDE)/2.0
+                  self.image_offset = self.my_dict["OFFSET"]
                   self.range_hitbox = Range_Hitbox(self,BACKGROUND_SQUARE_SIDE,BACKGROUND_SQUARE_SIDE,self.range,circular=True)  
 
-                  self.price = FIRE_TOWER_LVL3_PRICE 
+                  self.price = self.my_dict["PRICE"] 
 
                   self.upgrade_button = Option_button(menu,menu.lvl_max_button_image_path,self.posX-0.02*self.rect.w,self.posY+1.05*self.rect.h,0.15,"lvl_max",mouse_over_coeff=1.5,text="Lvl Max",obj=self)
                   menu.all_options_buttons.add(self.upgrade_button)
 
-            elif (self.my_tag==LIGHTNING_TOWER_BUTTON_TAG):
+            elif (self.my_tag==LIGHTNING_TOWER_LVL1_BUTTON_TAG):
+                  self.my_dict = LIGHTNING_TOWER_LVL1_DICT
 
                   self.compatible_grass = True
                   self.compatible_road = False
 
-                  self.image_to_carry = pygame.image.load(LIGHTNING_TOWER_ATTACK_IMAGE_PATH+"0001.png").convert_alpha()
-                  self.image_to_carry = pygame.transform.scale(self.image_to_carry,vec(self.image_to_carry.get_size())*LIGHTNING_TOWER_RESIZE_FACTOR)
+                  self.image_to_carry = pygame.image.load(self.my_dict["ATTACK_IMAGE_PATH"]+"0001.png").convert_alpha()
+                  self.image_to_carry = pygame.transform.scale(self.image_to_carry,vec(self.image_to_carry.get_size())*self.my_dict["RESIZE_FACTOR"])
 
-                  self.range = LIGHTNING_TOWER_RANGE*(BACKGROUND_SQUARE_SIDE+BACKGROUND_SQUARE_SIDE)/2.0
-                  self.image_offset = ARCANE_TOWER_OFFSET
+                  self.range = self.my_dict["RANGE"]*(BACKGROUND_SQUARE_SIDE+BACKGROUND_SQUARE_SIDE)/2.0
+                  self.image_offset = self.my_dict["OFFSET"]
                   self.range_hitbox = Range_Hitbox(self,BACKGROUND_SQUARE_SIDE,BACKGROUND_SQUARE_SIDE,self.range,circular=True)  
 
-                  self.price = LIGHTNING_TOWER_PRICE 
+                  self.price = self.my_dict["PRICE"] 
 
                   self.tag_to_upgrade = LIGHTNING_TOWER_LVL2_BUTTON_TAG
-                  self.upgrade_price = LIGHTNING_TOWER_UPGRADE_COST
-                  self.upgrade_button = Option_button(menu,menu.upgrade_button_image_path,self.posX-0.02*self.rect.w,self.posY+1.05*self.rect.h,0.15,"upgrade",mouse_over_coeff=1.5,text=LIGHTNING_TOWER_UPGRADE_COST,obj=self)
+                  self.upgrade_price = self.my_dict["UPGRADE_COST"]
+                  self.upgrade_button = Option_button(menu,menu.upgrade_button_image_path,self.posX-0.02*self.rect.w,self.posY+1.05*self.rect.h,0.15,"upgrade",mouse_over_coeff=1.5,text=self.upgrade_price,obj=self)
                   menu.all_options_buttons.add(self.upgrade_button)
 
             elif (self.my_tag==LIGHTNING_TOWER_LVL2_BUTTON_TAG):
+                  self.my_dict = LIGHTNING_TOWER_LVL2_DICT
 
                   self.compatible_grass = True
                   self.compatible_road = False
 
-                  self.image_to_carry = pygame.image.load(LIGHTNING_TOWER_LVL2_ATTACK_IMAGE_PATH+"0001.png").convert_alpha()
-                  self.image_to_carry = pygame.transform.scale(self.image_to_carry,vec(self.image_to_carry.get_size())*LIGHTNING_TOWER_LVL2_RESIZE_FACTOR)
+                  self.image_to_carry = pygame.image.load(self.my_dict["ATTACK_IMAGE_PATH"]+"0001.png").convert_alpha()
+                  self.image_to_carry = pygame.transform.scale(self.image_to_carry,vec(self.image_to_carry.get_size())*self.my_dict["RESIZE_FACTOR"])
 
-                  self.range = LIGHTNING_TOWER_LVL2_RANGE*(BACKGROUND_SQUARE_SIDE+BACKGROUND_SQUARE_SIDE)/2.
-                  self.image_offset = ARCANE_TOWER_OFFSET
+                  self.range = self.my_dict["RANGE"]*(BACKGROUND_SQUARE_SIDE+BACKGROUND_SQUARE_SIDE)/2.
+                  self.image_offset = self.my_dict["OFFSET"]
                   self.range_hitbox = Range_Hitbox(self,BACKGROUND_SQUARE_SIDE,BACKGROUND_SQUARE_SIDE,self.range,circular=True)  
 
-                  self.price = LIGHTNING_TOWER_LVL2_PRICE 
+                  self.price = self.my_dict["PRICE"] 
 
                   self.tag_to_upgrade = LIGHTNING_TOWER_LVL3_BUTTON_TAG
-                  self.upgrade_price = LIGHTNING_TOWER_LVL2_UPGRADE_COST
-                  self.upgrade_button = Option_button(menu,menu.upgrade_button_image_path,self.posX-0.02*self.rect.w,self.posY+1.05*self.rect.h,0.15,"upgrade",mouse_over_coeff=1.5,text=LIGHTNING_TOWER_LVL2_UPGRADE_COST,obj=self)
+                  self.upgrade_price = self.my_dict["UPGRADE_COST"]
+                  self.upgrade_button = Option_button(menu,menu.upgrade_button_image_path,self.posX-0.02*self.rect.w,self.posY+1.05*self.rect.h,0.15,"upgrade",mouse_over_coeff=1.5,text=self.upgrade_price,obj=self)
                   menu.all_options_buttons.add(self.upgrade_button)
 
             elif (self.my_tag==LIGHTNING_TOWER_LVL3_BUTTON_TAG):
+                  self.my_dict = LIGHTNING_TOWER_LVL3_DICT
 
                   self.compatible_grass = True
                   self.compatible_road = False
 
-                  self.image_to_carry = pygame.image.load(LIGHTNING_TOWER_LVL3_ATTACK_IMAGE_PATH+"0001.png").convert_alpha()
-                  self.image_to_carry = pygame.transform.scale(self.image_to_carry,vec(self.image_to_carry.get_size())*LIGHTNING_TOWER_LVL3_RESIZE_FACTOR)
+                  self.image_to_carry = pygame.image.load(self.my_dict["ATTACK_IMAGE_PATH"]+"0001.png").convert_alpha()
+                  self.image_to_carry = pygame.transform.scale(self.image_to_carry,vec(self.image_to_carry.get_size())*self.my_dict["RESIZE_FACTOR"])
 
-                  self.range = LIGHTNING_TOWER_LVL3_RANGE*(BACKGROUND_SQUARE_SIDE+BACKGROUND_SQUARE_SIDE)/2.0
-                  self.image_offset = ARCANE_TOWER_OFFSET
+                  self.range = self.my_dict["RANGE"]*(BACKGROUND_SQUARE_SIDE+BACKGROUND_SQUARE_SIDE)/2.0
+                  self.image_offset = self.my_dict["OFFSET"]
                   self.range_hitbox = Range_Hitbox(self,BACKGROUND_SQUARE_SIDE,BACKGROUND_SQUARE_SIDE,self.range,circular=True)  
 
-                  self.price = LIGHTNING_TOWER_LVL3_PRICE 
+                  self.price = self.my_dict["PRICE"] 
 
                   self.upgrade_button = Option_button(menu,menu.lvl_max_button_image_path,self.posX-0.02*self.rect.w,self.posY+1.05*self.rect.h,0.15,"lvl_max",mouse_over_coeff=1.5,text="Lvl Max",obj=self)
                   menu.all_options_buttons.add(self.upgrade_button)
 
-            elif (self.my_tag==ICE_TOWER_BUTTON_TAG):
+            elif (self.my_tag==ICE_TOWER_LVL1_BUTTON_TAG):
+                  self.my_dict = ICE_TOWER_LVL1_DICT
 
                   self.compatible_grass = True
                   self.compatible_road = False
 
-                  self.image_to_carry = pygame.image.load(ICE_TOWER_ATTACK_IMAGE_PATH+"0001.png").convert_alpha()
-                  self.image_to_carry = pygame.transform.scale(self.image_to_carry,vec(self.image_to_carry.get_size())*ICE_TOWER_RESIZE_FACTOR)
+                  self.image_to_carry = pygame.image.load(self.my_dict["ATTACK_IMAGE_PATH"]+"0001.png").convert_alpha()
+                  self.image_to_carry = pygame.transform.scale(self.image_to_carry,vec(self.image_to_carry.get_size())*self.my_dict["RESIZE_FACTOR"])
 
-                  self.range = ICE_TOWER_RANGE*(BACKGROUND_SQUARE_SIDE+BACKGROUND_SQUARE_SIDE)/2.0
-                  self.image_offset = ARCANE_TOWER_OFFSET
+                  self.range = self.my_dict["RANGE"]*(BACKGROUND_SQUARE_SIDE+BACKGROUND_SQUARE_SIDE)/2.0
+                  self.image_offset = self.my_dict["OFFSET"]
                   self.range_hitbox = Range_Hitbox(self,BACKGROUND_SQUARE_SIDE,BACKGROUND_SQUARE_SIDE,self.range,circular=True)  
 
-                  self.price = ICE_TOWER_PRICE 
+                  self.price = self.my_dict["PRICE"] 
 
                   self.tag_to_upgrade = ICE_TOWER_LVL2_BUTTON_TAG
-                  self.upgrade_price = ICE_TOWER_UPGRADE_COST
-                  self.upgrade_button = Option_button(menu,menu.upgrade_button_image_path,self.posX-0.02*self.rect.w,self.posY+1.05*self.rect.h,0.15,"upgrade",mouse_over_coeff=1.5,text=ICE_TOWER_UPGRADE_COST,obj=self)
+                  self.upgrade_price = self.my_dict["UPGRADE_COST"]
+                  self.upgrade_button = Option_button(menu,menu.upgrade_button_image_path,self.posX-0.02*self.rect.w,self.posY+1.05*self.rect.h,0.15,"upgrade",mouse_over_coeff=1.5,text=self.upgrade_price,obj=self)
                   menu.all_options_buttons.add(self.upgrade_button)
 
             elif (self.my_tag==ICE_TOWER_LVL2_BUTTON_TAG):
+                  self.my_dict = ICE_TOWER_LVL2_DICT
 
                   self.compatible_grass = True
                   self.compatible_road = False
 
-                  self.image_to_carry = pygame.image.load(ICE_TOWER_LVL2_ATTACK_IMAGE_PATH+"0001.png").convert_alpha()
-                  self.image_to_carry = pygame.transform.scale(self.image_to_carry,vec(self.image_to_carry.get_size())*ICE_TOWER_LVL2_RESIZE_FACTOR)
+                  self.image_to_carry = pygame.image.load(self.my_dict["ATTACK_IMAGE_PATH"]+"0001.png").convert_alpha()
+                  self.image_to_carry = pygame.transform.scale(self.image_to_carry,vec(self.image_to_carry.get_size())*self.my_dict["RESIZE_FACTOR"])
 
-                  self.range = ICE_TOWER_LVL2_RANGE*(BACKGROUND_SQUARE_SIDE+BACKGROUND_SQUARE_SIDE)/2.0
-                  self.image_offset = ARCANE_TOWER_OFFSET
+                  self.range = self.my_dict["RANGE"]*(BACKGROUND_SQUARE_SIDE+BACKGROUND_SQUARE_SIDE)/2.0
+                  self.image_offset = self.my_dict["OFFSET"]
                   self.range_hitbox = Range_Hitbox(self,BACKGROUND_SQUARE_SIDE,BACKGROUND_SQUARE_SIDE,self.range,circular=True)  
 
-                  self.price = ICE_TOWER_LVL2_PRICE 
+                  self.price = self.my_dict["PRICE"] 
 
                   self.tag_to_upgrade = ICE_TOWER_LVL3_BUTTON_TAG
-                  self.upgrade_price = ICE_TOWER_LVL2_UPGRADE_COST
-                  self.upgrade_button = Option_button(menu,menu.upgrade_button_image_path,self.posX-0.02*self.rect.w,self.posY+1.05*self.rect.h,0.15,"upgrade",mouse_over_coeff=1.5,text=ICE_TOWER_LVL2_UPGRADE_COST,obj=self)
+                  self.upgrade_price = self.my_dict["UPGRADE_COST"]
+                  self.upgrade_button = Option_button(menu,menu.upgrade_button_image_path,self.posX-0.02*self.rect.w,self.posY+1.05*self.rect.h,0.15,"upgrade",mouse_over_coeff=1.5,text=self.upgrade_price,obj=self)
                   menu.all_options_buttons.add(self.upgrade_button)
 
             elif (self.my_tag==ICE_TOWER_LVL3_BUTTON_TAG):
+                  self.my_dict = ICE_TOWER_LVL3_DICT
 
                   self.compatible_grass = True
                   self.compatible_road = False
 
-                  self.image_to_carry = pygame.image.load(ICE_TOWER_LVL3_ATTACK_IMAGE_PATH+"0001.png").convert_alpha()
-                  self.image_to_carry = pygame.transform.scale(self.image_to_carry,vec(self.image_to_carry.get_size())*ICE_TOWER_LVL3_RESIZE_FACTOR)
+                  self.image_to_carry = pygame.image.load(self.my_dict["ATTACK_IMAGE_PATH"]+"0001.png").convert_alpha()
+                  self.image_to_carry = pygame.transform.scale(self.image_to_carry,vec(self.image_to_carry.get_size())*self.my_dict["RESIZE_FACTOR"])
 
-                  self.range = ICE_TOWER_LVL3_RANGE*(BACKGROUND_SQUARE_SIDE+BACKGROUND_SQUARE_SIDE)/2.0
-                  self.image_offset = ARCANE_TOWER_OFFSET
+                  self.range = self.my_dict["RANGE"]*(BACKGROUND_SQUARE_SIDE+BACKGROUND_SQUARE_SIDE)/2.0
+                  self.image_offset = self.my_dict["OFFSET"]
                   self.range_hitbox = Range_Hitbox(self,BACKGROUND_SQUARE_SIDE,BACKGROUND_SQUARE_SIDE,self.range,circular=True)  
 
-                  self.price = ICE_TOWER_LVL3_PRICE 
+                  self.price = self.my_dict["PRICE"] 
 
                   self.upgrade_button = Option_button(menu,menu.lvl_max_button_image_path,self.posX-0.02*self.rect.w,self.posY+1.05*self.rect.h,0.15,"lvl_max",mouse_over_coeff=1.5,text="Lvl Max",obj=self)
                   menu.all_options_buttons.add(self.upgrade_button)
 
             elif (self.my_tag==BALLISTA_BUTTON_TAG):
+                  self.my_dict = BALLISTA_DICT
 
                   self.compatible_grass = False
                   self.compatible_road = True
 
-                  self.image_to_carry = pygame.image.load(BALLISTA_ATTACK_IMAGE_PATH+"0001.png").convert_alpha()
-                  self.image_to_carry = pygame.transform.scale(self.image_to_carry,vec(self.image_to_carry.get_size())*BALLISTA_RESIZE_FACTOR)  
+                  self.image_to_carry = pygame.image.load(self.my_dict["ATTACK_IMAGE_PATH"]+"0001.png").convert_alpha()
+                  self.image_to_carry = pygame.transform.scale(self.image_to_carry,vec(self.image_to_carry.get_size())*self.my_dict["RESIZE_FACTOR"])  
 
-                  self.range = BALLISTA_RANGE*(BACKGROUND_SQUARE_SIDE+BACKGROUND_SQUARE_SIDE)/2.0
+                  self.range = self.my_dict["RANGE"]*(BACKGROUND_SQUARE_SIDE+BACKGROUND_SQUARE_SIDE)/2.0
                   self.range_hitbox = Range_Hitbox(self,BACKGROUND_SQUARE_SIDE,BACKGROUND_SQUARE_SIDE,self.range,circular=False,tag="Ballista")  
 
-                  self.price = BALLISTA_PRICE 
+                  self.price = self.my_dict["PRICE"] 
 
             elif (self.my_tag==CATAPULT_BUTTON_TAG):
+                  self.my_dict = CATAPULT_DICT
 
                   self.compatible_grass = False
                   self.compatible_road = True
 
-                  self.image_to_carry = pygame.image.load(CATAPULT_ATTACK_IMAGE_PATH+"0001.png").convert_alpha()
-                  self.image_to_carry = pygame.transform.scale(self.image_to_carry,vec(self.image_to_carry.get_size())*CATAPULT_RESIZE_FACTOR)  
+                  self.image_to_carry = pygame.image.load(self.my_dict["ATTACK_IMAGE_PATH"]+"0001.png").convert_alpha()
+                  self.image_to_carry = pygame.transform.scale(self.image_to_carry,vec(self.image_to_carry.get_size())*self.my_dict["RESIZE_FACTOR"])  
 
-                  self.range = CATAPULT_RANGE*(BACKGROUND_SQUARE_SIDE+BACKGROUND_SQUARE_SIDE)/2.0
+                  self.range = self.my_dict["RANGE"]*(BACKGROUND_SQUARE_SIDE+BACKGROUND_SQUARE_SIDE)/2.0
                   self.range_hitbox = Range_Hitbox(self,BACKGROUND_SQUARE_SIDE,BACKGROUND_SQUARE_SIDE,self.range,circular=False,tag="Catapult")  
 
-                  self.price = CATAPULT_PRICE 
+                  self.price = self.my_dict["PRICE"] 
 
             else : 
                 self.compatible_grass = False
