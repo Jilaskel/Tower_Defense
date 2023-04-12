@@ -7,16 +7,16 @@ import numpy as np
 import math
 import random
 
-ARCANE_TOWER_BOLT_TAG = 1
+ARCANE_TOWER_LVL1_BOLT_TAG = 1
 ARCANE_TOWER_LVL2_BOLT_TAG = 2
 ARCANE_TOWER_LVL3_BOLT_TAG = 3
-FIRE_TOWER_BOLT_TAG = 4
+FIRE_TOWER_LVL1_BOLT_TAG = 4
 FIRE_TOWER_LVL2_BOLT_TAG = 5
 FIRE_TOWER_LVL3_BOLT_TAG = 6
-LIGHTNING_TOWER_BOLT_TAG = 7
+LIGHTNING_TOWER_LVL1_BOLT_TAG = 7
 LIGHTNING_TOWER_LVL2_BOLT_TAG = 8
 LIGHTNING_TOWER_LVL3_BOLT_TAG = 9
-ICE_TOWER_BOLT_TAG = 10
+ICE_TOWER_LVL1_BOLT_TAG = 10
 ICE_TOWER_LVL2_BOLT_TAG = 11
 ICE_TOWER_LVL3_BOLT_TAG = 12
 BALLISTA_BOLT_TAG = 13
@@ -26,16 +26,16 @@ class All_projectiles(pygame.sprite.Group):
       def __init__(self):
             pygame.sprite.Group.__init__(self)  
 
-            self.arcane_bolt_data = Arcane_bolt_data()
+            self.arcane_bolt_data = Arcane_bolt_lvl1_data()
             self.arcane_bolt_lvl2_data = Arcane_bolt_lvl2_data()
             self.arcane_bolt_lvl3_data = Arcane_bolt_lvl3_data()
-            self.fire_bolt_data = Fire_bolt_data()
+            self.fire_bolt_data = Fire_bolt_lvl1_data()
             self.fire_bolt_lvl2_data = Fire_bolt_lvl2_data()
             self.fire_bolt_lvl3_data = Fire_bolt_lvl3_data()
-            self.light_bolt_data = Light_bolt_data()
+            self.light_bolt_data = Light_bolt_lvl1_data()
             self.light_bolt_lvl2_data = Light_bolt_lvl2_data()
             self.light_bolt_lvl3_data = Light_bolt_lvl3_data()
-            self.ice_bolt_data = Ice_bolt_data()
+            self.ice_bolt_data = Ice_bolt_lvl1_data()
             self.ice_bolt_lvl2_data = Ice_bolt_lvl2_data()
             self.ice_bolt_lvl3_data = Ice_bolt_lvl3_data()
             
@@ -43,26 +43,26 @@ class All_projectiles(pygame.sprite.Group):
             self.rock_data = Rock_data()
 
       def add_bolt(self,game,x,y,target,tag,tower=None):
-            if (tag==ARCANE_TOWER_BOLT_TAG):
-                  self.add_arcane_bolt(game,x,y,target)
+            if (tag==ARCANE_TOWER_LVL1_BOLT_TAG):
+                  self.add_arcane_bolt_lvl1(game,x,y,target)
             if (tag==ARCANE_TOWER_LVL2_BOLT_TAG):
                   self.add_arcane_bolt_lvl2(game,x,y,target)
             if (tag==ARCANE_TOWER_LVL3_BOLT_TAG):
                   self.add_arcane_bolt_lvl3(game,x,y,target)
-            elif (tag==FIRE_TOWER_BOLT_TAG):
-                  self.add_fire_bolt(game,x,y,target)
+            elif (tag==FIRE_TOWER_LVL1_BOLT_TAG):
+                  self.add_fire_bolt_lvl1(game,x,y,target)
             elif (tag==FIRE_TOWER_LVL2_BOLT_TAG):
                   self.add_fire_bolt_lvl2(game,x,y,target)
             elif (tag==FIRE_TOWER_LVL3_BOLT_TAG):
                   self.add_fire_bolt_lvl3(game,x,y,target)
-            elif (tag==LIGHTNING_TOWER_BOLT_TAG):
-                  self.add_lightning_bolt(game,x,y,target)
+            elif (tag==LIGHTNING_TOWER_LVL1_BOLT_TAG):
+                  self.add_lightning_bolt_lvl1(game,x,y,target)
             elif (tag==LIGHTNING_TOWER_LVL2_BOLT_TAG):
                   self.add_lightning_bolt_lvl2(game,x,y,target)
             elif (tag==LIGHTNING_TOWER_LVL3_BOLT_TAG):
                   self.add_lightning_bolt_lvl3(game,x,y,target)
-            elif (tag==ICE_TOWER_BOLT_TAG):
-                  self.add_ice_bolt(game,x,y,target,tower)
+            elif (tag==ICE_TOWER_LVL1_BOLT_TAG):
+                  self.add_ice_bolt_lvl1(game,x,y,target,tower)
             elif (tag==ICE_TOWER_LVL2_BOLT_TAG):
                   self.add_ice_bolt_lvl2(game,x,y,target,tower)
             elif (tag==ICE_TOWER_LVL3_BOLT_TAG):
@@ -72,8 +72,8 @@ class All_projectiles(pygame.sprite.Group):
             elif (tag==CATAPULT_BOLT_TAG):
                   self.add_catapult_rock(game,x,y,target)
 
-      def add_arcane_bolt(self,game,x,y,target):
-            self.add(Arcane_bolt(self,x,y,target))
+      def add_arcane_bolt_lvl1(self,game,x,y,target):
+            self.add(Arcane_bolt_lvl1(self,x,y,target))
             game.all_mixers.projectile_mixer.arcane_proj_sound.play(maxtime=SOUND_ARCANE_PROJ_MAX_TIME)
 
       def add_arcane_bolt_lvl2(self,game,x,y,target):
@@ -84,8 +84,8 @@ class All_projectiles(pygame.sprite.Group):
             self.add(Arcane_bolt_lvl3(self,x,y,target))
             game.all_mixers.projectile_mixer.arcane_proj_sound.play(maxtime=SOUND_ARCANE_PROJ_MAX_TIME)
 
-      def add_fire_bolt(self,game,x,y,target):
-            self.add(Fire_bolt(self,x,y,target))
+      def add_fire_bolt_lvl1(self,game,x,y,target):
+            self.add(Fire_bolt_lvl1(self,x,y,target))
             game.all_mixers.projectile_mixer.fire_proj_sound.play(maxtime=SOUND_FIRE_PROJ_MAX_TIME)
 
       def add_fire_bolt_lvl2(self,game,x,y,target):
@@ -100,17 +100,17 @@ class All_projectiles(pygame.sprite.Group):
             self.add(Fire_bolt_no_target(self,x,y,impact_target,direction))
             # game.all_mixers.projectile_mixer.fire_proj_sound.play(maxtime=SOUND_FIRE_PROJ_MAX_TIME)
 
-      def add_lightning_bolt(self,game,x,y,target):
-            damage = LIGHTNING_BOLT_DAMAGE
-            self.add(Light_bolt(self,x,y,target,damage))
+      def add_lightning_bolt_lvl1(self,game,x,y,target):
+            damage = LIGHTNING_BOLT_LVL1_DICT["DAMAGE"]
+            self.add(Light_bolt_lvl1(self,x,y,target,damage))
             old_x = target.center[0]
             old_y = target.center[1]
             old_target = []
             old_target.append(target)
-            distance_lim = LIGHTNING_TOWER_RANGE*BACKGROUND_SQUARE_SIDE
-            for number_of_bounce in range(LIGHTNING_BOLT_NUMBER_BOUNCE_MAX):
-                  distance_lim = distance_lim*(1-LIGHTNING_BOLT_DECREASING_DISTANCE_BOUNCE_FACTOR)
-                  damage = damage*(1-LIGHTNING_BOLT_DECREASING_DAMAGE_BOUNCE_FACTOR)
+            distance_lim = LIGHTNING_BOLT_LVL1_DICT["RANGE"]*BACKGROUND_SQUARE_SIDE
+            for number_of_bounce in range(LIGHTNING_BOLT_LVL1_DICT["NUMBER_BOUNCE_MAX"]):
+                  distance_lim = distance_lim*(1-LIGHTNING_BOLT_LVL1_DICT["DECREASING_DISTANCE_BOUNCE_FACTOR"])
+                  damage = damage*(1-LIGHTNING_BOLT_LVL1_DICT["DECREASING_DAMAGE_BOUNCE_FACTOR"])
                   for new_target in game.all_ennemies:
                         if not(new_target in old_target):
                               new_x = new_target.center[0]
@@ -126,23 +126,23 @@ class All_projectiles(pygame.sprite.Group):
             random.choice(game.all_mixers.projectile_mixer.light_proj_list).play()
 
       def add_lightning_bolt_lvl2(self,game,x,y,target):
-            damage = LIGHTNING_BOLT_LVL2_DAMAGE
+            damage = LIGHTNING_BOLT_LVL2_DICT["DAMAGE"]
             self.add(Light_bolt_lvl2(self,x,y,target,damage))
             old_x = target.center[0]
             old_y = target.center[1]
             old_target = []
             old_target.append(target)
-            distance_lim = LIGHTNING_TOWER_LVL2_RANGE*BACKGROUND_SQUARE_SIDE
-            for number_of_bounce in range(LIGHTNING_BOLT_LVL2_NUMBER_BOUNCE_MAX):
-                  distance_lim = distance_lim*(1-LIGHTNING_BOLT_LVL2_DECREASING_DISTANCE_BOUNCE_FACTOR)
-                  damage = damage*(1-LIGHTNING_BOLT_LVL2_DECREASING_DAMAGE_BOUNCE_FACTOR)
+            distance_lim = LIGHTNING_BOLT_LVL2_DICT["RANGE"]*BACKGROUND_SQUARE_SIDE
+            for number_of_bounce in range(LIGHTNING_BOLT_LVL2_DICT["NUMBER_BOUNCE_MAX"]):
+                  distance_lim = distance_lim*(1-LIGHTNING_BOLT_LVL2_DICT["DECREASING_DISTANCE_BOUNCE_FACTOR"])
+                  damage = damage*(1-LIGHTNING_BOLT_LVL2_DICT["DECREASING_DAMAGE_BOUNCE_FACTOR"])
                   for new_target in game.all_ennemies:
                         if not(new_target in old_target):
                               new_x = new_target.center[0]
                               new_y = new_target.center[1]
                               distance = np.sqrt((old_x - new_x)**2 + (old_y - new_y)**2)
                               if (distance<(distance_lim)and(distance>0.1*BACKGROUND_SQUARE_SIDE)):
-                                    self.add(Light_bolt_lvl2(self,old_x,old_y,new_target,damage)) 
+                                    self.add(Light_bolt(self,old_x,old_y,new_target,damage)) 
                                     old_x = new_x  
                                     old_y = new_y
                                     old_target.append(new_target)  
@@ -151,23 +151,23 @@ class All_projectiles(pygame.sprite.Group):
             random.choice(game.all_mixers.projectile_mixer.light_proj_list).play()
 
       def add_lightning_bolt_lvl3(self,game,x,y,target):
-            damage = LIGHTNING_BOLT_LVL3_DAMAGE
+            damage = LIGHTNING_BOLT_LVL3_DICT["DAMAGE"]
             self.add(Light_bolt_lvl3(self,x,y,target,damage))
             old_x = target.center[0]
             old_y = target.center[1]
             old_target = []
             old_target.append(target)
-            distance_lim = LIGHTNING_TOWER_LVL3_RANGE*BACKGROUND_SQUARE_SIDE
-            for number_of_bounce in range(LIGHTNING_BOLT_LVL3_NUMBER_BOUNCE_MAX):
-                  distance_lim = distance_lim*(1-LIGHTNING_BOLT_LVL3_DECREASING_DISTANCE_BOUNCE_FACTOR)
-                  damage = damage*(1-LIGHTNING_BOLT_LVL3_DECREASING_DAMAGE_BOUNCE_FACTOR)
+            distance_lim = LIGHTNING_BOLT_LVL3_DICT["RANGE"]*BACKGROUND_SQUARE_SIDE
+            for number_of_bounce in range(LIGHTNING_BOLT_LVL3_DICT["NUMBER_BOUNCE_MAX"]):
+                  distance_lim = distance_lim*(1-LIGHTNING_BOLT_LVL3_DICT["DECREASING_DISTANCE_BOUNCE_FACTOR"])
+                  damage = damage*(1-LIGHTNING_BOLT_LVL3_DICT["DECREASING_DAMAGE_BOUNCE_FACTOR"])
                   for new_target in game.all_ennemies:
                         if not(new_target in old_target):
                               new_x = new_target.center[0]
                               new_y = new_target.center[1]
                               distance = np.sqrt((old_x - new_x)**2 + (old_y - new_y)**2)
                               if (distance<(distance_lim)and(distance>0.1*BACKGROUND_SQUARE_SIDE)):
-                                    self.add(Light_bolt_lvl3(self,old_x,old_y,new_target,damage)) 
+                                    self.add(Light_bolt(self,old_x,old_y,new_target,damage)) 
                                     old_x = new_x  
                                     old_y = new_y
                                     old_target.append(new_target)  
@@ -175,8 +175,8 @@ class All_projectiles(pygame.sprite.Group):
 
             random.choice(game.all_mixers.projectile_mixer.light_proj_list).play()
 
-      def add_ice_bolt(self,game,x,y,target,tower):
-            self.add(Ice_bolt(self,x,y,target,tower))
+      def add_ice_bolt_lvl1(self,game,x,y,target,tower):
+            self.add(Ice_bolt_lvl1(self,x,y,target,tower))
             random.choice(game.all_mixers.projectile_mixer.ice_bolt_proj_list).play()
 
       def add_ice_bolt_lvl2(self,game,x,y,target,tower):
@@ -197,132 +197,211 @@ class All_projectiles(pygame.sprite.Group):
 class Arcane_bolt_data():
       def __init__(self):
 
-            self.damage = ARCANE_BOLT_DAMAGE
-            self.velocity = ARCANE_BOLT_VELOCITY  # pixel by ms
-            self.ratio_for_impact = ARCANE_BOLT_RATIO_FOR_IMPACT
+            self.damage = self.my_dict["DAMAGE"]
+            self.velocity = self.my_dict["VELOCITY"]  # pixel by ms
+            self.ratio_for_impact = self.my_dict["RATIO_FOR_IMPACT"]
 
-            self.static_image = pygame.image.load(ARCANE_BOLT_IMAGE_PATH).convert_alpha()
-            self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*ARCANE_BOLT_RESIZE_FACTOR)  
+            self.static_image = pygame.image.load(self.my_dict["IMAGE_PATH"]).convert_alpha()
+            self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*self.my_dict["RESIZE_FACTOR"])  
             self.image_size = vec(self.static_image.get_size())
             self.initial_direction = vec(-1,0)
-            self.offset = vec(ARCANE_BOLT_CENTOR_VECTOR[0]*self.image_size[0],ARCANE_BOLT_CENTOR_VECTOR[1]*self.image_size[1])
+            self.offset = vec(self.my_dict["CENTOR_VECTOR"][0]*self.image_size[0],self.my_dict["CENTOR_VECTOR"][1]*self.image_size[1])
 
-            self.centor_vector = ARCANE_BOLT_CENTOR_VECTOR
+            self.centor_vector = self.my_dict["CENTOR_VECTOR"]
+
+class Arcane_bolt_lvl1_data(Arcane_bolt_data):
+      def __init__(self):
+            self.my_dict = ARCANE_BOLT_LVL1_DICT
+
+            Arcane_bolt_data.__init__(self)
+
+            # self.damage = ARCANE_BOLT_DAMAGE
+            # self.velocity = ARCANE_BOLT_VELOCITY  # pixel by ms
+            # self.ratio_for_impact = ARCANE_BOLT_RATIO_FOR_IMPACT
+
+            # self.static_image = pygame.image.load(ARCANE_BOLT_IMAGE_PATH).convert_alpha()
+            # self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*ARCANE_BOLT_RESIZE_FACTOR)  
+            # self.image_size = vec(self.static_image.get_size())
+            # self.initial_direction = vec(-1,0)
+            # self.offset = vec(ARCANE_BOLT_CENTOR_VECTOR[0]*self.image_size[0],ARCANE_BOLT_CENTOR_VECTOR[1]*self.image_size[1])
+
+            # self.centor_vector = ARCANE_BOLT_CENTOR_VECTOR
 
             self.impact_tag = ARCANE_TOWER_IMPACT_TAG
 
-class Arcane_bolt_lvl2_data():
+class Arcane_bolt_lvl2_data(Arcane_bolt_data):
       def __init__(self):
+            self.my_dict = ARCANE_BOLT_LVL2_DICT
 
-            self.damage = ARCANE_BOLT_LVL2_DAMAGE
-            self.velocity = ARCANE_BOLT_LVL2_VELOCITY  # pixel by ms
-            self.ratio_for_impact = ARCANE_BOLT_LVL2_RATIO_FOR_IMPACT
+            Arcane_bolt_data.__init__(self)
 
-            self.static_image = pygame.image.load(ARCANE_BOLT_LVL2_IMAGE_PATH).convert_alpha()
-            self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*ARCANE_BOLT_LVL2_RESIZE_FACTOR)  
-            self.image_size = vec(self.static_image.get_size())
-            self.initial_direction = vec(-1,0)
-            self.offset = vec(ARCANE_BOLT_LVL2_CENTOR_VECTOR[0]*self.image_size[0],ARCANE_BOLT_LVL2_CENTOR_VECTOR[1]*self.image_size[1])
+            # self.damage = ARCANE_BOLT_LVL2_DAMAGE
+            # self.velocity = ARCANE_BOLT_LVL2_VELOCITY  # pixel by ms
+            # self.ratio_for_impact = ARCANE_BOLT_LVL2_RATIO_FOR_IMPACT
 
-            self.centor_vector = ARCANE_BOLT_LVL2_CENTOR_VECTOR
+            # self.static_image = pygame.image.load(ARCANE_BOLT_LVL2_IMAGE_PATH).convert_alpha()
+            # self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*ARCANE_BOLT_LVL2_RESIZE_FACTOR)  
+            # self.image_size = vec(self.static_image.get_size())
+            # self.initial_direction = vec(-1,0)
+            # self.offset = vec(ARCANE_BOLT_LVL2_CENTOR_VECTOR[0]*self.image_size[0],ARCANE_BOLT_LVL2_CENTOR_VECTOR[1]*self.image_size[1])
+
+            # self.centor_vector = ARCANE_BOLT_LVL2_CENTOR_VECTOR
 
             self.impact_tag = ARCANE_TOWER_IMPACT_TAG
 
-class Arcane_bolt_lvl3_data():
+class Arcane_bolt_lvl3_data(Arcane_bolt_data):
       def __init__(self):
+            self.my_dict = ARCANE_BOLT_LVL3_DICT
 
-            self.damage = ARCANE_BOLT_LVL3_DAMAGE
-            self.velocity = ARCANE_BOLT_LVL3_VELOCITY  # pixel by ms
-            self.ratio_for_impact = ARCANE_BOLT_LVL3_RATIO_FOR_IMPACT
+            Arcane_bolt_data.__init__(self)
 
-            self.static_image = pygame.image.load(ARCANE_BOLT_LVL3_IMAGE_PATH).convert_alpha()
-            self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*ARCANE_BOLT_LVL3_RESIZE_FACTOR)  
-            self.image_size = vec(self.static_image.get_size())
-            self.initial_direction = vec(-1,0)
-            self.offset = vec(ARCANE_BOLT_LVL3_CENTOR_VECTOR[0]*self.image_size[0],ARCANE_BOLT_LVL3_CENTOR_VECTOR[1]*self.image_size[1])
+            # self.damage = ARCANE_BOLT_LVL3_DAMAGE
+            # self.velocity = ARCANE_BOLT_LVL3_VELOCITY  # pixel by ms
+            # self.ratio_for_impact = ARCANE_BOLT_LVL3_RATIO_FOR_IMPACT
 
-            self.centor_vector = ARCANE_BOLT_LVL3_CENTOR_VECTOR
+            # self.static_image = pygame.image.load(ARCANE_BOLT_LVL3_IMAGE_PATH).convert_alpha()
+            # self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*ARCANE_BOLT_LVL3_RESIZE_FACTOR)  
+            # self.image_size = vec(self.static_image.get_size())
+            # self.initial_direction = vec(-1,0)
+            # self.offset = vec(ARCANE_BOLT_LVL3_CENTOR_VECTOR[0]*self.image_size[0],ARCANE_BOLT_LVL3_CENTOR_VECTOR[1]*self.image_size[1])
+
+            # self.centor_vector = ARCANE_BOLT_LVL3_CENTOR_VECTOR
 
             self.impact_tag = ARCANE_TOWER_IMPACT_TAG
 
 class Fire_bolt_data():
       def __init__(self):
 
-            self.damage = FIRE_BOLT_DAMAGE
-            self.velocity = FIRE_BOLT_VELOCITY  # pixel by ms
-            self.ratio_for_impact = FIRE_BOLT_RATIO_FOR_IMPACT
+            self.damage = self.my_dict["DAMAGE"]
+            self.velocity = self.my_dict["VELOCITY"]  # pixel by ms
+            self.ratio_for_impact = self.my_dict["RATIO_FOR_IMPACT"]
 
-            self.static_image = pygame.image.load(FIRE_BOLT_IMAGE_PATH+"0001.png").convert_alpha()
-            self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*FIRE_BOLT_RESIZE_FACTOR)  
+            self.static_image = pygame.image.load(self.my_dict["IMAGE_PATH"]+"0001.png").convert_alpha()
+            self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*self.my_dict["RESIZE_FACTOR"])  
             self.image_size = vec(self.static_image.get_size())
             self.initial_direction = vec(-1,0)
-            self.offset = vec(FIRE_BOLT_CENTOR_VECTOR[0]*self.image_size[0],FIRE_BOLT_CENTOR_VECTOR[1]*self.image_size[1])
+            self.offset = vec(self.my_dict["CENTOR_VECTOR"][0]*self.image_size[0],self.my_dict["CENTOR_VECTOR"][1]*self.image_size[1])
 
-            self.number_frame = FIRE_BOLT_NUMBER_FRAME
+            self.number_frame = self.my_dict["NUMBER_FRAME"]
             self.images = []
             for i in range(1,self.number_frame+1):
-                  self.images.append(pygame.image.load(FIRE_BOLT_IMAGE_PATH+str(i).zfill(4)+".png").convert_alpha())  
-                  self.images[i-1] = pygame.transform.scale(self.images[i-1],vec(self.images[i-1].get_size())*FIRE_BOLT_RESIZE_FACTOR)
-            self.anim_total_time = FIRE_BOLT_TOTAL_TIME  # in ms
+                  self.images.append(pygame.image.load(self.my_dict["IMAGE_PATH"]+str(i).zfill(4)+".png").convert_alpha())  
+                  self.images[i-1] = pygame.transform.scale(self.images[i-1],vec(self.images[i-1].get_size())*self.my_dict["RESIZE_FACTOR"])
+            self.anim_total_time = self.my_dict["TOTAL_TIME"]  # in ms
             self.time_per_frame = self.anim_total_time/self.number_frame # in ms
 
-            self.centor_vector = FIRE_BOLT_CENTOR_VECTOR
+            self.centor_vector = self.my_dict["CENTOR_VECTOR"]
+
+class Fire_bolt_lvl1_data(Fire_bolt_data):
+      def __init__(self):
+            self.my_dict = FIRE_BOLT_LVL1_DICT
+
+            Fire_bolt_data.__init__(self)
+
+            # self.damage = FIRE_BOLT_DAMAGE
+            # self.velocity = FIRE_BOLT_VELOCITY  # pixel by ms
+            # self.ratio_for_impact = FIRE_BOLT_RATIO_FOR_IMPACT
+
+            # self.static_image = pygame.image.load(FIRE_BOLT_IMAGE_PATH+"0001.png").convert_alpha()
+            # self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*FIRE_BOLT_RESIZE_FACTOR)  
+            # self.image_size = vec(self.static_image.get_size())
+            # self.initial_direction = vec(-1,0)
+            # self.offset = vec(FIRE_BOLT_CENTOR_VECTOR[0]*self.image_size[0],FIRE_BOLT_CENTOR_VECTOR[1]*self.image_size[1])
+
+            # self.number_frame = FIRE_BOLT_NUMBER_FRAME
+            # self.images = []
+            # for i in range(1,self.number_frame+1):
+            #       self.images.append(pygame.image.load(FIRE_BOLT_IMAGE_PATH+str(i).zfill(4)+".png").convert_alpha())  
+            #       self.images[i-1] = pygame.transform.scale(self.images[i-1],vec(self.images[i-1].get_size())*FIRE_BOLT_RESIZE_FACTOR)
+            # self.anim_total_time = FIRE_BOLT_TOTAL_TIME  # in ms
+            # self.time_per_frame = self.anim_total_time/self.number_frame # in ms
+
+            # self.centor_vector = FIRE_BOLT_CENTOR_VECTOR
 
             self.impact_tag = FIRE_TOWER_IMPACT_TAG
 
-class Fire_bolt_lvl2_data():
+class Fire_bolt_lvl2_data(Fire_bolt_data):
       def __init__(self):
+            self.my_dict = FIRE_BOLT_LVL2_DICT
 
-            self.damage = FIRE_BOLT_LVL2_DAMAGE
-            self.velocity = FIRE_BOLT_LVL2_VELOCITY  # pixel by ms
-            self.ratio_for_impact = FIRE_BOLT_LVL2_RATIO_FOR_IMPACT
+            Fire_bolt_data.__init__(self)
 
-            self.static_image = pygame.image.load(FIRE_BOLT_LVL2_IMAGE_PATH+"0001.png").convert_alpha()
-            self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*FIRE_BOLT_LVL2_RESIZE_FACTOR)  
-            self.image_size = vec(self.static_image.get_size())
-            self.initial_direction = vec(-1,0)
-            self.offset = vec(FIRE_BOLT_LVL2_CENTOR_VECTOR[0]*self.image_size[0],FIRE_BOLT_LVL2_CENTOR_VECTOR[1]*self.image_size[1])
+            # self.damage = FIRE_BOLT_LVL2_DAMAGE
+            # self.velocity = FIRE_BOLT_LVL2_VELOCITY  # pixel by ms
+            # self.ratio_for_impact = FIRE_BOLT_LVL2_RATIO_FOR_IMPACT
 
-            self.number_frame = FIRE_BOLT_LVL2_NUMBER_FRAME
-            self.images = []
-            for i in range(1,self.number_frame+1):
-                  self.images.append(pygame.image.load(FIRE_BOLT_LVL2_IMAGE_PATH+str(i).zfill(4)+".png").convert_alpha())  
-                  self.images[i-1] = pygame.transform.scale(self.images[i-1],vec(self.images[i-1].get_size())*FIRE_BOLT_LVL2_RESIZE_FACTOR)
-            self.anim_total_time = FIRE_BOLT_LVL2_TOTAL_TIME  # in ms
-            self.time_per_frame = self.anim_total_time/self.number_frame # in ms
+            # self.static_image = pygame.image.load(FIRE_BOLT_LVL2_IMAGE_PATH+"0001.png").convert_alpha()
+            # self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*FIRE_BOLT_LVL2_RESIZE_FACTOR)  
+            # self.image_size = vec(self.static_image.get_size())
+            # self.initial_direction = vec(-1,0)
+            # self.offset = vec(FIRE_BOLT_LVL2_CENTOR_VECTOR[0]*self.image_size[0],FIRE_BOLT_LVL2_CENTOR_VECTOR[1]*self.image_size[1])
 
-            self.centor_vector = FIRE_BOLT_LVL2_CENTOR_VECTOR
+            # self.number_frame = FIRE_BOLT_LVL2_NUMBER_FRAME
+            # self.images = []
+            # for i in range(1,self.number_frame+1):
+            #       self.images.append(pygame.image.load(FIRE_BOLT_LVL2_IMAGE_PATH+str(i).zfill(4)+".png").convert_alpha())  
+            #       self.images[i-1] = pygame.transform.scale(self.images[i-1],vec(self.images[i-1].get_size())*FIRE_BOLT_LVL2_RESIZE_FACTOR)
+            # self.anim_total_time = FIRE_BOLT_LVL2_TOTAL_TIME  # in ms
+            # self.time_per_frame = self.anim_total_time/self.number_frame # in ms
+
+            # self.centor_vector = FIRE_BOLT_LVL2_CENTOR_VECTOR
 
             self.impact_tag = FIRE_TOWER_IMPACT_TAG
 
-class Fire_bolt_lvl3_data():
+class Fire_bolt_lvl3_data(Fire_bolt_data):
       def __init__(self):
+            self.my_dict = FIRE_BOLT_LVL3_DICT
 
-            self.damage = FIRE_BOLT_LVL3_DAMAGE
-            self.velocity = FIRE_BOLT_LVL3_VELOCITY  # pixel by ms
-            self.ratio_for_impact = FIRE_BOLT_LVL3_RATIO_FOR_IMPACT
+            Fire_bolt_data.__init__(self)
 
-            self.static_image = pygame.image.load(FIRE_BOLT_LVL3_IMAGE_PATH+"0001.png").convert_alpha()
-            self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*FIRE_BOLT_LVL3_RESIZE_FACTOR)  
-            self.image_size = vec(self.static_image.get_size())
-            self.initial_direction = vec(-1,0)
-            self.offset = vec(FIRE_BOLT_LVL3_CENTOR_VECTOR[0]*self.image_size[0],FIRE_BOLT_LVL3_CENTOR_VECTOR[1]*self.image_size[1])
+            # self.damage = FIRE_BOLT_LVL3_DAMAGE
+            # self.velocity = FIRE_BOLT_LVL3_VELOCITY  # pixel by ms
+            # self.ratio_for_impact = FIRE_BOLT_LVL3_RATIO_FOR_IMPACT
 
-            self.number_frame = FIRE_BOLT_LVL3_NUMBER_FRAME
-            self.images = []
-            for i in range(1,self.number_frame+1):
-                  self.images.append(pygame.image.load(FIRE_BOLT_LVL3_IMAGE_PATH+str(i).zfill(4)+".png").convert_alpha())  
-                  self.images[i-1] = pygame.transform.scale(self.images[i-1],vec(self.images[i-1].get_size())*FIRE_BOLT_LVL3_RESIZE_FACTOR)
-            self.anim_total_time = FIRE_BOLT_LVL3_TOTAL_TIME  # in ms
-            self.time_per_frame = self.anim_total_time/self.number_frame # in ms
+            # self.static_image = pygame.image.load(FIRE_BOLT_LVL3_IMAGE_PATH+"0001.png").convert_alpha()
+            # self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*FIRE_BOLT_LVL3_RESIZE_FACTOR)  
+            # self.image_size = vec(self.static_image.get_size())
+            # self.initial_direction = vec(-1,0)
+            # self.offset = vec(FIRE_BOLT_LVL3_CENTOR_VECTOR[0]*self.image_size[0],FIRE_BOLT_LVL3_CENTOR_VECTOR[1]*self.image_size[1])
 
-            self.centor_vector = FIRE_BOLT_LVL3_CENTOR_VECTOR
+            # self.number_frame = FIRE_BOLT_LVL3_NUMBER_FRAME
+            # self.images = []
+            # for i in range(1,self.number_frame+1):
+            #       self.images.append(pygame.image.load(FIRE_BOLT_LVL3_IMAGE_PATH+str(i).zfill(4)+".png").convert_alpha())  
+            #       self.images[i-1] = pygame.transform.scale(self.images[i-1],vec(self.images[i-1].get_size())*FIRE_BOLT_LVL3_RESIZE_FACTOR)
+            # self.anim_total_time = FIRE_BOLT_LVL3_TOTAL_TIME  # in ms
+            # self.time_per_frame = self.anim_total_time/self.number_frame # in ms
+
+            # self.centor_vector = FIRE_BOLT_LVL3_CENTOR_VECTOR
 
             self.impact_tag = FIRE_TOWER_IMPACT_TAG
 
             self.margin_spawn = vec(0.0,10.0)
 
 class Light_bolt_data():
+      def __init__(self):
+
+            self.damage = self.my_dict["DAMAGE"]
+            self.velocity = self.my_dict["VELOCITY"]  # pixel by ms
+            self.ratio_for_impact = self.my_dict["RATIO_FOR_IMPACT"]
+
+            self.static_image = pygame.image.load(self.my_dict["IMAGE_PATH"]+"0001.png").convert_alpha()
+            self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*self.my_dict["RESIZE_FACTOR"])  
+            self.image_size = vec(self.static_image.get_size())
+            self.initial_direction = vec(-1,0)
+            self.offset = vec(self.my_dict["CENTOR_VECTOR"][0]*self.image_size[0],self.my_dict["CENTOR_VECTOR"][1]*self.image_size[1])
+
+            self.number_frame = self.my_dict["NUMBER_FRAME"]
+            self.images = []
+            for i in range(1,self.number_frame+1):
+                  self.images.append(pygame.image.load(self.my_dict["IMAGE_PATH"]+str(i).zfill(4)+".png").convert_alpha())  
+                  self.images[i-1] = pygame.transform.scale(self.images[i-1],vec(self.images[i-1].get_size())*self.my_dict["RESIZE_FACTOR"])
+            self.anim_total_time = self.my_dict["TOTAL_TIME"]  # in ms
+            self.time_per_frame = self.anim_total_time/self.number_frame # in ms
+
+            self.centor_vector = self.my_dict["CENTOR_VECTOR"]
+
+class Light_bolt_lvl1_data():
       def __init__(self):
 
             self.damage = LIGHTNING_BOLT_DAMAGE
