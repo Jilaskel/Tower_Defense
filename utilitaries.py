@@ -720,48 +720,6 @@ CATAPULT_DICT = {
 
 ##############################################################
 
-#### BOLT
-BOLT_DICT = {
-
-"IMAGE_PATH" : "Assets/Tower/Baliste/CarreauBaliste_cropped.png",
-"RESIZE_FACTOR" : 0.8*RESIZE_COEFF,
-"CENTOR_VECTOR" : [0.16,0.47],
-"RATIO_FOR_IMPACT" : 0.5,
-
-"DAMAGE" : BALLISTA_DICT["DAMAGE"],
-"VELOCITY" : 2.0 * RESIZE_COEFF # pixel by ms
-
-}
-
-# BOLT_IMAGE_PATH = "Assets/Tower/Baliste/CarreauBaliste_cropped.png"
-# BOLT_RESIZE_FACTOR = 0.8*RESIZE_COEFF
-# BOLT_CENTOR_VECTOR = [0.16,0.47]
-# BOLT_RATIO_FOR_IMPACT = 0.5
-
-# BOLT_DAMAGE = BALLISTA_DICT["DAMAGE"]
-# BOLT_VELOCITY = 2.0 * RESIZE_COEFF # pixel by ms
-
-#### ROCK
-ROCK_DICT = {
-
-"IMAGE_PATH" : "Assets/Tower/Catapult/Rock_cropped.png",
-"RESIZE_FACTOR" : 0.8*RESIZE_COEFF,
-"CENTOR_VECTOR" : [0.51,0.78],
-
-"DAMAGE" : BALLISTA_DICT["DAMAGE"],
-"VELOCITY" : 2.0 * RESIZE_COEFF # pixel by ms
-"ROTATION_SPEED"  : 0.5 # rotation per second
-
-}
-
-# ROCK_IMAGE_PATH = "Assets/Tower/Catapult/Rock_cropped.png"
-# ROCK_RESIZE_FACTOR = 0.8*RESIZE_COEFF
-# ROCK_CENTOR_VECTOR = [0.51,0.78]
-
-# ROCK_DAMAGE = CATAPULT_DICT["DAMAGE"]
-# ROCK_VELOCITY = 0.60 * RESIZE_COEFF # pixel by ms
-# ROCK_ROTATION_SPEED  = 0.5 # rotation per second
-
 #### ARCANE_BOLT_LVL1
 ARCANE_BOLT_LVL1_DICT = {
 
@@ -1109,6 +1067,48 @@ ICE_BOLT_LVL3_DICT = {
 # ICE_BOLT_LVL3_TIME_PER_FRAME = 100  # in ms
 # ICE_BOLT_LVL3_NUMBER_FRAME_FADING = 5
 # ICE_BOLT_LVL3_TOTAL_TIME_FADING = 500  # in ms
+
+#### BOLT
+BOLT_DICT = {
+
+"IMAGE_PATH" : "Assets/Tower/Baliste/CarreauBaliste_cropped.png",
+"RESIZE_FACTOR" : 0.8*RESIZE_COEFF,
+"CENTOR_VECTOR" : [0.16,0.47],
+"RATIO_FOR_IMPACT" : 0.5,
+
+"DAMAGE" : BALLISTA_DICT["DAMAGE"],
+"VELOCITY" : 2.0 * RESIZE_COEFF # pixel by ms
+
+}
+
+# BOLT_IMAGE_PATH = "Assets/Tower/Baliste/CarreauBaliste_cropped.png"
+# BOLT_RESIZE_FACTOR = 0.8*RESIZE_COEFF
+# BOLT_CENTOR_VECTOR = [0.16,0.47]
+# BOLT_RATIO_FOR_IMPACT = 0.5
+
+# BOLT_DAMAGE = BALLISTA_DICT["DAMAGE"]
+# BOLT_VELOCITY = 2.0 * RESIZE_COEFF # pixel by ms
+
+#### ROCK
+ROCK_DICT = {
+
+"IMAGE_PATH" : "Assets/Tower/Catapult/Rock_cropped.png",
+"RESIZE_FACTOR" : 0.8*RESIZE_COEFF,
+"CENTOR_VECTOR" : [0.51,0.78],
+
+"DAMAGE" : BALLISTA_DICT["DAMAGE"],
+"VELOCITY" : 2.0 * RESIZE_COEFF, # pixel by ms
+"ROTATION_SPEED"  : 0.5 # rotation per second
+
+}
+
+# ROCK_IMAGE_PATH = "Assets/Tower/Catapult/Rock_cropped.png"
+# ROCK_RESIZE_FACTOR = 0.8*RESIZE_COEFF
+# ROCK_CENTOR_VECTOR = [0.51,0.78]
+
+# ROCK_DAMAGE = CATAPULT_DICT["DAMAGE"]
+# ROCK_VELOCITY = 0.60 * RESIZE_COEFF # pixel by ms
+# ROCK_ROTATION_SPEED  = 0.5 # rotation per second
 
 ##############################################################
 
