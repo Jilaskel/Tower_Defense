@@ -215,18 +215,6 @@ class Arcane_bolt_lvl1_data(Arcane_bolt_data):
 
             Arcane_bolt_data.__init__(self)
 
-            # self.damage = ARCANE_BOLT_DAMAGE
-            # self.velocity = ARCANE_BOLT_VELOCITY  # pixel by ms
-            # self.ratio_for_impact = ARCANE_BOLT_RATIO_FOR_IMPACT
-
-            # self.static_image = pygame.image.load(ARCANE_BOLT_IMAGE_PATH).convert_alpha()
-            # self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*ARCANE_BOLT_RESIZE_FACTOR)  
-            # self.image_size = vec(self.static_image.get_size())
-            # self.initial_direction = vec(-1,0)
-            # self.offset = vec(ARCANE_BOLT_CENTOR_VECTOR[0]*self.image_size[0],ARCANE_BOLT_CENTOR_VECTOR[1]*self.image_size[1])
-
-            # self.centor_vector = ARCANE_BOLT_CENTOR_VECTOR
-
             self.impact_tag = ARCANE_TOWER_IMPACT_TAG
 
 class Arcane_bolt_lvl2_data(Arcane_bolt_data):
@@ -235,18 +223,6 @@ class Arcane_bolt_lvl2_data(Arcane_bolt_data):
 
             Arcane_bolt_data.__init__(self)
 
-            # self.damage = ARCANE_BOLT_LVL2_DAMAGE
-            # self.velocity = ARCANE_BOLT_LVL2_VELOCITY  # pixel by ms
-            # self.ratio_for_impact = ARCANE_BOLT_LVL2_RATIO_FOR_IMPACT
-
-            # self.static_image = pygame.image.load(ARCANE_BOLT_LVL2_IMAGE_PATH).convert_alpha()
-            # self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*ARCANE_BOLT_LVL2_RESIZE_FACTOR)  
-            # self.image_size = vec(self.static_image.get_size())
-            # self.initial_direction = vec(-1,0)
-            # self.offset = vec(ARCANE_BOLT_LVL2_CENTOR_VECTOR[0]*self.image_size[0],ARCANE_BOLT_LVL2_CENTOR_VECTOR[1]*self.image_size[1])
-
-            # self.centor_vector = ARCANE_BOLT_LVL2_CENTOR_VECTOR
-
             self.impact_tag = ARCANE_TOWER_IMPACT_TAG
 
 class Arcane_bolt_lvl3_data(Arcane_bolt_data):
@@ -254,18 +230,6 @@ class Arcane_bolt_lvl3_data(Arcane_bolt_data):
             self.my_dict = ARCANE_BOLT_LVL3_DICT
 
             Arcane_bolt_data.__init__(self)
-
-            # self.damage = ARCANE_BOLT_LVL3_DAMAGE
-            # self.velocity = ARCANE_BOLT_LVL3_VELOCITY  # pixel by ms
-            # self.ratio_for_impact = ARCANE_BOLT_LVL3_RATIO_FOR_IMPACT
-
-            # self.static_image = pygame.image.load(ARCANE_BOLT_LVL3_IMAGE_PATH).convert_alpha()
-            # self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*ARCANE_BOLT_LVL3_RESIZE_FACTOR)  
-            # self.image_size = vec(self.static_image.get_size())
-            # self.initial_direction = vec(-1,0)
-            # self.offset = vec(ARCANE_BOLT_LVL3_CENTOR_VECTOR[0]*self.image_size[0],ARCANE_BOLT_LVL3_CENTOR_VECTOR[1]*self.image_size[1])
-
-            # self.centor_vector = ARCANE_BOLT_LVL3_CENTOR_VECTOR
 
             self.impact_tag = ARCANE_TOWER_IMPACT_TAG
 
@@ -298,26 +262,6 @@ class Fire_bolt_lvl1_data(Fire_bolt_data):
 
             Fire_bolt_data.__init__(self)
 
-            # self.damage = FIRE_BOLT_DAMAGE
-            # self.velocity = FIRE_BOLT_VELOCITY  # pixel by ms
-            # self.ratio_for_impact = FIRE_BOLT_RATIO_FOR_IMPACT
-
-            # self.static_image = pygame.image.load(FIRE_BOLT_IMAGE_PATH+"0001.png").convert_alpha()
-            # self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*FIRE_BOLT_RESIZE_FACTOR)  
-            # self.image_size = vec(self.static_image.get_size())
-            # self.initial_direction = vec(-1,0)
-            # self.offset = vec(FIRE_BOLT_CENTOR_VECTOR[0]*self.image_size[0],FIRE_BOLT_CENTOR_VECTOR[1]*self.image_size[1])
-
-            # self.number_frame = FIRE_BOLT_NUMBER_FRAME
-            # self.images = []
-            # for i in range(1,self.number_frame+1):
-            #       self.images.append(pygame.image.load(FIRE_BOLT_IMAGE_PATH+str(i).zfill(4)+".png").convert_alpha())  
-            #       self.images[i-1] = pygame.transform.scale(self.images[i-1],vec(self.images[i-1].get_size())*FIRE_BOLT_RESIZE_FACTOR)
-            # self.anim_total_time = FIRE_BOLT_TOTAL_TIME  # in ms
-            # self.time_per_frame = self.anim_total_time/self.number_frame # in ms
-
-            # self.centor_vector = FIRE_BOLT_CENTOR_VECTOR
-
             self.impact_tag = FIRE_TOWER_IMPACT_TAG
 
 class Fire_bolt_lvl2_data(Fire_bolt_data):
@@ -326,26 +270,6 @@ class Fire_bolt_lvl2_data(Fire_bolt_data):
 
             Fire_bolt_data.__init__(self)
 
-            # self.damage = FIRE_BOLT_LVL2_DAMAGE
-            # self.velocity = FIRE_BOLT_LVL2_VELOCITY  # pixel by ms
-            # self.ratio_for_impact = FIRE_BOLT_LVL2_RATIO_FOR_IMPACT
-
-            # self.static_image = pygame.image.load(FIRE_BOLT_LVL2_IMAGE_PATH+"0001.png").convert_alpha()
-            # self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*FIRE_BOLT_LVL2_RESIZE_FACTOR)  
-            # self.image_size = vec(self.static_image.get_size())
-            # self.initial_direction = vec(-1,0)
-            # self.offset = vec(FIRE_BOLT_LVL2_CENTOR_VECTOR[0]*self.image_size[0],FIRE_BOLT_LVL2_CENTOR_VECTOR[1]*self.image_size[1])
-
-            # self.number_frame = FIRE_BOLT_LVL2_NUMBER_FRAME
-            # self.images = []
-            # for i in range(1,self.number_frame+1):
-            #       self.images.append(pygame.image.load(FIRE_BOLT_LVL2_IMAGE_PATH+str(i).zfill(4)+".png").convert_alpha())  
-            #       self.images[i-1] = pygame.transform.scale(self.images[i-1],vec(self.images[i-1].get_size())*FIRE_BOLT_LVL2_RESIZE_FACTOR)
-            # self.anim_total_time = FIRE_BOLT_LVL2_TOTAL_TIME  # in ms
-            # self.time_per_frame = self.anim_total_time/self.number_frame # in ms
-
-            # self.centor_vector = FIRE_BOLT_LVL2_CENTOR_VECTOR
-
             self.impact_tag = FIRE_TOWER_IMPACT_TAG
 
 class Fire_bolt_lvl3_data(Fire_bolt_data):
@@ -353,26 +277,6 @@ class Fire_bolt_lvl3_data(Fire_bolt_data):
             self.my_dict = FIRE_BOLT_LVL3_DICT
 
             Fire_bolt_data.__init__(self)
-
-            # self.damage = FIRE_BOLT_LVL3_DAMAGE
-            # self.velocity = FIRE_BOLT_LVL3_VELOCITY  # pixel by ms
-            # self.ratio_for_impact = FIRE_BOLT_LVL3_RATIO_FOR_IMPACT
-
-            # self.static_image = pygame.image.load(FIRE_BOLT_LVL3_IMAGE_PATH+"0001.png").convert_alpha()
-            # self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*FIRE_BOLT_LVL3_RESIZE_FACTOR)  
-            # self.image_size = vec(self.static_image.get_size())
-            # self.initial_direction = vec(-1,0)
-            # self.offset = vec(FIRE_BOLT_LVL3_CENTOR_VECTOR[0]*self.image_size[0],FIRE_BOLT_LVL3_CENTOR_VECTOR[1]*self.image_size[1])
-
-            # self.number_frame = FIRE_BOLT_LVL3_NUMBER_FRAME
-            # self.images = []
-            # for i in range(1,self.number_frame+1):
-            #       self.images.append(pygame.image.load(FIRE_BOLT_LVL3_IMAGE_PATH+str(i).zfill(4)+".png").convert_alpha())  
-            #       self.images[i-1] = pygame.transform.scale(self.images[i-1],vec(self.images[i-1].get_size())*FIRE_BOLT_LVL3_RESIZE_FACTOR)
-            # self.anim_total_time = FIRE_BOLT_LVL3_TOTAL_TIME  # in ms
-            # self.time_per_frame = self.anim_total_time/self.number_frame # in ms
-
-            # self.centor_vector = FIRE_BOLT_LVL3_CENTOR_VECTOR
 
             self.impact_tag = FIRE_TOWER_IMPACT_TAG
 
@@ -414,98 +318,17 @@ class Light_bolt_lvl1_data(Light_bolt_data):
 
             Light_bolt_data.__init__(self)
 
-            # self.damage = LIGHTNING_BOLT_DAMAGE
-
-            # self.static_image = pygame.image.load(LIGHTNING_BOLT_IMAGE_PATH+"light_2.png").convert_alpha()
-            # self.resize_factor = LIGHTNING_BOLT_RESIZE_FACTOR
-            # self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*LIGHTNING_BOLT_RESIZE_FACTOR)  
-            # self.image_size = vec(self.static_image.get_size())
-            # self.initial_direction = vec(0,1)
-            # self.offset = vec(LIGHTNING_BOLT_CENTOR_VECTOR[0]*self.image_size[0],LIGHTNING_BOLT_CENTOR_VECTOR[1]*self.image_size[1])
-
-            # self.number_frame = LIGHTNING_BOLT_NUMBER_FRAME
-            # self.images = []
-            # for i in range(2,self.number_frame+2):
-            #       self.images.append(pygame.image.load(LIGHTNING_BOLT_IMAGE_PATH+"light_"+str(i)+".png").convert_alpha())  
-            # self.images_fading = []
-            # for i in range(4,self.number_frame+4):
-            #       self.images_fading.append(pygame.image.load(LIGHTNING_BOLT_IMAGE_PATH+"light_"+str(i)+".png").convert_alpha())  
-            # self.anim_total_time = LIGHTNING_BOLT_TOTAL_TIME  # in ms
-            # self.time_per_frame = LIGHTNING_BOLT_TIME_PER_FRAME # in ms
-
-            # self.centor_vector = LIGHTNING_BOLT_CENTOR_VECTOR
-
-            # self.short_images = []
-            # self.short_images.append(pygame.image.load(LIGHTNING_BOLT_IMAGE_PATH+"light_1.png").convert_alpha())
-            # self.short_images.append(pygame.transform.flip(self.short_images[0], True, False))
-
-            # self.stun_time = LIGHTNING_BOLT_STUN_TIME
-
 class Light_bolt_lvl2_data(Light_bolt_data):
       def __init__(self):
             self.my_dict = LIGHTNING_BOLT_LVL2_DICT
 
             Light_bolt_data.__init__(self)
 
-            # self.damage = LIGHTNING_BOLT_LVL2_DAMAGE
-
-            # self.static_image = pygame.image.load(LIGHTNING_BOLT_LVL2_IMAGE_PATH+"light_2.png").convert_alpha()
-            # self.resize_factor = LIGHTNING_BOLT_LVL2_RESIZE_FACTOR
-            # self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*LIGHTNING_BOLT_LVL2_RESIZE_FACTOR)  
-            # self.image_size = vec(self.static_image.get_size())
-            # self.initial_direction = vec(0,1)
-            # self.offset = vec(LIGHTNING_BOLT_LVL2_CENTOR_VECTOR[0]*self.image_size[0],LIGHTNING_BOLT_LVL2_CENTOR_VECTOR[1]*self.image_size[1])
-
-            # self.number_frame = LIGHTNING_BOLT_LVL2_NUMBER_FRAME
-            # self.images = []
-            # for i in range(2,self.number_frame+2):
-            #       self.images.append(pygame.image.load(LIGHTNING_BOLT_LVL2_IMAGE_PATH+"light_"+str(i)+".png").convert_alpha())  
-            # self.images_fading = []
-            # for i in range(4,self.number_frame+4):
-            #       self.images_fading.append(pygame.image.load(LIGHTNING_BOLT_LVL2_IMAGE_PATH+"light_"+str(i)+".png").convert_alpha())  
-            # self.anim_total_time = LIGHTNING_BOLT_LVL2_TOTAL_TIME  # in ms
-            # self.time_per_frame = LIGHTNING_BOLT_LVL2_TIME_PER_FRAME # in ms
-
-            # self.centor_vector = LIGHTNING_BOLT_LVL2_CENTOR_VECTOR
-
-            # self.short_images = []
-            # self.short_images.append(pygame.image.load(LIGHTNING_BOLT_LVL2_IMAGE_PATH+"light_1.png").convert_alpha())
-            # self.short_images.append(pygame.transform.flip(self.short_images[0], True, False))
-
-            # self.stun_time = LIGHTNING_BOLT_LVL2_STUN_TIME
-
 class Light_bolt_lvl3_data(Light_bolt_data):
       def __init__(self):
             self.my_dict = LIGHTNING_BOLT_LVL3_DICT
 
             Light_bolt_data.__init__(self)
-
-            # self.damage = LIGHTNING_BOLT_LVL3_DAMAGE
-
-            # self.static_image = pygame.image.load(LIGHTNING_BOLT_LVL3_IMAGE_PATH+"light_2.png").convert_alpha()
-            # self.resize_factor = LIGHTNING_BOLT_LVL3_RESIZE_FACTOR
-            # self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*LIGHTNING_BOLT_LVL3_RESIZE_FACTOR)  
-            # self.image_size = vec(self.static_image.get_size())
-            # self.initial_direction = vec(0,1)
-            # self.offset = vec(LIGHTNING_BOLT_LVL3_CENTOR_VECTOR[0]*self.image_size[0],LIGHTNING_BOLT_LVL3_CENTOR_VECTOR[1]*self.image_size[1])
-
-            # self.number_frame = LIGHTNING_BOLT_LVL3_NUMBER_FRAME
-            # self.images = []
-            # for i in range(2,self.number_frame+2):
-            #       self.images.append(pygame.image.load(LIGHTNING_BOLT_LVL3_IMAGE_PATH+"light_"+str(i)+".png").convert_alpha())  
-            # self.images_fading = []
-            # for i in range(4,self.number_frame+4):
-            #       self.images_fading.append(pygame.image.load(LIGHTNING_BOLT_LVL3_IMAGE_PATH+"light_"+str(i)+".png").convert_alpha())  
-            # self.anim_total_time = LIGHTNING_BOLT_LVL3_TOTAL_TIME  # in ms
-            # self.time_per_frame = LIGHTNING_BOLT_LVL3_TIME_PER_FRAME # in ms
-
-            # self.centor_vector = LIGHTNING_BOLT_LVL3_CENTOR_VECTOR
-
-            # self.short_images = []
-            # self.short_images.append(pygame.image.load(LIGHTNING_BOLT_LVL3_IMAGE_PATH+"light_1.png").convert_alpha())
-            # self.short_images.append(pygame.transform.flip(self.short_images[0], True, False))
-
-            # self.stun_time = LIGHTNING_BOLT_LVL3_STUN_TIME
 
 class Ice_bolt_data():
       def __init__(self):
@@ -544,106 +367,17 @@ class Ice_bolt_lvl1_data(Ice_bolt_data):
 
             Ice_bolt_data.__init__(self)
 
-            # self.damage = ICE_BOLT_DAMAGE
-            # self.slowing_coeff = ICE_BOLT_SLOWING_COEFF
-
-            # self.static_image = pygame.image.load(ICE_BOLT_IMAGE_PATH+"frost_ray_00.png").convert_alpha()
-            # self.resize_factor = ICE_BOLT_RESIZE_FACTOR
-            # self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*ICE_BOLT_RESIZE_FACTOR)  
-            # self.image_size = vec(self.static_image.get_size())
-            # self.initial_direction = vec(0,1)
-            # self.offset = vec(ICE_BOLT_CENTOR_VECTOR[0]*self.image_size[0],ICE_BOLT_CENTOR_VECTOR[1]*self.image_size[1])
-
-            # self.number_frame = ICE_BOLT_NUMBER_FRAME
-            # self.images = []
-            # for i in range(0,self.number_frame):
-            #       self.images.append(pygame.image.load(ICE_BOLT_IMAGE_PATH+"frost_ray_"+str(i).zfill(2)+".png").convert_alpha())  
-            # self.time_per_frame = ICE_BOLT_TIME_PER_FRAME # in ms
-
-            # self.centor_vector = ICE_BOLT_CENTOR_VECTOR
-
-            # self.images_fading = []
-            # self.number_frame_fading = ICE_BOLT_NUMBER_FRAME_FADING
-            # fading_number = 34
-            # for i in range(fading_number,fading_number+self.number_frame_fading):
-            #       self.images_fading.append(pygame.image.load(ICE_BOLT_IMAGE_PATH+"frost_ray_"+str(i).zfill(2)+".png").convert_alpha())  
-            # self.anim_total_time_fading = ICE_BOLT_TOTAL_TIME_FADING  # in ms
-            # self.time_per_frame_fading = self.anim_total_time_fading/self.number_frame_fading # in ms
-
-            # self.range = ICE_BOLT_RANGE
-            # self.freezing = ICE_BOLT_FREEZING
-
 class Ice_bolt_lvl2_data(Ice_bolt_data):
       def __init__(self):
             self.my_dict = ICE_BOLT_LVL2_DICT
 
             Ice_bolt_data.__init__(self)
 
-
-            # self.damage = ICE_BOLT_LVL2_DAMAGE
-            # self.slowing_coeff = ICE_BOLT_LVL2_SLOWING_COEFF
-
-            # self.static_image = pygame.image.load(ICE_BOLT_LVL2_IMAGE_PATH+"frost_ray_00.png").convert_alpha()
-            # self.resize_factor = ICE_BOLT_LVL2_RESIZE_FACTOR
-            # self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*ICE_BOLT_LVL2_RESIZE_FACTOR)  
-            # self.image_size = vec(self.static_image.get_size())
-            # self.initial_direction = vec(0,1)
-            # self.offset = vec(ICE_BOLT_LVL2_CENTOR_VECTOR[0]*self.image_size[0],ICE_BOLT_LVL2_CENTOR_VECTOR[1]*self.image_size[1])
-
-            # self.number_frame = ICE_BOLT_LVL2_NUMBER_FRAME
-            # self.images = []
-            # for i in range(0,self.number_frame):
-            #       self.images.append(pygame.image.load(ICE_BOLT_LVL2_IMAGE_PATH+"frost_ray_"+str(i).zfill(2)+".png").convert_alpha())  
-            # self.time_per_frame = ICE_BOLT_LVL2_TIME_PER_FRAME # in ms
-
-            # self.centor_vector = ICE_BOLT_LVL2_CENTOR_VECTOR
-
-            # self.images_fading = []
-            # self.number_frame_fading = ICE_BOLT_LVL2_NUMBER_FRAME_FADING
-            # fading_number = 34
-            # for i in range(fading_number,fading_number+self.number_frame_fading):
-            #       self.images_fading.append(pygame.image.load(ICE_BOLT_LVL2_IMAGE_PATH+"frost_ray_"+str(i).zfill(2)+".png").convert_alpha())  
-            # self.anim_total_time_fading = ICE_BOLT_LVL2_TOTAL_TIME_FADING  # in ms
-            # self.time_per_frame_fading = self.anim_total_time_fading/self.number_frame_fading # in ms
-
-            # self.range = ICE_BOLT_LVL2_RANGE
-            # self.freezing = ICE_BOLT_LVL2_FREEZING
-
 class Ice_bolt_lvl3_data(Ice_bolt_data):
       def __init__(self):
             self.my_dict = ICE_BOLT_LVL3_DICT
 
             Ice_bolt_data.__init__(self)
-
-
-            # self.damage = ICE_BOLT_LVL3_DAMAGE
-            # self.slowing_coeff = ICE_BOLT_LVL3_SLOWING_COEFF
-
-            # self.static_image = pygame.image.load(ICE_BOLT_LVL3_IMAGE_PATH+"frost_ray_00.png").convert_alpha()
-            # self.resize_factor = ICE_BOLT_LVL2_RESIZE_FACTOR
-            # self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*ICE_BOLT_LVL3_RESIZE_FACTOR)  
-            # self.image_size = vec(self.static_image.get_size())
-            # self.initial_direction = vec(0,1)
-            # self.offset = vec(ICE_BOLT_LVL3_CENTOR_VECTOR[0]*self.image_size[0],ICE_BOLT_LVL3_CENTOR_VECTOR[1]*self.image_size[1])
-
-            # self.number_frame = ICE_BOLT_LVL3_NUMBER_FRAME
-            # self.images = []
-            # for i in range(0,self.number_frame):
-            #       self.images.append(pygame.image.load(ICE_BOLT_LVL3_IMAGE_PATH+"frost_ray_"+str(i).zfill(2)+".png").convert_alpha())  
-            # self.time_per_frame = ICE_BOLT_LVL3_TIME_PER_FRAME # in ms
-
-            # self.centor_vector = ICE_BOLT_LVL3_CENTOR_VECTOR
-
-            # self.images_fading = []
-            # self.number_frame_fading = ICE_BOLT_LVL3_NUMBER_FRAME_FADING
-            # fading_number = 34
-            # for i in range(fading_number,fading_number+self.number_frame_fading):
-            #       self.images_fading.append(pygame.image.load(ICE_BOLT_LVL3_IMAGE_PATH+"frost_ray_"+str(i).zfill(2)+".png").convert_alpha())  
-            # self.anim_total_time_fading = ICE_BOLT_LVL3_TOTAL_TIME_FADING  # in ms
-            # self.time_per_frame_fading = self.anim_total_time_fading/self.number_frame_fading # in ms
-
-            # self.range = ICE_BOLT_LVL3_RANGE
-            # self.freezing = ICE_BOLT_LVL3_FREEZING
 
 class Siege_engine_bolt_data():
       def __init__(self):      
@@ -655,32 +389,11 @@ class Bolt_data(Siege_engine_bolt_data):
 
             Siege_engine_bolt_data.__init__(self)     
 
-            # self.damage = BOLT_DAMAGE
-            # self.velocity = BOLT_VELOCITY  # pixel by ms
-            # self.ratio_for_impact = BOLT_RATIO_FOR_IMPACT
-
-            # self.static_image = pygame.image.load(BOLT_IMAGE_PATH).convert_alpha()
-            # self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*BOLT_RESIZE_FACTOR)        
-            # self.image_size = vec(self.static_image.get_size())
-            # self.initial_direction = vec(-1,0)
-            # self.offset = vec(BOLT_CENTOR_VECTOR[0]*self.image_size[0],BOLT_CENTOR_VECTOR[1]*self.image_size[1])
-            # self.centor_vector = BOLT_CENTOR_VECTOR
-
 class Rock_data(Siege_engine_bolt_data):
       def __init__(self):   
             self.my_dict = ROCK_DICT
    
             Siege_engine_bolt_data.__init__(self)     
-
-            # self.damage = ROCK_DAMAGE
-            # self.velocity = ROCK_VELOCITY  # pixel by ms
-
-            # self.static_image = pygame.image.load(ROCK_IMAGE_PATH).convert_alpha()
-            # self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*ROCK_RESIZE_FACTOR)        
-            # self.image_size = vec(self.static_image.get_size())
-            # self.initial_direction = vec(-1,0)
-            # self.offset = vec(ROCK_CENTOR_VECTOR[0]*self.image_size[0],ROCK_CENTOR_VECTOR[1]*self.image_size[1])
-            # self.centor_vector = ROCK_CENTOR_VECTOR
 
             self.rotation_speed = self.my_dict["ROTATION_SPEED"]
 
