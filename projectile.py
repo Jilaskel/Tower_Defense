@@ -26,16 +26,16 @@ class All_projectiles(pygame.sprite.Group):
       def __init__(self):
             pygame.sprite.Group.__init__(self)  
 
-            self.arcane_bolt_data = Arcane_bolt_lvl1_data()
+            self.arcane_bolt_lvl1_data = Arcane_bolt_lvl1_data()
             self.arcane_bolt_lvl2_data = Arcane_bolt_lvl2_data()
             self.arcane_bolt_lvl3_data = Arcane_bolt_lvl3_data()
-            self.fire_bolt_data = Fire_bolt_lvl1_data()
+            self.fire_bolt_lvl1_data = Fire_bolt_lvl1_data()
             self.fire_bolt_lvl2_data = Fire_bolt_lvl2_data()
             self.fire_bolt_lvl3_data = Fire_bolt_lvl3_data()
-            self.light_bolt_data = Light_bolt_lvl1_data()
+            self.light_bolt_lvl1_data = Light_bolt_lvl1_data()
             self.light_bolt_lvl2_data = Light_bolt_lvl2_data()
             self.light_bolt_lvl3_data = Light_bolt_lvl3_data()
-            self.ice_bolt_data = Ice_bolt_lvl1_data()
+            self.ice_bolt_lvl1_data = Ice_bolt_lvl1_data()
             self.ice_bolt_lvl2_data = Ice_bolt_lvl2_data()
             self.ice_bolt_lvl3_data = Ice_bolt_lvl3_data()
             
@@ -117,7 +117,7 @@ class All_projectiles(pygame.sprite.Group):
                               new_y = new_target.center[1]
                               distance = np.sqrt((old_x - new_x)**2 + (old_y - new_y)**2)
                               if (distance<(distance_lim)and(distance>0.1*BACKGROUND_SQUARE_SIDE)):
-                                    self.add(Light_bolt(self,old_x,old_y,new_target,damage)) 
+                                    self.add(Light_bolt_lvl1(self,old_x,old_y,new_target,damage)) 
                                     old_x = new_x  
                                     old_y = new_y
                                     old_target.append(new_target)  
@@ -142,7 +142,7 @@ class All_projectiles(pygame.sprite.Group):
                               new_y = new_target.center[1]
                               distance = np.sqrt((old_x - new_x)**2 + (old_y - new_y)**2)
                               if (distance<(distance_lim)and(distance>0.1*BACKGROUND_SQUARE_SIDE)):
-                                    self.add(Light_bolt(self,old_x,old_y,new_target,damage)) 
+                                    self.add(Light_bolt_lvl2(self,old_x,old_y,new_target,damage)) 
                                     old_x = new_x  
                                     old_y = new_y
                                     old_target.append(new_target)  
@@ -167,7 +167,7 @@ class All_projectiles(pygame.sprite.Group):
                               new_y = new_target.center[1]
                               distance = np.sqrt((old_x - new_x)**2 + (old_y - new_y)**2)
                               if (distance<(distance_lim)and(distance>0.1*BACKGROUND_SQUARE_SIDE)):
-                                    self.add(Light_bolt(self,old_x,old_y,new_target,damage)) 
+                                    self.add(Light_bolt_lvl3(self,old_x,old_y,new_target,damage)) 
                                     old_x = new_x  
                                     old_y = new_y
                                     old_target.append(new_target)  
@@ -754,11 +754,11 @@ class Projectile(pygame.sprite.Sprite):
       def render(self):
             window.blit(self.current_image, (self.posX, self.posY))  
 
-class Arcane_bolt(Projectile,pygame.sprite.Sprite):
+class Arcane_bolt_lvl1(Projectile,pygame.sprite.Sprite):
       def __init__(self,all_p,x,y,target):
             pygame.sprite.Sprite.__init__(self)
 
-            self.my_data = all_p.arcane_bolt_data
+            self.my_data = all_p.arcane_bolt_lvl1_data
 
             Projectile.__init__(self,all_p,x,y,target)
 
@@ -778,11 +778,11 @@ class Arcane_bolt_lvl3(Projectile,pygame.sprite.Sprite):
 
             Projectile.__init__(self,all_p,x,y,target)
 
-class Fire_bolt(Projectile,pygame.sprite.Sprite):
+class Fire_bolt_lvl1(Projectile,pygame.sprite.Sprite):
       def __init__(self,all_p,x,y,target):
             pygame.sprite.Sprite.__init__(self)
 
-            self.my_data = all_p.fire_bolt_data
+            self.my_data = all_p.fire_bolt_lvl1_data
 
             Projectile.__init__(self,all_p,x,y,target)
 
@@ -814,6 +814,7 @@ class Fire_bolt(Projectile,pygame.sprite.Sprite):
                               
             self.rotate(self.my_data.images[self.current_frame])  
 
+# class Fire_bolt_lvl2(Fire_bolt_lvl1,pygame.sprite.Sprite):
 class Fire_bolt_lvl2(Projectile,pygame.sprite.Sprite):
       def __init__(self,all_p,x,y,target):
             pygame.sprite.Sprite.__init__(self)
@@ -829,7 +830,7 @@ class Fire_bolt_lvl2(Projectile,pygame.sprite.Sprite):
             self.my_timer = 0
                     
 
-class Fire_bolt_lvl3(Fire_bolt,pygame.sprite.Sprite):
+class Fire_bolt_lvl3(Fire_bolt_lvl1,pygame.sprite.Sprite):
       def __init__(self,all_p,x,y,target):
             pygame.sprite.Sprite.__init__(self)
 
@@ -864,7 +865,7 @@ class Fire_bolt_no_target(Projectile,pygame.sprite.Sprite):
       def __init__(self,all_p,x,y,impact_target,direction):
             pygame.sprite.Sprite.__init__(self)
 
-            self.my_data = all_p.fire_bolt_data
+            self.my_data = all_p.fire_bolt_lvl1_data
 
             self.all_p = all_p
 
@@ -889,7 +890,7 @@ class Fire_bolt_no_target(Projectile,pygame.sprite.Sprite):
             self.rect.x = self.posX
             self.rect.y = self.posY
 
-            self.center = vec(self.posX+self.my_dict["CENTOR_VECTOR"][0]*self.image_size[0],self.posY+self.my_dict["CENTOR_VECTOR"][1]*self.image_size[1])
+            self.center = vec(self.posX+self.my_data.my_dict["CENTOR_VECTOR"][0]*self.image_size[0],self.posY+self.my_data.my_dict["CENTOR_VECTOR"][1]*self.image_size[1])
 
       def move(self,game):  
             self.posX += self.my_data.velocity * game.timestep * self.direction[0]
@@ -925,11 +926,11 @@ class Fire_bolt_no_target(Projectile,pygame.sprite.Sprite):
                       game.all_impacts.add_impact(game,self,self.my_data.impact_tag)
                       pygame.sprite.Sprite.kill(self)
 
-class Light_bolt(Projectile,pygame.sprite.Sprite):
+class Light_bolt_lvl1(Projectile,pygame.sprite.Sprite):
       def __init__(self,all_p,x,y,target,damage):
             pygame.sprite.Sprite.__init__(self)
 
-            self.my_data = all_p.light_bolt_data
+            self.my_data = all_p.light_bolt_lvl1_data
 
             self.init(x,y,target,damage)
 
@@ -1050,27 +1051,27 @@ class Light_bolt(Projectile,pygame.sprite.Sprite):
       def render(self):
             window.blit(self.current_image, self.rotated_image_rect)  
 
-class Light_bolt_lvl2(Light_bolt,pygame.sprite.Sprite):
-      def __init__(self,all_p,x,y,target,damage=self.my_dict["DAMAGE"]):
+class Light_bolt_lvl2(Light_bolt_lvl1,pygame.sprite.Sprite):
+      def __init__(self,all_p,x,y,target,damage):
             pygame.sprite.Sprite.__init__(self)
 
             self.my_data = all_p.light_bolt_lvl2_data
 
-            self.init(x,y,target,damage=self.my_dict["DAMAGE"])
+            self.init(x,y,target,damage)
 
-class Light_bolt_lvl3(Light_bolt,pygame.sprite.Sprite):
-      def __init__(self,all_p,x,y,target,damage=self.my_dict["DAMAGE"]):
+class Light_bolt_lvl3(Light_bolt_lvl1,pygame.sprite.Sprite):
+      def __init__(self,all_p,x,y,target,damage):
             pygame.sprite.Sprite.__init__(self)
 
             self.my_data = all_p.light_bolt_lvl3_data
 
-            self.init(x,y,target,damage=self.my_dict["DAMAGE"])
+            self.init(x,y,target,damage)
 
-class Ice_bolt(Projectile,pygame.sprite.Sprite):
+class Ice_bolt_lvl1(Projectile,pygame.sprite.Sprite):
       def __init__(self,all_p,x,y,target,tower):
             pygame.sprite.Sprite.__init__(self)
 
-            self.my_data = all_p.ice_bolt_data
+            self.my_data = all_p.ice_bolt_lvl1_data
 
             self.init(x,y,target,tower)
 
@@ -1194,7 +1195,7 @@ class Ice_bolt(Projectile,pygame.sprite.Sprite):
       def render(self):
             window.blit(self.current_image, self.rotated_image_rect)  
 
-class Ice_bolt_lvl2(Ice_bolt,pygame.sprite.Sprite):
+class Ice_bolt_lvl2(Ice_bolt_lvl1,pygame.sprite.Sprite):
       def __init__(self,all_p,x,y,target,tower):
             pygame.sprite.Sprite.__init__(self)
 
@@ -1202,7 +1203,7 @@ class Ice_bolt_lvl2(Ice_bolt,pygame.sprite.Sprite):
 
             self.init(x,y,target,tower)
 
-class Ice_bolt_lvl3(Ice_bolt,pygame.sprite.Sprite):
+class Ice_bolt_lvl3(Ice_bolt_lvl1,pygame.sprite.Sprite):
       def __init__(self,all_p,x,y,target,tower):
             pygame.sprite.Sprite.__init__(self)
 
@@ -1264,10 +1265,10 @@ class Rock(Projectile,pygame.sprite.Sprite):
 
       def rotate(self,game,image):
             self.my_timer += game.timestep
-            if (self.my_dict["ROTATION_SPEED"]==0):
+            if (self.my_data.my_dict["ROTATION_SPEED"]==0):
                   angle = 0
             else:
-                  period = 1/(self.my_dict["ROTATION_SPEED"]/1000)
+                  period = 1/(self.my_data.my_dict["ROTATION_SPEED"]/1000)
                   self.my_timer = self.my_timer%period
                   angle = 360*(self.my_timer/period)  # marche pas pour le moment car l'axe de rotation pas au milieu de l'image
             self.current_image = pygame.transform.rotate(image, angle)
