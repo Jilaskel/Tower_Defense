@@ -83,6 +83,8 @@ class Game_mouse(pygame.sprite.Sprite):
                             self.hit_object = pygame.sprite.spritecollide(self, game.all_ennemies, False, pygame.sprite.collide_rect_ratio(self.ratio_for_hitbox))
                         if not(self.hit_object):
                             self.hit_object = pygame.sprite.spritecollide(self, game.all_dead_bodies.all_iced_bodies, False, pygame.sprite.collide_rect_ratio(self.ratio_for_hitbox))
+                        if not(self.hit_object):
+                            self.hit_object = pygame.sprite.spritecollide(self, game.base.all_gates, False, pygame.sprite.collide_rect_ratio(self.ratio_for_hitbox))
                             
                         if self.hit_object:
                             game.selected_object.update(game,self.hit_object[0])                        

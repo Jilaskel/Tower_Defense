@@ -1,5 +1,6 @@
 import pygame
 from utilitaries import *
+from functions import *
 import random
 
 
@@ -8,8 +9,11 @@ DEAD_OGRE_TAG = 2
 DEAD_BLUE_NEC_TAG = 3
 DEAD_RED_NEC_TAG = 4
 DEAD_GREEN_NEC_TAG = 5
-DEAD_KAMIKAZE_TAG = 6
-DEAD_DRAGON_TAG = 7
+DEAD_BLUE_SKEL_TAG = 6
+DEAD_RED_SKEL_TAG = 7
+DEAD_GREEN_SKEL_TAG = 8
+DEAD_KAMIKAZE_TAG = 9
+DEAD_DRAGON_TAG = 10
 
 
 class All_dead_bodies(pygame.sprite.Group):
@@ -22,6 +26,11 @@ class All_dead_bodies(pygame.sprite.Group):
             self.dead_goblin_data = Dead_goblin_data()
             self.dead_ogre_data = Dead_ogre_data()
             self.dead_blue_nec_data = Dead_blue_nec_data()
+            self.dead_red_nec_data = Dead_red_nec_data()
+            self.dead_green_nec_data = Dead_green_nec_data()
+            self.dead_blue_skel_data = Dead_blue_skel_data()
+            self.dead_red_skel_data = Dead_red_skel_data()
+            self.dead_green_skel_data = Dead_green_skel_data()
 
             
       def add_dead_body(self,game,emy_alive,tag):
@@ -31,6 +40,16 @@ class All_dead_bodies(pygame.sprite.Group):
                   self.add_dead_ogre(game,emy_alive)
             elif (tag==DEAD_BLUE_NEC_TAG):
                   self.add_dead_blue_nec(game,emy_alive)
+            elif (tag==DEAD_RED_NEC_TAG):
+                  self.add_dead_red_nec(game,emy_alive)
+            elif (tag==DEAD_GREEN_NEC_TAG):
+                  self.add_dead_green_nec(game,emy_alive)
+            elif (tag==DEAD_BLUE_SKEL_TAG):
+                  self.add_dead_blue_skel(game,emy_alive)
+            elif (tag==DEAD_RED_SKEL_TAG):
+                  self.add_dead_red_skel(game,emy_alive)
+            elif (tag==DEAD_GREEN_SKEL_TAG):
+                  self.add_dead_green_skel(game,emy_alive)
 
 
       def add_dead_goblin(self,game,emy_alive):
@@ -45,6 +64,25 @@ class All_dead_bodies(pygame.sprite.Group):
             self.add(Dead_blue_nec(self,emy_alive))
             game.all_mixers.ennemy_mixer.falling_sound.play()
 
+      def add_dead_red_nec(self,game,emy_alive):
+            self.add(Dead_red_nec(self,emy_alive))
+            game.all_mixers.ennemy_mixer.falling_sound.play()
+
+      def add_dead_green_nec(self,game,emy_alive):
+            self.add(Dead_green_nec(self,emy_alive))
+            game.all_mixers.ennemy_mixer.falling_sound.play()
+
+      def add_dead_blue_skel(self,game,emy_alive):
+            self.add(Dead_blue_skel(self,emy_alive))
+            game.all_mixers.ennemy_mixer.falling_sound.play()
+
+      def add_dead_red_skel(self,game,emy_alive):
+            self.add(Dead_red_skel(self,emy_alive))
+            game.all_mixers.ennemy_mixer.falling_sound.play()
+
+      def add_dead_green_skel(self,game,emy_alive):
+            self.add(Dead_green_skel(self,emy_alive))
+            game.all_mixers.ennemy_mixer.falling_sound.play()
 
 class All_iced_bodies(pygame.sprite.Group):
       def __init__(self):
@@ -104,8 +142,40 @@ class Dead_blue_nec_data(Dead_body_data):
             self.number_of_zero_image = 3  # Xavier....
             Dead_body_data.__init__(self)
 
+class Dead_red_nec_data(Dead_body_data):
+      def __init__(self):
+            self.my_dict = RED_NEC_DICT
+            self.number_of_zero_image = 3  # Xavier....
+            Dead_body_data.__init__(self)
+
+class Dead_green_nec_data(Dead_body_data):
+      def __init__(self):
+            self.my_dict = GREEN_NEC_DICT
+            self.number_of_zero_image = 3  # Xavier....
+            Dead_body_data.__init__(self)
+
+class Dead_blue_skel_data(Dead_body_data):
+      def __init__(self):
+            self.my_dict = BLUE_SKEL_DICT
+            self.number_of_zero_image = 3  # Xavier....
+            Dead_body_data.__init__(self)
+
+class Dead_red_skel_data(Dead_body_data):
+      def __init__(self):
+            self.my_dict = RED_SKEL_DICT
+            self.number_of_zero_image = 3  # Xavier....
+            Dead_body_data.__init__(self)
+
+class Dead_green_skel_data(Dead_body_data):
+      def __init__(self):
+            self.my_dict = GREEN_SKEL_DICT
+            self.number_of_zero_image = 3  # Xavier....
+            Dead_body_data.__init__(self)
+
 class Dead_body(pygame.sprite.Sprite):
-    def __init__(self,all_d,emy_alive):
+    def __init__(self,all_d,emy_alive,rezable=True):
+            pygame.sprite.Sprite.__init__(self)
+
             self.all_d = all_d
 
             self.current_image = self.my_data.static_image.convert_alpha()
@@ -114,6 +184,7 @@ class Dead_body(pygame.sprite.Sprite):
 
             self.posX = emy_alive.posX      
             self.posY = emy_alive.posY    
+            self.image_offset = emy_alive.my_data.image_offset
             self.center =  emy_alive.center
             self.rendering_layer = emy_alive.rendering_layer
 
@@ -125,7 +196,8 @@ class Dead_body(pygame.sprite.Sprite):
             if self.iced:
                   all_d.all_iced_bodies.add(self)
             else:
-                  all_d.all_rezable_bodies.add(self)
+                  if rezable:
+                        all_d.all_rezable_bodies.add(self)
 
             self.hp = self.my_data.iced_hp_max
             self.rect = emy_alive.rect
@@ -142,8 +214,10 @@ class Dead_body(pygame.sprite.Sprite):
             if (self.my_timer<self.my_data.iced_time_max*1000):
                   self.current_image = self.my_data.iced_image
             else:
-                 self.iced = False
-                 self.my_timer = 0
+                  self.iced = False
+                  self.all_d.all_iced_bodies.remove(self)
+                  self.all_d.all_rezable_bodies.add(self)
+                  self.my_timer = 0
             
         if (not(self.iced)):    
             if (self.current_frame<(self.my_data.number_frame-1)):
@@ -161,27 +235,57 @@ class Dead_body(pygame.sprite.Sprite):
     def render(self):
         window.blit(self.current_image, (self.posX, self.posY))  
 
-class Dead_goblin(Dead_body,pygame.sprite.Sprite):
+class Dead_goblin(Dead_body):
       def __init__(self,all_d,emy_alive):
-            pygame.sprite.Sprite.__init__(self)
-
             self.my_data = all_d.dead_goblin_data
 
             Dead_body.__init__(self,all_d,emy_alive)
 
 
-class Dead_ogre(Dead_body,pygame.sprite.Sprite):
+class Dead_ogre(Dead_body):
       def __init__(self,all_d,emy_alive):
-            pygame.sprite.Sprite.__init__(self)
-
             self.my_data = all_d.dead_ogre_data
 
             Dead_body.__init__(self,all_d,emy_alive)
 
-class Dead_blue_nec(Dead_body,pygame.sprite.Sprite):
+class Dead_blue_nec(Dead_body):
       def __init__(self,all_d,emy_alive):
-            pygame.sprite.Sprite.__init__(self)
-
             self.my_data = all_d.dead_blue_nec_data
 
             Dead_body.__init__(self,all_d,emy_alive)
+
+class Dead_red_nec(Dead_body):
+      def __init__(self,all_d,emy_alive):
+            self.my_data = all_d.dead_red_nec_data
+
+            Dead_body.__init__(self,all_d,emy_alive)
+
+class Dead_green_nec(Dead_body):
+      def __init__(self,all_d,emy_alive):
+            self.my_data = all_d.dead_green_nec_data
+
+            Dead_body.__init__(self,all_d,emy_alive)
+
+class Dead_blue_skel(Dead_body):
+      def __init__(self,all_d,emy_alive):
+            self.my_data = all_d.dead_blue_skel_data
+
+            Dead_body.__init__(self,all_d,emy_alive,rezable=False)
+
+            self.rendering_layer = compute_rendering_layer_number(self)
+
+class Dead_red_skel(Dead_body):
+      def __init__(self,all_d,emy_alive):
+            self.my_data = all_d.dead_red_skel_data
+
+            Dead_body.__init__(self,all_d,emy_alive,rezable=False)
+
+            self.rendering_layer = compute_rendering_layer_number(self)
+
+class Dead_green_skel(Dead_body):
+      def __init__(self,all_d,emy_alive):
+            self.my_data = all_d.dead_green_skel_data
+
+            Dead_body.__init__(self,all_d,emy_alive,rezable=False)
+
+            self.rendering_layer = compute_rendering_layer_number(self)

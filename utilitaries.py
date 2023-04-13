@@ -176,7 +176,9 @@ SPAWNING_INITIAL_TIME = 4.0 # in seconds
 TIME_P1 = 1000000   ## time phase n1 in seconds
 P1_GOBLIN_SPAWNING_PERIOD = 2.0   ## in seconds
 P1_OGRE_SPAWNING_PERIOD = 4.0   ## in seconds
-P1_BLUE_NEC_SPAWNING_PERIOD = 2.0   ## in seconds
+P1_BLUE_NEC_SPAWNING_PERIOD = 6.0   ## in seconds
+P1_RED_NEC_SPAWNING_PERIOD = 6.0   ## in seconds
+P1_GREEN_NEC_SPAWNING_PERIOD = 6.0   ## in seconds
 P1_DRAGON_SPAWNING_PERIOD = 10.0   ## in seconds
 ## MULTIP HP, DAMAGE, VELOCITY
 ## DEGAT TOUR DIFF IMPACT
@@ -200,7 +202,7 @@ BASE_GATE_HP_MAX = 100
 GOBLIN_DICT = {
 
 "NAME" : "Goblin",
-"HP_MAX" : 20.0,
+"HP_MAX" : 40.0,
 "DAMAGE" : 2.5,
 "VELOCITY" : 0.15 * RESIZE_COEFF, # pixel by ms
 "GOLD_EARNING" : 2,
@@ -244,7 +246,7 @@ GOBLIN_DICT = {
 OGRE_DICT = {
 
 "NAME" : "Ogre",
-"HP_MAX" : 60.0,
+"HP_MAX" : 160.0,
 "DAMAGE" : 10,
 "VELOCITY" : 0.1 * RESIZE_COEFF, # pixel by ms
 "GOLD_EARNING" : 4,
@@ -288,7 +290,7 @@ OGRE_DICT = {
 BLUE_NEC_DICT = {
 
 "NAME" : "Ice Necromancer",
-"HP_MAX" : 60.0,
+"HP_MAX" : 140.0,
 "DAMAGE" : 10,
 "VELOCITY" : 0.1 * RESIZE_COEFF, # pixel by ms
 "GOLD_EARNING" : 10,
@@ -321,7 +323,7 @@ BLUE_NEC_DICT = {
 "ICED_NAME" : "Iced Ice Necro",
 "ICED_TIME_MAX" : 10.0, # in second
 
-"REZ_RADIUS" : 3.5,
+"REZ_RADIUS" : 2.0,
 "REZ_COOLDOWN" : 5.0, # in second
 
 "NUMBER_FRAME_CASTING" : 5,
@@ -330,18 +332,110 @@ BLUE_NEC_DICT = {
 
 }
 
+#### RED_NEC
+RED_NEC_DICT = {
+
+"NAME" : "Fire Necromancer",
+"HP_MAX" : 140.0,
+"DAMAGE" : 10,
+"VELOCITY" : 0.1 * RESIZE_COEFF, # pixel by ms
+"GOLD_EARNING" : 10,
+
+"HITBOX_FACTOR" : 1.0,
+"RESIZE_FACTOR" : 0.5*RESIZE_COEFF, #   pixel
+"OFFSET" : [0* RESIZE_COEFF,-20* RESIZE_COEFF], 
+"CENTER_VECTOR" : [0.40, 0.56],
+
+"WALKING_IMAGE_PATH" : "Assets/Ennemies/Necromancers/Red_Necromancer/WalkAnim/",
+"NUMBER_FRAME_WALKING" : 5,
+"ANIMATION_WALKING_TOTAL_TIME" : 900, # in ms
+
+"NUMBER_FRAME_ATTACKING" : 5,
+"ATTACKING_IMAGE_PATH" : "Assets/Ennemies/Necromancers/Red_Necromancer/AttackAnim/",
+"ANIMATION_ATTACKING_TOTAL_TIME" : 1500, # in ms
+"HITTING_FRAME" : 3,
+
+"NUMBER_FRAME_DEATH" : 5,
+"DEATH_IMAGE_PATH" : "Assets/Ennemies/Necromancers/Red_Necromancer/DeathAnim/",
+"ANIMATION_DEATH_TOTAL_TIME" : 300, # in ms
+"FADING_TIME" : 3000, # in ms
+
+"STUN_NUMBER_FRAME" : 10,
+"STUN_IMAGE_PATH" : "Assets/Ennemies/Necromancers/Red_Necromancer/StunAnim/",
+"STUN_TIME_PER_FRAME" : 100, # in ms
+
+"ICED_IMAGE_PATH" : "Assets/Ennemies/Necromancers/Red_Necromancer/RedNecroIced.png",
+"ICED_HP_MAX" : 20.0,
+"ICED_NAME" : "Iced Ice Necro",
+"ICED_TIME_MAX" : 10.0, # in second
+
+"REZ_RADIUS" : 2.0,
+"REZ_COOLDOWN" : 5.0, # in second
+
+"NUMBER_FRAME_CASTING" : 5,
+"CASTING_IMAGE_PATH" : "Assets/Ennemies/Necromancers/Red_Necromancer/SummonAnim/",
+"ANIMATION_CASTING_TOTAL_TIME" : 1500 # in ms
+
+}
+
+#### GREEN_NEC
+GREEN_NEC_DICT = {
+
+"NAME" : "Fire Necromancer",
+"HP_MAX" : 140.0,
+"DAMAGE" : 10,
+"VELOCITY" : 0.1 * RESIZE_COEFF, # pixel by ms
+"GOLD_EARNING" : 10,
+
+"HITBOX_FACTOR" : 1.0,
+"RESIZE_FACTOR" : 0.5*RESIZE_COEFF, #   pixel
+"OFFSET" : [0* RESIZE_COEFF,-20* RESIZE_COEFF], 
+"CENTER_VECTOR" : [0.40, 0.56],
+
+"WALKING_IMAGE_PATH" : "Assets/Ennemies/Necromancers/Green_Necromancer/WalkAnim/",
+"NUMBER_FRAME_WALKING" : 5,
+"ANIMATION_WALKING_TOTAL_TIME" : 900, # in ms
+
+"NUMBER_FRAME_ATTACKING" : 5,
+"ATTACKING_IMAGE_PATH" : "Assets/Ennemies/Necromancers/Green_Necromancer/AttackAnim/",
+"ANIMATION_ATTACKING_TOTAL_TIME" : 1500, # in ms
+"HITTING_FRAME" : 3,
+
+"NUMBER_FRAME_DEATH" : 5,
+"DEATH_IMAGE_PATH" : "Assets/Ennemies/Necromancers/Green_Necromancer/DeathAnim/",
+"ANIMATION_DEATH_TOTAL_TIME" : 300, # in ms
+"FADING_TIME" : 3000, # in ms
+
+"STUN_NUMBER_FRAME" : 10,
+"STUN_IMAGE_PATH" : "Assets/Ennemies/Necromancers/Green_Necromancer/StunAnim/",
+"STUN_TIME_PER_FRAME" : 100, # in ms
+
+"ICED_IMAGE_PATH" : "Assets/Ennemies/Necromancers/Green_Necromancer/GreenNecroIced.png",
+"ICED_HP_MAX" : 20.0,
+"ICED_NAME" : "Iced Ice Necro",
+"ICED_TIME_MAX" : 10.0, # in second
+
+"REZ_RADIUS" : 2.0,
+"REZ_COOLDOWN" : 5.0, # in second
+
+"NUMBER_FRAME_CASTING" : 5,
+"CASTING_IMAGE_PATH" : "Assets/Ennemies/Necromancers/Green_Necromancer/SummonAnim/",
+"ANIMATION_CASTING_TOTAL_TIME" : 1500 # in ms
+
+}
+
 #### BLUE_SKELETON
 BLUE_SKEL_DICT = {
 
 "NAME" : "Ice Skeleton",
-"HP_MAX" : 60.0,
+"HP_MAX" : 100.0,
 "DAMAGE" : 10,
 "VELOCITY" : 0.1 * RESIZE_COEFF, # pixel by ms
 "GOLD_EARNING" : 4,
 
 "HITBOX_FACTOR" : 1.0,
 "RESIZE_FACTOR" : 0.5*RESIZE_COEFF, #   pixel
-"OFFSET" : [0* RESIZE_COEFF,-20* RESIZE_COEFF], 
+"OFFSET" : [0* RESIZE_COEFF,-30* RESIZE_COEFF], 
 "CENTER_VECTOR" : [0.40, 0.56],
 
 "WALKING_IMAGE_PATH" : "Assets/Ennemies/Skeletons/FramesSkeletonBlue/WalkAnim/",
@@ -369,6 +463,92 @@ BLUE_SKEL_DICT = {
 
 "NUMBER_FRAME_SPAWNING" : 5,
 "SPAWNING_IMAGE_PATH" : "Assets/Ennemies/Skeletons/FramesSkeletonBlue/SummonAnim/",
+"ANIMATION_SPAWNING_TOTAL_TIME" : 1500
+
+}
+
+#### RED_SKELETON
+RED_SKEL_DICT = {
+
+"NAME" : "Ice Skeleton",
+"HP_MAX" : 100.0,
+"DAMAGE" : 10,
+"VELOCITY" : 0.1 * RESIZE_COEFF, # pixel by ms
+"GOLD_EARNING" : 4,
+
+"HITBOX_FACTOR" : 1.0,
+"RESIZE_FACTOR" : 0.5*RESIZE_COEFF, #   pixel
+"OFFSET" : [0* RESIZE_COEFF,-30* RESIZE_COEFF], 
+"CENTER_VECTOR" : [0.40, 0.56],
+
+"WALKING_IMAGE_PATH" : "Assets/Ennemies/Skeletons/FramesSkeletonRed/WalkAnim/",
+"NUMBER_FRAME_WALKING" : 4,
+"ANIMATION_WALKING_TOTAL_TIME" : 900, # in ms
+
+"NUMBER_FRAME_ATTACKING" : 6,
+"ATTACKING_IMAGE_PATH" : "Assets/Ennemies/Skeletons/FramesSkeletonRed/AttackAnim/",
+"ANIMATION_ATTACKING_TOTAL_TIME" : 1500, # in ms
+"HITTING_FRAME" : 5,
+
+"NUMBER_FRAME_DEATH" : 6,
+"DEATH_IMAGE_PATH" : "Assets/Ennemies/Skeletons/FramesSkeletonRed/DeathAnim/",
+"ANIMATION_DEATH_TOTAL_TIME" : 300, # in ms
+"FADING_TIME" : 3000, # in ms
+
+"STUN_NUMBER_FRAME" : 10,
+"STUN_IMAGE_PATH" : "Assets/Ennemies/Skeletons/FramesSkeletonRed/StunAnim/",
+"STUN_TIME_PER_FRAME" : 100, # in ms
+
+"ICED_IMAGE_PATH" : "Assets/Ennemies/Skeletons/FramesSkeletonRed/RedSkeletonIced.png",
+"ICED_HP_MAX" : 20.0,
+"ICED_NAME" : "Iced Ice Skel",
+"ICED_TIME_MAX" : 10.0, # in second
+
+"NUMBER_FRAME_SPAWNING" : 5,
+"SPAWNING_IMAGE_PATH" : "Assets/Ennemies/Skeletons/FramesSkeletonRed/SummonAnim/",
+"ANIMATION_SPAWNING_TOTAL_TIME" : 1500
+
+}
+
+#### GREEN_SKELETON
+GREEN_SKEL_DICT = {
+
+"NAME" : "Ice Skeleton",
+"HP_MAX" : 100.0,
+"DAMAGE" : 10,
+"VELOCITY" : 0.1 * RESIZE_COEFF, # pixel by ms
+"GOLD_EARNING" : 4,
+
+"HITBOX_FACTOR" : 1.0,
+"RESIZE_FACTOR" : 0.5*RESIZE_COEFF, #   pixel
+"OFFSET" : [0* RESIZE_COEFF,-30* RESIZE_COEFF], 
+"CENTER_VECTOR" : [0.40, 0.56],
+
+"WALKING_IMAGE_PATH" : "Assets/Ennemies/Skeletons/FramesSkeletonGreen/WalkAnim/",
+"NUMBER_FRAME_WALKING" : 4,
+"ANIMATION_WALKING_TOTAL_TIME" : 900, # in ms
+
+"NUMBER_FRAME_ATTACKING" : 6,
+"ATTACKING_IMAGE_PATH" : "Assets/Ennemies/Skeletons/FramesSkeletonGreen/AttackAnim/",
+"ANIMATION_ATTACKING_TOTAL_TIME" : 1500, # in ms
+"HITTING_FRAME" : 5,
+
+"NUMBER_FRAME_DEATH" : 6,
+"DEATH_IMAGE_PATH" : "Assets/Ennemies/Skeletons/FramesSkeletonGreen/DeathAnim/",
+"ANIMATION_DEATH_TOTAL_TIME" : 300, # in ms
+"FADING_TIME" : 3000, # in ms
+
+"STUN_NUMBER_FRAME" : 10,
+"STUN_IMAGE_PATH" : "Assets/Ennemies/Skeletons/FramesSkeletonGreen/StunAnim/",
+"STUN_TIME_PER_FRAME" : 100, # in ms
+
+"ICED_IMAGE_PATH" : "Assets/Ennemies/Skeletons/FramesSkeletonGreen/GreenSkeletonIced.png",
+"ICED_HP_MAX" : 20.0,
+"ICED_NAME" : "Iced Ice Skel",
+"ICED_TIME_MAX" : 10.0, # in second
+
+"NUMBER_FRAME_SPAWNING" : 5,
+"SPAWNING_IMAGE_PATH" : "Assets/Ennemies/Skeletons/FramesSkeletonGreen/SummonAnim/",
 "ANIMATION_SPAWNING_TOTAL_TIME" : 1500
 
 }

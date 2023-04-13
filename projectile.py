@@ -402,8 +402,6 @@ class Rock_data(Siege_engine_bolt_data):
 class Projectile(pygame.sprite.Sprite):
       def __init__(self,all_p,x,y,target): 
             pygame.sprite.Sprite.__init__(self)
-
-            self.damage = self.my_data.damage
       
             self.current_image = self.my_data.static_image
             self.image_size = self.my_data.image_size
@@ -456,6 +454,7 @@ class Projectile(pygame.sprite.Sprite):
             self.hit_ennemies = pygame.sprite.spritecollide(self, game.all_ennemies, False,pygame.sprite.collide_rect_ratio(self.my_data.ratio_for_impact))
             if self.hit_ennemies:
                   pygame.sprite.Sprite.kill(self)
+                  self.hit_ennemies[0].hp -= self.my_data.damage
                   game.all_impacts.add_impact(game,self,self.my_data.impact_tag)
             else:
                   ## if ennemy is dead while projectile was travelling, distance is computed with last ennemy position 
@@ -469,32 +468,24 @@ class Projectile(pygame.sprite.Sprite):
 
 class Arcane_bolt_lvl1(Projectile):
       def __init__(self,all_p,x,y,target):
-            pygame.sprite.Sprite.__init__(self)
-
             self.my_data = all_p.arcane_bolt_lvl1_data
 
             Projectile.__init__(self,all_p,x,y,target)
 
 class Arcane_bolt_lvl2(Projectile):
       def __init__(self,all_p,x,y,target):
-            pygame.sprite.Sprite.__init__(self)
-
             self.my_data = all_p.arcane_bolt_lvl2_data
 
             Projectile.__init__(self,all_p,x,y,target)
 
 class Arcane_bolt_lvl3(Projectile):
       def __init__(self,all_p,x,y,target):
-            pygame.sprite.Sprite.__init__(self)
-
             self.my_data = all_p.arcane_bolt_lvl3_data
 
             Projectile.__init__(self,all_p,x,y,target)
 
 class Fire_bolt_lvl1(Projectile):
       def __init__(self,all_p,x,y,target):
-            pygame.sprite.Sprite.__init__(self)
-
             self.my_data = all_p.fire_bolt_lvl1_data
 
             Projectile.__init__(self,all_p,x,y,target)
@@ -530,8 +521,6 @@ class Fire_bolt_lvl1(Projectile):
 # class Fire_bolt_lvl2(Fire_bolt_lvl1,pygame.sprite.Sprite):
 class Fire_bolt_lvl2(Projectile):
       def __init__(self,all_p,x,y,target):
-            pygame.sprite.Sprite.__init__(self)
-
             self.my_data = all_p.fire_bolt_lvl2_data
 
             Projectile.__init__(self,all_p,x,y,target)
@@ -545,8 +534,6 @@ class Fire_bolt_lvl2(Projectile):
 
 class Fire_bolt_lvl3(Fire_bolt_lvl1):
       def __init__(self,all_p,x,y,target):
-            pygame.sprite.Sprite.__init__(self)
-
             self.my_data = all_p.fire_bolt_lvl3_data
 
             Projectile.__init__(self,all_p,x,y,target)
@@ -562,6 +549,7 @@ class Fire_bolt_lvl3(Fire_bolt_lvl1):
             self.hit_ennemies = pygame.sprite.spritecollide(self, game.all_ennemies, False,pygame.sprite.collide_rect_ratio(self.my_data.ratio_for_impact))
             if self.hit_ennemies:
                   pygame.sprite.Sprite.kill(self)
+                  self.hit_ennemies[0].hp -= self.my_data.damage
                   game.all_impacts.add_impact(game,self,self.my_data.impact_tag)
                   self.all_p.add_fire_bolt_no_target(game,self.posX+self.my_data.margin_spawn[0],self.posY+self.my_data.margin_spawn[1],self.target,vec(1,0))
                   self.all_p.add_fire_bolt_no_target(game,self.posX-self.my_data.margin_spawn[0],self.posY+self.my_data.margin_spawn[1],self.target,vec(-1,0))
@@ -583,8 +571,6 @@ class Fire_bolt_no_target(Projectile):
             self.all_p = all_p
 
             self.impact_target = impact_target
-
-            self.damage = self.my_data.damage
       
             self.current_image = self.my_data.static_image
             self.image_size = self.my_data.image_size
@@ -627,6 +613,7 @@ class Fire_bolt_no_target(Projectile):
             self.hit_ennemies = pygame.sprite.spritecollide(self, game.all_ennemies, False,pygame.sprite.collide_rect_ratio(self.my_data.ratio_for_impact))
             if (self.hit_ennemies and (self.hit_ennemies[0]!=self.impact_target)):
                   self.target = self.hit_ennemies[0]
+                  self.hit_ennemies[0].hp -= self.my_data.damage
                   game.all_impacts.add_impact(game,self,self.my_data.impact_tag)
                   pygame.sprite.Sprite.kill(self)
             else:
@@ -648,8 +635,6 @@ class Light_bolt_lvl1(Projectile):
             self.init(x,y,target,damage)
 
       def init(self,x,y,target,damage):
-
-            self.damage = damage
 
             self.target = target
 
@@ -754,7 +739,7 @@ class Light_bolt_lvl1(Projectile):
                    pygame.sprite.Sprite.kill(self)
             elif ((self.my_total_timer > self.my_data.anim_total_time) and not(self.damage_dealt)):
                   self.target.velocity = self.target.my_data.velocity
-                  self.target.hp -= self.damage 
+                  self.target.hp -= self.my_data.damage 
                   self.target.stun_time = self.my_data.stun_time*1000  
                   self.damage_dealt = True
                   self.current_frame = 0
@@ -926,8 +911,6 @@ class Ice_bolt_lvl3(Ice_bolt_lvl1):
 
 class Bolt(Projectile):
       def __init__(self,all_p,x,y,target):
-            pygame.sprite.Sprite.__init__(self)
-
             self.my_data = all_p.bolt_data
 
             Projectile.__init__(self,all_p,x,y,target)
@@ -944,8 +927,6 @@ class Bolt(Projectile):
  
 class Rock(Projectile):
       def __init__(self,all_p,x,y,target):
-            pygame.sprite.Sprite.__init__(self)
-
             self.my_data = all_p.rock_data
 
             Projectile.__init__(self,all_p,x,y,target)

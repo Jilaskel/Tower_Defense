@@ -5,6 +5,9 @@ class Base():
     def __init__(self,game):  
         self.all_gates = pygame.sprite.Group()
 
+        self.name = "Gate"
+        self.hp_max = BASE_GATE_HP_MAX
+
         self.unit = game.background.square_side
 
         self.x_walls = game.background.bush_width + game.background.number_square_x*self.unit
@@ -32,11 +35,12 @@ class Gate(pygame.sprite.Sprite):
             side = BACKGROUND_SQUARE_SIDE
             self.rect = pygame.Rect(x,y,side,side)
 
+            self.my_data = base
+
             self.posX = base.x_walls - 40*RESIZE_COEFF
             self.posY = base.y_walls - 90*RESIZE_COEFF
 
-            self.hp_max = BASE_GATE_HP_MAX
-            self.hp = self.hp_max
+            self.hp = self.my_data.hp_max
             self.opened = False
 
             self.opened_path = BACKGROUND_WALLS_ASSETS_PATH + "wall_" + position + "_opened.png"

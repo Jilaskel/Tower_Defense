@@ -129,44 +129,9 @@ class Rock_impact_data(Impact_data):
         Impact_data.__init__(self)
 
 
-# class Fire_impact_data():
-#       def __init__(self):
-
-#         self.static_image = pygame.image.load(FIRE_IMPACT_IMAGE_PATH+"0001.png").convert_alpha()
-#         self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*FIRE_IMPACT_RESIZE_FACTOR)        
-#         self.image_size = vec(self.static_image.get_size())
-#         self.offset = vec(FIRE_IMPACT_CENTOR_VECTOR[0]*self.image_size[0],FIRE_IMPACT_CENTOR_VECTOR[1]*self.image_size[1])
-
-#         self.number_frame = FIRE_IMPACT_NUMBER_FRAME
-#         self.images = []
-#         for i in range(1,self.number_frame+1):
-#                 self.images.append(pygame.image.load(FIRE_IMPACT_IMAGE_PATH+str(i).zfill(4)+".png").convert_alpha())  
-#                 self.images[i-1] = pygame.transform.scale(self.images[i-1],vec(self.images[i-1].get_size())*FIRE_IMPACT_RESIZE_FACTOR)
-#         self.anim_total_time = FIRE_IMPACT_TOTAL_TIME  # in ms
-#         self.time_per_frame = self.anim_total_time/self.number_frame # in ms
-
-#         self.damage_frame = FIRE_IMPACT_DAMAGE_FRAME - 1
-
-# class Rock_impact_data():
-#       def __init__(self):
-
-#         self.static_image = pygame.image.load(ROCK_IMPACT_IMAGE_PATH+"0001.png").convert_alpha()
-#         self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*ROCK_IMPACT_RESIZE_FACTOR)        
-#         self.image_size = vec(self.static_image.get_size())
-#         self.offset = vec(ROCK_IMPACT_CENTOR_VECTOR[0]*self.image_size[0],ROCK_IMPACT_CENTOR_VECTOR[1]*self.image_size[1])
-
-#         self.number_frame = ROCK_IMPACT_NUMBER_FRAME
-#         self.images = []
-#         for i in range(1,self.number_frame+1):
-#                 self.images.append(pygame.image.load(ROCK_IMPACT_IMAGE_PATH+str(i).zfill(4)+".png").convert_alpha())  
-#                 self.images[i-1] = pygame.transform.scale(self.images[i-1],vec(self.images[i-1].get_size())*ROCK_IMPACT_RESIZE_FACTOR)
-#         self.anim_total_time = ROCK_IMPACT_TOTAL_TIME  # in ms
-#         self.time_per_frame = self.anim_total_time/self.number_frame # in ms
-
-#         self.damage_frame = ROCK_IMPACT_DAMAGE_FRAME - 1
-
 class Impact(pygame.sprite.Sprite):
     def __init__(self,projectile):
+        pygame.sprite.Sprite.__init__(self)
 
         self.current_image = self.my_data.static_image
         self.image_size = self.my_data.image_size
@@ -175,7 +140,6 @@ class Impact(pygame.sprite.Sprite):
 
         self.my_timer = 0
 
-        self.damage = projectile.damage
         self.damage_dealt=False
 
         self.posX = projectile.target.rect.center[0]-self.my_data.offset[0]
@@ -193,7 +157,7 @@ class Impact(pygame.sprite.Sprite):
             self.hit_ennemies = pygame.sprite.spritecollide(self, game.all_ennemies, False)
             if self.hit_ennemies:
                 for i in range (len(self.hit_ennemies)):
-                        self.hit_ennemies[i].hp -= self.damage
+                        self.hit_ennemies[i].hp -= self.my_data.damage
 
     def explode(self,game):
         self.my_timer += game.timestep
@@ -212,56 +176,42 @@ class Impact(pygame.sprite.Sprite):
 
 class Arcane_impact_lvl1(Impact):
     def __init__(self,all_i,projectile):
-        pygame.sprite.Sprite.__init__(self)
-
         self.my_data = all_i.arcane_impact_lvl1_data
 
         Impact.__init__(self,projectile)
 
 class Arcane_impact_lvl2(Impact):
     def __init__(self,all_i,projectile):
-        pygame.sprite.Sprite.__init__(self)
-
         self.my_data = all_i.arcane_impact_lvl2_data
 
         Impact.__init__(self,projectile)
 
 class Arcane_impact_lvl3(Impact):
     def __init__(self,all_i,projectile):
-        pygame.sprite.Sprite.__init__(self)
-
         self.my_data = all_i.arcane_impact_lvl3_data
 
         Impact.__init__(self,projectile)
 
 class Fire_impact_lvl1(Impact):
     def __init__(self,all_i,projectile):
-        pygame.sprite.Sprite.__init__(self)
-
         self.my_data = all_i.fire_impact_lvl1_data
 
         Impact.__init__(self,projectile)
 
 class Fire_impact_lvl2(Impact):
     def __init__(self,all_i,projectile):
-        pygame.sprite.Sprite.__init__(self)
-
         self.my_data = all_i.fire_impact_lvl2_data
 
         Impact.__init__(self,projectile)
 
 class Fire_impact_lvl3(Impact):
     def __init__(self,all_i,projectile):
-        pygame.sprite.Sprite.__init__(self)
-
         self.my_data = all_i.fire_impact_lvl3_data
 
         Impact.__init__(self,projectile)
 
 class Rock_impact(Impact):
     def __init__(self,all_i,projectile):
-        pygame.sprite.Sprite.__init__(self)
-
         self.my_data = all_i.rock_impact_data
 
         Impact.__init__(self,projectile)

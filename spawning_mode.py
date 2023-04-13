@@ -4,16 +4,6 @@ from utilitaries import *
 import random
 import numpy as np
 
-
-GOBLIN_TAG = 1
-OGRE_TAG = 2
-BLUE_NEC_TAG = 3
-RED_NEC_TAG = 4
-GREEN_NEC_TAG = 5
-KAMIKAZE_TAG = 6
-DRAGON_TAG = 7
-
-
 class Spawning_mode():
     def __init__(self,game):
         self.spawning_margin = game.background.bush_width*SPAWNING_MARGIN_SPACE
@@ -32,19 +22,40 @@ class Spawning_mode():
             self.number_ogre_spawned = 1.0
             self.last_time_spawning_ogre = SPAWNING_INITIAL_TIME - P1_OGRE_SPAWNING_PERIOD*self.number_ogre_spawned 
             self.number_blue_nec_spawned = 1.0
-            self.last_time_spawning_blue_nec = SPAWNING_INITIAL_TIME - P1_BLUE_NEC_SPAWNING_PERIOD*self.number_blue_nec_spawned             
+            self.last_time_spawning_blue_nec = SPAWNING_INITIAL_TIME - P1_BLUE_NEC_SPAWNING_PERIOD*self.number_blue_nec_spawned   
+            self.number_red_nec_spawned = 1.0
+            self.last_time_spawning_red_nec = SPAWNING_INITIAL_TIME - P1_RED_NEC_SPAWNING_PERIOD*self.number_red_nec_spawned     
+            self.number_green_nec_spawned = 1.0
+            self.last_time_spawning_green_nec = SPAWNING_INITIAL_TIME - P1_GREEN_NEC_SPAWNING_PERIOD*self.number_green_nec_spawned         
             self.number_dragon_spawned = 1.0
             self.last_time_spawning_dragon = SPAWNING_INITIAL_TIME - P1_DRAGON_SPAWNING_PERIOD*self.number_dragon_spawned   
 
     def reset(self):
         self.number_goblin_spawned = 1.0
-        self.last_time_spawning_goblin = SPAWNING_INITIAL_TIME - P1_GOBLIN_SPAWNING_PERIOD*self.number_goblin_spawned            
+        self.last_time_spawning_goblin = SPAWNING_INITIAL_TIME             
         self.number_ogre_spawned = 1.0
-        self.last_time_spawning_ogre = SPAWNING_INITIAL_TIME - P1_OGRE_SPAWNING_PERIOD*self.number_goblin_spawned            
+        self.last_time_spawning_ogre = SPAWNING_INITIAL_TIME             
         self.number_blue_nec_spawned = 1.0
-        self.last_time_spawning_blue_nec = SPAWNING_INITIAL_TIME - P1_BLUE_NEC_SPAWNING_PERIOD*self.number_blue_nec_spawned   
+        self.last_time_spawning_blue_nec = SPAWNING_INITIAL_TIME    
+        self.number_red_nec_spawned = 1.0
+        self.last_time_spawning_red_nec = SPAWNING_INITIAL_TIME 
+        self.number_green_nec_spawned = 1.0
+        self.last_time_spawning_green_nec = SPAWNING_INITIAL_TIME       
         self.number_dragon_spawned = 1.0
-        self.last_time_spawning_dragon = SPAWNING_INITIAL_TIME - P1_DRAGON_SPAWNING_PERIOD*self.number_dragon_spawned              
+        self.last_time_spawning_dragon = SPAWNING_INITIAL_TIME              
+
+        # self.number_goblin_spawned = 1.0
+        # self.last_time_spawning_goblin = SPAWNING_INITIAL_TIME - P1_GOBLIN_SPAWNING_PERIOD*self.number_goblin_spawned            
+        # self.number_ogre_spawned = 1.0
+        # self.last_time_spawning_ogre = SPAWNING_INITIAL_TIME - P1_OGRE_SPAWNING_PERIOD*self.number_goblin_spawned            
+        # self.number_blue_nec_spawned = 1.0
+        # self.last_time_spawning_blue_nec = SPAWNING_INITIAL_TIME - P1_BLUE_NEC_SPAWNING_PERIOD*self.number_blue_nec_spawned   
+        # self.number_red_nec_spawned = 1.0
+        # self.last_time_spawning_red_nec = SPAWNING_INITIAL_TIME - P1_RED_NEC_SPAWNING_PERIOD*self.number_red_nec_spawned
+        # self.number_green_nec_spawned = 1.0
+        # self.last_time_spawning_green_nec = SPAWNING_INITIAL_TIME - P1_GREEN_NEC_SPAWNING_PERIOD*self.number_green_nec_spawned      
+        # self.number_dragon_spawned = 1.0
+        # self.last_time_spawning_dragon = SPAWNING_INITIAL_TIME - P1_DRAGON_SPAWNING_PERIOD*self.number_dragon_spawned 
 
     def spawning_ennemies(self,game):
         time = game.timer/1000.0  # in second
@@ -74,6 +85,18 @@ class Spawning_mode():
                     self.number_blue_nec_spawned = random.randint(1,3)
                     self.spawn(game,BLUE_NEC_TAG,self.number_blue_nec_spawned)
 
+                cooldown = P1_RED_NEC_SPAWNING_PERIOD*self.number_red_nec_spawned 
+                if ((time-self.last_time_spawning_red_nec)>cooldown):
+                    self.last_time_spawning_red_nec = time
+                    self.number_red_nec_spawned = random.randint(1,3)
+                    self.spawn(game,RED_NEC_TAG,self.number_red_nec_spawned)
+
+                cooldown = P1_GREEN_NEC_SPAWNING_PERIOD*self.number_green_nec_spawned 
+                if ((time-self.last_time_spawning_green_nec)>cooldown):
+                    self.last_time_spawning_green_nec = time
+                    self.number_green_nec_spawned = random.randint(1,3)
+                    self.spawn(game,GREEN_NEC_TAG,self.number_green_nec_spawned)
+
                 cooldown = P1_DRAGON_SPAWNING_PERIOD*self.number_dragon_spawned*1000 ## comment *0 to have normal spawning 
                 if ((time-self.last_time_spawning_dragon)>cooldown):
                     self.last_time_spawning_dragon = time
@@ -102,6 +125,12 @@ class Spawning_mode():
 
             if (TAG==BLUE_NEC_TAG):
                 game.all_ennemies.add_blue_nec(x_path,y_path,rand_offset)
+
+            if (TAG==RED_NEC_TAG):
+                game.all_ennemies.add_red_nec(x_path,y_path,rand_offset)
+
+            if (TAG==GREEN_NEC_TAG):
+                game.all_ennemies.add_green_nec(x_path,y_path,rand_offset)
 
             if (TAG==DRAGON_TAG):
                 game.all_ennemies.add_dragon(x_path,y_path,rand_offset)

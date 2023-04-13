@@ -4,6 +4,17 @@ from functions import *
 from dead_body import *
 from tower import * 
 
+GOBLIN_TAG = 1
+OGRE_TAG = 2
+BLUE_NEC_TAG = 3
+RED_NEC_TAG = 4
+GREEN_NEC_TAG = 5
+BLUE_SKEL_TAG = 6
+RED_SKEL_TAG = 7
+GREEN_SKEL_TAG = 8
+KAMIKAZE_TAG = 9
+DRAGON_TAG = 10
+
 class All_ennemies(pygame.sprite.Group):
       def __init__(self):
             pygame.sprite.Group.__init__(self)   
@@ -11,6 +22,11 @@ class All_ennemies(pygame.sprite.Group):
             self.goblin_data = Goblin_data()
             self.ogre_data = Ogre_data()
             self.blue_nec_data = Blue_nec_data()
+            self.red_nec_data = Red_nec_data()
+            self.green_nec_data = Green_nec_data()
+            self.blue_skel_data = Blue_skel_data()
+            self.red_skel_data = Red_skel_data()
+            self.green_skel_data = Green_skel_data()
             self.dragon_data = Dragon_data()
 
       def add_goblin(self,x,y,rand_offset):
@@ -21,6 +37,29 @@ class All_ennemies(pygame.sprite.Group):
 
       def add_blue_nec(self,x,y,rand_offset):
             self.add(Blue_Necromancer(self,x,y,rand_offset))
+
+      def add_red_nec(self,x,y,rand_offset):
+            self.add(Red_Necromancer(self,x,y,rand_offset))
+
+      def add_green_nec(self,x,y,rand_offset):
+            self.add(Green_Necromancer(self,x,y,rand_offset))
+
+      def add_skel(self,x,y,tag):
+            if (tag==BLUE_SKEL_TAG):
+                  self.add_blue_skel(x,y)
+            elif (tag==RED_SKEL_TAG):
+                  self.add_red_skel(x,y)
+            elif (tag==GREEN_SKEL_TAG):
+                  self.add_green_skel(x,y)
+
+      def add_blue_skel(self,x,y):
+            self.add(Blue_Skeleton(self,x,y))
+
+      def add_red_skel(self,x,y):
+            self.add(Red_Skeleton(self,x,y))
+
+      def add_green_skel(self,x,y):
+            self.add(Green_Skeleton(self,x,y))
 
       def add_dragon(self,x,y,rand_offset):
             self.add(Dragon(self,x,y,rand_offset))
@@ -91,6 +130,15 @@ class Ennemy_data():
             self.rez_radius = self.my_dict["REZ_RADIUS"]*BACKGROUND_SQUARE_SIDE
             self.rez_cd = self.my_dict["REZ_COOLDOWN"]*1000
 
+      def init_spawning_data(self):
+            self.number_frame_spawning = self.my_dict["NUMBER_FRAME_SPAWNING"]
+            self.image_spawning = []
+            for i in range(1,self.number_frame_spawning+1):
+                  self.image_spawning.append(pygame.image.load(self.my_dict["SPAWNING_IMAGE_PATH"]+str(i).zfill(3)+".png").convert_alpha()) 
+                  self.image_spawning[i-1] = pygame.transform.scale(self.image_spawning[i-1],vec(self.image_spawning[i-1].get_size())*self.my_dict["RESIZE_FACTOR"])
+            self.anim_total_time_sp = self.my_dict["ANIMATION_SPAWNING_TOTAL_TIME"]  # in ms
+            self.time_per_frame_sp = self.anim_total_time_sp/self.number_frame_spawning # in ms
+
 class Goblin_data(Ennemy_data):
       def __init__(self):
             self.my_dict = GOBLIN_DICT
@@ -116,7 +164,55 @@ class Blue_nec_data(Ennemy_data):
             Ennemy_data.__init__(self)
             self.init_casting_data()
 
+            self.summon_tag = BLUE_SKEL_TAG
             self.dead_body_tag = DEAD_BLUE_NEC_TAG
+
+class Red_nec_data(Ennemy_data):
+      def __init__(self):
+            self.my_dict = RED_NEC_DICT
+
+            Ennemy_data.__init__(self)
+            self.init_casting_data()
+
+            self.summon_tag = RED_SKEL_TAG
+            self.dead_body_tag = DEAD_RED_NEC_TAG
+
+class Green_nec_data(Ennemy_data):
+      def __init__(self):
+            self.my_dict = GREEN_NEC_DICT
+
+            Ennemy_data.__init__(self)
+            self.init_casting_data()
+
+            self.summon_tag = GREEN_SKEL_TAG
+            self.dead_body_tag = DEAD_GREEN_NEC_TAG
+
+class Blue_skel_data(Ennemy_data):
+      def __init__(self):
+            self.my_dict = BLUE_SKEL_DICT
+
+            Ennemy_data.__init__(self)
+            self.init_spawning_data()
+
+            self.dead_body_tag = DEAD_BLUE_SKEL_TAG 
+
+class Red_skel_data(Ennemy_data):
+      def __init__(self):
+            self.my_dict = RED_SKEL_DICT
+
+            Ennemy_data.__init__(self)
+            self.init_spawning_data()
+
+            self.dead_body_tag = DEAD_RED_SKEL_TAG 
+
+class Green_skel_data(Ennemy_data):
+      def __init__(self):
+            self.my_dict = GREEN_SKEL_DICT
+
+            Ennemy_data.__init__(self)
+            self.init_spawning_data()
+
+            self.dead_body_tag = DEAD_GREEN_SKEL_TAG 
 
 class Dragon_data():
       def __init__(self):
@@ -149,6 +245,8 @@ class Dragon_data():
 
 class Ennemy(pygame.sprite.Sprite):
       def __init__(self,x,y,rand_offset):
+            pygame.sprite.Sprite.__init__(self)
+
             self.hp = self.my_data.hp_max
 
             self.velocity = self.my_data.velocity
@@ -230,6 +328,32 @@ class Ennemy(pygame.sprite.Sprite):
                         self.current_image= self.my_data.image_walking[self.move_frame]
 
       def attack(self,game):
+            if (not(self.stunned) and not(self.casting)):
+                  # self.detected_ennemies = pygame.sprite.spritecollide(self, game.all_towers, False)
+                  self.detected_ennemies = pygame.sprite.spritecollide(self, game.all_towers.all_siege_engines, False)
+                  if not self.detected_ennemies:
+                        self.detected_ennemies = pygame.sprite.spritecollide(self, game.base.all_gates, False)
+                  if not self.detected_ennemies:
+                        self.detected_ennemies = pygame.sprite.spritecollide(self, game.all_dead_bodies.all_iced_bodies, False)
+
+                  if self.detected_ennemies:
+                        self.attacking = True
+                        self.my_timer += game.timestep
+
+                        if self.my_timer>self.my_data.time_per_frame_a:
+                              self.attack_frame += 1
+                              self.attack_frame = self.attack_frame%self.my_data.number_frame_attacking
+                              self.my_timer = 0.0
+                              if (self.attack_frame==self.my_data.hitting_frame):
+                                    for i in range (len(self.detected_ennemies)):
+                                          self.detected_ennemies[i].hp -= self.my_data.damage
+
+                        self.current_image = self.my_data.image_attacking[self.attack_frame]
+                              
+                  else:
+                        self.attacking = False
+
+      def attack_with_transition(self,game):
             if not(self.stunned):
                   # self.detected_ennemies = pygame.sprite.spritecollide(self, game.all_towers, False)
                   self.detected_ennemies = pygame.sprite.spritecollide(self, game.all_towers.all_siege_engines, False)
@@ -285,8 +409,10 @@ class Ennemy(pygame.sprite.Sprite):
             window.blit(self.current_image, (self.posX, self.posY))  
 
 
-class Necromancer(Ennemy,pygame.sprite.Sprite):
-      def __init__(self):
+class Necromancer(Ennemy):
+      def __init__(self,all_e):
+            self.all_e = all_e
+
             self.cast_frame = 0
             self.rez_done = False
             self.rez_timer = self.my_data.rez_cd*2
@@ -295,38 +421,13 @@ class Necromancer(Ennemy,pygame.sprite.Sprite):
 
             self.range_hitbox = Range_Hitbox(self,self.rect.w,self.rect.h,self.my_data.rez_radius,circular=True)
 
-      def attack(self,game):
-            if (not(self.stunned) and not(self.casting)):
-                  # self.detected_ennemies = pygame.sprite.spritecollide(self, game.all_towers, False)
-                  self.detected_ennemies = pygame.sprite.spritecollide(self, game.all_towers.all_siege_engines, False)
-                  if not self.detected_ennemies:
-                        self.detected_ennemies = pygame.sprite.spritecollide(self, game.base.all_gates, False)
-                  if not self.detected_ennemies:
-                        self.detected_ennemies = pygame.sprite.spritecollide(self, game.all_dead_bodies.all_iced_bodies, False)
-
-                  if self.detected_ennemies:
-                        self.attacking = True
-                        self.my_timer += game.timestep
-
-                        if self.my_timer>self.my_data.time_per_frame_a:
-                              self.attack_frame += 1
-                              self.attack_frame = self.attack_frame%self.my_data.number_frame_attacking
-                              self.my_timer = 0.0
-                              if (self.attack_frame==self.my_data.hitting_frame):
-                                    for i in range (len(self.detected_ennemies)):
-                                          self.detected_ennemies[i].hp -= self.my_data.damage
-
-                        self.current_image = self.my_data.image_attacking[self.attack_frame]
-                              
-                  else:
-                        self.attacking = False
-
       def rez_dead_bodies(self,game):
             self.rez_timer += game.timestep
             if (not(self.stunned) and (self.rez_timer>self.my_data.rez_cd)):
                   self.detected_bodies = pygame.sprite.spritecollide(self.range_hitbox, game.all_dead_bodies.all_rezable_bodies, False, pygame.sprite.collide_circle)
                   if self.detected_bodies:
                         game.all_dead_bodies.all_rezable_bodies.remove(self.detected_bodies[0])
+                        self.rez_done = False
 
             if self.detected_bodies:
                   self.casting = True
@@ -337,9 +438,10 @@ class Necromancer(Ennemy,pygame.sprite.Sprite):
                         self.cast_frame += 1
                         self.my_timer = 0.0
                   if (self.cast_frame<self.my_data.number_frame_casting):
-                        if (self.cast_frame==self.my_data.casting_frame):
+                        if ((self.cast_frame==self.my_data.casting_frame) and not(self.rez_done)):
                               #rezing
-                              pass
+                              self.all_e.add_skel(self.detected_bodies[0].posX - self.detected_bodies[0].image_offset[0],self.detected_bodies[0].posY - self.detected_bodies[0].image_offset[1],self.my_data.summon_tag)
+                              self.rez_done = True
                   
                         self.current_image = self.my_data.image_casting[self.cast_frame]
 
@@ -347,45 +449,100 @@ class Necromancer(Ennemy,pygame.sprite.Sprite):
                         pygame.sprite.Sprite.kill(self.detected_bodies[0])
                         self.detected_bodies = None
                         self.casting = False
-                        self.current_image = self.my_data.image_casting[self.cast_frame-1]
+                        self.current_image = self.my_data.image_casting[self.my_data.number_frame_casting-1]
 
             else:
                   self.casting = False            
 
-class Blue_Necromancer(Necromancer,pygame.sprite.Sprite):
+class Blue_Necromancer(Necromancer):
       def __init__(self,all_e,x,y,rand_offset):
-            pygame.sprite.Sprite.__init__(self)
- 
             self.my_data = all_e.blue_nec_data
 
             Ennemy.__init__(self,x,y,rand_offset)
-            Necromancer.__init__(self)
+            Necromancer.__init__(self,all_e)
 
       def use_power(self,game):
             self.rez_dead_bodies(game)
 
-class Goblin(Ennemy,pygame.sprite.Sprite):
+class Red_Necromancer(Necromancer):
       def __init__(self,all_e,x,y,rand_offset):
-            pygame.sprite.Sprite.__init__(self)
- 
+            self.my_data = all_e.red_nec_data
+
+            Ennemy.__init__(self,x,y,rand_offset)
+            Necromancer.__init__(self,all_e)
+
+      def use_power(self,game):
+            self.rez_dead_bodies(game)
+
+class Green_Necromancer(Necromancer):
+      def __init__(self,all_e,x,y,rand_offset):
+            self.my_data = all_e.green_nec_data
+
+            Ennemy.__init__(self,x,y,rand_offset)
+            Necromancer.__init__(self,all_e)
+
+      def use_power(self,game):
+            self.rez_dead_bodies(game)
+
+class Skeleton(Ennemy):
+      def __init__(self,all_e,x,y): 
+            Ennemy.__init__(self,x,y,0)
+
+            self.stunned = True # to pass attack() while summoning
+            self.my_timer_sp = 0.0
+            self.spawn_frame = 0
+
+      def move(self,game):
+            if (self.my_timer_sp<self.my_data.anim_total_time_sp):
+                  self.my_timer_sp += game.timestep
+                  self.my_timer += game.timestep
+
+                  if self.my_timer>self.my_data.time_per_frame_sp:
+                        self.spawn_frame += 1
+                        self.my_timer = 0.0  
+                  self.current_image = self.my_data.image_spawning[self.spawn_frame]   
+
+            else:
+                  Ennemy.move(self,game)           
+
+class Blue_Skeleton(Skeleton):
+      def __init__(self,all_e,x,y):
+            self.my_data = all_e.blue_skel_data
+
+            Skeleton.__init__(self,all_e,x,y)
+
+class Red_Skeleton(Skeleton):
+      def __init__(self,all_e,x,y):
+            self.my_data = all_e.red_skel_data
+
+            Skeleton.__init__(self,all_e,x,y)
+
+class Green_Skeleton(Skeleton):
+      def __init__(self,all_e,x,y):
+            self.my_data = all_e.green_skel_data
+
+            Skeleton.__init__(self,all_e,x,y)
+
+class Goblin(Ennemy):
+      def __init__(self,all_e,x,y,rand_offset): 
             self.my_data = all_e.goblin_data
 
             Ennemy.__init__(self,x,y,rand_offset)
 
- 
-class Ogre(Ennemy,pygame.sprite.Sprite):
-      def __init__(self,all_e,x,y,rand_offset):
-            pygame.sprite.Sprite.__init__(self)
- 
+      def attack(self,game):
+            self.attack_with_transition(game)
+
+class Ogre(Ennemy):
+      def __init__(self,all_e,x,y,rand_offset): 
             self.my_data = all_e.ogre_data
 
             Ennemy.__init__(self,x,y,rand_offset)
 
+      def attack(self,game):
+            self.attack_with_transition(game)
 
-class Dragon(Ennemy,pygame.sprite.Sprite):
-      def __init__(self,all_e,x,y,rand_offset):
-            pygame.sprite.Sprite.__init__(self)
- 
+class Dragon(Ennemy):
+      def __init__(self,all_e,x,y,rand_offset): 
             self.my_data = all_e.dragon_data
 
             Ennemy.__init__(self,x,y,rand_offset)

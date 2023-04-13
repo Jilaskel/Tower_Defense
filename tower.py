@@ -339,7 +339,8 @@ class Catapult_data(Siege_engine_data):
 
 class Tower(pygame.sprite.Sprite):
       def __init__(self,game,box):
-            
+            pygame.sprite.Sprite.__init__(self)
+         
             x = box.posX
             y = box.posY
             self.box = box
@@ -450,40 +451,30 @@ class Tower(pygame.sprite.Sprite):
 
 class Arcane_tower_lvl1(Tower):
       def __init__(self,game,all_t,box):
-            pygame.sprite.Sprite.__init__(self)
-
             self.my_data = all_t.arcane_tower_lvl1_data
 
             Tower.__init__(self,game,box)
 
 class Arcane_tower_lvl2(Tower):
       def __init__(self,game,all_t,box):
-            pygame.sprite.Sprite.__init__(self)
-
             self.my_data = all_t.arcane_tower_lvl2_data
 
             Tower.__init__(self,game,box)
 
 class Arcane_tower_lvl3(Tower):
       def __init__(self,game,all_t,box):
-            pygame.sprite.Sprite.__init__(self)
-
             self.my_data = all_t.arcane_tower_lvl3_data
 
             Tower.__init__(self,game,box)
 
 class Fire_tower_lvl1(Tower):
       def __init__(self,game,all_t,box):
-            pygame.sprite.Sprite.__init__(self)
-
             self.my_data = all_t.fire_tower_lvl1_data
 
             Tower.__init__(self,game,box)
 
 class Fire_tower_lvl2(Tower):
       def __init__(self,game,all_t,box):
-            pygame.sprite.Sprite.__init__(self)
-
             self.my_data = all_t.fire_tower_lvl2_data
 
             Tower.__init__(self,game,box)
@@ -551,40 +542,30 @@ class Fire_tower_lvl2(Tower):
 
 class Fire_tower_lvl3(Fire_tower_lvl2,pygame.sprite.Sprite):
       def __init__(self,game,all_t,box):
-            pygame.sprite.Sprite.__init__(self)
-
             self.my_data = all_t.fire_tower_lvl3_data
 
             Tower.__init__(self,game,box)
 
 class Lightning_tower_lvl1(Tower):
       def __init__(self,game,all_t,box):
-            pygame.sprite.Sprite.__init__(self)
-
             self.my_data = all_t.lightning_tower_lvl1_data
 
             Tower.__init__(self,game,box)
 
 class Lightning_tower_lvl2(Tower):
       def __init__(self,game,all_t,box):
-            pygame.sprite.Sprite.__init__(self)
-
             self.my_data = all_t.lightning_tower_lvl2_data
 
             Tower.__init__(self,game,box)
 
 class Lightning_tower_lvl3(Tower):
       def __init__(self,game,all_t,box):
-            pygame.sprite.Sprite.__init__(self)
-
             self.my_data = all_t.lightning_tower_lvl3_data
 
             Tower.__init__(self,game,box)
 
 class Ice_tower_lvl1(Tower):
       def __init__(self,game,all_t,box):
-            pygame.sprite.Sprite.__init__(self)
-
             self.my_data = all_t.ice_tower_lvl1_data
 
             self.firing = False
@@ -634,8 +615,6 @@ class Ice_tower_lvl1(Tower):
 
 class Ice_tower_lvl2(Ice_tower_lvl1,pygame.sprite.Sprite):
       def __init__(self,game,all_t,box):
-            pygame.sprite.Sprite.__init__(self)
-
             self.my_data = all_t.ice_tower_lvl2_data
 
             self.firing = False
@@ -644,8 +623,6 @@ class Ice_tower_lvl2(Ice_tower_lvl1,pygame.sprite.Sprite):
 
 class Ice_tower_lvl3(Ice_tower_lvl1,pygame.sprite.Sprite):
       def __init__(self,game,all_t,box):
-            pygame.sprite.Sprite.__init__(self)
-
             self.my_data = all_t.ice_tower_lvl3_data
 
             self.firing = False
@@ -654,6 +631,8 @@ class Ice_tower_lvl3(Ice_tower_lvl1,pygame.sprite.Sprite):
 
 class Siege_engine(Tower):
       def __init__(self,game,box):
+            pygame.sprite.Sprite.__init__(self)
+
             x = box.posX
             y = box.posY
             self.box = box
@@ -694,8 +673,6 @@ class Siege_engine(Tower):
 
 class Ballista(Siege_engine):
       def __init__(self,game,all_t,box):
-            pygame.sprite.Sprite.__init__(self)
-
             self.my_data = all_t.ballista_data
 
             Siege_engine.__init__(self,game,box)
@@ -705,8 +682,6 @@ class Ballista(Siege_engine):
 
 class Catapult(Siege_engine):
       def __init__(self,game,all_t,box):
-            pygame.sprite.Sprite.__init__(self)
-
             self.my_data = all_t.catapult_data
 
             Siege_engine.__init__(self,game,box)
