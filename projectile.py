@@ -215,7 +215,7 @@ class Arcane_bolt_lvl1_data(Arcane_bolt_data):
 
             Arcane_bolt_data.__init__(self)
 
-            self.impact_tag = ARCANE_TOWER_IMPACT_TAG
+            self.impact_tag = ARCANE_TOWER_LVL1_IMPACT_TAG
 
 class Arcane_bolt_lvl2_data(Arcane_bolt_data):
       def __init__(self):
@@ -223,7 +223,7 @@ class Arcane_bolt_lvl2_data(Arcane_bolt_data):
 
             Arcane_bolt_data.__init__(self)
 
-            self.impact_tag = ARCANE_TOWER_IMPACT_TAG
+            self.impact_tag = ARCANE_TOWER_LVL2_IMPACT_TAG
 
 class Arcane_bolt_lvl3_data(Arcane_bolt_data):
       def __init__(self):
@@ -231,7 +231,7 @@ class Arcane_bolt_lvl3_data(Arcane_bolt_data):
 
             Arcane_bolt_data.__init__(self)
 
-            self.impact_tag = ARCANE_TOWER_IMPACT_TAG
+            self.impact_tag = ARCANE_TOWER_LVL3_IMPACT_TAG
 
 class Fire_bolt_data():
       def __init__(self):
@@ -262,7 +262,7 @@ class Fire_bolt_lvl1_data(Fire_bolt_data):
 
             Fire_bolt_data.__init__(self)
 
-            self.impact_tag = FIRE_TOWER_IMPACT_TAG
+            self.impact_tag = FIRE_TOWER_LVL1_IMPACT_TAG
 
 class Fire_bolt_lvl2_data(Fire_bolt_data):
       def __init__(self):
@@ -270,7 +270,7 @@ class Fire_bolt_lvl2_data(Fire_bolt_data):
 
             Fire_bolt_data.__init__(self)
 
-            self.impact_tag = FIRE_TOWER_IMPACT_TAG
+            self.impact_tag = FIRE_TOWER_LVL2_IMPACT_TAG
 
 class Fire_bolt_lvl3_data(Fire_bolt_data):
       def __init__(self):
@@ -278,7 +278,7 @@ class Fire_bolt_lvl3_data(Fire_bolt_data):
 
             Fire_bolt_data.__init__(self)
 
-            self.impact_tag = FIRE_TOWER_IMPACT_TAG
+            self.impact_tag = FIRE_TOWER_LVL3_IMPACT_TAG
 
             self.margin_spawn = vec(0.0,10.0)
 
@@ -467,7 +467,7 @@ class Projectile(pygame.sprite.Sprite):
       def render(self):
             window.blit(self.current_image, (self.posX, self.posY))  
 
-class Arcane_bolt_lvl1(Projectile,pygame.sprite.Sprite):
+class Arcane_bolt_lvl1(Projectile):
       def __init__(self,all_p,x,y,target):
             pygame.sprite.Sprite.__init__(self)
 
@@ -475,7 +475,7 @@ class Arcane_bolt_lvl1(Projectile,pygame.sprite.Sprite):
 
             Projectile.__init__(self,all_p,x,y,target)
 
-class Arcane_bolt_lvl2(Projectile,pygame.sprite.Sprite):
+class Arcane_bolt_lvl2(Projectile):
       def __init__(self,all_p,x,y,target):
             pygame.sprite.Sprite.__init__(self)
 
@@ -483,7 +483,7 @@ class Arcane_bolt_lvl2(Projectile,pygame.sprite.Sprite):
 
             Projectile.__init__(self,all_p,x,y,target)
 
-class Arcane_bolt_lvl3(Projectile,pygame.sprite.Sprite):
+class Arcane_bolt_lvl3(Projectile):
       def __init__(self,all_p,x,y,target):
             pygame.sprite.Sprite.__init__(self)
 
@@ -491,7 +491,7 @@ class Arcane_bolt_lvl3(Projectile,pygame.sprite.Sprite):
 
             Projectile.__init__(self,all_p,x,y,target)
 
-class Fire_bolt_lvl1(Projectile,pygame.sprite.Sprite):
+class Fire_bolt_lvl1(Projectile):
       def __init__(self,all_p,x,y,target):
             pygame.sprite.Sprite.__init__(self)
 
@@ -528,7 +528,7 @@ class Fire_bolt_lvl1(Projectile,pygame.sprite.Sprite):
             self.rotate(self.my_data.images[self.current_frame])  
 
 # class Fire_bolt_lvl2(Fire_bolt_lvl1,pygame.sprite.Sprite):
-class Fire_bolt_lvl2(Projectile,pygame.sprite.Sprite):
+class Fire_bolt_lvl2(Projectile):
       def __init__(self,all_p,x,y,target):
             pygame.sprite.Sprite.__init__(self)
 
@@ -543,7 +543,7 @@ class Fire_bolt_lvl2(Projectile,pygame.sprite.Sprite):
             self.my_timer = 0
                     
 
-class Fire_bolt_lvl3(Fire_bolt_lvl1,pygame.sprite.Sprite):
+class Fire_bolt_lvl3(Fire_bolt_lvl1):
       def __init__(self,all_p,x,y,target):
             pygame.sprite.Sprite.__init__(self)
 
@@ -574,7 +574,7 @@ class Fire_bolt_lvl3(Fire_bolt_lvl1,pygame.sprite.Sprite):
                         self.all_p.add_fire_bolt_no_target(game,self.posX+self.my_data.margin_spawn[0],self.posY+self.my_data.margin_spawn[1],self.target,vec(1,0))
                         self.all_p.add_fire_bolt_no_target(game,self.posX-self.my_data.margin_spawn[0],self.posY+self.my_data.margin_spawn[1],self.target,vec(-1,0))
 
-class Fire_bolt_no_target(Projectile,pygame.sprite.Sprite):
+class Fire_bolt_no_target(Projectile):
       def __init__(self,all_p,x,y,impact_target,direction):
             pygame.sprite.Sprite.__init__(self)
 
@@ -639,7 +639,7 @@ class Fire_bolt_no_target(Projectile,pygame.sprite.Sprite):
                       game.all_impacts.add_impact(game,self,self.my_data.impact_tag)
                       pygame.sprite.Sprite.kill(self)
 
-class Light_bolt_lvl1(Projectile,pygame.sprite.Sprite):
+class Light_bolt_lvl1(Projectile):
       def __init__(self,all_p,x,y,target,damage):
             pygame.sprite.Sprite.__init__(self)
 
@@ -764,7 +764,7 @@ class Light_bolt_lvl1(Projectile,pygame.sprite.Sprite):
       def render(self):
             window.blit(self.current_image, self.rotated_image_rect)  
 
-class Light_bolt_lvl2(Light_bolt_lvl1,pygame.sprite.Sprite):
+class Light_bolt_lvl2(Light_bolt_lvl1):
       def __init__(self,all_p,x,y,target,damage):
             pygame.sprite.Sprite.__init__(self)
 
@@ -772,7 +772,7 @@ class Light_bolt_lvl2(Light_bolt_lvl1,pygame.sprite.Sprite):
 
             self.init(x,y,target,damage)
 
-class Light_bolt_lvl3(Light_bolt_lvl1,pygame.sprite.Sprite):
+class Light_bolt_lvl3(Light_bolt_lvl1):
       def __init__(self,all_p,x,y,target,damage):
             pygame.sprite.Sprite.__init__(self)
 
@@ -780,7 +780,7 @@ class Light_bolt_lvl3(Light_bolt_lvl1,pygame.sprite.Sprite):
 
             self.init(x,y,target,damage)
 
-class Ice_bolt_lvl1(Projectile,pygame.sprite.Sprite):
+class Ice_bolt_lvl1(Projectile):
       def __init__(self,all_p,x,y,target,tower):
             pygame.sprite.Sprite.__init__(self)
 
@@ -908,7 +908,7 @@ class Ice_bolt_lvl1(Projectile,pygame.sprite.Sprite):
       def render(self):
             window.blit(self.current_image, self.rotated_image_rect)  
 
-class Ice_bolt_lvl2(Ice_bolt_lvl1,pygame.sprite.Sprite):
+class Ice_bolt_lvl2(Ice_bolt_lvl1):
       def __init__(self,all_p,x,y,target,tower):
             pygame.sprite.Sprite.__init__(self)
 
@@ -916,7 +916,7 @@ class Ice_bolt_lvl2(Ice_bolt_lvl1,pygame.sprite.Sprite):
 
             self.init(x,y,target,tower)
 
-class Ice_bolt_lvl3(Ice_bolt_lvl1,pygame.sprite.Sprite):
+class Ice_bolt_lvl3(Ice_bolt_lvl1):
       def __init__(self,all_p,x,y,target,tower):
             pygame.sprite.Sprite.__init__(self)
 
@@ -924,7 +924,7 @@ class Ice_bolt_lvl3(Ice_bolt_lvl1,pygame.sprite.Sprite):
 
             self.init(x,y,target,tower)
 
-class Bolt(Projectile,pygame.sprite.Sprite):
+class Bolt(Projectile):
       def __init__(self,all_p,x,y,target):
             pygame.sprite.Sprite.__init__(self)
 
@@ -942,7 +942,7 @@ class Bolt(Projectile,pygame.sprite.Sprite):
                   if ((self.posX>WINDOW_WIDTH) or (self.posX<0)):
                       pygame.sprite.Sprite.kill(self)
  
-class Rock(Projectile,pygame.sprite.Sprite):
+class Rock(Projectile):
       def __init__(self,all_p,x,y,target):
             pygame.sprite.Sprite.__init__(self)
 

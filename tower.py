@@ -692,7 +692,7 @@ class Siege_engine(Tower):
             game.gold.gold_gain(game,self,self.my_data.gold_cost)
 
 
-class Ballista(Siege_engine,pygame.sprite.Sprite):
+class Ballista(Siege_engine):
       def __init__(self,game,all_t,box):
             pygame.sprite.Sprite.__init__(self)
 
