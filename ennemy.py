@@ -3,6 +3,7 @@ from utilitaries import *
 from functions import *
 from dead_body import *
 from tower import * 
+from magic_effects import * 
 
 GOBLIN_TAG = 1
 OGRE_TAG = 2
@@ -163,9 +164,12 @@ class Blue_nec_data(Ennemy_data):
 
             Ennemy_data.__init__(self)
             self.init_casting_data()
+            # self.init_blue_nec_power()
 
             self.summon_tag = BLUE_SKEL_TAG
             self.dead_body_tag = DEAD_BLUE_NEC_TAG
+
+            self.wave_cd = self.my_dict["WAVE_COOLDOWN"]
 
 class Red_nec_data(Ennemy_data):
       def __init__(self):
@@ -460,9 +464,15 @@ class Blue_Necromancer(Necromancer):
 
             Ennemy.__init__(self,x,y,rand_offset)
             Necromancer.__init__(self,all_e)
+            self.wave_timer = self.my_data.my_dict["FIRST_WAVE_TIME"]*1000
 
       def use_power(self,game):
             self.rez_dead_bodies(game)
+
+            self.wave_timer -= game.timestep
+            if self.wave_timer < 0.0:
+                  game.all_magic_effects.add_wave(self)
+                  self.wave_timer = self.my_data.wave_cd*1000
 
 class Red_Necromancer(Necromancer):
       def __init__(self,all_e,x,y,rand_offset):

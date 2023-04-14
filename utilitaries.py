@@ -328,8 +328,10 @@ BLUE_NEC_DICT = {
 
 "NUMBER_FRAME_CASTING" : 5,
 "CASTING_IMAGE_PATH" : "Assets/Ennemies/Necromancers/Blue_Necromancer/SummonAnim/",
-"ANIMATION_CASTING_TOTAL_TIME" : 1500 # in ms
+"ANIMATION_CASTING_TOTAL_TIME" : 1500, # in ms
 
+"WAVE_COOLDOWN" : 10,   
+"FIRST_WAVE_TIME" : 2
 }
 
 #### RED_NEC
@@ -852,7 +854,7 @@ ICE_TOWER_LVL3_DICT = {
 BALLISTA_DICT = { 
 
 "NAME" : "Ballista",
-"HP_MAX" : 20.0,
+"HP_MAX" : 50.0,
 "RANGE" : 6.0, # multiplied by the square side
 "PRICE" : 5,
 "DAMAGE" : 10,
@@ -875,7 +877,7 @@ BALLISTA_DICT = {
 CATAPULT_DICT = { 
 
 "NAME" : "Catapult",
-"HP_MAX" : 20.0,
+"HP_MAX" : 100.0,
 "RANGE" : 8.0, # multiplied by the square side
 "PRICE" : 5,
 "DAMAGE" : 20,
@@ -1243,6 +1245,36 @@ ROCK_IMPACT_DICT = {
 
 }
 
+##############################################################
+
+###############     MAGICAL_EFFECTS     ###############
+
+##############################################################
+
+WAVE_DICT = {
+    
+"NUMBER_FRAME" : 25,
+"IMAGE_PATH" : "Assets/Ennemies/Necromancers/Blue_Necromancer/WaveAnim/",
+"OFFSET" : [0* RESIZE_COEFF,-40* RESIZE_COEFF],
+"TIME_PER_FRAME" : 100, # in ms,
+"HITBOX_FACTOR" : 1.0,
+"VELOCITY" : 0.3, # in ms
+"DAMAGE" : 10,
+"RESIZE_FACTOR" : 0.5*RESIZE_COEFF
+
+}
+
+HEAL_DICT = {
+
+"NUMBER_FRAME" : 149,
+"IMAGE_PATH" : "Assets/Effects/HealAnim",
+"OFFSET" : [0* RESIZE_COEFF,-40* RESIZE_COEFF],
+"TIME_PER_FRAME" : 50, # in ms,
+"TOTAL_TIME" : 5.0,
+"AMOUNT" : 5, # heal by seconds
+"RESIZE_FACTOR" : 0.5*RESIZE_COEFF
+
+}
 
 ##############################################################
 
@@ -1306,3 +1338,6 @@ SOUND_ARCANE_IMPACT_PATH = "Audio/Impact/ES_Energy Blasts 9-zone-000.mp3"
 SOUND_ARCANE_IMPACT_VOLUME = 0.0
 SOUND_ARCANE_IMPACT_MAX_TIME = 0 # in ms
 
+SOUND_WAVE_PATH = "Audio/Other_effect/ES_Ocean Waves Crash 3_cropped.mp3"
+SOUND_WAVE_VOLUME = 0.1
+SOUND_WAVE_MAX_TIME = 0 # in ms

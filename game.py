@@ -7,6 +7,7 @@ from base import *
 from tower import *
 from projectile import *
 from impact import * 
+from magic_effects import * 
 from ennemy import *
 from dead_body import *
 from game_mouse import *
@@ -51,8 +52,6 @@ class Game():
 
             self.mouse = Game_mouse()
 
-            loading_progress.value += 10
-
             self.spawning_mode = Spawning_mode(self)
 
             self.base = Base(self)
@@ -61,11 +60,15 @@ class Game():
 
             self.all_towers = All_towers()
 
+            loading_progress.value += 10
+
             self.all_projectiles = All_projectiles()
 
             loading_progress.value += 10
 
             self.all_impacts = All_impacts()
+
+            self.all_magic_effects = All_magic_effects(self)
 
             loading_progress.value += 10
 
@@ -111,6 +114,10 @@ class Game():
             for impact in self.all_impacts:
                   impact.explode(self)
                   impact.check_impact(self)
+
+            for effect in self.all_magic_effects:
+                  effect.advance(self)
+                  effect.check_impact(self)
 
             for gold_gain in self.all_gold_anim.list:
                   gold_gain.move(self)
@@ -167,6 +174,9 @@ class Game():
             for impact in self.all_impacts:
                   self.object_to_render.append(impact)
 
+            for effect in self.all_magic_effects:
+                  self.object_to_render.append(effect)
+
             for gold_gain in self.all_gold_anim.list:
                   self.object_to_render.append(gold_gain)
 
@@ -215,6 +225,8 @@ class Game():
             self.all_projectiles.empty()
 
             self.all_impacts.empty()
+
+            self.all_magic_effects.empty()
 
             self.all_ennemies.empty()
 

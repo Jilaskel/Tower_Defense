@@ -113,9 +113,9 @@ class Spawning_mode():
             x_path = self.spawning_margin
             side = game.background.square_side
             
-            # y_path = game.background.menu_height + side*(1+2*path_number) + (random.randint(0,1)-0.5)*side*0.5  #used for tests
+            y_path = game.background.menu_height + side*(1+2*path_number) + (random.randint(0,1)-0.5)*side*0.5  #used for tests
             rand_offset = random.random()-0.5
-            y_path = game.background.menu_height + side*(1+2*path_number) + rand_offset*side*0.5
+            # y_path = game.background.menu_height + side*(1+2*path_number) + rand_offset*side*0.5
 
             if (TAG==GOBLIN_TAG):
                 game.all_ennemies.add_goblin(x_path,y_path,rand_offset)

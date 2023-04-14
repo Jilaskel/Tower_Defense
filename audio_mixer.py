@@ -16,6 +16,8 @@ class All_mixers():
         
         self.impact_mixer = Impact_mixer()
 
+        self.magical_effect_mixer = Magical_effect_mixer()
+
 class Music_mixer():
     def __init__(self):
         pygame.mixer.music.load(MUSIC_FILE_PATH)
@@ -116,3 +118,10 @@ class Impact_mixer():
 
         self.arcane_impact_sound = pygame.mixer.Sound(SOUND_ARCANE_IMPACT_PATH)
         self.arcane_impact_sound.set_volume(SOUND_ARCANE_IMPACT_VOLUME*AUDIO_EFFECTS_COEFF)
+
+
+class Magical_effect_mixer():
+    def __init__(self):
+
+        self.wave_sound = pygame.mixer.Sound(SOUND_WAVE_PATH)
+        self.wave_sound.set_volume(SOUND_WAVE_VOLUME*AUDIO_EFFECTS_COEFF)
