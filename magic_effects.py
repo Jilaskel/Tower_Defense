@@ -11,7 +11,7 @@ class All_magic_effects(pygame.sprite.Group):
 
             self.wave_data = Wave_data()
             self.heal_data = Heal_data()
-            # self.buff_effect_data = Buff_effect_data()
+            self.buff_data = Buff_data()
 
 
       def add_wave(self,mage):
@@ -22,6 +22,9 @@ class All_magic_effects(pygame.sprite.Group):
             self.add(Heal(self,target))
             # game.all_mixers.magical_effect_mixer.wave_sound.play(maxtime=SOUND_WAVE_MAX_TIME)
 
+      def add_buff(self,target):
+            self.add(Buff(self,target))
+            # game.all_mixers.magical_effect_mixer.wave_sound.play(maxtime=SOUND_WAVE_MAX_TIME)
 
 class Magic_effect_data():
       def __init__(self):
@@ -57,6 +60,18 @@ class Heal_data(Magic_effect_data):
 
             self.amount = self.my_dict["AMOUNT"]
 
+class Buff_data(Magic_effect_data):
+      def __init__(self):
+            self.my_dict = BUFF_DICT
+
+            Magic_effect_data.__init__(self)
+
+            self.total_time = self.my_dict["TOTAL_TIME"]
+
+            self.velocity_coeff = self.my_dict["VELOCITY_COEFF"]
+
+            self.damage_coeff = self.my_dict["DAMAGE_COEFF"]
+
 class Magical_effect(pygame.sprite.Sprite):
       def __init__(self,target):
             pygame.sprite.Sprite.__init__(self)
@@ -74,7 +89,7 @@ class Magical_effect(pygame.sprite.Sprite):
             self.posX = target.posX + target.my_data.image_size[0] - self.image_size[0] + self.my_data.offset[0]
             self.posY = target.posY + target.my_data.image_size[1] - self.image_size[1] + self.my_data.offset[1]
             
-            self.rendering_layer = target.rendering_layer - 0.1
+            self.rendering_layer = target.rendering_layer + self.rendering_layer_offset
             # self.rendering_layer = compute_rendering_layer_number(self)
 
       def advance(self,game):
@@ -86,6 +101,7 @@ class Magical_effect(pygame.sprite.Sprite):
                   self.my_timer = 0.0
             
             if ((self.my_total_timer>self.my_data.total_time*1000) or not(pygame.sprite.Sprite.alive(self.my_target))):
+                  self.stop_effect()
                   pygame.sprite.Sprite.kill(self)
             else:
                   self.current_image= self.my_data.images[self.current_frame]  
@@ -95,18 +111,42 @@ class Magical_effect(pygame.sprite.Sprite):
       def check_impact(self,game):
             pass
 
+      def stop_effect(self):
+            pass
+
       def render(self):
             window.blit(self.current_image, (self.posX, self.posY)) 
 
 class Heal(Magical_effect):
       def __init__(self,all_ef,target):
             self.my_data = all_ef.heal_data
+            self.rendering_layer_offset = - 0.1
 
             Magical_effect.__init__(self,target)
 
+
       def check_impact(self,game):
             self.my_target.hp += self.my_data.amount*game.timestep*0.001
-            self.my_target.hp = min(self.my_target.hp,self.my_target.my_data.hp_max)
+            self.my_target.hp = min(self.my_target.hp,self.my_target.hp_max)
+
+class Buff(Magical_effect):
+      def __init__(self,all_ef,target):
+            self.my_data = all_ef.buff_data
+            self.rendering_layer_offset = 0.1
+
+            Magical_effect.__init__(self,target)
+
+            self.buff_applied = False
+
+      def check_impact(self,game):
+            if not(self.buff_applied):
+                  self.my_target.velocity = self.my_target.velocity*self.my_data.velocity_coeff
+                  self.my_target.damage = self.my_target.damage*self.my_data.damage_coeff
+                  self.buff_applied = True
+
+      def stop_effect(self):
+            self.my_target.velocity = self.my_target.velocity/self.my_data.velocity_coeff
+            self.my_target.damage = self.my_target.damage/self.my_data.damage_coeff
 
 class Wave(Magical_effect):
       def __init__(self,all_ef,mage):

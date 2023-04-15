@@ -190,7 +190,7 @@ P1_DRAGON_SPAWNING_PERIOD = 10.0   ## in seconds
 
 ##############################################################
 
-BASE_GATE_HP_MAX = 100
+BASE_GATE_HP_MAX = 1000
 
 ##############################################################
 
@@ -371,13 +371,15 @@ RED_NEC_DICT = {
 "ICED_NAME" : "Iced Ice Necro",
 "ICED_TIME_MAX" : 10.0, # in second
 
-"REZ_RADIUS" : 2.0,
+"REZ_RADIUS" : 2.0,  # also used for buffing
 "REZ_COOLDOWN" : 2.0, # in second
 
 "NUMBER_FRAME_CASTING" : 5,
 "CASTING_IMAGE_PATH" : "Assets/Ennemies/Necromancers/Red_Necromancer/SummonAnim/",
-"ANIMATION_CASTING_TOTAL_TIME" : 1500 # in ms
+"ANIMATION_CASTING_TOTAL_TIME" : 1500, # in ms
 
+"BUFF_COOLDOWN" : 5,   
+"FIRST_BUFF_TIME" : 2
 }
 
 #### GREEN_NEC
@@ -430,7 +432,7 @@ GREEN_NEC_DICT = {
 BLUE_SKEL_DICT = {
 
 "NAME" : "Ice Skeleton",
-"HP_MAX" : 100.0,
+"HP_MAX" : 400.0,
 "DAMAGE" : 10,
 "VELOCITY" : 0.1 * RESIZE_COEFF, # pixel by ms
 "GOLD_EARNING" : 4,
@@ -473,7 +475,7 @@ BLUE_SKEL_DICT = {
 RED_SKEL_DICT = {
 
 "NAME" : "Ice Skeleton",
-"HP_MAX" : 100.0,
+"HP_MAX" : 400.0,
 "DAMAGE" : 10,
 "VELOCITY" : 0.1 * RESIZE_COEFF, # pixel by ms
 "GOLD_EARNING" : 4,
@@ -516,7 +518,7 @@ RED_SKEL_DICT = {
 GREEN_SKEL_DICT = {
 
 "NAME" : "Ice Skeleton",
-"HP_MAX" : 100.0,
+"HP_MAX" : 400.0,
 "DAMAGE" : 10,
 "VELOCITY" : 0.1 * RESIZE_COEFF, # pixel by ms
 "GOLD_EARNING" : 4,
@@ -1272,6 +1274,19 @@ HEAL_DICT = {
 "TIME_PER_FRAME" : 20, # in ms,
 "TOTAL_TIME" : 5.0,
 "AMOUNT" : 40, # heal by seconds
+"RESIZE_FACTOR" : 0.5*RESIZE_COEFF
+
+}
+
+BUFF_DICT = {
+
+"NUMBER_FRAME" : 78,
+"IMAGE_PATH" : "Assets/Effects/BuffAnim/",
+"OFFSET" : [-90* RESIZE_COEFF,30* RESIZE_COEFF],
+"TIME_PER_FRAME" : 20, # in ms,
+"TOTAL_TIME" : 5.0,
+"VELOCITY_COEFF" : 1.5, # heal by seconds
+"DAMAGE_COEFF" : 2,
 "RESIZE_FACTOR" : 0.5*RESIZE_COEFF
 
 }

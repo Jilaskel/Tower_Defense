@@ -164,7 +164,6 @@ class Blue_nec_data(Ennemy_data):
 
             Ennemy_data.__init__(self)
             self.init_casting_data()
-            # self.init_blue_nec_power()
 
             self.summon_tag = BLUE_SKEL_TAG
             self.dead_body_tag = DEAD_BLUE_NEC_TAG
@@ -180,6 +179,8 @@ class Red_nec_data(Ennemy_data):
 
             self.summon_tag = RED_SKEL_TAG
             self.dead_body_tag = DEAD_RED_NEC_TAG
+
+            self.buff_cd = self.my_dict["BUFF_COOLDOWN"]
 
 class Green_nec_data(Ennemy_data):
       def __init__(self):
@@ -251,9 +252,11 @@ class Ennemy(pygame.sprite.Sprite):
       def __init__(self,x,y,rand_offset):
             pygame.sprite.Sprite.__init__(self)
 
-            self.hp = self.my_data.hp_max
+            self.hp_max = self.my_data.hp_max
+            self.hp = self.hp_max
 
             self.velocity = self.my_data.velocity
+            self.damage = self.my_data.damage
 
             self.current_image = self.my_data.static_image
 
@@ -350,7 +353,7 @@ class Ennemy(pygame.sprite.Sprite):
                               self.my_timer = 0.0
                               if (self.attack_frame==self.my_data.hitting_frame):
                                     for i in range (len(self.detected_ennemies)):
-                                          self.detected_ennemies[i].hp -= self.my_data.damage
+                                          self.detected_ennemies[i].hp -= self.damage
 
                         self.current_image = self.my_data.image_attacking[self.attack_frame]
                               
@@ -391,7 +394,7 @@ class Ennemy(pygame.sprite.Sprite):
                                     self.my_timer = 0.0
                                     if (self.attack_frame==self.my_data.hitting_frame):
                                           for i in range (len(self.detected_ennemies)):
-                                                self.detected_ennemies[i].hp -= self.my_data.damage
+                                                self.detected_ennemies[i].hp -= self.damage
                               self.current_image = self.my_data.image_attacking[self.attack_frame]
 
                                                       
@@ -502,9 +505,21 @@ class Red_Necromancer(Necromancer):
 
             Ennemy.__init__(self,x,y,rand_offset)
             Necromancer.__init__(self,all_e)
+            self.buff_timer = self.my_data.my_dict["FIRST_BUFF_TIME"]*1000
 
       def use_power(self,game):
             self.rez_dead_bodies(game)
+
+            self.buff_timer -= game.timestep
+            if self.buff_timer < 0.0:
+                  self.detected_allies = pygame.sprite.spritecollide(self.range_hitbox, game.all_ennemies, False, pygame.sprite.collide_circle)
+                  if self.detected_allies:
+                        for ally in self.detected_allies:
+                              game.all_magic_effects.add_buff(ally)
+                        self.buff_timer = self.my_data.buff_cd*1000
+                        self.using_power = True
+                        self.cast_frame = 0
+                        self.my_timer = 0.0
 
 class Green_Necromancer(Necromancer):
       def __init__(self,all_e,x,y,rand_offset):

@@ -67,7 +67,7 @@ class Selected_object():
                 txt_hp = self.font.render(txt,True,self.font_color)
                 window.blit(txt_hp,(self.font_posX,self.font_posY)) 
 
-                txt = "HP :  " + str(int(self.obj.hp)) + " / " + str(int(self.obj.my_data.hp_max))
+                txt = "HP :  " + str(int(self.obj.hp)) + " / " + str(int(self.obj.hp_max))
                 txt_hp = self.font.render(txt,True,self.font_color)
                 window.blit(txt_hp,(self.font_posX,self.font_posY+1.0*self.spaceY)) 
             else:

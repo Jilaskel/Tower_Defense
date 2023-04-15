@@ -120,9 +120,7 @@ class Dead_body_data():
             self.iced_hp_max = self.my_dict["ICED_HP_MAX"]
 
             ## for selected obj
-            self.hp_max = self.iced_hp_max
             self.name = self.my_dict["ICED_NAME"]
-
 
 class Dead_goblin_data(Dead_body_data):
       def __init__(self):
@@ -199,7 +197,8 @@ class Dead_body(pygame.sprite.Sprite):
                   if rezable:
                         all_d.all_rezable_bodies.add(self)
 
-            self.hp = self.my_data.iced_hp_max
+            self.hp_max = self.my_data.iced_hp_max
+            self.hp = self.hp_max
             self.rect = emy_alive.rect
             self.radius = emy_alive.radius
 

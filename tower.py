@@ -345,7 +345,8 @@ class Tower(pygame.sprite.Sprite):
             y = box.posY
             self.box = box
 
-            self.hp = self.my_data.hp_max
+            self.hp_max = self.my_data.hp_max
+            self.hp = self.hp_max
       
             self.current_image = self.my_data.static_image  
             self.posX = x + self.my_data.image_offset[0]
@@ -637,7 +638,8 @@ class Siege_engine(Tower):
             y = box.posY
             self.box = box
 
-            self.hp = self.my_data.hp_max
+            self.hp_max = self.my_data.hp_max
+            self.hp = self.hp_max
 
             self.current_image = self.my_data.static_image    
             self.posX = x + self.my_data.image_offset[0]
