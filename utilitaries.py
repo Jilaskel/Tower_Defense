@@ -372,7 +372,7 @@ RED_NEC_DICT = {
 "ICED_TIME_MAX" : 10.0, # in second
 
 "REZ_RADIUS" : 2.0,
-"REZ_COOLDOWN" : 5.0, # in second
+"REZ_COOLDOWN" : 2.0, # in second
 
 "NUMBER_FRAME_CASTING" : 5,
 "CASTING_IMAGE_PATH" : "Assets/Ennemies/Necromancers/Red_Necromancer/SummonAnim/",
@@ -1267,11 +1267,11 @@ WAVE_DICT = {
 HEAL_DICT = {
 
 "NUMBER_FRAME" : 149,
-"IMAGE_PATH" : "Assets/Effects/HealAnim",
-"OFFSET" : [0* RESIZE_COEFF,-40* RESIZE_COEFF],
-"TIME_PER_FRAME" : 50, # in ms,
+"IMAGE_PATH" : "Assets/Effects/HealAnim/",
+"OFFSET" : [-80* RESIZE_COEFF,30* RESIZE_COEFF],
+"TIME_PER_FRAME" : 20, # in ms,
 "TOTAL_TIME" : 5.0,
-"AMOUNT" : 5, # heal by seconds
+"AMOUNT" : 40, # heal by seconds
 "RESIZE_FACTOR" : 0.5*RESIZE_COEFF
 
 }

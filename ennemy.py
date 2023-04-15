@@ -423,6 +423,8 @@ class Necromancer(Ennemy):
             self.detected_bodies = None
             self.image_offset = self.my_data.image_offset
 
+            self.using_power = False
+
             self.range_hitbox = Range_Hitbox(self,self.rect.w,self.rect.h,self.my_data.rez_radius,circular=True)
 
       def rez_dead_bodies(self,game):
@@ -432,6 +434,8 @@ class Necromancer(Ennemy):
                   if self.detected_bodies:
                         game.all_dead_bodies.all_rezable_bodies.remove(self.detected_bodies[0])
                         self.rez_done = False
+                        self.cast_frame = 0
+                        self.my_timer = 0.0
 
             if self.detected_bodies:
                   self.casting = True
@@ -455,6 +459,21 @@ class Necromancer(Ennemy):
                         self.casting = False
                         self.current_image = self.my_data.image_casting[self.my_data.number_frame_casting-1]
 
+            elif (self.using_power):
+                  self.casting = True
+                  self.my_timer += game.timestep
+                  self.rez_timer = 0.0
+
+                  if self.my_timer>self.my_data.time_per_frame_c:
+                        self.cast_frame += 1
+                        self.my_timer = 0.0    
+                  if (self.cast_frame<self.my_data.number_frame_casting):
+                        self.current_image = self.my_data.image_casting[self.cast_frame]
+                  else:
+                        self.current_image = self.my_data.image_casting[self.my_data.number_frame_casting-1]
+                        self.casting = False
+                        self.using_power = False
+
             else:
                   self.casting = False            
 
@@ -473,6 +492,9 @@ class Blue_Necromancer(Necromancer):
             if self.wave_timer < 0.0:
                   game.all_magic_effects.add_wave(self)
                   self.wave_timer = self.my_data.wave_cd*1000
+                  self.using_power = True
+                  self.cast_frame = 0
+                  self.my_timer = 0.0
 
 class Red_Necromancer(Necromancer):
       def __init__(self,all_e,x,y,rand_offset):

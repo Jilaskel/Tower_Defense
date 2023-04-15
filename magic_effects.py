@@ -10,7 +10,7 @@ class All_magic_effects(pygame.sprite.Group):
             self.game = game
 
             self.wave_data = Wave_data()
-            self.heal_effect_data = Heal_effect_data()
+            self.heal_data = Heal_data()
             # self.buff_effect_data = Buff_effect_data()
 
 
@@ -55,13 +55,13 @@ class Heal_data(Magic_effect_data):
 
             self.total_time = self.my_dict["TOTAL_TIME"]
 
-            self.damage = self.my_dict["AMOUNT"]
+            self.amount = self.my_dict["AMOUNT"]
 
 class Magical_effect(pygame.sprite.Sprite):
-      def __init__(self,all_ef,mage):
+      def __init__(self,target):
             pygame.sprite.Sprite.__init__(self)
 
-            self.my_data = all_ef.wave_data
+            self.my_target = target
 
             self.image_size = self.my_data.image_size
 
@@ -69,49 +69,44 @@ class Magical_effect(pygame.sprite.Sprite):
             self.current_image = self.my_data.images[self.current_frame]
 
             self.my_timer = 0
+            self.my_total_timer = 0
 
-            self.posX = mage.posX + self.my_data.offset[0]
-            self.posY = mage.posY + self.my_data.offset[1]
-            self.rendering_layer = compute_rendering_layer_number(self)
-
-            self.rect = self.current_image.get_rect()
-            self.rect.x = self.posX + self.rect.width*0.5
-            self.rect.width = self.rect.width*0.5
-            self.rect.y = self.posY + self.rect.height*0.5
-            self.rect.height = self.rect.height*0.5
-
-            self.damaged_enmy = []
+            self.posX = target.posX + target.my_data.image_size[0] - self.image_size[0] + self.my_data.offset[0]
+            self.posY = target.posY + target.my_data.image_size[1] - self.image_size[1] + self.my_data.offset[1]
+            
+            self.rendering_layer = target.rendering_layer - 0.1
+            # self.rendering_layer = compute_rendering_layer_number(self)
 
       def advance(self,game):
             self.my_timer += game.timestep
             if self.my_timer>self.my_data.time_per_frame:
                   self.current_frame += 1
+                  self.current_frame = self.current_frame%self.my_data.number_frame
+                  self.my_total_timer += self.my_timer
                   self.my_timer = 0.0
             
-            if (self.current_frame>(self.my_data.number_frame-1)):
+            if ((self.my_total_timer>self.my_data.total_time*1000) or not(pygame.sprite.Sprite.alive(self.my_target))):
                   pygame.sprite.Sprite.kill(self)
             else:
                   self.current_image= self.my_data.images[self.current_frame]  
 
-            dx = self.my_data.velocity * game.timestep
-            self.posX += dx
-            self.rect.x = self.posX
+            self.posX = self.my_target.posX + self.my_data.offset[0]
 
       def check_impact(self,game):
-            self.hit_ennemies = pygame.sprite.spritecollide(self, game.all_towers.all_siege_engines, False)
-            if self.hit_ennemies:
-                for i in range (len(self.hit_ennemies)):
-                        if not (self.hit_ennemies[i] in self.damaged_enmy):
-                              self.hit_ennemies[i].hp -= self.my_data.damage
-                              self.damaged_enmy.append(self.hit_ennemies[i])
+            pass
 
       def render(self):
             window.blit(self.current_image, (self.posX, self.posY)) 
 
 class Heal(Magical_effect):
-      def advance(self,game):
-            Magical_effect.advance(game)
+      def __init__(self,all_ef,target):
+            self.my_data = all_ef.heal_data
 
+            Magical_effect.__init__(self,target)
+
+      def check_impact(self,game):
+            self.my_target.hp += self.my_data.amount*game.timestep*0.001
+            self.my_target.hp = min(self.my_target.hp,self.my_target.my_data.hp_max)
 
 class Wave(Magical_effect):
       def __init__(self,all_ef,mage):
@@ -119,6 +114,8 @@ class Wave(Magical_effect):
 
             self.my_data = all_ef.wave_data
 
+            self.all_ef = all_ef
+
             self.image_size = self.my_data.image_size
 
             self.current_frame = 0
@@ -137,6 +134,7 @@ class Wave(Magical_effect):
             self.rect.height = self.rect.height*0.5
 
             self.damaged_enmy = []
+            self.healed_allies = []
 
       def advance(self,game):
             self.my_timer += game.timestep
@@ -161,4 +159,9 @@ class Wave(Magical_effect):
                               self.hit_ennemies[i].hp -= self.my_data.damage
                               self.damaged_enmy.append(self.hit_ennemies[i])
 
- 
+            self.hit_allies = pygame.sprite.spritecollide(self, game.all_ennemies, False)
+            if self.hit_allies:
+                for i in range (len(self.hit_allies)):
+                        if not (self.hit_allies[i] in self.healed_allies):
+                              self.all_ef.add_heal(self.hit_allies[i])
+                              self.healed_allies.append(self.hit_allies[i])

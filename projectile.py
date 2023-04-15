@@ -623,6 +623,9 @@ class Fire_bolt_no_target(Projectile):
                   if ((self.posX>(x_walls-side*0.5)) or (self.posX<(x_bush*0.2))):
                       self.target = pygame.sprite.Sprite()
                       self.target.rect = pygame.Rect(self.posX,self.posY,0.5*side,0.5*side)
+                      self.target.posX = self.posX
+                      self.target.posY = self.posY
+                      self.target.rendering_layer = self.rendering_layer
                       game.all_impacts.add_impact(game,self,self.my_data.impact_tag)
                       pygame.sprite.Sprite.kill(self)
 

@@ -144,7 +144,13 @@ class Impact(pygame.sprite.Sprite):
 
         self.posX = projectile.target.rect.center[0]-self.my_data.offset[0]
         self.posY = projectile.target.rect.center[1]-self.my_data.offset[1]
-        self.rendering_layer = compute_rendering_layer_number(self)
+        margin = - 20.0 * RESIZE_COEFF
+        if ((projectile.posY+margin)<projectile.target.posY):
+             self.rendering_layer = projectile.target.rendering_layer - 0.1
+        else:
+             self.rendering_layer = projectile.target.rendering_layer + 0.1
+
+      #   self.rendering_layer = compute_rendering_layer_number(self)
 
         self.rect = self.current_image.get_rect()
         self.rect.x = self.posX
