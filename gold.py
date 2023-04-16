@@ -14,6 +14,8 @@ class Gold():
         self.font_posY = 0.45 * BACKGROUND_SQUARE_SIDE
 
         self.rendering_layer = TOTAL_NUMBER_RENDERING_LAYER-1
+
+        self.gold_earning = 0.0
  
     def gold_gain(self,game,obj,amount):
         self.amount += amount
@@ -22,6 +24,13 @@ class Gold():
             game.all_mixers.mouse_mixer.gold_gain_sound.play()
         else:
             game.all_mixers.mouse_mixer.big_gold_gain_sound.play()
+
+    def gold_earn(self,game):
+        self.gold_earning += game.timestep*GOLD_EARNING_WITH_TIME*0.001
+        if self.gold_earning>1:
+            self.gold_earning -= 1
+            self.amount += 1
+    
 
     def reset(self):
         self.amount = GOLD_STARTING_AMOUNT

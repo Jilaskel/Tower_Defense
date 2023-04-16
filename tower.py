@@ -171,6 +171,14 @@ class Tower_data():
             self.anim_total_time_r = self.my_dict["ANIMATION_RELOADING_TOTAL_TIME"]
             self.time_per_frame_r = self.anim_total_time_r/self.number_frame_reloading # in ms
 
+            self.image_rooting = []
+            self.number_frame_rooting = self.my_dict["NUMBER_FRAME_ROOTING"]
+            for i in range(1,self.number_frame_rooting+1):
+                  self.image_rooting.append(pygame.image.load(self.my_dict["ROOT_IMAGE_PATH"]+str(i).zfill(4)+".png").convert_alpha())   
+                  self.image_rooting[i-1] = pygame.transform.scale(self.image_rooting[i-1],vec(self.image_rooting[i-1].get_size())*self.my_dict["RESIZE_FACTOR"])
+            self.anim_total_time_root = self.my_dict["ANIMATION_ROOTING_TOTAL_TIME"]
+            self.time_per_frame_root = self.my_dict["ANIMATION_ROOTING_TIME_PER_FRAME"] # in ms            
+
 class Siege_engine_data():
       def __init__(self):
             self.name = self.my_dict["NAME"] 
@@ -194,14 +202,6 @@ class Siege_engine_data():
                   self.image_attacking[i-1] = pygame.transform.scale(self.image_attacking[i-1],vec(self.image_attacking[i-1].get_size())*self.my_dict["RESIZE_FACTOR"])
             self.anim_total_time_a = self.my_dict["ANIMATION_ATTACKING_TOTAL_TIME"]
             self.time_per_frame_a = self.anim_total_time_a/self.number_frame_attacking # in ms
-
-            self.image_reloading = []
-            self.number_frame_reloading = self.my_dict["NUMBER_FRAME_ATTACKING"]
-            for i in range(1,self.number_frame_reloading+1):
-                  self.image_reloading.append(pygame.image.load(self.my_dict["ATTACK_IMAGE_PATH"]+str(self.number_frame_reloading-i+1).zfill(4)+".png").convert_alpha())   
-                  self.image_reloading[i-1] = pygame.transform.scale(self.image_reloading[i-1],vec(self.image_reloading[i-1].get_size())*self.my_dict["RESIZE_FACTOR"])
-            self.anim_total_time_r = self.my_dict["ANIMATION_RELOADING_TOTAL_TIME"]
-            self.time_per_frame_r = self.anim_total_time_r/self.number_frame_reloading # in ms
 
             self.image_reloading = []
             offset_degeu = 5
@@ -365,6 +365,10 @@ class Tower(pygame.sprite.Sprite):
             self.attacking = True
             self.reloading = False
 
+            self.rooted = False
+            self.root_frame = 0
+            self.root_timer = 0.0
+
             self.anim_frame_r = 0
             self.anim_frame_a = 0
 
@@ -383,57 +387,79 @@ class Tower(pygame.sprite.Sprite):
             game.gold.gold_gain(game,self,self.my_data.gold_cost)
 
       def check_ennemies(self,game):
-            if self.range_hitbox.circular:
-                  self.detected_ennemies = pygame.sprite.spritecollide(self.range_hitbox, game.all_ennemies, False, pygame.sprite.collide_circle)
-            else:
-                  self.detected_ennemies = pygame.sprite.spritecollide(self.range_hitbox, game.all_ennemies, False)
+            if not(self.rooted):
+                  if self.range_hitbox.circular:
+                        self.detected_ennemies = pygame.sprite.spritecollide(self.range_hitbox, game.all_ennemies, False, pygame.sprite.collide_circle)
+                  else:
+                        self.detected_ennemies = pygame.sprite.spritecollide(self.range_hitbox, game.all_ennemies, False)
 
-            if (self.detected_ennemies):
-                  self.attacking = True
-                  if not(self.my_target in self.detected_ennemies):
-                        self.my_target = self.detected_ennemies[0]
+                  if (self.detected_ennemies):
+                        self.attacking = True
+                        if not(self.my_target in self.detected_ennemies):
+                              self.my_target = self.detected_ennemies[0]
+                  else:
+                        self.attacking = False
             else:
-                  self.attacking = False
+                  self.root(game)
+
+      def root(self,game):
+            self.root_timer += game.timestep
+            if (self.root_timer<self.my_data.anim_total_time_root):
+                  self.my_timer += game.timestep
+                  if (self.my_timer>self.my_data.time_per_frame_root):
+                        self.root_frame += 1
+                        self.my_timer = 0.0
+                  self.root_frame = min(self.root_frame,self.my_data.number_frame_rooting-1)
+                  self.current_image= self.my_data.image_rooting[self.root_frame]
+            else:
+                  self.root_timer = 0.0
+                  self.root_frame = 0
+                  self.my_timer = 0.0 
+                  self.rooted = False
+                  if hasattr(self,'firing'):
+                        self.firing = False
+
 
       def attack_and_reload(self,game):
-            if (self.attacking):
-                  self.my_timer += game.timestep
-                  if self.reloading:
-                        if self.my_timer>self.my_data.time_per_frame_r:
-                              self.anim_frame_r += 1
-                              self.my_timer = 0.0
-                              if (self.anim_frame_r==self.my_data.number_frame_reloading):
-                                    self.anim_frame_r = 0
-                                    self.reloading = False
-                                    self.current_image= self.my_data.image_attacking[self.anim_frame_a]
-                              else:
-                                    self.current_image= self.my_data.image_reloading[self.anim_frame_r]
-                  else:
-                        if self.my_timer>self.my_data.time_per_frame_a:
-                              self.anim_frame_a += 1
-                              self.my_timer = 0.0
-                              if (self.anim_frame_a==self.my_data.number_frame_attacking):
-                                    game.all_projectiles.add_bolt(game,self.posX+self.my_data.firing_offset[0],self.posY+self.my_data.firing_offset[1],self.my_target,self.my_data.bolt_tag)
-                                    self.anim_frame_a = 0
-                                    self.reloading = True
-                                    self.current_image= self.my_data.image_reloading[self.anim_frame_r]
-                              else:
-                                    self.current_image= self.my_data.image_attacking[self.anim_frame_a]
-            else:
-                  if self.reloading:
+            if not(self.rooted):
+                  if (self.attacking):
                         self.my_timer += game.timestep
-                        if self.my_timer>self.my_data.time_per_frame_r:
-                              self.anim_frame_r += 1
-                              self.my_timer = 0.0
-                              if (self.anim_frame_r==self.my_data.number_frame_reloading):
-                                    self.reloading = False   
-                                    self.anim_frame_r = 0
-                                    self.current_image= self.my_data.image_attacking[self.anim_frame_a]
-                              else:
-                                    self.current_image= self.my_data.image_reloading[self.anim_frame_r]
+                        if self.reloading:
+                              if self.my_timer>self.my_data.time_per_frame_r:
+                                    self.anim_frame_r += 1
+                                    self.my_timer = 0.0
+                                    if (self.anim_frame_r==self.my_data.number_frame_reloading):
+                                          self.anim_frame_r = 0
+                                          self.reloading = False
+                                          self.current_image= self.my_data.image_attacking[self.anim_frame_a]
+                                    else:
+                                          self.current_image= self.my_data.image_reloading[self.anim_frame_r]
+                        else:
+                              if self.my_timer>self.my_data.time_per_frame_a:
+                                    self.anim_frame_a += 1
+                                    self.my_timer = 0.0
+                                    if (self.anim_frame_a==self.my_data.number_frame_attacking):
+                                          game.all_projectiles.add_bolt(game,self.posX+self.my_data.firing_offset[0],self.posY+self.my_data.firing_offset[1],self.my_target,self.my_data.bolt_tag)
+                                          self.anim_frame_a = 0
+                                          self.reloading = True
+                                          self.current_image= self.my_data.image_reloading[self.anim_frame_r]
+                                    else:
+                                          self.current_image= self.my_data.image_attacking[self.anim_frame_a]
                   else:
-                        self.anim_frame_a = 0
-                        self.current_image= self.my_data.image_attacking[self.anim_frame_a]
+                        if self.reloading:
+                              self.my_timer += game.timestep
+                              if self.my_timer>self.my_data.time_per_frame_r:
+                                    self.anim_frame_r += 1
+                                    self.my_timer = 0.0
+                                    if (self.anim_frame_r==self.my_data.number_frame_reloading):
+                                          self.reloading = False   
+                                          self.anim_frame_r = 0
+                                          self.current_image= self.my_data.image_attacking[self.anim_frame_a]
+                                    else:
+                                          self.current_image= self.my_data.image_reloading[self.anim_frame_r]
+                        else:
+                              self.anim_frame_a = 0
+                              self.current_image= self.my_data.image_attacking[self.anim_frame_a]
 
 
       def die(self):
@@ -481,64 +507,68 @@ class Fire_tower_lvl2(Tower):
             Tower.__init__(self,game,box)
 
       def check_ennemies(self,game):
-            if self.range_hitbox.circular:
-                  self.detected_ennemies = pygame.sprite.spritecollide(self.range_hitbox, game.all_ennemies, False, pygame.sprite.collide_circle)
-            else:
-                  self.detected_ennemies = pygame.sprite.spritecollide(self.range_hitbox, game.all_ennemies, False)
-
-            if (self.detected_ennemies):
-                  self.attacking = True
-                  if not(self.my_target in self.detected_ennemies):
-                        self.my_target = self.detected_ennemies[0]
-                  if (len(self.detected_ennemies)>1):
-                        self.second_target = self.detected_ennemies[1]
+            if not(self.rooted):
+                  if self.range_hitbox.circular:
+                        self.detected_ennemies = pygame.sprite.spritecollide(self.range_hitbox, game.all_ennemies, False, pygame.sprite.collide_circle)
                   else:
+                        self.detected_ennemies = pygame.sprite.spritecollide(self.range_hitbox, game.all_ennemies, False)
+
+                  if (self.detected_ennemies):
+                        self.attacking = True
+                        if not(self.my_target in self.detected_ennemies):
+                              self.my_target = self.detected_ennemies[0]
+                        if (len(self.detected_ennemies)>1):
+                              self.second_target = self.detected_ennemies[1]
+                        else:
+                              self.second_target = None
+                  else:
+                        self.attacking = False
                         self.second_target = None
             else:
-                  self.attacking = False
-                  self.second_target = None
+                  self.root(game)
 
       def attack_and_reload(self,game):
-            if (self.attacking):
-                  self.my_timer += game.timestep
-                  if self.reloading:
-                        if self.my_timer>self.my_data.time_per_frame_r:
-                              self.anim_frame_r += 1
-                              self.my_timer = 0.0
-                              if (self.anim_frame_r==self.my_data.number_frame_reloading):
-                                    self.anim_frame_r = 0
-                                    self.reloading = False
-                                    self.current_image= self.my_data.image_attacking[self.anim_frame_a]
-                              else:
-                                    self.current_image= self.my_data.image_reloading[self.anim_frame_r]
-                  else:
-                        if self.my_timer>self.my_data.time_per_frame_a:
-                              self.anim_frame_a += 1
-                              self.my_timer = 0.0
-                              if (self.anim_frame_a==self.my_data.number_frame_attacking):
-                                    game.all_projectiles.add_bolt(game,self.posX+self.my_data.firing_offset[0],self.posY+self.my_data.firing_offset[1],self.my_target,self.my_data.bolt_tag)
-                                    if self.second_target:
-                                          game.all_projectiles.add_bolt(game,self.posX+self.my_data.firing_offset[0],self.posY+self.my_data.firing_offset[1],self.second_target,self.my_data.bolt_tag)
-                                    self.anim_frame_a = 0
-                                    self.reloading = True
-                                    self.current_image= self.my_data.image_reloading[self.anim_frame_r]
-                              else:
-                                    self.current_image= self.my_data.image_attacking[self.anim_frame_a]
-            else:
-                  if self.reloading:
+            if not(self.rooted):
+                  if (self.attacking):
                         self.my_timer += game.timestep
-                        if self.my_timer>self.my_data.time_per_frame_r:
-                              self.anim_frame_r += 1
-                              self.my_timer = 0.0
-                              if (self.anim_frame_r==self.my_data.number_frame_reloading):
-                                    self.reloading = False   
-                                    self.anim_frame_r = 0
-                                    self.current_image= self.my_data.image_attacking[self.anim_frame_a]
-                              else:
-                                    self.current_image= self.my_data.image_reloading[self.anim_frame_r]
+                        if self.reloading:
+                              if self.my_timer>self.my_data.time_per_frame_r:
+                                    self.anim_frame_r += 1
+                                    self.my_timer = 0.0
+                                    if (self.anim_frame_r==self.my_data.number_frame_reloading):
+                                          self.anim_frame_r = 0
+                                          self.reloading = False
+                                          self.current_image= self.my_data.image_attacking[self.anim_frame_a]
+                                    else:
+                                          self.current_image= self.my_data.image_reloading[self.anim_frame_r]
+                        else:
+                              if self.my_timer>self.my_data.time_per_frame_a:
+                                    self.anim_frame_a += 1
+                                    self.my_timer = 0.0
+                                    if (self.anim_frame_a==self.my_data.number_frame_attacking):
+                                          game.all_projectiles.add_bolt(game,self.posX+self.my_data.firing_offset[0],self.posY+self.my_data.firing_offset[1],self.my_target,self.my_data.bolt_tag)
+                                          if self.second_target:
+                                                game.all_projectiles.add_bolt(game,self.posX+self.my_data.firing_offset[0],self.posY+self.my_data.firing_offset[1],self.second_target,self.my_data.bolt_tag)
+                                          self.anim_frame_a = 0
+                                          self.reloading = True
+                                          self.current_image= self.my_data.image_reloading[self.anim_frame_r]
+                                    else:
+                                          self.current_image= self.my_data.image_attacking[self.anim_frame_a]
                   else:
-                        self.anim_frame_a = 0
-                        self.current_image= self.my_data.image_attacking[self.anim_frame_a]
+                        if self.reloading:
+                              self.my_timer += game.timestep
+                              if self.my_timer>self.my_data.time_per_frame_r:
+                                    self.anim_frame_r += 1
+                                    self.my_timer = 0.0
+                                    if (self.anim_frame_r==self.my_data.number_frame_reloading):
+                                          self.reloading = False   
+                                          self.anim_frame_r = 0
+                                          self.current_image= self.my_data.image_attacking[self.anim_frame_a]
+                                    else:
+                                          self.current_image= self.my_data.image_reloading[self.anim_frame_r]
+                        else:
+                              self.anim_frame_a = 0
+                              self.current_image= self.my_data.image_attacking[self.anim_frame_a]
 
 
 class Fire_tower_lvl3(Fire_tower_lvl2,pygame.sprite.Sprite):
@@ -574,45 +604,46 @@ class Ice_tower_lvl1(Tower):
             Tower.__init__(self,game,box)
 
       def attack_and_reload(self,game):
-            if not(self.firing):
-                  if (self.attacking):
-                        self.my_timer += game.timestep
-                        if self.reloading:
-                              if self.my_timer>self.my_data.time_per_frame_r:
-                                    self.anim_frame_r += 1
-                                    self.my_timer = 0.0
-                                    if (self.anim_frame_r==self.my_data.number_frame_reloading):
-                                          self.anim_frame_r = 0
-                                          self.reloading = False
-                                          self.current_image= self.my_data.image_attacking[self.anim_frame_a]
-                                    else:
-                                          self.current_image= self.my_data.image_reloading[self.anim_frame_r]
-                        else:
-                              if self.my_timer>self.my_data.time_per_frame_a:
-                                    self.anim_frame_a += 1
-                                    self.my_timer = 0.0
-                                    if (self.anim_frame_a==self.my_data.number_frame_attacking):
-                                          game.all_projectiles.add_bolt(game,self.posX+self.my_data.firing_offset[0],self.posY+self.my_data.firing_offset[1],self.my_target,self.my_data.bolt_tag,self)
-                                          self.anim_frame_a = 0
-                                          self.reloading = True
-                                          self.current_image= self.my_data.image_reloading[self.anim_frame_r]
-                                    else:
-                                          self.current_image= self.my_data.image_attacking[self.anim_frame_a]
-                  else:
-                        if self.reloading:
+            if not(self.rooted):
+                  if not(self.firing):
+                        if (self.attacking):
                               self.my_timer += game.timestep
-                              if self.my_timer>self.my_data.time_per_frame_r:
-                                    self.anim_frame_r += 1
-                                    self.my_timer = 0.0
-                                    if (self.anim_frame_r==self.my_data.number_frame_reloading):
-                                          self.reloading = False   
-                                          self.anim_frame_r = 0
-                                          self.current_image= self.my_data.image_attacking[self.anim_frame_a]
-                                    else:
-                                          self.current_image= self.my_data.image_reloading[self.anim_frame_r]
+                              if self.reloading:
+                                    if self.my_timer>self.my_data.time_per_frame_r:
+                                          self.anim_frame_r += 1
+                                          self.my_timer = 0.0
+                                          if (self.anim_frame_r==self.my_data.number_frame_reloading):
+                                                self.anim_frame_r = 0
+                                                self.reloading = False
+                                                self.current_image= self.my_data.image_attacking[self.anim_frame_a]
+                                          else:
+                                                self.current_image= self.my_data.image_reloading[self.anim_frame_r]
+                              else:
+                                    if self.my_timer>self.my_data.time_per_frame_a:
+                                          self.anim_frame_a += 1
+                                          self.my_timer = 0.0
+                                          if (self.anim_frame_a==self.my_data.number_frame_attacking):
+                                                game.all_projectiles.add_bolt(game,self.posX+self.my_data.firing_offset[0],self.posY+self.my_data.firing_offset[1],self.my_target,self.my_data.bolt_tag,self)
+                                                self.anim_frame_a = 0
+                                                self.reloading = True
+                                                self.current_image= self.my_data.image_reloading[self.anim_frame_r]
+                                          else:
+                                                self.current_image= self.my_data.image_attacking[self.anim_frame_a]
                         else:
-                              self.anim_frame_a = 0
-                              self.current_image= self.my_data.image_attacking[self.anim_frame_a]
+                              if self.reloading:
+                                    self.my_timer += game.timestep
+                                    if self.my_timer>self.my_data.time_per_frame_r:
+                                          self.anim_frame_r += 1
+                                          self.my_timer = 0.0
+                                          if (self.anim_frame_r==self.my_data.number_frame_reloading):
+                                                self.reloading = False   
+                                                self.anim_frame_r = 0
+                                                self.current_image= self.my_data.image_attacking[self.anim_frame_a]
+                                          else:
+                                                self.current_image= self.my_data.image_reloading[self.anim_frame_r]
+                              else:
+                                    self.anim_frame_a = 0
+                                    self.current_image= self.my_data.image_attacking[self.anim_frame_a]
 
 class Ice_tower_lvl2(Ice_tower_lvl1,pygame.sprite.Sprite):
       def __init__(self,game,all_t,box):
@@ -656,6 +687,7 @@ class Siege_engine(Tower):
 
             self.attacking = True
             self.reloading = False
+            self.rooted = False
 
             self.anim_frame_a = 0
             self.anim_frame_r = 0

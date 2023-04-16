@@ -206,6 +206,9 @@ class Game():
 
       def advance_time(self):
             self.timer += self.timestep
+
+            self.gold.gold_earn(self)
+            
             #print(CLOCK.get_fps())
 
       def reset(self):
@@ -263,6 +266,9 @@ class Game():
                               self.gold.amount *= 2
                         if (event.key == K_d):
                               self.spawning_mode.spawn(self,DRAGON_TAG,1)
+                        if (event.key == K_DELETE):
+                              if self.selected_object.destroyable:
+                                    self.selected_object.obj.destroy(self)
             
 
 

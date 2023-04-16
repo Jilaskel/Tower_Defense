@@ -192,6 +192,9 @@ class Green_nec_data(Ennemy_data):
             self.summon_tag = GREEN_SKEL_TAG
             self.dead_body_tag = DEAD_GREEN_NEC_TAG
 
+            self.root_cd = self.my_dict["ROOT_COOLDOWN"]
+            self.number_max_tower_root = self.my_dict["NUMBER_MAX_OF_TOWER_ROOT"]
+
 class Blue_skel_data(Ennemy_data):
       def __init__(self):
             self.my_dict = BLUE_SKEL_DICT
@@ -527,9 +530,28 @@ class Green_Necromancer(Necromancer):
 
             Ennemy.__init__(self,x,y,rand_offset)
             Necromancer.__init__(self,all_e)
+            self.root_timer = self.my_data.my_dict["FIRST_ROOT_TIME"]*1000
 
       def use_power(self,game):
             self.rez_dead_bodies(game)
+
+            self.root_timer -= game.timestep
+            if self.root_timer < 0.0:
+                  tower_rooted = 0
+                  self.detected_towers = pygame.sprite.spritecollide(self.range_hitbox, game.all_towers, False, pygame.sprite.collide_circle)
+                  if self.detected_towers:
+                        for tower in self.detected_towers:
+                              if (tower_rooted == self.my_data.number_max_tower_root):
+                                    break
+                              if (not(tower in game.all_towers.all_siege_engines) and not(tower.rooted)):
+                                    tower.rooted = True
+                                    tower.my_timer = 0.0
+                                    tower_rooted += 1
+                  if tower_rooted > 0:
+                        self.root_timer = self.my_data.root_cd*1000
+                        self.using_power = True
+                        self.cast_frame = 0
+                        self.my_timer = 0.0
 
 class Skeleton(Ennemy):
       def __init__(self,all_e,x,y): 
@@ -547,6 +569,7 @@ class Skeleton(Ennemy):
                   if self.my_timer>self.my_data.time_per_frame_sp:
                         self.spawn_frame += 1
                         self.my_timer = 0.0  
+                  self.spawn_frame = min(self.spawn_frame,self.my_data.number_frame_spawning-1)
                   self.current_image = self.my_data.image_spawning[self.spawn_frame]   
 
             else:

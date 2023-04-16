@@ -413,6 +413,7 @@ class Projectile(pygame.sprite.Sprite):
             self.direction = vec(0,0)
 
             self.target = target
+            self.my_target_center = self.target.rect.center
 
             self.rect = self.current_image.get_rect()
             self.rect.x = self.posX
@@ -891,7 +892,10 @@ class Ice_bolt_lvl1(Projectile):
                         self.target.hp -= self.my_data.damage*game.timestep/1000.0
                         self.target.my_timer -= game.timestep*self.my_data.slowing_coeff
                         if self.my_data.freezing:
-                              self.target.iced = True                 
+                              self.target.iced = True   
+
+            if (not(pygame.sprite.Sprite.alive(self.tower)) or self.tower.rooted):
+                  pygame.sprite.Sprite.kill(self)      
 
       def render(self):
             window.blit(self.current_image, self.rotated_image_rect)  
