@@ -552,6 +552,7 @@ class Green_Necromancer(Necromancer):
                         self.using_power = True
                         self.cast_frame = 0
                         self.my_timer = 0.0
+                        game.all_mixers.magical_effect_mixer.root_sound.play(maxtime=SOUND_ROOT_MAX_TIME)
 
 class Skeleton(Ennemy):
       def __init__(self,all_e,x,y): 

@@ -177,7 +177,8 @@ class Tower_data():
                   self.image_rooting.append(pygame.image.load(self.my_dict["ROOT_IMAGE_PATH"]+str(i).zfill(4)+".png").convert_alpha())   
                   self.image_rooting[i-1] = pygame.transform.scale(self.image_rooting[i-1],vec(self.image_rooting[i-1].get_size())*self.my_dict["RESIZE_FACTOR"])
             self.anim_total_time_root = self.my_dict["ANIMATION_ROOTING_TOTAL_TIME"]
-            self.time_per_frame_root = self.my_dict["ANIMATION_ROOTING_TIME_PER_FRAME"] # in ms            
+            self.time_per_frame_root = self.my_dict["ANIMATION_ROOTING_TIME_PER_FRAME"] # in ms  
+            self.root_dps = self.my_dict["ROOT_DPS"]          
 
 class Siege_engine_data():
       def __init__(self):
@@ -411,6 +412,7 @@ class Tower(pygame.sprite.Sprite):
                         self.my_timer = 0.0
                   self.root_frame = min(self.root_frame,self.my_data.number_frame_rooting-1)
                   self.current_image= self.my_data.image_rooting[self.root_frame]
+                  self.hp -= self.my_data.root_dps*game.timestep*0.001
             else:
                   self.root_timer = 0.0
                   self.root_frame = 0
