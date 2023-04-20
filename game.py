@@ -260,17 +260,32 @@ class Game():
                                     global_status.status = "In pause"
                               elif (global_status.status == "In pause"):
                                     global_status.status = "In game"
-                        if (event.key == K_g):
-                              global_status.status = "Game Over"
-                        if (event.key == K_n):
-                              self.gold.amount *= 2
-                        if (event.key == K_d):
-                              self.spawning_mode.spawn(self,DRAGON_TAG,1)
                         if (event.key == K_DELETE):
                               if self.selected_object.destroyable:
                                     self.selected_object.obj.destroy(self)
-            
+                        if DEV_MODE:
+                              if (event.key == K_g):
+                                    global_status.status = "Game Over"
+                              if (event.key == K_n):
+                                    self.gold.amount *= 2
 
-
- 
-
+                              if (event.key == K_1):
+                                    self.spawning_mode.spawn(self,GOBLIN_TAG,1)
+                              if (event.key == K_2):
+                                    self.spawning_mode.spawn(self,OGRE_TAG,1)
+                              if (event.key == K_3):
+                                    self.spawning_mode.spawn(self,BLUE_NEC_TAG,1)            
+                              if (event.key == K_4):
+                                    self.spawning_mode.spawn(self,RED_NEC_TAG,1)
+                              if (event.key == K_5):
+                                    self.spawning_mode.spawn(self,GREEN_NEC_TAG,1) 
+                              if (event.key == K_6):
+                                    self.spawning_mode.spawn(self,BLUE_SKEL_TAG,1)
+                              if (event.key == K_7):
+                                    self.spawning_mode.spawn(self,RED_SKEL_TAG,1)
+                              if (event.key == K_8):
+                                    self.spawning_mode.spawn(self,GREEN_SKEL_TAG,1)
+                              if (event.key == K_9):
+                                    self.spawning_mode.spawn(self,KAMIKAZE_TAG,1)
+                              if (event.key == K_0):
+                                    self.spawning_mode.spawn(self,DRAGON_TAG,1)

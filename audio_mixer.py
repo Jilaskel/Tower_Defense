@@ -128,3 +128,6 @@ class Magical_effect_mixer():
 
         self.root_sound = pygame.mixer.Sound(SOUND_ROOT_PATH)
         self.root_sound.set_volume(SOUND_ROOT_VOLUME*AUDIO_EFFECTS_COEFF)
+
+        self.explosion_sound = pygame.mixer.Sound(SOUND_EXPLOSION_PATH)
+        self.explosion_sound.set_volume(SOUND_EXPLOSION_VOLUME*AUDIO_EFFECTS_COEFF)

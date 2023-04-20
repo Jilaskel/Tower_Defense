@@ -18,12 +18,13 @@ class Gold():
         self.gold_earning = 0.0
  
     def gold_gain(self,game,obj,amount):
-        self.amount += amount
-        game.all_gold_anim.add_gold_anim(obj,amount)
-        if abs(amount)<SOUND_BIG_GOLD_GAIN_TRESHOLD:
-            game.all_mixers.mouse_mixer.gold_gain_sound.play()
-        else:
-            game.all_mixers.mouse_mixer.big_gold_gain_sound.play()
+        if amount!=0:
+            self.amount += amount
+            game.all_gold_anim.add_gold_anim(obj,amount)
+            if abs(amount)<SOUND_BIG_GOLD_GAIN_TRESHOLD:
+                game.all_mixers.mouse_mixer.gold_gain_sound.play()
+            else:
+                game.all_mixers.mouse_mixer.big_gold_gain_sound.play()
 
     def gold_earn(self,game):
         self.gold_earning += game.timestep*GOLD_EARNING_WITH_TIME*0.001

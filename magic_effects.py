@@ -12,11 +12,11 @@ class All_magic_effects(pygame.sprite.Group):
             self.wave_data = Wave_data()
             self.heal_data = Heal_data()
             self.buff_data = Buff_data()
-            self.explosion_data = 
+            self.explosion_data = Explosion_data()
 
 
-      def add_wave(self,mage):
-            self.add(Wave(self,mage))
+      def add_wave(self,nec):
+            self.add(Wave(self,nec))
             self.game.all_mixers.magical_effect_mixer.wave_sound.play(maxtime=SOUND_WAVE_MAX_TIME)
 
       def add_heal(self,target):
@@ -26,6 +26,10 @@ class All_magic_effects(pygame.sprite.Group):
       def add_buff(self,target):
             self.add(Buff(self,target))
             # game.all_mixers.magical_effect_mixer.wave_sound.play(maxtime=SOUND_WAVE_MAX_TIME)
+
+      def add_explosion(self,kam):
+            self.add(Explosion(self,kam))
+            self.game.all_mixers.magical_effect_mixer.explosion_sound.play(maxtime=SOUND_EXPLOSION_MAX_TIME)
 
 class Magic_effect_data():
       def __init__(self):
@@ -45,8 +49,6 @@ class Wave_data(Magic_effect_data):
             self.my_dict = WAVE_DICT
 
             Magic_effect_data.__init__(self)
-
-            self.hitbox_factor = self.my_dict["HITBOX_FACTOR"]
 
             self.velocity = self.my_dict["VELOCITY"]
             self.damage = self.my_dict["DAMAGE"]
@@ -72,6 +74,18 @@ class Buff_data(Magic_effect_data):
             self.velocity_coeff = self.my_dict["VELOCITY_COEFF"]
 
             self.damage_coeff = self.my_dict["DAMAGE_COEFF"]
+
+class Explosion_data(Magic_effect_data):
+      def __init__(self):
+            self.my_dict = EXPLOSION_DICT
+
+            Magic_effect_data.__init__(self)
+
+            self.hitbox_factor = self.my_dict["HITBOX_FACTOR"]
+
+            self.damage = self.my_dict["DAMAGE"]
+
+            self.damage_frame = self.my_dict["DAMAGE_FRAME"]
 
 class Magical_effect(pygame.sprite.Sprite):
       def __init__(self,target):
@@ -150,7 +164,7 @@ class Buff(Magical_effect):
             self.my_target.damage = self.my_target.damage/self.my_data.damage_coeff
 
 class Wave(Magical_effect):
-      def __init__(self,all_ef,mage):
+      def __init__(self,all_ef,nec):
             pygame.sprite.Sprite.__init__(self)
 
             self.my_data = all_ef.wave_data
@@ -164,8 +178,8 @@ class Wave(Magical_effect):
 
             self.my_timer = 0
 
-            self.posX = mage.posX + self.my_data.offset[0]
-            self.posY = mage.posY + self.my_data.offset[1]
+            self.posX = nec.posX + self.my_data.offset[0]
+            self.posY = nec.posY + self.my_data.offset[1]
             self.rendering_layer = compute_rendering_layer_number(self)
 
             self.rect = self.current_image.get_rect()
@@ -206,3 +220,64 @@ class Wave(Magical_effect):
                         if not (self.hit_allies[i] in self.healed_allies):
                               self.all_ef.add_heal(self.hit_allies[i])
                               self.healed_allies.append(self.hit_allies[i])
+
+
+class Explosion(Magical_effect):
+      def __init__(self,all_ef,kam):
+            pygame.sprite.Sprite.__init__(self)
+
+            self.my_data = all_ef.explosion_data
+
+            self.kam = kam
+
+            self.image_size = self.my_data.image_size
+
+            self.current_frame = 0
+            self.current_image = self.my_data.images[self.current_frame]
+
+            self.my_timer = 0
+
+            self.posX = kam.posX + self.my_data.offset[0]
+            self.posY = kam.posY + self.my_data.offset[1]
+            self.rendering_layer = 23
+            # self.rendering_layer = kam.rendering_layer
+            # self.rendering_layer = compute_rendering_layer_number(self)
+
+            self.rect = self.current_image.get_rect()
+            old_width = self.rect.width 
+            old_height = self.rect.height
+            self.rect.width = self.rect.width*self.my_data.hitbox_factor
+            self.rect.height = self.rect.height*self.my_data.hitbox_factor
+            self.rect.x = self.posX + (old_width-self.rect.width)*0.5
+            self.rect.y = self.posY + (old_height-self.rect.height)*0.5
+
+            self.damage_dealt = False
+
+      def advance(self,game):
+            self.my_timer += game.timestep
+            if self.my_timer>self.my_data.time_per_frame:
+                  self.current_frame += 1
+                  self.my_timer = 0.0
+            
+            if (self.current_frame>(self.my_data.number_frame-1)):
+                  pygame.sprite.Sprite.kill(self)
+            else:
+                  self.current_image= self.my_data.images[self.current_frame]  
+
+      def check_impact(self,game):
+            if (self.current_frame==self.my_data.damage_frame-1 and self.damage_dealt==False):
+                  self.damage_dealt = True
+                  self.hit_ennemies = pygame.sprite.spritecollide(self, game.all_towers, False)
+                  if self.hit_ennemies:
+                        for i in range (len(self.hit_ennemies)):
+                                    self.hit_ennemies[i].hp -= self.my_data.damage
+                  self.hit_ennemies = pygame.sprite.spritecollide(self, game.all_dead_bodies.all_iced_bodies, False)
+                  if self.hit_ennemies:
+                        for i in range (len(self.hit_ennemies)):
+                                    self.hit_ennemies[i].hp -= self.my_data.damage
+                  self.hit_ennemies = pygame.sprite.spritecollide(self, game.base.all_gates, False)
+                  if self.hit_ennemies:
+                        for i in range (len(self.hit_ennemies)):
+                                    self.hit_ennemies[i].hp -= self.my_data.damage                  
+                  self.kam.hp = 0.0
+

@@ -9,6 +9,9 @@ global_status = Global_status()
 
 RUNNING = True
 
+DEV_MODE = True  # activate shortcuts, see README
+TURN_OFF_NATURAL_SPAWNING = True
+
 ############### RESOLUTION
 WINDOW_WIDTH = 1920
 WINDOW_HEIGHT = 1080
@@ -180,6 +183,7 @@ P1_OGRE_SPAWNING_PERIOD = 4.0   ## in seconds
 P1_BLUE_NEC_SPAWNING_PERIOD = 6.0   ## in seconds
 P1_RED_NEC_SPAWNING_PERIOD = 6.0   ## in seconds
 P1_GREEN_NEC_SPAWNING_PERIOD = 6.0   ## in seconds
+P1_KAMIKAZE_SPAWNING_PERIOD = 5.0   ## in seconds
 P1_DRAGON_SPAWNING_PERIOD = 10.0   ## in seconds
 ## MULTIP HP, DAMAGE, VELOCITY
 ## DEGAT TOUR DIFF IMPACT
@@ -291,28 +295,30 @@ OGRE_DICT = {
 KAMIKAZE_DICT = {
 
 "NAME" : "Kamikaze Goblin",
-"HP_MAX" : 40.0,
+"HP_MAX" : 4000.0,
 "DAMAGE" : 2.5,
 "VELOCITY" : 0.25 * RESIZE_COEFF, # pixel by ms
-"GOLD_EARNING" : 2,
+"GOLD_EARNING" : 0,
 
 "HITBOX_FACTOR" : 1.0,
-"RESIZE_FACTOR" : 0.5*RESIZE_COEFF, #   pixel
+"RESIZE_FACTOR" : 0.125*RESIZE_COEFF, #   pixel
 "OFFSET" : [50* RESIZE_COEFF,-20* RESIZE_COEFF], 
 "CENTER_VECTOR" : [0.26, 0.63],
 
-"WALKING_IMAGE_PATH" : "Assets/Ennemies/KamikazeGoblin/RunAnim/",
+"WALKING_IMAGE_PATH" : "Assets/Ennemies/KamikazeGoblin/RunAnim/0",
 "NUMBER_FRAME_WALKING" : 28,
-"ANIMATION_WALKING_TOTAL_TIME" : 600, # in ms
+"ANIMATION_WALKING_TOTAL_TIME" : 300, # in ms
 
-"NUMBER_FRAME_ATTACKING" : 0,
-# "ATTACKING_IMAGE_PATH" : "Assets/Ennemies/KamikazeGoblin/AttackAnim/",
+"NUMBER_FRAME_ATTACKING" : 1,
+"ATTACKING_IMAGE_PATH" : "Assets/Ennemies/KamikazeGoblin/RunAnim/0",
 "ANIMATION_ATTACKING_TOTAL_TIME" : 0, # in ms
 "HITTING_FRAME" : 0,
 
 "STUN_NUMBER_FRAME" : 10,
 "STUN_IMAGE_PATH" : "Assets/Ennemies/KamikazeGoblin/StunAnim/",
 "STUN_TIME_PER_FRAME" : 100, # in ms
+
+"EXPLOSION_WHEN_KILLED" : True
 
 # "ICED_IMAGE_PATH" :  "Assets/Ennemies/KamikazeGoblin/KamikazeGoblinIced.png",
 # "ICED_HP_MAX" : 20.0,
@@ -1370,7 +1376,7 @@ WAVE_DICT = {
 "IMAGE_PATH" : "Assets/Ennemies/Necromancers/Blue_Necromancer/WaveAnim/",
 "OFFSET" : [0* RESIZE_COEFF,-40* RESIZE_COEFF],
 "TIME_PER_FRAME" : 100, # in ms,
-"HITBOX_FACTOR" : 1.0,
+"HITBOX_FACTOR" : 1.0, # do nothing atm
 "VELOCITY" : 0.3, # in ms
 "DAMAGE" : 10,
 "RESIZE_FACTOR" : 0.5*RESIZE_COEFF
@@ -1402,6 +1408,19 @@ BUFF_DICT = {
 
 }
 
+EXPLOSION_DICT = {
+    
+"NUMBER_FRAME" : 9,
+"IMAGE_PATH" : "Assets/Ennemies/KamikazeGoblin/ExplosionAnim/",
+"OFFSET" : [-50* RESIZE_COEFF,-80* RESIZE_COEFF],
+"TIME_PER_FRAME" : 100, # in ms,
+"DAMAGE_FRAME" : 4,
+"HITBOX_FACTOR" : 1.0, 
+"DAMAGE" : 100,
+"RESIZE_FACTOR" : 0.75*RESIZE_COEFF
+
+}
+
 ##############################################################
 
 ###############     AUDIO     ###############
@@ -1411,7 +1430,7 @@ BUFF_DICT = {
 ### MUSIC
 MUSIC_FILE_PATH = "Audio/Music/Age_of_War_Theme_Soundtrack.mp3"
 FADE_UP_TIME = 3.0 # in seconds
-MUSIC_VOLUME = 0.00 # 0.05
+MUSIC_VOLUME = 0.05 # 0.05
 
 ## SOUND
 AUDIO_EFFECTS_COEFF = 1.0
@@ -1464,10 +1483,14 @@ SOUND_ARCANE_IMPACT_PATH = "Audio/Impact/ES_Energy Blasts 9-zone-000.mp3"
 SOUND_ARCANE_IMPACT_VOLUME = 0.0
 SOUND_ARCANE_IMPACT_MAX_TIME = 0 # in ms
 
-SOUND_WAVE_PATH = "Audio/Other_effect/ES_Ocean Waves Crash 3_cropped.mp3"
+SOUND_WAVE_PATH = "Audio/Magical_effect/ES_Ocean Waves Crash 3_cropped.mp3"
 SOUND_WAVE_VOLUME = 0.1
 SOUND_WAVE_MAX_TIME = 0 # in ms
 
-SOUND_ROOT_PATH = "Audio/Other_effect/plant-growing-sound-effect.mp3"
+SOUND_ROOT_PATH = "Audio/Magical_effect/plant-growing-sound-effect.mp3"
 SOUND_ROOT_VOLUME = 0.5
 SOUND_ROOT_MAX_TIME = 0 #2000 # in ms
+
+SOUND_EXPLOSION_PATH = "Audio/Magical_effect/ES_Explosion Blast 6_cropped.mp3"
+SOUND_EXPLOSION_VOLUME = 0.5
+SOUND_EXPLOSION_MAX_TIME = 0 #2000 # in ms

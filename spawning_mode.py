@@ -26,7 +26,9 @@ class Spawning_mode():
             self.number_red_nec_spawned = 1.0
             self.last_time_spawning_red_nec = SPAWNING_INITIAL_TIME - P1_RED_NEC_SPAWNING_PERIOD*self.number_red_nec_spawned     
             self.number_green_nec_spawned = 1.0
-            self.last_time_spawning_green_nec = SPAWNING_INITIAL_TIME - P1_GREEN_NEC_SPAWNING_PERIOD*self.number_green_nec_spawned         
+            self.last_time_spawning_green_nec = SPAWNING_INITIAL_TIME - P1_GREEN_NEC_SPAWNING_PERIOD*self.number_green_nec_spawned   
+            self.number_kamikaze_spawned = 1.0
+            self.last_time_spawning_kamikaze = SPAWNING_INITIAL_TIME - P1_KAMIKAZE_SPAWNING_PERIOD*self.number_kamikaze_spawned         
             self.number_dragon_spawned = 1.0
             self.last_time_spawning_dragon = SPAWNING_INITIAL_TIME - P1_DRAGON_SPAWNING_PERIOD*self.number_dragon_spawned   
 
@@ -40,7 +42,9 @@ class Spawning_mode():
         self.number_red_nec_spawned = 1.0
         self.last_time_spawning_red_nec = SPAWNING_INITIAL_TIME 
         self.number_green_nec_spawned = 1.0
-        self.last_time_spawning_green_nec = SPAWNING_INITIAL_TIME       
+        self.last_time_spawning_green_nec = SPAWNING_INITIAL_TIME 
+        self.number_kamikaze_spawned = 1.0
+        self.last_time_spawning_kamikaze = SPAWNING_INITIAL_TIME          
         self.number_dragon_spawned = 1.0
         self.last_time_spawning_dragon = SPAWNING_INITIAL_TIME              
 
@@ -65,7 +69,7 @@ class Spawning_mode():
                 self.spawn(game,int(self.my_script[self.line,1]),int(self.my_script[self.line,2]))
                 self.line += 1
         else:
-            if (time<(TIME_P1)):
+            if (time<(TIME_P1) and not(TURN_OFF_NATURAL_SPAWNING)):
                 
                 cooldown = P1_GOBLIN_SPAWNING_PERIOD*self.number_goblin_spawned 
                 if ((time-self.last_time_spawning_goblin)>cooldown):
@@ -97,11 +101,17 @@ class Spawning_mode():
                     self.number_green_nec_spawned = random.randint(1,3)
                     self.spawn(game,GREEN_NEC_TAG,self.number_green_nec_spawned)
 
-                cooldown = P1_DRAGON_SPAWNING_PERIOD*self.number_dragon_spawned*1000 ## comment *0 to have normal spawning 
-                if ((time-self.last_time_spawning_dragon)>cooldown):
-                    self.last_time_spawning_dragon = time
-                    self.number_dragon_spawned = random.randint(1,3)
-                    self.spawn(game,DRAGON_TAG,self.number_dragon_spawned)                        
+                cooldown = P1_KAMIKAZE_SPAWNING_PERIOD*self.number_kamikaze_spawned 
+                if ((time-self.last_time_spawning_kamikaze)>cooldown):
+                    self.last_time_spawning_kamikaze = time
+                    self.number_kamikaze_spawned = random.randint(1,3)
+                    self.spawn(game,KAMIKAZE_TAG,self.number_kamikaze_spawned) 
+
+                # cooldown = P1_DRAGON_SPAWNING_PERIOD*self.number_dragon_spawned
+                # if ((time-self.last_time_spawning_dragon)>cooldown):
+                #     self.last_time_spawning_dragon = time
+                #     self.number_dragon_spawned = random.randint(1,3)
+                #     self.spawn(game,DRAGON_TAG,self.number_dragon_spawned)                        
 
     def spawn(self,game,TAG,number_of_ennemies):
         for i in range (number_of_ennemies):
@@ -131,6 +141,18 @@ class Spawning_mode():
 
             if (TAG==GREEN_NEC_TAG):
                 game.all_ennemies.add_green_nec(x_path,y_path,rand_offset)
+
+            if (TAG==BLUE_SKEL_TAG):
+                game.all_ennemies.add_blue_skel(x_path,y_path)
+
+            if (TAG==RED_SKEL_TAG):
+                game.all_ennemies.add_red_skel(x_path,y_path)
+
+            if (TAG==GREEN_SKEL_TAG):
+                game.all_ennemies.add_green_skel(x_path,y_path)
+
+            if (TAG==KAMIKAZE_TAG):
+                game.all_ennemies.add_kamikaze(x_path,y_path,rand_offset)
 
             if (TAG==DRAGON_TAG):
                 game.all_ennemies.add_dragon(x_path,y_path,rand_offset)

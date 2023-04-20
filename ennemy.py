@@ -236,6 +236,8 @@ class Kamikaze_data(Ennemy_data):
 
             Ennemy_data.__init__(self)
 
+            self.explosion_killed = self.my_dict["EXPLOSION_WHEN_KILLED"]
+
 class Dragon_data():
       def __init__(self):
             self.my_dict = DRAGON_DICT
@@ -244,7 +246,8 @@ class Dragon_data():
 
             self.hp_max = self.my_dict["HP_MAX"]
             self.velocity = self.my_dict["VELOCITY"] # pixel by ms
-            self.gold_earning = self.my_dict["GOLD_EARNING"]     
+            self.gold_earning = self.my_dict["GOLD_EARNING"] 
+            self.damage = 0.0 #for enemy init    
 
             self.static_image = pygame.image.load(self.my_dict["WALKING_IMAGE_PATH"]+"0001.png").convert_alpha()
             self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*self.my_dict["RESIZE_FACTOR"])             
@@ -544,7 +547,7 @@ class Green_Necromancer(Necromancer):
 
             Ennemy.__init__(self,x,y,rand_offset)
             Necromancer.__init__(self,all_e)
-            self.root_timer = self.my_data.first_buff_time*1000
+            self.root_timer = self.my_data.first_root_time*1000
 
       def use_power(self,game):
             self.rez_dead_bodies(game)
@@ -646,12 +649,15 @@ class Kamikaze(Ennemy):
                   if self.detected_ennemies:
                         self.attacking = True
                         if not(self.launch_explosion):
+                              self.launch_explosion = True
                               game.all_magic_effects.add_explosion(self)                              
                   else:
                         self.attacking = False
 
       def die(self,game):
             if (self.hp<=0):
+                  if self.my_data.explosion_killed and not(self.launch_explosion):
+                        game.all_magic_effects.add_explosion(self)
                   game.gold.gold_gain(game,self,self.my_data.gold_earning)
                   pygame.sprite.Sprite.kill(self)
 
