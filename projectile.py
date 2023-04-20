@@ -590,7 +590,7 @@ class Fire_bolt_no_target(Projectile):
             self.rect.x = self.posX
             self.rect.y = self.posY
 
-            self.center = vec(self.posX+self.my_data.my_dict["CENTOR_VECTOR"][0]*self.image_size[0],self.posY+self.my_data.my_dict["CENTOR_VECTOR"][1]*self.image_size[1])
+            self.center = vec(self.posX+self.my_data.centor_vector[0]*self.image_size[0],self.posY+self.my_data.centor_vector[1]*self.image_size[1])
 
       def move(self,game):  
             self.posX += self.my_data.velocity * game.timestep * self.direction[0]
@@ -966,10 +966,10 @@ class Rock(Projectile):
 
       def rotate(self,game,image):
             self.my_timer += game.timestep
-            if (self.my_data.my_dict["ROTATION_SPEED"]==0):
+            if (self.my_data.rotation_speed==0):
                   angle = 0
             else:
-                  period = 1/(self.my_data.my_dict["ROTATION_SPEED"]/1000)
+                  period = 1/(self.my_data.rotation_speed/1000)
                   self.my_timer = self.my_timer%period
                   angle = 360*(self.my_timer/period)  # marche pas pour le moment car l'axe de rotation pas au milieu de l'image
             self.current_image = pygame.transform.rotate(image, angle)

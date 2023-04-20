@@ -12,6 +12,7 @@ class All_magic_effects(pygame.sprite.Group):
             self.wave_data = Wave_data()
             self.heal_data = Heal_data()
             self.buff_data = Buff_data()
+            self.explosion_data = 
 
 
       def add_wave(self,mage):

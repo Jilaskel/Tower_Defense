@@ -28,6 +28,7 @@ class All_ennemies(pygame.sprite.Group):
             self.blue_skel_data = Blue_skel_data()
             self.red_skel_data = Red_skel_data()
             self.green_skel_data = Green_skel_data()
+            self.kamikaze_data = Kamikaze_data()
             self.dragon_data = Dragon_data()
 
       def add_goblin(self,x,y,rand_offset):
@@ -61,6 +62,9 @@ class All_ennemies(pygame.sprite.Group):
 
       def add_green_skel(self,x,y):
             self.add(Green_Skeleton(self,x,y))
+
+      def add_kamikaze(self,x,y,rand_offset):
+            self.add(Kamikaze(self,x,y,rand_offset))
 
       def add_dragon(self,x,y,rand_offset):
             self.add(Dragon(self,x,y,rand_offset))
@@ -169,6 +173,7 @@ class Blue_nec_data(Ennemy_data):
             self.dead_body_tag = DEAD_BLUE_NEC_TAG
 
             self.wave_cd = self.my_dict["WAVE_COOLDOWN"]
+            self.first_wave_time = self.my_dict["FIRST_WAVE_TIME"]
 
 class Red_nec_data(Ennemy_data):
       def __init__(self):
@@ -181,6 +186,8 @@ class Red_nec_data(Ennemy_data):
             self.dead_body_tag = DEAD_RED_NEC_TAG
 
             self.buff_cd = self.my_dict["BUFF_COOLDOWN"]
+            self.first_buff_time = self.my_dict["FIRST_BUFF_TIME"]
+
 
 class Green_nec_data(Ennemy_data):
       def __init__(self):
@@ -193,6 +200,7 @@ class Green_nec_data(Ennemy_data):
             self.dead_body_tag = DEAD_GREEN_NEC_TAG
 
             self.root_cd = self.my_dict["ROOT_COOLDOWN"]
+            self.first_root_time = self.my_dict["FIRST_ROOT_TIME"]
             self.number_max_tower_root = self.my_dict["NUMBER_MAX_OF_TOWER_ROOT"]
 
 class Blue_skel_data(Ennemy_data):
@@ -221,6 +229,12 @@ class Green_skel_data(Ennemy_data):
             self.init_spawning_data()
 
             self.dead_body_tag = DEAD_GREEN_SKEL_TAG 
+
+class Kamikaze_data(Ennemy_data):
+      def __init__(self):
+            self.my_dict = KAMIKAZE_DICT
+
+            Ennemy_data.__init__(self)
 
 class Dragon_data():
       def __init__(self):
@@ -489,7 +503,7 @@ class Blue_Necromancer(Necromancer):
 
             Ennemy.__init__(self,x,y,rand_offset)
             Necromancer.__init__(self,all_e)
-            self.wave_timer = self.my_data.my_dict["FIRST_WAVE_TIME"]*1000
+            self.wave_timer = self.my_data.first_wave_time*1000
 
       def use_power(self,game):
             self.rez_dead_bodies(game)
@@ -508,7 +522,7 @@ class Red_Necromancer(Necromancer):
 
             Ennemy.__init__(self,x,y,rand_offset)
             Necromancer.__init__(self,all_e)
-            self.buff_timer = self.my_data.my_dict["FIRST_BUFF_TIME"]*1000
+            self.buff_timer = self.my_data.first_buff_time*1000
 
       def use_power(self,game):
             self.rez_dead_bodies(game)
@@ -530,7 +544,7 @@ class Green_Necromancer(Necromancer):
 
             Ennemy.__init__(self,x,y,rand_offset)
             Necromancer.__init__(self,all_e)
-            self.root_timer = self.my_data.my_dict["FIRST_ROOT_TIME"]*1000
+            self.root_timer = self.my_data.first_buff_time*1000
 
       def use_power(self,game):
             self.rez_dead_bodies(game)
@@ -611,6 +625,35 @@ class Ogre(Ennemy):
 
       def attack(self,game):
             self.attack_with_transition(game)
+
+class Kamikaze(Ennemy):
+      def __init__(self,all_e,x,y,rand_offset): 
+            self.my_data = all_e.kamikaze_data
+
+            Ennemy.__init__(self,x,y,rand_offset)
+
+            self.launch_explosion = False
+
+      def attack(self,game):
+            if (not(self.stunned) and not(self.casting)):
+                  # self.detected_ennemies = pygame.sprite.spritecollide(self, game.all_towers, False)
+                  self.detected_ennemies = pygame.sprite.spritecollide(self, game.all_towers.all_siege_engines, False)
+                  if not self.detected_ennemies:
+                        self.detected_ennemies = pygame.sprite.spritecollide(self, game.base.all_gates, False)
+                  if not self.detected_ennemies:
+                        self.detected_ennemies = pygame.sprite.spritecollide(self, game.all_dead_bodies.all_iced_bodies, False)
+
+                  if self.detected_ennemies:
+                        self.attacking = True
+                        if not(self.launch_explosion):
+                              game.all_magic_effects.add_explosion(self)                              
+                  else:
+                        self.attacking = False
+
+      def die(self,game):
+            if (self.hp<=0):
+                  game.gold.gold_gain(game,self,self.my_data.gold_earning)
+                  pygame.sprite.Sprite.kill(self)
 
 class Dragon(Ennemy):
       def __init__(self,all_e,x,y,rand_offset): 

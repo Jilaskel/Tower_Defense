@@ -287,6 +287,40 @@ OGRE_DICT = {
 
 }
 
+#### KAMIKAZE
+KAMIKAZE_DICT = {
+
+"NAME" : "Kamikaze Goblin",
+"HP_MAX" : 40.0,
+"DAMAGE" : 2.5,
+"VELOCITY" : 0.25 * RESIZE_COEFF, # pixel by ms
+"GOLD_EARNING" : 2,
+
+"HITBOX_FACTOR" : 1.0,
+"RESIZE_FACTOR" : 0.5*RESIZE_COEFF, #   pixel
+"OFFSET" : [50* RESIZE_COEFF,-20* RESIZE_COEFF], 
+"CENTER_VECTOR" : [0.26, 0.63],
+
+"WALKING_IMAGE_PATH" : "Assets/Ennemies/KamikazeGoblin/RunAnim/",
+"NUMBER_FRAME_WALKING" : 28,
+"ANIMATION_WALKING_TOTAL_TIME" : 600, # in ms
+
+"NUMBER_FRAME_ATTACKING" : 0,
+# "ATTACKING_IMAGE_PATH" : "Assets/Ennemies/KamikazeGoblin/AttackAnim/",
+"ANIMATION_ATTACKING_TOTAL_TIME" : 0, # in ms
+"HITTING_FRAME" : 0,
+
+"STUN_NUMBER_FRAME" : 10,
+"STUN_IMAGE_PATH" : "Assets/Ennemies/KamikazeGoblin/StunAnim/",
+"STUN_TIME_PER_FRAME" : 100, # in ms
+
+# "ICED_IMAGE_PATH" :  "Assets/Ennemies/KamikazeGoblin/KamikazeGoblinIced.png",
+# "ICED_HP_MAX" : 20.0,
+# "ICED_NAME" : "Iced Kamikaze",
+# "ICED_TIME_MAX" : 10.0 # in second
+
+}
+
 #### BLUE_NEC
 BLUE_NEC_DICT = {
 
