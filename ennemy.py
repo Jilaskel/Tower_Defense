@@ -10,11 +10,12 @@ OGRE_TAG = 2
 BLUE_NEC_TAG = 3
 RED_NEC_TAG = 4
 GREEN_NEC_TAG = 5
-BLUE_SKEL_TAG = 6
-RED_SKEL_TAG = 7
-GREEN_SKEL_TAG = 8
-KAMIKAZE_TAG = 9
-DRAGON_TAG = 10
+KAMIKAZE_TAG = 6
+DRAGON_TAG = 7
+BLUE_SKEL_TAG = 8
+RED_SKEL_TAG = 9
+GREEN_SKEL_TAG = 10
+
 
 class All_ennemies(pygame.sprite.Group):
       def __init__(self):

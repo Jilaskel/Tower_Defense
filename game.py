@@ -146,6 +146,7 @@ class Game():
       def render(self,update=True):
             self.object_to_render.append(self.background)
             self.object_to_render.append(self.menu)
+            self.object_to_render.append(self.spawning_mode)
 
             for button in self.menu.all_buttons:
                   self.object_to_render.append(button)
@@ -213,7 +214,7 @@ class Game():
 
       def reset(self):
 
-            self.spawning_mode.reset()
+            self.spawning_mode.reset_hard()
 
             self.gold.reset()
 
@@ -268,6 +269,8 @@ class Game():
                                     global_status.status = "Game Over"
                               if (event.key == K_n):
                                     self.gold.amount *= 2
+                              if (event.key == K_k):
+                                    self.all_ennemies.empty()
 
                               if (event.key == K_1):
                                     self.spawning_mode.spawn(self,GOBLIN_TAG,1)
