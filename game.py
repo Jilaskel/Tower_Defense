@@ -271,6 +271,9 @@ class Game():
                                     self.gold.amount *= 2
                               if (event.key == K_k):
                                     self.all_ennemies.empty()
+                              if (event.key == K_h):
+                                    for emy in self.all_ennemies:
+                                          emy.hp = 0.0
 
                               if (event.key == K_1):
                                     self.spawning_mode.spawn(self,GOBLIN_TAG,1)

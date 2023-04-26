@@ -196,7 +196,7 @@ class Dead_body(pygame.sprite.Sprite):
                   if rezable:
                         all_d.all_rezable_bodies.add(self)
 
-            self.hp_max = self.my_data.iced_hp_max
+            self.hp_max = self.my_data.iced_hp_max*spawning_coeff.hp_coeff
             self.hp = self.hp_max
             self.rect = emy_alive.rect
             self.radius = emy_alive.radius

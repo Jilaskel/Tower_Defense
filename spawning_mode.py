@@ -35,12 +35,17 @@ class Spawning_mode():
             self.current_phase = 0
             self.last_phase = i-1
             self.time_last_phase = INITIAL_SPAWNING_TIME
-            self.display_time = self.my_dict["DISPLAY_TIME"]
+            self.display_time = ROUND_DISPLAY_TIME
 
             self.font_size = int(140*RESIZE_COEFF)
             self.font = pygame.font.Font(LOADING_FONT_PATH,self.font_size)
             self.font_color = (0,0,0) # (243,243,243)
             self.rendering_layer = 26
+
+            self.font_size_small = int(70*RESIZE_COEFF)
+            self.font_small = pygame.font.Font(LOADING_FONT_PATH,self.font_size_small)
+
+            self.small_txt = []
 
             self.display(0,"Prepare Your Defenses!")
 
@@ -49,7 +54,22 @@ class Spawning_mode():
             text = txt
         else:
             text = "Round " + str(i)
+
+            self.small_txt.clear()
+            if (self.my_phases[self.current_phase].hp_coeff != 1) :
+                text_small = "HP coeff : x" + str(self.my_phases[self.current_phase].hp_coeff)
+                self.small_txt.append(self.font_small.render(text_small,True,self.font_color))
+
+            if (self.my_phases[self.current_phase].damage_coeff != 1) :
+                text_small = "Damage coeff : x" + str(self.my_phases[self.current_phase].damage_coeff)
+                self.small_txt.append(self.font_small.render(text_small,True,self.font_color))
+
+            if (self.my_phases[self.current_phase].velocity_coeff != 1) :
+                text_small = "Velocity coeff : x" + str(self.my_phases[self.current_phase].velocity_coeff)
+                self.small_txt.append(self.font_small.render(text_small,True,self.font_color))
+
         self.main_text = self.font.render(text,True,self.font_color)  
+
         self.timer_display = 0.0
 
         self.displayed = False
@@ -58,10 +78,18 @@ class Spawning_mode():
         if not(self.displayed):
             image_size = vec(self.main_text.get_size())
             x = WINDOW_WIDTH*0.5 - image_size[0]*0.5
-            window.blit(self.main_text, (x, 380*RESIZE_COEFF))
+            window.blit(self.main_text, (x, 380*RESIZE_COEFF))   
+
+            j = 0
+            for small_txt in self.small_txt:
+                image_size = vec(small_txt.get_size())
+                x = WINDOW_WIDTH*0.5 - image_size[0]*0.5
+                window.blit(small_txt, (x, 580*RESIZE_COEFF+j*100))    
+                j += 1                           
 
         if (self.timer_display>self.display_time):
             self.displayed = True
+
 
     def reset(self):
         self.number_goblin_spawned = 1.0
@@ -120,10 +148,14 @@ class Spawning_mode():
                             self.time_last_phase = time
                             self.reset_cd(time)
 
-                    if (time>(self.time_last_phase+TIME_BETWEEN_ROUNDS*0.5) and (time<(self.time_last_phase+TIME_BETWEEN_ROUNDS*0.5+self.display_time))):
+                    if (time>(self.time_last_phase+TIME_BETWEEN_ROUNDS*0.5) and (time<(self.time_last_phase+TIME_BETWEEN_ROUNDS*0.5+game.timestep*0.001*2))):
                             self.display(self.current_phase+1)
 
                     phase = self.my_phases[self.current_phase]
+
+                    spawning_coeff.hp_coeff = phase.hp_coeff
+                    spawning_coeff.damage_coeff = phase.damage_coeff
+                    spawning_coeff.velocity_coeff = phase.velocity_coeff
                         
                     cooldown = phase.ennemy_period[GOBLIN_TAG-1]*self.number_goblin_spawned 
                     if ((time-self.last_time_spawning_goblin)>cooldown):

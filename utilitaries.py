@@ -62,12 +62,12 @@ LOADING_FONT_PATH = "Font/misc/Balgruf-d256.woff"
 
 ##############################################################
 
-GOLD_RESERVE_IMAGE_PATH = "Assets/Gold/GoldReserve.png"  ## useless atm
 GOLD_STARTING_AMOUNT = 2000
 GOLD_EARNING_WITH_TIME = 2 # per seconds
 GOLD_TOWER_REFUND_COEFF = 0.5
 
 GOLD_GAIN_IMAGE_PATH = "Assets/Gold/GoldGain.png"    
+GOLD_RESERVE_IMAGE_PATH = "Assets/Gold/GoldReserve.png"  ## useless atm
 GOLD_GAIN_RESIZE_FACTOR = 0.125*RESIZE_COEFF
 GOLD_GAIN_FONT_SIZE = 25*RESIZE_COEFF
 GOLD_GAIN_POSITIVE_RGB = (0,0,153)
@@ -177,19 +177,11 @@ SPAWNING_WITH_SCRIPT = False
 SPAWNING_MARGIN_SPACE = 0.1   ## *background.bush_width
 INITIAL_SPAWNING_TIME = 5.0
 TIME_BETWEEN_ROUNDS = 6.0 # in seconds
+ROUND_DISPLAY_TIME = 4.0
 
-TIME_P1 = 1000000   ## time phase n1 in seconds
-P1_GOBLIN_SPAWNING_PERIOD = 2.0   ## in seconds
-P1_OGRE_SPAWNING_PERIOD = 4.0   ## in seconds
-P1_BLUE_NEC_SPAWNING_PERIOD = 6.0   ## in seconds
-P1_RED_NEC_SPAWNING_PERIOD = 6.0   ## in seconds
-P1_GREEN_NEC_SPAWNING_PERIOD = 6.0   ## in seconds
-P1_KAMIKAZE_SPAWNING_PERIOD = 5.0   ## in seconds
-P1_DRAGON_SPAWNING_PERIOD = 10.0   ## in seconds
+spawning_coeff = Spawning_coeff()
 
 SPAWNING_DICT = {
-
-"DISPLAY_TIME" : 2.0,
 
 "P1_DURATION" : 20,  ## in seconds
 "P1_HP_COEFF" : 1.0,
@@ -205,7 +197,7 @@ SPAWNING_DICT = {
 
 
 "P2_DURATION" : 20,  ## in seconds
-"P2_HP_COEFF" : 1.0,
+"P2_HP_COEFF" : 2.0,
 "P2_DAMAGE_COEFF" : 1.0,
 "P2_VELOCITY_COEFF" : 1.0,
 "P2_GOBLIN_PERIOD" : 2.0,   ## in seconds
@@ -220,9 +212,9 @@ SPAWNING_DICT = {
 
 
 "P3_DURATION" : 40,  ## in seconds
-"P3_HP_COEFF" : 1.0,
-"P3_DAMAGE_COEFF" : 1.0,
-"P3_VELOCITY_COEFF" : 1.0,
+"P3_HP_COEFF" : 2.0,
+"P3_DAMAGE_COEFF" : 2.0,
+"P3_VELOCITY_COEFF" : 1.5,
 "P3_GOBLIN_PERIOD" : 2.0,   ## in seconds
 "P3_OGRE_PERIOD" : 4.0,   ## in seconds
 "P3_BLUE_NEC_PERIOD" : 6.0,   ## in seconds
@@ -235,9 +227,6 @@ SPAWNING_DICT = {
 
 }
 
-## MULTIP HP, DAMAGE, VELOCITY
-## DEGAT TOUR DIFF IMPACT
-## NB MAX SPAWN
 
 ##############################################################
 

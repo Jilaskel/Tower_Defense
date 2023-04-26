@@ -273,11 +273,11 @@ class Ennemy(pygame.sprite.Sprite):
       def __init__(self,x,y,rand_offset):
             pygame.sprite.Sprite.__init__(self)
 
-            self.hp_max = self.my_data.hp_max
+            self.hp_max = self.my_data.hp_max*spawning_coeff.hp_coeff
             self.hp = self.hp_max
 
-            self.velocity = self.my_data.velocity
-            self.damage = self.my_data.damage
+            self.velocity = self.my_data.velocity*spawning_coeff.velocity_coeff
+            self.damage = self.my_data.damage*spawning_coeff.damage_coeff
 
             self.current_image = self.my_data.static_image
 
