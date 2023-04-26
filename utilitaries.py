@@ -179,6 +179,10 @@ INITIAL_SPAWNING_TIME = 5.0
 TIME_BETWEEN_ROUNDS = 6.0 # in seconds
 ROUND_DISPLAY_TIME = 4.0
 
+LAST_ROUND_HP_COEFF_PER_SEC = 0.1  # after the end of last round duration, the coeff will increase of this amount each second
+LAST_ROUND_DAMAGE_COEFF_PER_SEC = 0.1  # after the end of last round duration, the coeff will increase of this amount each second
+LAST_ROUND_VELOCITY_COEFF_PER_SEC = 0.1  # after the end of last round duration, the coeff will increase of this amount each second
+
 spawning_coeff = Spawning_coeff()
 
 SPAWNING_DICT = {
@@ -335,7 +339,7 @@ KAMIKAZE_DICT = {
 
 "NAME" : "Kamikaze Goblin",
 "HP_MAX" : 4000.0,
-"DAMAGE" : 2.5,
+"DAMAGE" : 2.5,  #useless, see explosion damage 
 "VELOCITY" : 0.25 * RESIZE_COEFF, # pixel by ms
 "GOLD_EARNING" : 0,
 

@@ -26,14 +26,13 @@ class Spawning_mode():
                 char = "P"+ str(i) + "_DURATION"
                 if char in self.my_dict:
                     self.my_phases.append(Spawning_phase(self.my_dict,i))
+                    i += 1
                 else:
                     last_phase = True
-                i += 1
 
             self.reset()  
 
-            self.current_phase = 0
-            self.last_phase = i-1
+            self.last_phase = i-2
             self.time_last_phase = INITIAL_SPAWNING_TIME
             self.display_time = ROUND_DISPLAY_TIME
 
@@ -53,20 +52,24 @@ class Spawning_mode():
         if txt:
             text = txt
         else:
-            text = "Round " + str(i)
+            if (i-1==self.last_phase):
+                text = "Last Round"
+                self.small_txt.clear()
+            else:
+                text = "Round " + str(i)
 
-            self.small_txt.clear()
-            if (self.my_phases[self.current_phase].hp_coeff != 1) :
-                text_small = "HP coeff : x" + str(self.my_phases[self.current_phase].hp_coeff)
-                self.small_txt.append(self.font_small.render(text_small,True,self.font_color))
+                self.small_txt.clear()
+                if (self.my_phases[self.current_phase].hp_coeff != 1) :
+                    text_small = "HP coeff : x" + str(self.my_phases[self.current_phase].hp_coeff)
+                    self.small_txt.append(self.font_small.render(text_small,True,self.font_color))
 
-            if (self.my_phases[self.current_phase].damage_coeff != 1) :
-                text_small = "Damage coeff : x" + str(self.my_phases[self.current_phase].damage_coeff)
-                self.small_txt.append(self.font_small.render(text_small,True,self.font_color))
+                if (self.my_phases[self.current_phase].damage_coeff != 1) :
+                    text_small = "Damage coeff : x" + str(self.my_phases[self.current_phase].damage_coeff)
+                    self.small_txt.append(self.font_small.render(text_small,True,self.font_color))
 
-            if (self.my_phases[self.current_phase].velocity_coeff != 1) :
-                text_small = "Velocity coeff : x" + str(self.my_phases[self.current_phase].velocity_coeff)
-                self.small_txt.append(self.font_small.render(text_small,True,self.font_color))
+                if (self.my_phases[self.current_phase].velocity_coeff != 1) :
+                    text_small = "Velocity coeff : x" + str(self.my_phases[self.current_phase].velocity_coeff)
+                    self.small_txt.append(self.font_small.render(text_small,True,self.font_color))
 
         self.main_text = self.font.render(text,True,self.font_color)  
 
@@ -105,12 +108,17 @@ class Spawning_mode():
         self.number_kamikaze_spawned = 1.0
         self.last_time_spawning_kamikaze = INITIAL_SPAWNING_TIME+TIME_BETWEEN_ROUNDS          
         self.number_dragon_spawned = 1.0
-        self.last_time_spawning_dragon = INITIAL_SPAWNING_TIME+TIME_BETWEEN_ROUNDS              
+        self.last_time_spawning_dragon = INITIAL_SPAWNING_TIME+TIME_BETWEEN_ROUNDS      
+
+        self.current_phase = 0
+
+        spawning_coeff.hp_coeff = self.my_phases[self.current_phase].hp_coeff
+        spawning_coeff.damage_coeff = self.my_phases[self.current_phase].damage_coeff
+        spawning_coeff.velocity_coeff = self.my_phases[self.current_phase].velocity_coeff        
 
 
     def reset_hard(self):
         self.reset()
-        self.current_phase = 0
         self.time_last_phase = INITIAL_SPAWNING_TIME
         self.display(0,"Prepare Your Defenses!")
 
@@ -148,14 +156,21 @@ class Spawning_mode():
                             self.time_last_phase = time
                             self.reset_cd(time)
 
+                            spawning_coeff.hp_coeff = self.my_phases[self.current_phase].hp_coeff
+                            spawning_coeff.damage_coeff = self.my_phases[self.current_phase].damage_coeff
+                            spawning_coeff.velocity_coeff = self.my_phases[self.current_phase].velocity_coeff
+
+                        else:
+                            dt = game.timestep*0.001
+                            spawning_coeff.hp_coeff += LAST_ROUND_HP_COEFF_PER_SEC*dt
+                            spawning_coeff.damage_coeff += LAST_ROUND_DAMAGE_COEFF_PER_SEC*dt
+                            spawning_coeff.velocity_coeff += LAST_ROUND_VELOCITY_COEFF_PER_SEC*dt                           
+
                     if (time>(self.time_last_phase+TIME_BETWEEN_ROUNDS*0.5) and (time<(self.time_last_phase+TIME_BETWEEN_ROUNDS*0.5+game.timestep*0.001*2))):
                             self.display(self.current_phase+1)
 
                     phase = self.my_phases[self.current_phase]
 
-                    spawning_coeff.hp_coeff = phase.hp_coeff
-                    spawning_coeff.damage_coeff = phase.damage_coeff
-                    spawning_coeff.velocity_coeff = phase.velocity_coeff
                         
                     cooldown = phase.ennemy_period[GOBLIN_TAG-1]*self.number_goblin_spawned 
                     if ((time-self.last_time_spawning_goblin)>cooldown):

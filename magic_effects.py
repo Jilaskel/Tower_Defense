@@ -137,11 +137,13 @@ class Heal(Magical_effect):
             self.my_data = all_ef.heal_data
             self.rendering_layer_offset = - 0.1
 
+            self.amount = self.my_data.amount*spawning_coeff.damage_coeff
+
             Magical_effect.__init__(self,target)
 
 
       def check_impact(self,game):
-            self.my_target.hp += self.my_data.amount*game.timestep*0.001
+            self.my_target.hp += self.amount*game.timestep*0.001
             self.my_target.hp = min(self.my_target.hp,self.my_target.hp_max)
 
 class Buff(Magical_effect):
@@ -172,6 +174,8 @@ class Wave(Magical_effect):
             self.all_ef = all_ef
 
             self.image_size = self.my_data.image_size
+
+            self.damage = self.my_data.damage*spawning_coeff.damage_coeff
 
             self.current_frame = 0
             self.current_image = self.my_data.images[self.current_frame]
@@ -211,7 +215,7 @@ class Wave(Magical_effect):
             if self.hit_ennemies:
                 for i in range (len(self.hit_ennemies)):
                         if not (self.hit_ennemies[i] in self.damaged_enmy):
-                              self.hit_ennemies[i].hp -= self.my_data.damage
+                              self.hit_ennemies[i].hp -= self.damage
                               self.damaged_enmy.append(self.hit_ennemies[i])
 
             self.hit_allies = pygame.sprite.spritecollide(self, game.all_ennemies, False)
@@ -231,6 +235,8 @@ class Explosion(Magical_effect):
             self.kam = kam
 
             self.image_size = self.my_data.image_size
+
+            self.damage = self.my_data.damage*spawning_coeff.damage_coeff
 
             self.current_frame = 0
             self.current_image = self.my_data.images[self.current_frame]
@@ -270,14 +276,14 @@ class Explosion(Magical_effect):
                   self.hit_ennemies = pygame.sprite.spritecollide(self, game.all_towers, False)
                   if self.hit_ennemies:
                         for i in range (len(self.hit_ennemies)):
-                                    self.hit_ennemies[i].hp -= self.my_data.damage
+                                    self.hit_ennemies[i].hp -= self.damage
                   self.hit_ennemies = pygame.sprite.spritecollide(self, game.all_dead_bodies.all_iced_bodies, False)
                   if self.hit_ennemies:
                         for i in range (len(self.hit_ennemies)):
-                                    self.hit_ennemies[i].hp -= self.my_data.damage
+                                    self.hit_ennemies[i].hp -= self.damage
                   self.hit_ennemies = pygame.sprite.spritecollide(self, game.base.all_gates, False)
                   if self.hit_ennemies:
                         for i in range (len(self.hit_ennemies)):
-                                    self.hit_ennemies[i].hp -= self.my_data.damage                  
+                                    self.hit_ennemies[i].hp -= self.damage                  
                   self.kam.hp = 0.0
 
