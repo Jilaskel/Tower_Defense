@@ -668,6 +668,10 @@ class Dragon(Ennemy):
 
             Ennemy.__init__(self,x,y,rand_offset)
 
+            self.rendering_layer = 23
+
+            self.rect.width *= 2
+
       def attack(self,game):
             self.stun_time = 0.0
             pass
