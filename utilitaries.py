@@ -172,8 +172,6 @@ MENU_LVL_MAX_BUTTON_IMAGE_PATH = "Assets/Menu/Buttons/menu_bar.png"
 
 ##############################################################
 
-SPAWNING_WITH_SCRIPT = False
-
 SPAWNING_MARGIN_SPACE = 0.1   ## *background.bush_width
 INITIAL_SPAWNING_TIME = 5.0
 TIME_BETWEEN_ROUNDS = 6.0 # in seconds
@@ -193,9 +191,12 @@ SPAWNING_DICT = {
 "P1_VELOCITY_COEFF" : 1.0,
 "P1_GOBLIN_PERIOD" : 2.0,   ## in seconds
 "P1_OGRE_PERIOD" : 4.0,   ## in seconds
-"P1_BLUE_NEC_PERIOD" : 6.0,   ## in seconds
-"P1_RED_NEC_PERIOD" : 6.0,   ## in seconds
-"P1_GREEN_NEC_PERIOD" : 6.0,   ## in seconds
+"P1_BLUE_SKEL_PERIOD" : 6.0,   ## in seconds
+"P1_RED_SKEL_PERIOD" : 6.0,   ## in seconds
+"P1_GREEN_SKEL_PERIOD" : 6.0,   ## in seconds
+# "P1_BLUE_NEC_PERIOD" : 6.0,   ## in seconds
+# "P1_RED_NEC_PERIOD" : 6.0,   ## in seconds
+# "P1_GREEN_NEC_PERIOD" : 6.0,   ## in seconds
 # "P1_KAMIKAZE_PERIOD" : 0.0,   ## in seconds
 # "P1_DRAGON_PERIOD" : 0.0,   ## in seconds
 

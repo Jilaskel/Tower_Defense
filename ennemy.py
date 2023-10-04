@@ -49,20 +49,20 @@ class All_ennemies(pygame.sprite.Group):
 
       def add_skel(self,x,y,tag):
             if (tag==BLUE_SKEL_TAG):
-                  self.add_blue_skel(x,y)
+                  self.add_blue_skel(x,y,0)
             elif (tag==RED_SKEL_TAG):
-                  self.add_red_skel(x,y)
+                  self.add_red_skel(x,y,0)
             elif (tag==GREEN_SKEL_TAG):
-                  self.add_green_skel(x,y)
+                  self.add_green_skel(x,y,0)
 
-      def add_blue_skel(self,x,y):
-            self.add(Blue_Skeleton(self,x,y))
+      def add_blue_skel(self,x,y,rand_offset):
+            self.add(Blue_Skeleton(self,x,y,rand_offset))
 
-      def add_red_skel(self,x,y):
-            self.add(Red_Skeleton(self,x,y))
+      def add_red_skel(self,x,y,rand_offset):
+            self.add(Red_Skeleton(self,x,y,rand_offset))
 
-      def add_green_skel(self,x,y):
-            self.add(Green_Skeleton(self,x,y))
+      def add_green_skel(self,x,y,rand_offset):
+            self.add(Green_Skeleton(self,x,y,rand_offset))
 
       def add_kamikaze(self,x,y,rand_offset):
             self.add(Kamikaze(self,x,y,rand_offset))
@@ -573,12 +573,16 @@ class Green_Necromancer(Necromancer):
                         game.all_mixers.magical_effect_mixer.root_sound.play(maxtime=SOUND_ROOT_MAX_TIME)
 
 class Skeleton(Ennemy):
-      def __init__(self,all_e,x,y): 
-            Ennemy.__init__(self,x,y,0)
+      def __init__(self,all_e,x,y,rand_offset): 
+            Ennemy.__init__(self,x,y,rand_offset)
 
-            self.stunned = True # to pass attack() while summoning
-            self.my_timer_sp = 0.0
-            self.spawn_frame = 0
+            if rand_offset==0:   #summoned
+                  self.stunned = True # to pass attack() while summoning
+                  self.my_timer_sp = 0.0
+                  self.spawn_frame = 0
+            else:
+                  self.stunned = False
+                  self.my_timer_sp = self.my_data.anim_total_time_sp*2      
 
       def move(self,game):
             if (self.my_timer_sp<self.my_data.anim_total_time_sp):
@@ -595,22 +599,22 @@ class Skeleton(Ennemy):
                   Ennemy.move(self,game)           
 
 class Blue_Skeleton(Skeleton):
-      def __init__(self,all_e,x,y):
+      def __init__(self,all_e,x,y,rand_offset):
             self.my_data = all_e.blue_skel_data
 
-            Skeleton.__init__(self,all_e,x,y)
+            Skeleton.__init__(self,all_e,x,y,rand_offset)
 
 class Red_Skeleton(Skeleton):
-      def __init__(self,all_e,x,y):
+      def __init__(self,all_e,x,y,rand_offset):
             self.my_data = all_e.red_skel_data
 
-            Skeleton.__init__(self,all_e,x,y)
+            Skeleton.__init__(self,all_e,x,y,rand_offset)
 
 class Green_Skeleton(Skeleton):
-      def __init__(self,all_e,x,y):
+      def __init__(self,all_e,x,y,rand_offset):
             self.my_data = all_e.green_skel_data
 
-            Skeleton.__init__(self,all_e,x,y)
+            Skeleton.__init__(self,all_e,x,y,rand_offset)
 
 class Goblin(Ennemy):
       def __init__(self,all_e,x,y,rand_offset): 
