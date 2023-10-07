@@ -174,7 +174,7 @@ MENU_LVL_MAX_BUTTON_IMAGE_PATH = "Assets/Menu/Buttons/menu_bar.png"
 
 SPAWNING_MARGIN_SPACE = 0.1   ## *background.bush_width
 INITIAL_SPAWNING_TIME = 5.0
-TIME_BETWEEN_ROUNDS = 6.0 # in seconds
+TIME_BETWEEN_ROUNDS = 5.0 # in seconds
 ROUND_DISPLAY_TIME = 4.0
 
 LAST_ROUND_HP_COEFF_PER_SEC = 0.1  # after the end of last round duration, the coeff will increase of this amount each second
@@ -184,52 +184,98 @@ LAST_ROUND_VELOCITY_COEFF_PER_SEC = 0.1  # after the end of last round duration,
 spawning_coeff = Spawning_coeff()
 
 SPAWNING_DICT = {
+    "R1"  : {
 
-"P1_DURATION" : 20,  ## in seconds
-"P1_HP_COEFF" : 1.0,
-"P1_DAMAGE_COEFF" : 1.0,
-"P1_VELOCITY_COEFF" : 1.0,
-"P1_GOBLIN_PERIOD" : 2.0,   ## in seconds
-"P1_OGRE_PERIOD" : 4.0,   ## in seconds
-"P1_BLUE_SKEL_PERIOD" : 6.0,   ## in seconds
-"P1_RED_SKEL_PERIOD" : 6.0,   ## in seconds
-"P1_GREEN_SKEL_PERIOD" : 6.0,   ## in seconds
-# "P1_BLUE_NEC_PERIOD" : 6.0,   ## in seconds
-# "P1_RED_NEC_PERIOD" : 6.0,   ## in seconds
-# "P1_GREEN_NEC_PERIOD" : 6.0,   ## in seconds
-# "P1_KAMIKAZE_PERIOD" : 0.0,   ## in seconds
-# "P1_DRAGON_PERIOD" : 0.0,   ## in seconds
+        "HP_COEFF" : 1.0,
+        "DAMAGE_COEFF" : 1.0,
+        "VELOCITY_COEFF" : 1.0,
 
+        "PHASES": {
+            "P1": {
+                "DURATION" : 30,  ## in seconds
+                "GOBLIN_PERIOD" : 2.0,   ## in seconds
+                "OGRE_PERIOD" : 4.0,   ## in seconds
+                "BLUE_SKEL_PERIOD" : 6.0,   ## in seconds
+                "RED_SKEL_PERIOD" : 6.0,   ## in seconds
+                "GREEN_SKEL_PERIOD" : 6.0  ## in seconds
+            },
 
-"P2_DURATION" : 20,  ## in seconds
-"P2_HP_COEFF" : 2.0,
-"P2_DAMAGE_COEFF" : 1.0,
-"P2_VELOCITY_COEFF" : 1.0,
-"P2_GOBLIN_PERIOD" : 2.0,   ## in seconds
-"P2_OGRE_PERIOD" : 4.0,   ## in seconds
-"P2_BLUE_NEC_PERIOD" : 6.0,   ## in seconds
-"P2_RED_NEC_PERIOD" : 6.0,   ## in seconds
-"P2_GREEN_NEC_PERIOD" : 6.0,   ## in seconds
-"P2_KAMIKAZE_PERIOD" : 5.0,   ## in seconds
-"P2_MAX_KAMIKAZE_SIMULTANEOUSLY" : 2,
-# "P2_DRAGON_PERIOD" : 7.0,  ## in seconds
-# "P2_MAX_DRAGON_SIMULTANEOUSLY" : 0
+            "P2" : {
+                "DURATION" : 30,  ## in seconds
+                "GOBLIN_PERIOD" : 2.0,   ## in seconds
+                "OGRE_PERIOD" : 4.0,   ## in seconds
+                "BLUE_NEC_PERIOD" : 6.0,   ## in seconds
+                "RED_NEC_PERIOD" : 6.0,   ## in seconds
+                "GREEN_NEC_PERIOD" : 6.0,   ## in seconds
+                "KAMIKAZE_PERIOD" : 5.0,   ## in seconds
+                "MAX_KAMIKAZE_SIMULTANEOUSLY" : 2
+            },
 
+            "P3" : {
+                "DURATION" : 30,  ## in seconds
+                "KAMIKAZE_PERIOD" : 5.0,   ## in seconds
+                "MAX_KAMIKAZE_SIMULTANEOUSLY" : 2,
+                "DRAGON_PERIOD" : 7.0,  ## in seconds
+                "MAX_DRAGON_SIMULTANEOUSLY" : 1
+            }
+        }
+    },
+    "R2"  : {
+        "HP_COEFF" : 1.0,
+        "DAMAGE_COEFF" : 1.1,
+        "VELOCITY_COEFF" : 1.0,
 
-"P3_DURATION" : 40,  ## in seconds
-"P3_HP_COEFF" : 2.0,
-"P3_DAMAGE_COEFF" : 2.0,
-"P3_VELOCITY_COEFF" : 1.5,
-"P3_GOBLIN_PERIOD" : 2.0,   ## in seconds
-"P3_OGRE_PERIOD" : 4.0,   ## in seconds
-"P3_BLUE_NEC_PERIOD" : 6.0,   ## in seconds
-"P3_RED_NEC_PERIOD" : 6.0,   ## in seconds
-"P3_GREEN_NEC_PERIOD" : 6.0,   ## in seconds
-"P3_KAMIKAZE_PERIOD" : 5.0,   ## in seconds
-"P3_MAX_KAMIKAZE_SIMULTANEOUSLY" : 2,
-"P3_DRAGON_PERIOD" : 7.0,  ## in seconds
-"P3_MAX_DRAGON_SIMULTANEOUSLY" : 1
+        "PHASES": {
+            "P1": {
+                "DURATION" : 10,  ## in seconds
+                "GOBLIN_PERIOD" : 2.0,   ## in seconds
+                "OGRE_PERIOD" : 4.0,   ## in seconds
+                "BLUE_SKEL_PERIOD" : 6.0,   ## in seconds
+                "RED_SKEL_PERIOD" : 6.0,   ## in seconds
+                "GREEN_SKEL_PERIOD" : 6.0  ## in seconds
+            },
 
+            "P2" : {
+                "DURATION" : 10,  ## in seconds
+                "GOBLIN_PERIOD" : 2.0,   ## in seconds
+                "OGRE_PERIOD" : 4.0,   ## in seconds
+                "BLUE_NEC_PERIOD" : 6.0,   ## in seconds
+                "RED_NEC_PERIOD" : 6.0,   ## in seconds
+                "GREEN_NEC_PERIOD" : 6.0,   ## in seconds
+                "KAMIKAZE_PERIOD" : 5.0,   ## in seconds
+                "MAX_KAMIKAZE_SIMULTANEOUSLY" : 2
+            },
+
+            "P3" : {
+                "DURATION" : 10,  ## in seconds
+                "GOBLIN_PERIOD" : 2.0,   ## in seconds
+                "OGRE_PERIOD" : 4.0,   ## in seconds
+                "BLUE_NEC_PERIOD" : 6.0,   ## in seconds
+                "RED_NEC_PERIOD" : 6.0,   ## in seconds
+                "GREEN_NEC_PERIOD" : 6.0,   ## in seconds
+                "KAMIKAZE_PERIOD" : 5.0,   ## in seconds
+                "MAX_KAMIKAZE_SIMULTANEOUSLY" : 2,
+                "DRAGON_PERIOD" : 7.0,  ## in seconds
+                "MAX_DRAGON_SIMULTANEOUSLY" : 1
+            }
+        }
+    },
+    "R3"  : {
+        "HP_COEFF" : 1.0,
+        "DAMAGE_COEFF" : 1.0,
+        "VELOCITY_COEFF" : 1.0,
+
+        "PHASES": {
+            "P1": {
+                "DURATION" : 20,  ## in seconds
+                "GOBLIN_PERIOD" : 2.0,   ## in seconds
+                "OGRE_PERIOD" : 4.0,   ## in seconds
+                "BLUE_SKEL_PERIOD" : 6.0,   ## in seconds
+                "RED_SKEL_PERIOD" : 6.0,   ## in seconds
+                "GREEN_SKEL_PERIOD" : 6.0  ## in seconds
+            }
+        }
+    }
 }
 
 
