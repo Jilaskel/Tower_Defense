@@ -124,7 +124,7 @@ class Spawning_mode():
         self.time_last_spawned = dict()
         for e_char in self.ennemies_char_tag_dict.keys():
             self.number_last_spawned[e_char] = 1.0
-            self.time_last_spawned[e_char] = INITIAL_SPAWNING_TIME+TIME_BETWEEN_ROUNDS   
+            self.time_last_spawned[e_char] = INITIAL_SPAWNING_TIME   
 
         self.current_round = 0
         self.current_phase = 0
@@ -155,44 +155,43 @@ class Spawning_mode():
         self.timer_display += game.timestep*0.001
 
         if not(TURN_OFF_NATURAL_SPAWNING):
-            if time>INITIAL_SPAWNING_TIME:
-                if (time>(self.my_rounds[self.current_round].duration+self.time_last_round)):
-                    if not(self.current_round==self.last_round):
-                        self.current_round += 1
-                        self.current_phase = 0
-                        self.time_last_round = time
-                        self.time_last_phase = time
-                        self.reset_cd_between_rounds(time)
-
-                        spawning_coeff.hp_coeff = self.my_rounds[self.current_round].hp_coeff
-                        spawning_coeff.damage_coeff = self.my_rounds[self.current_round].damage_coeff
-                        spawning_coeff.velocity_coeff = self.my_rounds[self.current_round].velocity_coeff   
-
-                    else:
-                        dt = game.timestep*0.001
-                        spawning_coeff.hp_coeff += LAST_ROUND_HP_COEFF_PER_SEC*dt
-                        spawning_coeff.damage_coeff += LAST_ROUND_DAMAGE_COEFF_PER_SEC*dt
-                        spawning_coeff.velocity_coeff += LAST_ROUND_VELOCITY_COEFF_PER_SEC*dt                           
-
-                if (time>(self.time_last_round+TIME_BETWEEN_ROUNDS*0.5) and (time<(self.time_last_round+TIME_BETWEEN_ROUNDS*0.5+game.timestep*0.001*2))):
-                        self.display(self.current_round+1)
-
+            if (time>(self.my_rounds[self.current_round].duration+self.time_last_round)):
                 if not(self.current_round==self.last_round):
-                    if (time>(self.my_rounds[self.current_round].my_phases[self.current_phase].duration+self.time_last_phase)):
-                        self.current_phase += 1
-                        self.time_last_phase = time
-                        self.reset_cd_between_phases(time)
+                    self.current_round += 1
+                    self.current_phase = 0
+                    self.time_last_round = time+TIME_BETWEEN_ROUNDS
+                    self.time_last_phase = time+TIME_BETWEEN_ROUNDS
+                    self.reset_cd_between_rounds(time)
+
+                    spawning_coeff.hp_coeff = self.my_rounds[self.current_round].hp_coeff
+                    spawning_coeff.damage_coeff = self.my_rounds[self.current_round].damage_coeff
+                    spawning_coeff.velocity_coeff = self.my_rounds[self.current_round].velocity_coeff   
+
+                else:
+                    dt = game.timestep*0.001
+                    spawning_coeff.hp_coeff += LAST_ROUND_HP_COEFF_PER_SEC*dt
+                    spawning_coeff.damage_coeff += LAST_ROUND_DAMAGE_COEFF_PER_SEC*dt
+                    spawning_coeff.velocity_coeff += LAST_ROUND_VELOCITY_COEFF_PER_SEC*dt                           
+
+            if (time>(self.time_last_round-TIME_BETWEEN_ROUNDS*0.25) and (time<(self.time_last_round-TIME_BETWEEN_ROUNDS*0.25+game.timestep*0.001*2))):
+                    self.display(self.current_round+1)
+
+            if not(self.current_round==self.last_round):
+                if (time>(self.my_rounds[self.current_round].my_phases[self.current_phase].duration+self.time_last_phase)):
+                    self.current_phase += 1
+                    self.time_last_phase = time
+                    self.reset_cd_between_phases(time)
 
 
-                phase = self.my_rounds[self.current_round].my_phases[self.current_phase]
+            phase = self.my_rounds[self.current_round].my_phases[self.current_phase]
 
-                for e_char in self.ennemies_char_tag_dict.keys():
-                    cooldown = phase.ennemy_period[e_char]*self.number_last_spawned[e_char]
-                    if ((time-self.time_last_spawned[e_char])>cooldown):
-                        self.time_last_spawned[e_char] = time
-                        max_sim = phase.ennemy_max_sim[e_char]
-                        self.number_last_spawned[e_char] = random.randint(1,max_sim)
-                        self.spawn(game,self.ennemies_char_tag_dict[e_char],self.number_last_spawned[e_char])     
+            for e_char in self.ennemies_char_tag_dict.keys():
+                cooldown = phase.ennemy_period[e_char]*self.number_last_spawned[e_char]
+                if ((time-self.time_last_spawned[e_char])>cooldown):
+                    self.time_last_spawned[e_char] = time
+                    max_sim = phase.ennemy_max_sim[e_char]
+                    self.number_last_spawned[e_char] = random.randint(1,max_sim)
+                    self.spawn(game,self.ennemies_char_tag_dict[e_char],self.number_last_spawned[e_char])     
                                       
 
     def spawn(self,game,TAG,number_of_ennemies):
