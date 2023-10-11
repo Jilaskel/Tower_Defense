@@ -561,7 +561,8 @@ class Green_Necromancer(Necromancer):
                         for tower in self.detected_towers:
                               if (tower_rooted == self.my_data.number_max_tower_root):
                                     break
-                              if (not(tower in game.all_towers.all_siege_engines) and not(tower.rooted)):
+                              #if (not(tower in game.all_towers.all_siege_engines) and not(tower.rooted)): C'EST LA MERDE !!!!
+                              if (not(tower in game.all_towers.all_siege_engines) and not(tower.rooted) and not(tower in game.all_towers.all_engines_on_wall)):
                                     tower.rooted = True
                                     tower.my_timer = 0.0
                                     tower_rooted += 1

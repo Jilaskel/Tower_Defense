@@ -942,12 +942,12 @@ class Rock(Projectile):
 
             self.my_timer = 0
                         
-      def check_impact(self,game):
-            distance = np.sqrt((self.my_target_center[0] - self.center[0])**2 + (self.my_target_center[1] - self.center[1])**2)
-            if (distance<0.1*BACKGROUND_SQUARE_SIDE):
-                  pygame.sprite.Sprite.kill(self)
-                  game.all_impacts.add_impact(game,self,self.my_data.impact_tag)  
-
+#      def check_impact(self,game):
+#            distance = np.sqrt((self.my_target_center[0] - self.center[0])**2 + (self.my_target_center[1] - self.center[1])**2)
+#            if (distance<0.1*BACKGROUND_SQUARE_SIDE):
+#                  pygame.sprite.Sprite.kill(self)
+#                  game.all_impacts.add_impact(game,self,self.my_data.impact_tag)
+         
 
       def move(self,game):
             if (pygame.sprite.Sprite.alive(self.target)):

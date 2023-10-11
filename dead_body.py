@@ -124,7 +124,7 @@ class Dead_body_data():
 class Dead_goblin_data(Dead_body_data):
       def __init__(self):
             self.my_dict = GOBLIN_DICT
-            self.number_of_zero_image = 4  # Xavier....
+            self.number_of_zero_image = 4  # Xavier.... le boss
             Dead_body_data.__init__(self)
 
 class Dead_ogre_data(Dead_body_data):

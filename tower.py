@@ -24,6 +24,7 @@ class All_towers(pygame.sprite.Group):
             pygame.sprite.Group.__init__(self)   
 
             self.all_siege_engines = All_siege_engines()
+            self.all_engines_on_wall = All_engines_on_wall()
 
             self.arcane_tower_lvl1_data = Arcane_tower_lvl1_data()
             self.arcane_tower_lvl2_data = Arcane_tower_lvl2_data()
@@ -125,6 +126,8 @@ class All_towers(pygame.sprite.Group):
             self.add(balliste)
             if (box.rendering_layer!=23):       ## not on walls
                   self.all_siege_engines.add(balliste)
+            else:
+                  self.all_engines_on_wall.add(balliste)
             game.all_mixers.mouse_mixer.building_wood_sound.play()
 
       def add_catapult(self,game,box):
@@ -132,10 +135,16 @@ class All_towers(pygame.sprite.Group):
             self.add(catapulte)
             if (box.rendering_layer!=23):       ## not on walls
                   self.all_siege_engines.add(catapulte)
+            else:
+                  self.all_engines_on_wall.add(catapulte)
             game.all_mixers.mouse_mixer.building_wood_sound.play()
 
 
 class All_siege_engines(pygame.sprite.Group):
+      def __init__(self):
+            pygame.sprite.Group.__init__(self)  
+
+class All_engines_on_wall(pygame.sprite.Group):
       def __init__(self):
             pygame.sprite.Group.__init__(self)  
 
