@@ -73,7 +73,7 @@ class Impact_data():
         self.static_image = pygame.image.load(self.my_dict["IMAGE_PATH"]+"0001.png").convert_alpha()
         self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*self.my_dict["RESIZE_FACTOR"])        
         self.image_size = vec(self.static_image.get_size())
-        self.offset = vec(self.my_dict["CENTOR_VECTOR"][0]*self.image_size[0],self.my_dict["CENTOR_VECTOR"][1]*self.image_size[1])
+        self.offset = vec(self.my_dict["CENTER_VECTOR"][0]*self.image_size[0],self.my_dict["CENTER_VECTOR"][1]*self.image_size[1])
 
         self.number_frame = self.my_dict["NUMBER_FRAME"]
         self.images = []

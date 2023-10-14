@@ -205,9 +205,9 @@ class Arcane_bolt_data():
             self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*self.my_dict["RESIZE_FACTOR"])  
             self.image_size = vec(self.static_image.get_size())
             self.initial_direction = vec(-1,0)
-            self.offset = vec(self.my_dict["CENTOR_VECTOR"][0]*self.image_size[0],self.my_dict["CENTOR_VECTOR"][1]*self.image_size[1])
+            self.offset = vec(self.my_dict["CENTER_VECTOR"][0]*self.image_size[0],self.my_dict["CENTER_VECTOR"][1]*self.image_size[1])
 
-            self.centor_vector = self.my_dict["CENTOR_VECTOR"]
+            self.center_vector = self.my_dict["CENTER_VECTOR"]
 
 class Arcane_bolt_lvl1_data(Arcane_bolt_data):
       def __init__(self):
@@ -244,7 +244,7 @@ class Fire_bolt_data():
             self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*self.my_dict["RESIZE_FACTOR"])  
             self.image_size = vec(self.static_image.get_size())
             self.initial_direction = vec(-1,0)
-            self.offset = vec(self.my_dict["CENTOR_VECTOR"][0]*self.image_size[0],self.my_dict["CENTOR_VECTOR"][1]*self.image_size[1])
+            self.offset = vec(self.my_dict["CENTER_VECTOR"][0]*self.image_size[0],self.my_dict["CENTER_VECTOR"][1]*self.image_size[1])
 
             self.number_frame = self.my_dict["NUMBER_FRAME"]
             self.images = []
@@ -254,7 +254,7 @@ class Fire_bolt_data():
             self.anim_total_time = self.my_dict["TOTAL_TIME"]  # in ms
             self.time_per_frame = self.anim_total_time/self.number_frame # in ms
 
-            self.centor_vector = self.my_dict["CENTOR_VECTOR"]
+            self.center_vector = self.my_dict["CENTER_VECTOR"]
 
 class Fire_bolt_lvl1_data(Fire_bolt_data):
       def __init__(self):
@@ -292,7 +292,7 @@ class Light_bolt_data():
             self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*self.my_dict["RESIZE_FACTOR"])  
             self.image_size = vec(self.static_image.get_size())
             self.initial_direction = vec(0,1)
-            self.offset = vec(self.my_dict["CENTOR_VECTOR"][0]*self.image_size[0],self.my_dict["CENTOR_VECTOR"][1]*self.image_size[1])
+            self.offset = vec(self.my_dict["CENTER_VECTOR"][0]*self.image_size[0],self.my_dict["CENTER_VECTOR"][1]*self.image_size[1])
 
             self.number_frame = self.my_dict["NUMBER_FRAME"]
             self.images = []
@@ -304,7 +304,7 @@ class Light_bolt_data():
             self.anim_total_time = self.my_dict["TOTAL_TIME"]  # in ms
             self.time_per_frame = self.my_dict["NUMBER_FRAME"] # in ms
 
-            self.centor_vector = self.my_dict["CENTOR_VECTOR"]
+            self.center_vector = self.my_dict["CENTER_VECTOR"]
 
             self.short_images = []
             self.short_images.append(pygame.image.load(self.my_dict["IMAGE_PATH"]+"light_1.png").convert_alpha())
@@ -340,7 +340,7 @@ class Ice_bolt_data():
             self.static_image = pygame.transform.scale(self.static_image,vec(self.static_image.get_size())*self.my_dict["RESIZE_FACTOR"])  
             self.image_size = vec(self.static_image.get_size())
             self.initial_direction = vec(0,1)
-            self.offset = vec(self.my_dict["CENTOR_VECTOR"][0]*self.image_size[0],self.my_dict["CENTOR_VECTOR"][1]*self.image_size[1])
+            self.offset = vec(self.my_dict["CENTER_VECTOR"][0]*self.image_size[0],self.my_dict["CENTER_VECTOR"][1]*self.image_size[1])
 
             self.number_frame = self.my_dict["NUMBER_FRAME"]
             self.images = []
@@ -348,7 +348,7 @@ class Ice_bolt_data():
                   self.images.append(pygame.image.load(self.my_dict["IMAGE_PATH"]+"frost_ray_"+str(i).zfill(2)+".png").convert_alpha())  
             self.time_per_frame = self.my_dict["TIME_PER_FRAME"] # in ms
 
-            self.centor_vector = self.my_dict["CENTOR_VECTOR"]
+            self.center_vector = self.my_dict["CENTER_VECTOR"]
 
             self.images_fading = []
             self.number_frame_fading = self.my_dict["NUMBER_FRAME_FADING"]
@@ -396,6 +396,7 @@ class Rock_data(Siege_engine_bolt_data):
             Siege_engine_bolt_data.__init__(self)     
 
             self.rotation_speed = self.my_dict["ROTATION_SPEED"]
+            self.ortho_movement = self.my_dict["ORTHO_MOVEMENT"]
 
             self.impact_tag = ROCK_IMPACT_TAG
 
@@ -419,7 +420,7 @@ class Projectile(pygame.sprite.Sprite):
             self.rect.x = self.posX
             self.rect.y = self.posY
 
-            self.center = vec(self.posX+self.my_data.centor_vector[0]*self.image_size[0],self.posY+self.my_data.centor_vector[1]*self.image_size[1])
+            self.center = vec(self.posX+self.my_data.center_vector[0]*self.image_size[0],self.posY+self.my_data.center_vector[1]*self.image_size[1])
 
       def move(self,game):
             if (pygame.sprite.Sprite.alive(self.target)):
@@ -590,7 +591,7 @@ class Fire_bolt_no_target(Projectile):
             self.rect.x = self.posX
             self.rect.y = self.posY
 
-            self.center = vec(self.posX+self.my_data.centor_vector[0]*self.image_size[0],self.posY+self.my_data.centor_vector[1]*self.image_size[1])
+            self.center = vec(self.posX+self.my_data.center_vector[0]*self.image_size[0],self.posY+self.my_data.center_vector[1]*self.image_size[1])
 
       def move(self,game):  
             self.posX += self.my_data.velocity * game.timestep * self.direction[0]
@@ -657,7 +658,7 @@ class Light_bolt_lvl1(Projectile):
             self.current_image = pygame.transform.scale(self.current_image,self.image_size*resize_ratio)  
 
             self.image_size = vec(self.current_image.get_size())
-            self.origin_pos = vec(self.my_data.centor_vector[0]*self.image_size[0],self.posY+self.my_data.centor_vector[1]*self.image_size[1])
+            self.origin_pos = vec(self.my_data.center_vector[0]*self.image_size[0],self.my_data.center_vector[1]*self.image_size[1])
       
             self.current_frame = 0
 
@@ -704,7 +705,7 @@ class Light_bolt_lvl1(Projectile):
             self.current_image = pygame.transform.scale(self.current_image,(image_size[0]*self.my_data.resize_factor,image_size[1]*resize_ratio))  
 
             self.image_size = vec(self.current_image.get_size())
-            self.origin_pos = vec(self.my_data.centor_vector[0]*self.image_size[0],self.my_data.centor_vector[1]*self.image_size[1])
+            self.origin_pos = vec(self.my_data.center_vector[0]*self.image_size[0],self.my_data.center_vector[1]*self.image_size[1])
 
             self.rotate(self.current_image)
 
@@ -798,7 +799,7 @@ class Ice_bolt_lvl1(Projectile):
             self.current_image = pygame.transform.scale(self.current_image,self.image_size*resize_ratio)  
 
             self.image_size = vec(self.current_image.get_size())
-            self.origin_pos = vec(self.my_data.centor_vector[0]*self.image_size[0],self.posY+self.my_data.centor_vector[1]*self.image_size[1])
+            self.origin_pos = vec(self.my_data.center_vector[0]*self.image_size[0],self.my_data.center_vector[1]*self.image_size[1])
       
             self.current_frame = 0
 
@@ -847,7 +848,7 @@ class Ice_bolt_lvl1(Projectile):
             self.current_image = pygame.transform.scale(self.current_image,(image_size[0]*self.my_data.resize_factor,image_size[1]*resize_ratio))  
 
             self.image_size = vec(self.current_image.get_size())
-            self.origin_pos = vec(self.my_data.centor_vector[0]*self.image_size[0],self.my_data.centor_vector[1]*self.image_size[1])
+            self.origin_pos = vec(self.my_data.center_vector[0]*self.image_size[0],self.my_data.center_vector[1]*self.image_size[1])
 
             self.rotate(self.current_image)
 
@@ -940,8 +941,12 @@ class Rock(Projectile):
 
             self.my_target_center = self.target.center
 
+            self.my_d_max = 0.0
+
             self.my_timer = 0
                         
+            self.origin_pos = vec(self.my_data.center_vector[0]*self.image_size[0],self.my_data.center_vector[1]*self.image_size[1])
+
 #      def check_impact(self,game):
 #            distance = np.sqrt((self.my_target_center[0] - self.center[0])**2 + (self.my_target_center[1] - self.center[1])**2)
 #            if (distance<0.1*BACKGROUND_SQUARE_SIDE):
@@ -953,9 +958,14 @@ class Rock(Projectile):
             if (pygame.sprite.Sprite.alive(self.target)):
                   self.my_target_center = self.target.rect.center
                   self.direction = (self.target.rect.center[0] - self.center[0], self.target.rect.center[1] - self.center[1])   
-                  self.direction /= sqrt(self.direction[0]**2+self.direction[1]**2)     
+                  self.direction /= sqrt(self.direction[0]**2+self.direction[1]**2)   
+
+            distance = np.sqrt((self.my_target_center[0] - self.center[0])**2 + (self.my_target_center[1] - self.center[1])**2)
+            self.my_d_max = max(distance, self.my_d_max)
+            delta_cross = np.cos(distance/self.my_d_max*np.pi)*self.my_data.ortho_movement
+
             self.posX += self.my_data.velocity * game.timestep * self.direction[0]
-            self.posY += self.my_data.velocity * game.timestep * self.direction[1]
+            self.posY += self.my_data.velocity * game.timestep * self.direction[1] + delta_cross* game.timestep
             self.rect.x = self.posX
             self.rect.y = self.posY
             self.center += self.my_data.velocity * game.timestep * self.direction
@@ -972,4 +982,19 @@ class Rock(Projectile):
                   period = 1/(self.my_data.rotation_speed/1000)
                   self.my_timer = self.my_timer%period
                   angle = 360*(self.my_timer/period)  # marche pas pour le moment car l'axe de rotation pas au milieu de l'image
+            # self.current_image = pygame.transform.rotate(image, angle)
+
+            angle = math.degrees(angle)
+
+            image_rect = image.get_rect(topleft = (self.posX - self.origin_pos[0], self.posY-self.origin_pos[1]))
+            offset_center_to_pivot = vec(self.posX,self.posY) - image_rect.center
+
+            rotated_offset = offset_center_to_pivot.rotate(-angle)
+
+            rotated_image_center = (self.posX - rotated_offset.x, self.posY - rotated_offset.y)
+
             self.current_image = pygame.transform.rotate(image, angle)
+            self.rotated_image_rect = self.current_image.get_rect(center = rotated_image_center)
+
+      def render(self):
+            window.blit(self.current_image, self.rotated_image_rect)  

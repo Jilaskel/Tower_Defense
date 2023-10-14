@@ -84,7 +84,7 @@ class Ennemy_data():
             self.image_size = vec(self.static_image.get_size())
 
             self.image_offset = self.my_dict["OFFSET"]
-            self.centor_vector = self.my_dict["CENTER_VECTOR"]
+            self.center_vector = self.my_dict["CENTER_VECTOR"]
             self.hitbox_factor = self.my_dict["HITBOX_FACTOR"]
 
             self.number_frame_walking = self.my_dict["NUMBER_FRAME_WALKING"]
@@ -255,7 +255,7 @@ class Dragon_data():
             self.image_size = vec(self.static_image.get_size())
 
             self.image_offset = self.my_dict["OFFSET"]
-            self.centor_vector = self.my_dict["CENTER_VECTOR"]
+            self.center_vector = self.my_dict["CENTER_VECTOR"]
             self.hitbox_factor = self.my_dict["HITBOX_FACTOR"]
 
             self.number_frame_walking = self.my_dict["NUMBER_FRAME_WALKING"]
@@ -285,7 +285,7 @@ class Ennemy(pygame.sprite.Sprite):
 
             self.posX = x + self.my_data.image_offset[0]     
             self.posY = y + self.my_data.image_offset[1]   
-            self.center = vec(self.posX+self.my_data.centor_vector[0]*self.image_size[0],self.posY+self.my_data.centor_vector[0]*self.image_size[1]) 
+            self.center = vec(self.posX+self.my_data.center_vector[0]*self.image_size[0],self.posY+self.my_data.center_vector[0]*self.image_size[1]) 
             self.rendering_layer = compute_rendering_layer_number(self)
             self.rendering_layer += rand_offset
 
