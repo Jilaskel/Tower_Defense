@@ -221,7 +221,8 @@ SPAWNING_DICT = {
                 "GOBLIN_PERIOD" : 3.0,   ## in seconds
                 "BLUE_SKEL_PERIOD" : 7.3,   ## in seconds
                 "RED_SKEL_PERIOD" : 6.0,   ## in seconds
-                "GREEN_SKEL_PERIOD" : 4.8  ## in seconds
+                "GREEN_SKEL_PERIOD" : 4.8,  ## in seconds
+                "RED_NEC_PERIOD" : 7.0   ## in seconds
             }
         }
     },
@@ -233,19 +234,19 @@ SPAWNING_DICT = {
         "PHASES": {
             "P1": {
                 "DURATION" : 15,  ## in seconds
-                "GOBLIN_PERIOD" : 1.6,   ## in seconds
-                "OGRE_PERIOD" : 2.5   ## in seconds
-                #"BLUE_NEC_PERIOD" : 3.2,   ## in seconds
+                "GOBLIN_PERIOD" : 1.9,   ## in seconds
+                "OGRE_PERIOD" : 2.8,   ## in seconds
+                "BLUE_NEC_PERIOD" : 3.8  ## in seconds
                 #"RED_NEC_PERIOD" : 6.0,   ## in seconds
                 #"GREEN_NEC_PERIOD" : 4.6,   ## in seconds
             },
 
             "P2" : {
                 "DURATION" : 15,  ## in seconds
-                "GOBLIN_PERIOD" : 1.8,   ## in seconds
+                "GOBLIN_PERIOD" : 1.9,   ## in seconds
                 "OGRE_PERIOD" : 3.3,   ## in seconds
-                "BLUE_NEC_PERIOD" : 3.2   ## in seconds
-                #"RED_NEC_PERIOD" : 6.0,   ## in seconds
+                "BLUE_NEC_PERIOD" : 3.2,   ## in seconds
+                "RED_NEC_PERIOD" : 6.0   ## in seconds
                 #"GREEN_NEC_PERIOD" : 4.6,   ## in seconds
                 #"KAMIKAZE_PERIOD" : 5.0,   ## in seconds
                 #"MAX_KAMIKAZE_SIMULTANEOUSLY" : 2
@@ -253,7 +254,7 @@ SPAWNING_DICT = {
 
             "P3" : {
                 "DURATION" : 15,  ## in seconds
-                "GOBLIN_PERIOD" : 1.8,   ## in seconds
+                "GOBLIN_PERIOD" : 1.9,   ## in seconds
                 "OGRE_PERIOD" : 3.3,   ## in seconds
                 #"BLUE_NEC_PERIOD" : 3.4,   ## in seconds
                 "RED_NEC_PERIOD" : 3.4,   ## in seconds
@@ -266,7 +267,7 @@ SPAWNING_DICT = {
 
             "P4" : {
                 "DURATION" : 15,  ## in seconds
-                "GOBLIN_PERIOD" : 1.8,   ## in seconds
+                "GOBLIN_PERIOD" : 1.9,   ## in seconds
                 "OGRE_PERIOD" : 3.3,   ## in seconds
                 "BLUE_NEC_PERIOD" : 3.4,   ## in seconds
                 "RED_NEC_PERIOD" : 2.7,   ## in seconds
@@ -317,9 +318,9 @@ GOBLIN_DICT = {
 
 "NAME" : "Goblin",
 "HP_MAX" : 10.0,
-"DAMAGE" : 2,
+"DAMAGE" : 3,
 "VELOCITY" : 0.1 * RESIZE_COEFF, # pixel by ms
-"GOLD_EARNING" : 5,
+"GOLD_EARNING" : 4,
 
 "HITBOX_FACTOR" : 1.0,
 "RESIZE_FACTOR" : 0.5*RESIZE_COEFF, #   pixel
@@ -360,10 +361,10 @@ GOBLIN_DICT = {
 OGRE_DICT = {
 
 "NAME" : "Ogre",
-"HP_MAX" : 23.0,
-"DAMAGE" : 10,
-"VELOCITY" : 0.075 * RESIZE_COEFF, # pixel by ms
-"GOLD_EARNING" : 12,
+"HP_MAX" : 26.0,
+"DAMAGE" : 8,
+"VELOCITY" : 0.08 * RESIZE_COEFF, # pixel by ms
+"GOLD_EARNING" : 10,
 
 "HITBOX_FACTOR" : 1.0,
 "RESIZE_FACTOR" : 0.75*RESIZE_COEFF, #   pixel
@@ -440,10 +441,10 @@ KAMIKAZE_DICT = {
 BLUE_NEC_DICT = {
 
 "NAME" : "Ice Necromancer",
-"HP_MAX" : 16.0,
-"DAMAGE" : 10,
+"HP_MAX" : 14.0,
+"DAMAGE" : 4,
 "VELOCITY" : 0.1 * RESIZE_COEFF, # pixel by ms
-"GOLD_EARNING" : 8,
+"GOLD_EARNING" : 7,
 
 "HITBOX_FACTOR" : 1.0,
 "RESIZE_FACTOR" : 0.5*RESIZE_COEFF, #   pixel
@@ -488,10 +489,10 @@ BLUE_NEC_DICT = {
 RED_NEC_DICT = {
 
 "NAME" : "Fire Necromancer",
-"HP_MAX" : 16.0,
-"DAMAGE" : 10,
+"HP_MAX" : 14.0,
+"DAMAGE" : 4,
 "VELOCITY" : 0.1 * RESIZE_COEFF, # pixel by ms
-"GOLD_EARNING" : 8,
+"GOLD_EARNING" : 7,
 
 "HITBOX_FACTOR" : 1.0,
 "RESIZE_FACTOR" : 0.5*RESIZE_COEFF, #   pixel
@@ -536,10 +537,10 @@ RED_NEC_DICT = {
 GREEN_NEC_DICT = {
 
 "NAME" : "Plant Necromancer",
-"HP_MAX" : 16.0,
-"DAMAGE" : 10,
+"HP_MAX" : 14.0,
+"DAMAGE" : 4,
 "VELOCITY" : 0.1 * RESIZE_COEFF, # pixel by ms
-"GOLD_EARNING" : 8,
+"GOLD_EARNING" : 7,
 
 "HITBOX_FACTOR" : 1.0,
 "RESIZE_FACTOR" : 0.5*RESIZE_COEFF, #   pixel
@@ -587,7 +588,7 @@ BLUE_SKEL_DICT = {
 
 "NAME" : "Ice Skeleton",
 "HP_MAX" : 5.0,
-"DAMAGE" : 2,
+"DAMAGE" : 4,
 "VELOCITY" : 0.09 * RESIZE_COEFF, # pixel by ms
 "GOLD_EARNING" : 2,
 
@@ -630,7 +631,7 @@ RED_SKEL_DICT = {
 
 "NAME" : "Red Skeleton",
 "HP_MAX" : 5.0,
-"DAMAGE" : 2,
+"DAMAGE" : 4,
 "VELOCITY" : 0.09 * RESIZE_COEFF, # pixel by ms
 "GOLD_EARNING" : 2,
 
@@ -673,7 +674,7 @@ GREEN_SKEL_DICT = {
 
 "NAME" : "Green Skeleton",
 "HP_MAX" : 5.0,
-"DAMAGE" : 2,
+"DAMAGE" : 4,
 "VELOCITY" : 0.09 * RESIZE_COEFF, # pixel by ms
 "GOLD_EARNING" : 2,
 
@@ -748,8 +749,8 @@ ARCANE_TOWER_LVL1_DICT = {
 "NAME" : "Arcane tower Lvl.1",
 "HP_MAX" : 100.0,
 "RANGE" : 2.0, # multiplied by the square side
-"PRICE" : 60,
-"DAMAGE" : 8.0,
+"PRICE" : 65,
+"DAMAGE" : 9.0,
 
 "ATTACK_IMAGE_PATH" : "Assets/Tower/ToursMagique/Blanche/Niveau1/AttackAnim/",
 "NUMBER_FRAME_ATTACKING" : 10,
@@ -758,8 +759,8 @@ ARCANE_TOWER_LVL1_DICT = {
 
 "ROOT_IMAGE_PATH" : "Assets/Tower/ToursMagique/Blanche/Niveau1/RootedAnim/",
 "NUMBER_FRAME_ROOTING" : 10,
-"ANIMATION_ROOTING_TOTAL_TIME" : 1500,  # in ms
-"ANIMATION_ROOTING_TIME_PER_FRAME" : 150,  # in ms
+"ANIMATION_ROOTING_TOTAL_TIME" : 2500,  # in ms
+"ANIMATION_ROOTING_TIME_PER_FRAME" : 250,  # in ms
 "ROOT_DPS" : 2,
 
 "OFFSET" : [0.1*BACKGROUND_SQUARE_SIDE,-0.7*BACKGROUND_SQUARE_SIDE],
@@ -832,8 +833,8 @@ FIRE_TOWER_LVL1_DICT = {
 "NAME" : "Fire tower Lvl.1",
 "HP_MAX" : 100.0,
 "RANGE" : 3.5, # multiplied by the square side
-"PRICE" : 60,
-"DAMAGE" : 12.0,
+"PRICE" : 65,
+"DAMAGE" : 13.0,
 
 "ATTACK_IMAGE_PATH" : "Assets/Tower/ToursMagique/Rouge/Niveau1/AttackAnim/",
 "NUMBER_FRAME_ATTACKING" : 10,
@@ -842,8 +843,8 @@ FIRE_TOWER_LVL1_DICT = {
 
 "ROOT_IMAGE_PATH" : "Assets/Tower/ToursMagique/Rouge/Niveau1/RootedAnim/",
 "NUMBER_FRAME_ROOTING" : 10,
-"ANIMATION_ROOTING_TOTAL_TIME" : 1500,  # in ms
-"ANIMATION_ROOTING_TIME_PER_FRAME" : 150,  # in ms
+"ANIMATION_ROOTING_TOTAL_TIME" : 2500,  # in ms
+"ANIMATION_ROOTING_TIME_PER_FRAME" : 250,  # in ms
 "ROOT_DPS" : 2,
 
 "OFFSET" : ARCANE_TOWER_LVL1_DICT["OFFSET"],
@@ -916,7 +917,7 @@ LIGHTNING_TOWER_LVL1_DICT = {
 "NAME" : "Lightning tower Lvl.1",
 "HP_MAX" : 100.0,
 "RANGE" : 2.5, # multiplied by the square side
-"PRICE" : 60,
+"PRICE" : 65,
 "DAMAGE" : 6.0,
 
 "ATTACK_IMAGE_PATH" : "Assets/Tower/ToursMagique/Jaune/Niveau1/AttackAnim/",
@@ -926,8 +927,8 @@ LIGHTNING_TOWER_LVL1_DICT = {
 
 "ROOT_IMAGE_PATH" : "Assets/Tower/ToursMagique/Jaune/Niveau1/RootedAnim/",
 "NUMBER_FRAME_ROOTING" : 10,
-"ANIMATION_ROOTING_TOTAL_TIME" : 1500,  # in ms
-"ANIMATION_ROOTING_TIME_PER_FRAME" : 150,  # in ms
+"ANIMATION_ROOTING_TOTAL_TIME" : 2500,  # in ms
+"ANIMATION_ROOTING_TIME_PER_FRAME" : 250,  # in ms
 "ROOT_DPS" : 2,
 
 "OFFSET" : ARCANE_TOWER_LVL1_DICT["OFFSET"],
@@ -1000,7 +1001,7 @@ ICE_TOWER_LVL1_DICT = {
 "NAME" : "Ice tower Lvl.1",
 "HP_MAX" : 100.0,
 "RANGE" : 2.5, # multiplied by the square side
-"PRICE" : 60,
+"PRICE" : 65,
 "DAMAGE" : 8.0,
 
 "ATTACK_IMAGE_PATH" : "Assets/Tower/ToursMagique/Bleue/Niveau1/AttackAnim/",
@@ -1010,8 +1011,8 @@ ICE_TOWER_LVL1_DICT = {
 
 "ROOT_IMAGE_PATH" : "Assets/Tower/ToursMagique/Bleue/Niveau1/RootedAnim/",
 "NUMBER_FRAME_ROOTING" : 10,
-"ANIMATION_ROOTING_TOTAL_TIME" : 1500,  # in ms
-"ANIMATION_ROOTING_TIME_PER_FRAME" : 150,  # in ms
+"ANIMATION_ROOTING_TOTAL_TIME" : 2500,  # in ms
+"ANIMATION_ROOTING_TIME_PER_FRAME" : 250,  # in ms
 "ROOT_DPS" : 2,
 
 "OFFSET" : ARCANE_TOWER_LVL1_DICT["OFFSET"],
@@ -1082,7 +1083,7 @@ ICE_TOWER_LVL3_DICT = {
 BALLISTA_DICT = { 
 
 "NAME" : "Ballista",
-"HP_MAX" : 15.0,
+"HP_MAX" : 18.0,
 "RANGE" : 7.0, # multiplied by the square side
 "PRICE" : 5,
 "DAMAGE" : 2,
@@ -1105,7 +1106,7 @@ BALLISTA_DICT = {
 CATAPULT_DICT = { 
 
 "NAME" : "Catapult",
-"HP_MAX" : 25.0,
+"HP_MAX" : 12.0,
 "RANGE" : 9.0, # multiplied by the square side
 "PRICE" : 10,
 "DAMAGE" : 2,
@@ -1358,7 +1359,7 @@ ROCK_DICT = {
 "DAMAGE" : CATAPULT_DICT["DAMAGE"],
 "VELOCITY" : 0.60 * RESIZE_COEFF, # pixel by ms
 "ROTATION_SPEED"  : 0.01, # rotation per second
-"ORTHO_MOVEMENT" : 0.2   # multiplied by distance with the target
+"ORTHO_MOVEMENT" : 0.25   # multiplied by distance with the target
 
 }
 
@@ -1487,7 +1488,7 @@ WAVE_DICT = {
 "OFFSET" : [0* RESIZE_COEFF,-40* RESIZE_COEFF],
 "TIME_PER_FRAME" : 200, # in ms,
 "VELOCITY" : 0.15, # in ms
-"DAMAGE" : 10,
+"DAMAGE" : 0,
 "RESIZE_FACTOR" : 0.5*RESIZE_COEFF
 
 }
@@ -1511,7 +1512,7 @@ BUFF_DICT = {
 "OFFSET" : [-90* RESIZE_COEFF,30* RESIZE_COEFF],
 "TIME_PER_FRAME" : 20, # in ms,
 "TOTAL_TIME" : 5.0,
-"VELOCITY_COEFF" : 1.5, # heal by seconds
+"VELOCITY_COEFF" : 1.275,
 "DAMAGE_COEFF" : 2,
 "RESIZE_FACTOR" : 0.5*RESIZE_COEFF
 
