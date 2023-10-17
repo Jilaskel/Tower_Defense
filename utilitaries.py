@@ -196,6 +196,8 @@ SPAWNING_DICT = {
                 "DURATION" : 15,  ## in seconds
                 "BLUE_SKEL_PERIOD" : 3.4,   ## in seconds
                 "RED_SKEL_PERIOD" : 6.4   ## in seconds
+                # "MIN_BLUE_SKEL_SIMULTANEOUSLY" : 3,
+                # "MAX_RED_SKEL_SIMULTANEOUSLY" : 1
                 #"GREEN_SKEL_PERIOD" : 4.6  ## in seconds
             },
 

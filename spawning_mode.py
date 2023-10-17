@@ -189,8 +189,9 @@ class Spawning_mode():
                 cooldown = phase.ennemy_period[e_char]*self.number_last_spawned[e_char]
                 if ((time-self.time_last_spawned[e_char])>cooldown):
                     self.time_last_spawned[e_char] = time
+                    min_sim = phase.ennemy_min_sim[e_char]
                     max_sim = phase.ennemy_max_sim[e_char]
-                    self.number_last_spawned[e_char] = random.randint(1,max_sim)
+                    self.number_last_spawned[e_char] = random.randint(min_sim,max_sim)
                     self.spawn(game,self.ennemies_char_tag_dict[e_char],self.number_last_spawned[e_char])     
                                       
 
@@ -271,11 +272,15 @@ class Spawning_phase():
             self.duration = self.find_in_dic(char,0.0)
 
             self.ennemy_period= dict()
+            self.ennemy_min_sim = dict()
             self.ennemy_max_sim = dict()
 
             for e_char in sp_mode.ennemies_char_tag_dict.keys():
                 self.ennemy_period[e_char] = self.find_period_in_dic(e_char)
+                self.ennemy_min_sim[e_char] = self.find_min_sim_in_dic(e_char)
                 self.ennemy_max_sim[e_char] = self.find_max_sim_in_dic(e_char)
+                if (self.ennemy_max_sim[e_char]<self.ennemy_min_sim[e_char]):
+                    self.ennemy_max_sim[e_char]=self.ennemy_min_sim[e_char]
 
 
         def find_in_dic(self,char,default):
@@ -292,11 +297,21 @@ class Spawning_phase():
             else:
                 return(1e6)
 
+        def find_min_sim_in_dic(self,char):
+            complete_char = "MIN_" + char + "_SIMULTANEOUSLY"
+            if complete_char in self.my_dict:
+                if ((self.my_dict[complete_char]<1) or (self.my_dict[complete_char]>3)):
+                    return(1)
+                else:
+                    return(self.my_dict[complete_char])
+            else:
+                return(1)
+            
         def find_max_sim_in_dic(self,char):
             complete_char = "MAX_" + char + "_SIMULTANEOUSLY"
             if complete_char in self.my_dict:
                 if ((self.my_dict[complete_char]<1) or (self.my_dict[complete_char]>3)):
-                    return(1)
+                    return(3)
                 else:
                     return(self.my_dict[complete_char])
             else:
