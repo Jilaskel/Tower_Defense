@@ -212,6 +212,7 @@ class Blue_skel_data(Ennemy_data):
             self.init_spawning_data()
 
             self.dead_body_tag = DEAD_BLUE_SKEL_TAG 
+            self.gold_earning_when_summoned = self.my_dict["GOLD_EARNING_WHEN_SUMMONED"]
 
 class Red_skel_data(Ennemy_data):
       def __init__(self):
@@ -221,6 +222,7 @@ class Red_skel_data(Ennemy_data):
             self.init_spawning_data()
 
             self.dead_body_tag = DEAD_RED_SKEL_TAG 
+            self.gold_earning_when_summoned = self.my_dict["GOLD_EARNING_WHEN_SUMMONED"]
 
 class Green_skel_data(Ennemy_data):
       def __init__(self):
@@ -230,6 +232,7 @@ class Green_skel_data(Ennemy_data):
             self.init_spawning_data()
 
             self.dead_body_tag = DEAD_GREEN_SKEL_TAG 
+            self.gold_earning_when_summoned = self.my_dict["GOLD_EARNING_WHEN_SUMMONED"]
 
 class Kamikaze_data(Ennemy_data):
       def __init__(self):
@@ -581,9 +584,11 @@ class Skeleton(Ennemy):
                   self.stunned = True # to pass attack() while summoning
                   self.my_timer_sp = 0.0
                   self.spawn_frame = 0
+                  self.gold_earning = self.my_data.gold_earning_when_summoned
             else:
                   self.stunned = False
-                  self.my_timer_sp = self.my_data.anim_total_time_sp*2      
+                  self.my_timer_sp = self.my_data.anim_total_time_sp*2
+                  self.gold_earning = self.my_data.gold_earning      
 
       def move(self,game):
             if (self.my_timer_sp<self.my_data.anim_total_time_sp):
@@ -598,6 +603,14 @@ class Skeleton(Ennemy):
 
             else:
                   Ennemy.move(self,game)           
+
+      def die(self,game):
+            if (self.hp<=0):
+                  game.gold.gold_gain(game,self,self.gold_earning)
+                  game.all_dead_bodies.add_dead_body(game,self,self.my_data.dead_body_tag)
+                  pygame.sprite.Sprite.kill(self)
+            else:
+                  self.iced = False
 
 class Blue_Skeleton(Skeleton):
       def __init__(self,all_e,x,y,rand_offset):
