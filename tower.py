@@ -367,8 +367,10 @@ class Tower(pygame.sprite.Sprite):
 
             if (box.rendering_layer==23):       ## on walls
                   self.rendering_layer = 23
+                  range_used = self.my_data.range + 1
             else:
                   self.rendering_layer = compute_rendering_layer_number(self)
+                  range_used = self.my_data.range 
 
             self.my_timer = 0
 
@@ -391,7 +393,7 @@ class Tower(pygame.sprite.Sprite):
             self.hitbox_height = BACKGROUND_SQUARE_SIDE
             self.rect = pygame.Rect(self.hitbox_left,self.hitbox_top,self.hitbox_width,self.hitbox_height)
 
-            self.range = self.my_data.range * (self.rect.width+self.rect.height)/2.0
+            self.range = range_used * (self.rect.width+self.rect.height)/2.0
             self.range_hitbox = Range_Hitbox(self,self.rect.w,self.rect.h,self.range,circular=True)
 
             game.gold.gold_gain(game,self,self.my_data.gold_cost)
@@ -691,8 +693,10 @@ class Siege_engine(Tower):
 
             if (box.rendering_layer==23):       ## on walls
                   self.rendering_layer = 23
+                  range_used = self.my_data.range + 1.5
             else:
                   self.rendering_layer = compute_rendering_layer_number(self)
+                  range_used = self.my_data.range 
 
             self.my_timer = 0
 
@@ -711,7 +715,7 @@ class Siege_engine(Tower):
             self.hitbox_width = BACKGROUND_SQUARE_SIDE
             self.hitbox_height = BACKGROUND_SQUARE_SIDE
             self.rect = pygame.Rect(self.hitbox_left,self.hitbox_top,self.hitbox_width,self.hitbox_height)            
-            self.range = self.my_data.range*(self.rect.width+self.rect.height)/2.0
+            self.range = range_used*(self.rect.width+self.rect.height)/2.0
 
             game.gold.gold_gain(game,self,self.my_data.gold_cost)
 
