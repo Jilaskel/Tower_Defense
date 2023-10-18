@@ -175,7 +175,7 @@ MENU_LVL_MAX_BUTTON_IMAGE_PATH = "Assets/Menu/Buttons/menu_bar.png"
 SPAWNING_MARGIN_SPACE = 0.1   ## *background.bush_width
 INITIAL_SPAWNING_TIME = 10.0
 
-TIME_BETWEEN_ROUNDS = 20.0 # in seconds
+TIME_BETWEEN_ROUNDS = 15.0 # in seconds
 ROUND_DISPLAY_TIME = 4.0
 
 LAST_ROUND_HP_COEFF_PER_SEC = 0.1  # after the end of last round duration, the coeff will increase of this amount each second
@@ -222,7 +222,7 @@ SPAWNING_DICT = {
                 "BLUE_SKEL_PERIOD" : 7.3,   ## in seconds
                 "RED_SKEL_PERIOD" : 6.0,   ## in seconds
                 "GREEN_SKEL_PERIOD" : 4.8,  ## in seconds
-                "RED_NEC_PERIOD" : 7.0   ## in seconds
+                #"RED_NEC_PERIOD" : 7.0   ## in seconds
             }
         }
     },
@@ -287,12 +287,62 @@ SPAWNING_DICT = {
 
         "PHASES": {
             "P1": {
-                "DURATION" : 20,  ## in seconds
+                "DURATION" : 2,  ## in seconds
+                "KAMIKAZE_PERIOD" : 1.0   ## in seconds
+            },
+
+            "P2": {
+                "DURATION" : 15,  ## in seconds
+                "GOBLIN_PERIOD" : 1.5,   ## in seconds
+                "OGRE_PERIOD" : 3.0,   ## in seconds
+                "KAMIKAZE_PERIOD" : 4.5, ## in seconds
+                #"BLUE_NEC_PERIOD" : 3.4,   ## in seconds
+                "RED_NEC_PERIOD" : 2.2   ## in seconds
+                #"GREEN_NEC_PERIOD" : 4.6   ## in seconds
+                #"DRAGON_PERIOD" : 7.0,  ## in seconds
+            },
+
+            "P3": {
+                "DURATION" : 15,  ## in seconds
                 "GOBLIN_PERIOD" : 2.0,   ## in seconds
                 "OGRE_PERIOD" : 4.0,   ## in seconds
-                "BLUE_SKEL_PERIOD" : 6.0,   ## in seconds
-                "RED_SKEL_PERIOD" : 6.0,   ## in seconds
-                "GREEN_SKEL_PERIOD" : 6.0  ## in seconds
+                "KAMIKAZE_PERIOD" : 3.5, ## in seconds
+                "BLUE_NEC_PERIOD" : 2.3,   ## in seconds
+                "RED_NEC_PERIOD" : 3.1   ## in seconds
+                #"GREEN_NEC_PERIOD" : 4.6   ## in seconds
+                #"DRAGON_PERIOD" : 7.0,  ## in seconds
+
+            },
+
+            "P4": {
+                "DURATION" : 15,  ## in seconds
+                "GOBLIN_PERIOD" : 2.0,   ## in seconds
+                "OGRE_PERIOD" : 4.0,   ## in seconds
+                "KAMIKAZE_PERIOD" : 6.0, ## in seconds
+                "BLUE_NEC_PERIOD" : 4.4,   ## in seconds
+                "RED_NEC_PERIOD" : 3.7,   ## in seconds
+                "GREEN_NEC_PERIOD" : 2.6   ## in seconds
+                #"DRAGON_PERIOD" : 7.0,  ## in seconds
+
+            },
+
+            "P5": {
+                "DURATION" : 15,  ## in seconds
+                "GOBLIN_PERIOD" : 2.0,   ## in seconds
+                "OGRE_PERIOD" : 4.0,   ## in seconds
+                "KAMIKAZE_PERIOD" : 5.0, ## in seconds
+                "BLUE_NEC_PERIOD" : 3.4,   ## in seconds
+                "RED_NEC_PERIOD" : 2.7,   ## in seconds
+                "GREEN_NEC_PERIOD" : 4.6,   ## in seconds
+                "DRAGON_PERIOD" : 7.5  ## in seconds
+            },
+
+            "P6": {
+                "DURATION" : 2.0,  ## in seconds
+                "BLUE_NEC_PERIOD" : 1.0,   ## in seconds
+                "RED_NEC_PERIOD" : 1.0,   ## in seconds
+                "GREEN_NEC_PERIOD" : 1.0,   ## in seconds
+                "DRAGON_PERIOD" : 1.0  ## in seconds
             }
         }
     }
@@ -305,7 +355,7 @@ SPAWNING_DICT = {
 
 ##############################################################
 
-BASE_GATE_HP_MAX = 1000
+BASE_GATE_HP_MAX = 1000000
 
 ##############################################################
 
@@ -395,7 +445,7 @@ OGRE_DICT = {
 "STUN_TIME_PER_FRAME" : 50, # in ms
 
 "ICED_IMAGE_PATH" :  "Assets/Ennemies/Ogre/OgreIced.png",
-"ICED_HP_MAX" : 20.0,
+"ICED_HP_MAX" : 30.0,
 "ICED_NAME" : "Iced Goblin",
 "ICED_TIME_MAX" : 10.0 # in second
 
@@ -470,7 +520,7 @@ BLUE_NEC_DICT = {
 "STUN_TIME_PER_FRAME" : 75, # in ms
 
 "ICED_IMAGE_PATH" : "Assets/Ennemies/Necromancers/Blue_Necromancer/BlueNecroIced.png",
-"ICED_HP_MAX" : 20.0,
+"ICED_HP_MAX" : 25.0,
 "ICED_NAME" : "Iced Ice Necro",
 "ICED_TIME_MAX" : 10.0, # in second
 
@@ -518,7 +568,7 @@ RED_NEC_DICT = {
 "STUN_TIME_PER_FRAME" : 75, # in ms
 
 "ICED_IMAGE_PATH" : "Assets/Ennemies/Necromancers/Red_Necromancer/RedNecroIced.png",
-"ICED_HP_MAX" : 20.0,
+"ICED_HP_MAX" : 25.0,
 "ICED_NAME" : "Iced Fire Necro",
 "ICED_TIME_MAX" : 10.0, # in second
 
@@ -566,7 +616,7 @@ GREEN_NEC_DICT = {
 "STUN_TIME_PER_FRAME" : 75, # in ms
 
 "ICED_IMAGE_PATH" : "Assets/Ennemies/Necromancers/Green_Necromancer/GreenNecroIced.png",
-"ICED_HP_MAX" : 20.0,
+"ICED_HP_MAX" : 25.0,
 "ICED_NAME" : "Iced Plant Necro",
 "ICED_TIME_MAX" : 10.0, # in second
 
@@ -616,7 +666,7 @@ BLUE_SKEL_DICT = {
 "STUN_TIME_PER_FRAME" : 100, # in ms
 
 "ICED_IMAGE_PATH" : "Assets/Ennemies/Skeletons/FramesSkeletonBlue/BlueSkeletonIced.png",
-"ICED_HP_MAX" : 20.0,
+"ICED_HP_MAX" : 15.0,
 "ICED_NAME" : "Iced Ice Skel",
 "ICED_TIME_MAX" : 10.0, # in second
 
@@ -659,7 +709,7 @@ RED_SKEL_DICT = {
 "STUN_TIME_PER_FRAME" : 100, # in ms
 
 "ICED_IMAGE_PATH" : "Assets/Ennemies/Skeletons/FramesSkeletonRed/RedSkeletonIced.png",
-"ICED_HP_MAX" : 20.0,
+"ICED_HP_MAX" : 15.0,
 "ICED_NAME" : "Iced Red Skel",
 "ICED_TIME_MAX" : 10.0, # in second
 
@@ -702,7 +752,7 @@ GREEN_SKEL_DICT = {
 "STUN_TIME_PER_FRAME" : 100, # in ms
 
 "ICED_IMAGE_PATH" : "Assets/Ennemies/Skeletons/FramesSkeletonGreen/GreenSkeletonIced.png",
-"ICED_HP_MAX" : 20.0,
+"ICED_HP_MAX" : 15.0,
 "ICED_NAME" : "Iced Green Skel",
 "ICED_TIME_MAX" : 10.0, # in second
 
@@ -1292,7 +1342,7 @@ ICE_BOLT_LVL1_DICT = {
 
 "DAMAGE" : ICE_TOWER_LVL1_DICT["DAMAGE"],
 "SLOWING_COEFF" : 0.5,
-"FREEZING" : False, # Turn ennemie into ice block
+"FREEZING" : True, # Turn ennemie into ice block
 "RANGE" : ICE_TOWER_LVL1_DICT["RANGE"]
 
 }
