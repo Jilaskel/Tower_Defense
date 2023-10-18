@@ -196,6 +196,8 @@ SPAWNING_DICT = {
                 "DURATION" : 15,  ## in seconds
                 "BLUE_SKEL_PERIOD" : 3.4,   ## in seconds
                 "RED_SKEL_PERIOD" : 6.4   ## in seconds
+                # "MIN_BLUE_SKEL_SIMULTANEOUSLY" : 3,
+                # "MAX_RED_SKEL_SIMULTANEOUSLY" : 1
                 #"GREEN_SKEL_PERIOD" : 4.6  ## in seconds
             },
 
@@ -641,6 +643,7 @@ BLUE_SKEL_DICT = {
 "DAMAGE" : 4,
 "VELOCITY" : 0.09 * RESIZE_COEFF, # pixel by ms
 "GOLD_EARNING" : 2,
+"GOLD_EARNING_WHEN_SUMMONED" : 0,
 
 "HITBOX_FACTOR" : 1.0,
 "RESIZE_FACTOR" : 0.5*RESIZE_COEFF, #   pixel
@@ -684,6 +687,7 @@ RED_SKEL_DICT = {
 "DAMAGE" : 4,
 "VELOCITY" : 0.09 * RESIZE_COEFF, # pixel by ms
 "GOLD_EARNING" : 2,
+"GOLD_EARNING_WHEN_SUMMONED" : 0,
 
 "HITBOX_FACTOR" : 1.0,
 "RESIZE_FACTOR" : 0.5*RESIZE_COEFF, #   pixel
@@ -727,6 +731,7 @@ GREEN_SKEL_DICT = {
 "DAMAGE" : 4,
 "VELOCITY" : 0.09 * RESIZE_COEFF, # pixel by ms
 "GOLD_EARNING" : 2,
+"GOLD_EARNING_WHEN_SUMMONED" : 0,
 
 "HITBOX_FACTOR" : 1.0,
 "RESIZE_FACTOR" : 0.5*RESIZE_COEFF, #   pixel
