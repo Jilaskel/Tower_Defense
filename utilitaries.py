@@ -809,7 +809,7 @@ ARCANE_TOWER_LVL1_DICT = {
 "NAME" : "Arcane tower Lvl.1",
 "HP_MAX" : 100.0,
 "RANGE" : 2.0, # multiplied by the square side
-"PRICE" : 65,
+"PRICE" : 60,
 "DAMAGE" : 9.0,
 
 "ATTACK_IMAGE_PATH" : "Assets/Tower/ToursMagique/Blanche/Niveau1/AttackAnim/",
@@ -865,7 +865,7 @@ ARCANE_TOWER_LVL3_DICT = {
 "NAME" : "Arcane tower Lvl.3",
 "HP_MAX" : 300.0,
 "RANGE" : 3.5, # multiplied by the square side
-"PRICE" : 85,
+"PRICE" : 90,
 "DAMAGE" : 30.0,
 
 "ATTACK_IMAGE_PATH" : "Assets/Tower/ToursMagique/Blanche/Niveau3/AttackAnim/",
@@ -893,7 +893,7 @@ FIRE_TOWER_LVL1_DICT = {
 "NAME" : "Fire tower Lvl.1",
 "HP_MAX" : 100.0,
 "RANGE" : 3.5, # multiplied by the square side
-"PRICE" : 65,
+"PRICE" : 60,
 "DAMAGE" : 15.0,
 
 "ATTACK_IMAGE_PATH" : "Assets/Tower/ToursMagique/Rouge/Niveau1/AttackAnim/",
@@ -949,7 +949,7 @@ FIRE_TOWER_LVL3_DICT = {
 "NAME" : "Fire tower Lvl.3",
 "HP_MAX" : 300.0,
 "RANGE" : 4.5, # multiplied by the square side
-"PRICE" : 85,
+"PRICE" : 90,
 "DAMAGE" : 40.0,
 
 "ATTACK_IMAGE_PATH" : "Assets/Tower/ToursMagique/Rouge/Niveau3/AttackAnim/",
@@ -977,7 +977,7 @@ LIGHTNING_TOWER_LVL1_DICT = {
 "NAME" : "Lightning tower Lvl.1",
 "HP_MAX" : 100.0,
 "RANGE" : 2.5, # multiplied by the square side
-"PRICE" : 65,
+"PRICE" : 60,
 "DAMAGE" : 6.0,
 
 "ATTACK_IMAGE_PATH" : "Assets/Tower/ToursMagique/Jaune/Niveau1/AttackAnim/",
@@ -1033,7 +1033,7 @@ LIGHTNING_TOWER_LVL3_DICT = {
 "NAME" : "Lightning tower Lvl.3",
 "HP_MAX" : 300.0,
 "RANGE" : 4.5, # multiplied by the square side
-"PRICE" : 85,
+"PRICE" : 90,
 "DAMAGE" : 15.0,
 
 "ATTACK_IMAGE_PATH" : "Assets/Tower/ToursMagique/Jaune/Niveau3/AttackAnim/",
@@ -1061,7 +1061,7 @@ ICE_TOWER_LVL1_DICT = {
 "NAME" : "Ice tower Lvl.1",
 "HP_MAX" : 100.0,
 "RANGE" : 2.5, # multiplied by the square side
-"PRICE" : 65,
+"PRICE" : 60,
 "DAMAGE" : 8.0,
 
 "ATTACK_IMAGE_PATH" : "Assets/Tower/ToursMagique/Bleue/Niveau1/AttackAnim/",
@@ -1117,7 +1117,7 @@ ICE_TOWER_LVL3_DICT = {
 "NAME" : "Ice tower Lvl.3",
 "HP_MAX" : 300.0,
 "RANGE" : 2.5, # multiplied by the square side
-"PRICE" : 85,
+"PRICE" : 90,
 "DAMAGE" : 20,
 
 "ATTACK_IMAGE_PATH" : "Assets/Tower/ToursMagique/Bleue/Niveau3/AttackAnim/",
@@ -1351,7 +1351,7 @@ ICE_BOLT_LVL1_DICT = {
 "CENTER_VECTOR" : [0.5,0.0],
 
 "DAMAGE" : ICE_TOWER_LVL1_DICT["DAMAGE"],
-"SLOWING_COEFF" : 0.4,
+"SLOWING_COEFF" : 0.5,
 "FREEZING" : True, # Turn ennemie into ice block
 "RANGE" : ICE_TOWER_LVL1_DICT["RANGE"]
 
@@ -1370,7 +1370,7 @@ ICE_BOLT_LVL2_DICT = {
 "CENTER_VECTOR" : [0.5,0.0],
 
 "DAMAGE" : ICE_TOWER_LVL2_DICT["DAMAGE"],
-"SLOWING_COEFF" : 0.6,
+"SLOWING_COEFF" : 0.7,
 "FREEZING" : False, # Turn ennemie into ice block
 "RANGE" : ICE_TOWER_LVL2_DICT["RANGE"]
 
@@ -1560,7 +1560,7 @@ HEAL_DICT = {
 "OFFSET" : [-80* RESIZE_COEFF,30* RESIZE_COEFF],
 "TIME_PER_FRAME" : 20, # in ms,
 "TOTAL_TIME" : 5.0,
-"AMOUNT" : 3.0, # heal by seconds
+"AMOUNT" : 2.0, # heal by seconds
 "RESIZE_FACTOR" : 0.5*RESIZE_COEFF
 
 }
