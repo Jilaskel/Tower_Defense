@@ -329,17 +329,25 @@ SPAWNING_DICT = {
 
                         "P7": {
                 "DURATION" : 10.0,  ## in seconds
-                "DRAGON_PERIOD" : 1.2  ## in seconds
+                "DRAGON_PERIOD" : 1.4  ## in seconds
             }
         }
     },
     "R4"  : {
-        "HP_COEFF" : 1.0,
-        "DAMAGE_COEFF" : 1.0,
-        "VELOCITY_COEFF" : 1.0,
+        "HP_COEFF" : 2.0,
+        "DAMAGE_COEFF" : 1.2,
+        "VELOCITY_COEFF" : 1.2,
 
         "PHASES": {
             "P1": {
+                "DURATION" : 15,  ## in seconds
+                "GOBLIN_PERIOD" : 2.0,   ## in seconds
+                "OGRE_PERIOD" : 4.0,   ## in seconds
+                "KAMIKAZE_PERIOD" : 3.7, ## in seconds
+                "BLUE_NEC_PERIOD" : 3.4,   ## in seconds
+                "RED_NEC_PERIOD" : 2.7,   ## in seconds
+                "GREEN_NEC_PERIOD" : 4.6,   ## in seconds
+                "DRAGON_PERIOD" : 5.0  ## in seconds
 
         }
      }
@@ -354,7 +362,7 @@ SPAWNING_DICT = {
 
 ##############################################################
 
-BASE_GATE_HP_MAX = 300
+BASE_GATE_HP_MAX = 150
 
 ##############################################################
 
@@ -770,7 +778,7 @@ DRAGON_DICT = {
 "NAME" : "Dragon",
 "HP_MAX" : 100.0,
 "VELOCITY" : 0.1 * RESIZE_COEFF, # pixel by ms
-"GOLD_EARNING" : 40,
+"GOLD_EARNING" : 35,
 
 "HITBOX_FACTOR" : 1.0,
 "RESIZE_FACTOR" : 0.15*RESIZE_COEFF, #   pixel
@@ -807,7 +815,7 @@ ARCANE_TOWER_LVL1_DICT = {
 "ATTACK_IMAGE_PATH" : "Assets/Tower/ToursMagique/Blanche/Niveau1/AttackAnim/",
 "NUMBER_FRAME_ATTACKING" : 10,
 "ANIMATION_ATTACKING_TOTAL_TIME" : 800,  # in ms
-"ANIMATION_RELOADING_TOTAL_TIME" : 400,  # in ms
+"ANIMATION_RELOADING_TOTAL_TIME" : 600,  # in ms
 
 "ROOT_IMAGE_PATH" : "Assets/Tower/ToursMagique/Blanche/Niveau1/RootedAnim/",
 "NUMBER_FRAME_ROOTING" : 10,
@@ -819,7 +827,7 @@ ARCANE_TOWER_LVL1_DICT = {
 "RESIZE_FACTOR" : 0.4*RESIZE_COEFF,
 "FIRING_OFFSET" : [40* RESIZE_COEFF,50* RESIZE_COEFF],
 
-"UPGRADE_COST" : 150
+"UPGRADE_COST" : 100
 
 }
 
@@ -828,14 +836,14 @@ ARCANE_TOWER_LVL2_DICT = {
 
 "NAME" : "Arcane tower Lvl.2",
 "HP_MAX" : 150.0,
-"RANGE" : 2.4, # multiplied by the square side
-"PRICE" : 65,
+"RANGE" : 2.0, # multiplied by the square side
+"PRICE" : 75,
 "DAMAGE" : 14.0,
 
 "ATTACK_IMAGE_PATH" : "Assets/Tower/ToursMagique/Blanche/Niveau2/AttackAnim/",
 "NUMBER_FRAME_ATTACKING" : 10,
-"ANIMATION_ATTACKING_TOTAL_TIME" : 400,
-"ANIMATION_RELOADING_TOTAL_TIME" : 200,
+"ANIMATION_ATTACKING_TOTAL_TIME" : 600,
+"ANIMATION_RELOADING_TOTAL_TIME" : 400,
 
 "ROOT_IMAGE_PATH" : "Assets/Tower/ToursMagique/Blanche/Niveau2/RootedAnim/",
 "NUMBER_FRAME_ROOTING" : 10,
@@ -847,7 +855,7 @@ ARCANE_TOWER_LVL2_DICT = {
 "RESIZE_FACTOR" : ARCANE_TOWER_LVL1_DICT["RESIZE_FACTOR"],
 "FIRING_OFFSET" : ARCANE_TOWER_LVL1_DICT["FIRING_OFFSET"],
 
-"UPGRADE_COST" : 600
+"UPGRADE_COST" : 300
 
 }
 
@@ -855,15 +863,15 @@ ARCANE_TOWER_LVL2_DICT = {
 ARCANE_TOWER_LVL3_DICT = { 
 
 "NAME" : "Arcane tower Lvl.3",
-"HP_MAX" : 100.0,
+"HP_MAX" : 300.0,
 "RANGE" : 3.5, # multiplied by the square side
-"PRICE" : 400,
-"DAMAGE" : 10.0,
+"PRICE" : 85,
+"DAMAGE" : 30.0,
 
 "ATTACK_IMAGE_PATH" : "Assets/Tower/ToursMagique/Blanche/Niveau3/AttackAnim/",
 "NUMBER_FRAME_ATTACKING" : 10,
-"ANIMATION_ATTACKING_TOTAL_TIME" : 200,
-"ANIMATION_RELOADING_TOTAL_TIME" : 100,
+"ANIMATION_ATTACKING_TOTAL_TIME" : 300,
+"ANIMATION_RELOADING_TOTAL_TIME" : 200,
 
 "ROOT_IMAGE_PATH" : "Assets/Tower/ToursMagique/Blanche/Niveau3/RootedAnim/",
 "NUMBER_FRAME_ROOTING" : 10,
@@ -903,7 +911,7 @@ FIRE_TOWER_LVL1_DICT = {
 "RESIZE_FACTOR" : ARCANE_TOWER_LVL1_DICT["RESIZE_FACTOR"],
 "FIRING_OFFSET" : [40* RESIZE_COEFF,50* RESIZE_COEFF],
 
-"UPGRADE_COST" : 150
+"UPGRADE_COST" : 100
 
 }
 
@@ -913,7 +921,7 @@ FIRE_TOWER_LVL2_DICT = {
 "NAME" : "Fire tower Lvl.2",
 "HP_MAX" : 150.0,
 "RANGE" : 4.0, # multiplied by the square side
-"PRICE" : 65,
+"PRICE" : 75,
 "DAMAGE" : 20.0,
 
 "ATTACK_IMAGE_PATH" : "Assets/Tower/ToursMagique/Rouge/Niveau2/AttackAnim/",
@@ -931,7 +939,7 @@ FIRE_TOWER_LVL2_DICT = {
 "RESIZE_FACTOR" : FIRE_TOWER_LVL1_DICT["RESIZE_FACTOR"],
 "FIRING_OFFSET" : FIRE_TOWER_LVL1_DICT["FIRING_OFFSET"],
 
-"UPGRADE_COST" : 600
+"UPGRADE_COST" : 300
 
 }
 
@@ -939,15 +947,15 @@ FIRE_TOWER_LVL2_DICT = {
 FIRE_TOWER_LVL3_DICT = { 
 
 "NAME" : "Fire tower Lvl.3",
-"HP_MAX" : 100.0,
+"HP_MAX" : 300.0,
 "RANGE" : 4.5, # multiplied by the square side
-"PRICE" : 400,
-"DAMAGE" : 20.0,
+"PRICE" : 85,
+"DAMAGE" : 40.0,
 
 "ATTACK_IMAGE_PATH" : "Assets/Tower/ToursMagique/Rouge/Niveau3/AttackAnim/",
 "NUMBER_FRAME_ATTACKING" : 10,
-"ANIMATION_ATTACKING_TOTAL_TIME" : ARCANE_TOWER_LVL1_DICT["ANIMATION_ATTACKING_TOTAL_TIME"]*1.5,
-"ANIMATION_RELOADING_TOTAL_TIME" : ARCANE_TOWER_LVL1_DICT["ANIMATION_RELOADING_TOTAL_TIME"]*2,
+"ANIMATION_ATTACKING_TOTAL_TIME" : ARCANE_TOWER_LVL1_DICT["ANIMATION_ATTACKING_TOTAL_TIME"],
+"ANIMATION_RELOADING_TOTAL_TIME" : ARCANE_TOWER_LVL1_DICT["ANIMATION_RELOADING_TOTAL_TIME"],
 
 "ROOT_IMAGE_PATH" : "Assets/Tower/ToursMagique/Rouge/Niveau3/RootedAnim/",
 "NUMBER_FRAME_ROOTING" : 10,
@@ -975,7 +983,7 @@ LIGHTNING_TOWER_LVL1_DICT = {
 "ATTACK_IMAGE_PATH" : "Assets/Tower/ToursMagique/Jaune/Niveau1/AttackAnim/",
 "NUMBER_FRAME_ATTACKING" : 10,
 "ANIMATION_ATTACKING_TOTAL_TIME" : ARCANE_TOWER_LVL1_DICT["ANIMATION_ATTACKING_TOTAL_TIME"]*2,
-"ANIMATION_RELOADING_TOTAL_TIME" : ARCANE_TOWER_LVL1_DICT["ANIMATION_RELOADING_TOTAL_TIME"]*6,
+"ANIMATION_RELOADING_TOTAL_TIME" : ARCANE_TOWER_LVL1_DICT["ANIMATION_RELOADING_TOTAL_TIME"]*4,
 
 "ROOT_IMAGE_PATH" : "Assets/Tower/ToursMagique/Jaune/Niveau1/RootedAnim/",
 "NUMBER_FRAME_ROOTING" : 10,
@@ -987,7 +995,7 @@ LIGHTNING_TOWER_LVL1_DICT = {
 "RESIZE_FACTOR" : ARCANE_TOWER_LVL1_DICT["RESIZE_FACTOR"],
 "FIRING_OFFSET" : [60* RESIZE_COEFF,60* RESIZE_COEFF],
 
-"UPGRADE_COST" : 150
+"UPGRADE_COST" : 100
 
 }
 
@@ -997,7 +1005,7 @@ LIGHTNING_TOWER_LVL2_DICT = {
 "NAME" : "Lightning tower Lvl.2",
 "HP_MAX" : 150.0,
 "RANGE" : 2.8, # multiplied by the square side
-"PRICE" : 65,
+"PRICE" : 75,
 "DAMAGE" : 8.0,
 
 "ATTACK_IMAGE_PATH" : "Assets/Tower/ToursMagique/Jaune/Niveau2/AttackAnim/",
@@ -1015,7 +1023,7 @@ LIGHTNING_TOWER_LVL2_DICT = {
 "RESIZE_FACTOR" : LIGHTNING_TOWER_LVL1_DICT["RESIZE_FACTOR"],
 "FIRING_OFFSET" : LIGHTNING_TOWER_LVL1_DICT["FIRING_OFFSET"],
 
-"UPGRADE_COST" : 600
+"UPGRADE_COST" : 300
 
 }
 
@@ -1023,10 +1031,10 @@ LIGHTNING_TOWER_LVL2_DICT = {
 LIGHTNING_TOWER_LVL3_DICT = { 
 
 "NAME" : "Lightning tower Lvl.3",
-"HP_MAX" : 100.0,
+"HP_MAX" : 300.0,
 "RANGE" : 4.5, # multiplied by the square side
-"PRICE" : 400,
-"DAMAGE" : 10.0,
+"PRICE" : 85,
+"DAMAGE" : 15.0,
 
 "ATTACK_IMAGE_PATH" : "Assets/Tower/ToursMagique/Jaune/Niveau3/AttackAnim/",
 "NUMBER_FRAME_ATTACKING" : 10,
@@ -1071,7 +1079,7 @@ ICE_TOWER_LVL1_DICT = {
 "RESIZE_FACTOR" : ARCANE_TOWER_LVL1_DICT["RESIZE_FACTOR"],
 "FIRING_OFFSET" : [60* RESIZE_COEFF,70* RESIZE_COEFF],
 
-"UPGRADE_COST" : 150
+"UPGRADE_COST" : 100
 
 }
 
@@ -1081,7 +1089,7 @@ ICE_TOWER_LVL2_DICT = {
 "NAME" : "Ice tower Lvl.2",
 "HP_MAX" : 150.0,
 "RANGE" : 3.0, # multiplied by the square side
-"PRICE" : 65,
+"PRICE" : 75,
 "DAMAGE" : 10.0,
 
 "ATTACK_IMAGE_PATH" : "Assets/Tower/ToursMagique/Bleue/Niveau2/AttackAnim/",
@@ -1099,7 +1107,7 @@ ICE_TOWER_LVL2_DICT = {
 "RESIZE_FACTOR" : ICE_TOWER_LVL1_DICT["RESIZE_FACTOR"],
 "FIRING_OFFSET" : ICE_TOWER_LVL1_DICT["FIRING_OFFSET"],
 
-"UPGRADE_COST" : 600
+"UPGRADE_COST" : 300
 
 }
 
@@ -1107,10 +1115,10 @@ ICE_TOWER_LVL2_DICT = {
 ICE_TOWER_LVL3_DICT = { 
 
 "NAME" : "Ice tower Lvl.3",
-"HP_MAX" : 100.0,
+"HP_MAX" : 300.0,
 "RANGE" : 2.5, # multiplied by the square side
-"PRICE" : 400,
-"DAMAGE" : 10,
+"PRICE" : 85,
+"DAMAGE" : 20,
 
 "ATTACK_IMAGE_PATH" : "Assets/Tower/ToursMagique/Bleue/Niveau3/AttackAnim/",
 "NUMBER_FRAME_ATTACKING" : 10,
@@ -1282,10 +1290,10 @@ LIGHTNING_BOLT_LVL1_DICT = {
 "CENTER_VECTOR" : [0.5,0.0],
 
 "DAMAGE" : LIGHTNING_TOWER_LVL1_DICT["DAMAGE"],
-"STUN_TIME" : 0.0,
-"NUMBER_BOUNCE_MAX" : 3,
-"DECREASING_DISTANCE_BOUNCE_FACTOR" : 0.2,  # will decrease of X% at each bounce
-"DECREASING_DAMAGE_BOUNCE_FACTOR" : 0.25, # will decrease of X% at each bounce
+"STUN_TIME" : 0.5,
+"NUMBER_BOUNCE_MAX" : 4,
+"DECREASING_DISTANCE_BOUNCE_FACTOR" : 0.1,  # will decrease of X% at each bounce
+"DECREASING_DAMAGE_BOUNCE_FACTOR" : 0.2, # will decrease of X% at each bounce
 "RANGE" : LIGHTNING_TOWER_LVL1_DICT["RANGE"]
 
 }
@@ -1302,10 +1310,10 @@ LIGHTNING_BOLT_LVL2_DICT = {
 "CENTER_VECTOR" : [0.5,0.0],
 
 "DAMAGE" : LIGHTNING_TOWER_LVL2_DICT["DAMAGE"],
-"STUN_TIME" : 0.5,
-"NUMBER_BOUNCE_MAX" : 6,
-"DECREASING_DISTANCE_BOUNCE_FACTOR" : 0.2,  # will decrease of X% at each bounce
-"DECREASING_DAMAGE_BOUNCE_FACTOR" : 0.25, # will decrease of X% at each bounce
+"STUN_TIME" : 1.0,
+"NUMBER_BOUNCE_MAX" : 8,
+"DECREASING_DISTANCE_BOUNCE_FACTOR" : 0.1,  # will decrease of X% at each bounce
+"DECREASING_DAMAGE_BOUNCE_FACTOR" : 0.2, # will decrease of X% at each bounce
 "RANGE" : LIGHTNING_TOWER_LVL2_DICT["RANGE"]
 
 }
@@ -1323,9 +1331,9 @@ LIGHTNING_BOLT_LVL3_DICT = {
 
 "DAMAGE" : LIGHTNING_TOWER_LVL3_DICT["DAMAGE"],
 "STUN_TIME" : 2.0,
-"NUMBER_BOUNCE_MAX" : 3,
-"DECREASING_DISTANCE_BOUNCE_FACTOR" : 0.2,  # will decrease of X% at each bounce
-"DECREASING_DAMAGE_BOUNCE_FACTOR" : 0.25, # will decrease of X% at each bounce
+"NUMBER_BOUNCE_MAX" : 15,
+"DECREASING_DISTANCE_BOUNCE_FACTOR" : 0,  # will decrease of X% at each bounce
+"DECREASING_DAMAGE_BOUNCE_FACTOR" : 0, # will decrease of X% at each bounce
 "RANGE" : LIGHTNING_TOWER_LVL3_DICT["RANGE"]
 
 }
@@ -1381,7 +1389,7 @@ ICE_BOLT_LVL3_DICT = {
 "CENTER_VECTOR" : [0.5,0.0],
 
 "DAMAGE" : ICE_TOWER_LVL3_DICT["DAMAGE"],
-"SLOWING_COEFF" : 0.5,
+"SLOWING_COEFF" : 0.9,
 "FREEZING" : True, # Turn ennemie into ice block
 "RANGE" : ICE_TOWER_LVL3_DICT["RANGE"]
 
@@ -1455,7 +1463,7 @@ ARCANE_IMPACT_LVL2_DICT = {
 #### ARCANE_IMPACT_LVL3
 ARCANE_IMPACT_LVL3_DICT = {
 
-"DAMAGE" : 10.0,
+"DAMAGE" : 15.0,
 
 "IMAGE_PATH" : "Assets/Tower/ToursMagique/Blanche/ImpactAnim/",
 "RESIZE_FACTOR" : 0.3*RESIZE_COEFF,
@@ -1578,7 +1586,7 @@ EXPLOSION_DICT = {
 "TIME_PER_FRAME" : 100, # in ms,
 "DAMAGE_FRAME" : 4,
 "HITBOX_FACTOR" : 1.0, 
-"DAMAGE" : 30,
+"DAMAGE" : 40,
 "RESIZE_FACTOR" : 0.75*RESIZE_COEFF
 
 }
