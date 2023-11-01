@@ -54,13 +54,6 @@ class Spawning_mode():
             else:
                 last_round = True
 
-        self.reset()  
-
-        self.last_round = round_number-2
-        self.time_last_round = INITIAL_SPAWNING_TIME
-        self.time_last_phase = INITIAL_SPAWNING_TIME
-        self.display_time = ROUND_DISPLAY_TIME
-
         self.font_size = int(140*RESIZE_COEFF)
         self.font = pygame.font.Font(LOADING_FONT_PATH,self.font_size)
         self.font_color = (0,0,0) # (243,243,243)
@@ -71,19 +64,22 @@ class Spawning_mode():
 
         self.small_txt = []
 
-        self.display(0,"Prepare Your Defenses!")
+        self.last_round = round_number-2
+        self.display_time = ROUND_DISPLAY_TIME
+
+        self.reset()  
+
 
     def display(self,i,txt=None):
+        self.small_txt.clear()
         if txt:
             text = txt
         else:
             if (i-1==self.last_round):
                 text = "Last Round"
-                self.small_txt.clear()
             else:
                 text = "Round " + str(i)
 
-                self.small_txt.clear()
                 if (self.my_rounds[self.current_round].hp_coeff != 1) :
                     text_small = "HP coeff : x" + str(self.my_rounds[self.current_round].hp_coeff)
                     self.small_txt.append(self.font_small.render(text_small,True,self.font_color))
@@ -133,12 +129,10 @@ class Spawning_mode():
         spawning_coeff.damage_coeff = self.my_rounds[self.current_round].damage_coeff
         spawning_coeff.velocity_coeff = self.my_rounds[self.current_round].velocity_coeff        
 
-
-    def reset_hard(self):
-        self.reset()
         self.time_last_phase = INITIAL_SPAWNING_TIME
         self.time_last_round = INITIAL_SPAWNING_TIME
         self.display(0,"Prepare Your Defenses!")
+
 
     def reset_cd_between_rounds(self,time):
         for e_char in self.ennemies_char_tag_dict.keys():

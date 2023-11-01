@@ -214,7 +214,7 @@ class Game():
 
       def reset(self):
 
-            self.spawning_mode.reset_hard()
+            self.spawning_mode.reset()
 
             self.gold.reset()
 
