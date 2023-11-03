@@ -1,6 +1,8 @@
 Python version : 3.11.3
 Pygame version : 2.1.2
 
+All games parameters are set in utilitaries.py
+
 When DEV_MODE = True, list of shortcuts:
 
 G : Game Over
