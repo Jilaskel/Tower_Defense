@@ -141,7 +141,7 @@ class Game():
             for tower in self.all_towers:
                   tower.die()
             for gate in self.base.all_gates:
-                  gate.destroy()
+                  gate.check_destroy()
 
       def render(self,update=True):
             self.object_to_render.append(self.background)

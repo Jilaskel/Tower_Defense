@@ -9,14 +9,14 @@ global_status = Global_status()
 
 RUNNING = True
 
-DEV_MODE = True  # activate shortcuts, see README
+DEV_MODE = False  # activate shortcuts, see README
 TURN_OFF_NATURAL_SPAWNING = False
 
 ############### RESOLUTION
 WINDOW_WIDTH = 1920
 WINDOW_HEIGHT = 1080
-# WINDOW_WIDTH = 1920*0.50
-# WINDOW_HEIGHT = 1080*0.50
+# WINDOW_WIDTH = 1920*0.75
+# WINDOW_HEIGHT = 1080*0.75
 
 RESIZE_COEFF = WINDOW_WIDTH/1920
 
