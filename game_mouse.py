@@ -115,7 +115,8 @@ class Game_mouse(pygame.sprite.Sprite):
 
                     self.carried_rect = self.carried_image.get_rect()
                     self.carried_width = self.carried_rect.width
-                    self.carried_height = self.carried_rect.height               
+                    self.carried_height = self.carried_rect.height     
+                    self.left_clicked = False          
             else:
                 self.hit_opt_buttons = pygame.sprite.spritecollide(self, game.menu.all_options_buttons, False, pygame.sprite.collide_rect_ratio(self.ratio_for_hitbox))
                 if (self.hit_opt_buttons):

@@ -56,7 +56,8 @@ class Spawning_mode():
 
         self.font_size = int(140*RESIZE_COEFF)
         self.font = pygame.font.Font(LOADING_FONT_PATH,self.font_size)
-        self.font_color = (0,0,0) # (243,243,243)
+        # self.font_color = (0,0,0) 
+        self.font_color = (243,243,243)
         self.rendering_layer = 26
 
         self.font_size_small = int(70*RESIZE_COEFF)

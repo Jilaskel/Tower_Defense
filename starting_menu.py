@@ -115,7 +115,7 @@ class Starting_menu():
 
       def render_credits(self):
             margin_x = WINDOW_WIDTH*0.77
-            margin_y = WINDOW_HEIGHT*0.20
+            margin_y = WINDOW_HEIGHT*0.15
             space = 1.0
 
             message = "Code:" 
@@ -130,17 +130,23 @@ class Starting_menu():
             x = margin_x - image_size[0]*0.5
             window.blit(txt, (x, margin_y+image_size[1]*space*1)) 
 
-            message = "Graphical Assets:"
+            message = "Graphical Assets"
             txt = self.font_credits.render(message,True,self.font_credits_color)
             image_size = vec(txt.get_size())
             x = margin_x - image_size[0]*0.5
             window.blit(txt, (x, margin_y+image_size[1]*space*2)) 
 
-            message = "Xavier Condamine"
+            message = "and Balancing:"
             txt = self.font_credits.render(message,True,self.font_credits_color)
             image_size = vec(txt.get_size())
             x = margin_x - image_size[0]*0.5
             window.blit(txt, (x, margin_y+image_size[1]*space*3)) 
+
+            message = "Xavier Condamine"
+            txt = self.font_credits.render(message,True,self.font_credits_color)
+            image_size = vec(txt.get_size())
+            x = margin_x - image_size[0]*0.5
+            window.blit(txt, (x, margin_y+image_size[1]*space*4)) 
 
       def render(self):
             window.fill((0,0,0))
