@@ -26,6 +26,7 @@ class Menu():
             self.text_price_offset = vec(0.60,0.67)  # multiplied by the button image size
             self.text_upgrade_price_offset = vec(0.55,0.05)  # multiplied by the button image size
             self.text_lvl_max_offset = vec(0.80,0.05)  # multiplied by the button image size
+            self.text_shortcut_offset = vec(0.3,0.0)
 
             self.upgrade_button_image_path = MENU_UPGRADE_BUTTON_IMAGE_PATH
             self.lvl_max_button_image_path = MENU_LVL_MAX_BUTTON_IMAGE_PATH
@@ -408,6 +409,7 @@ class Tower_button(pygame.sprite.Sprite):
                   self.range_hitbox = Range_Hitbox(self,BACKGROUND_SQUARE_SIDE,BACKGROUND_SQUARE_SIDE,self.range,circular=False,tag="Ballista")  
 
                   self.price = self.my_dict["PRICE"] 
+                  self.shortcut_str = "a"
 
             elif (self.my_tag==CATAPULT_BUTTON_TAG):
                   self.my_dict = CATAPULT_DICT
@@ -422,25 +424,44 @@ class Tower_button(pygame.sprite.Sprite):
                   self.range_hitbox = Range_Hitbox(self,BACKGROUND_SQUARE_SIDE,BACKGROUND_SQUARE_SIDE,self.range,circular=False,tag="Catapult")  
 
                   self.price = self.my_dict["PRICE"] 
+                  self.shortcut_str = "z"
 
             else : 
                 self.compatible_grass = False
                 self.compatible_road = False         
 
+            if self.my_tag in ARCANE_TOWER_BUTTONS_TAG:
+                  self.shortcut_str = "e"
+            elif self.my_tag in ICE_TOWER_BUTTONS_TAG:
+                  self.shortcut_str = "r"
+            elif self.my_tag in LIGHTNING_TOWER_BUTTONS_TAG:
+                  self.shortcut_str = "t"
+            elif self.my_tag in FIRE_TOWER_BUTTONS_TAG:
+                  self.shortcut_str = "y"
+
             self.text_price =  menu.font_menu.render(str(self.price),True,menu.font_menu_color)  
             self.text_size = vec(self.text_price.get_size())    
             self.text_price_enlarged =  menu.font_menu_enlarged.render(str(self.price),True,menu.font_menu_color)
-            self.text_size_enlarged = vec(self.text_price_enlarged.get_size())    
+            self.text_size_enlarged = vec(self.text_price_enlarged.get_size())   
+
+            self.text_shortcut =  menu.font_menu.render(self.shortcut_str,True,menu.font_menu_color)
+            self.text_shortcut_size = vec(self.text_shortcut.get_size())    
+            self.text_shortcut_enlarged =  menu.font_menu_enlarged.render(self.shortcut_str,True,menu.font_menu_color)
+            self.text_shortcut_size_enlarged = vec(self.text_shortcut_enlarged.get_size())  
 
       def render(self):
             if self.mouse_over:
                   window.blit(self.enlarged_image, (self.enlarged_posX, self.enlarged_posY))  
                   x_txt =  self.enlarged_posX+self.enlarged_size[0]*self.menu.text_price_offset[0]-self.text_size_enlarged[0]
                   window.blit(self.text_price_enlarged,(x_txt, self.enlarged_posY+self.enlarged_size[1]*self.menu.text_price_offset[1])) 
+                  x_txt =  self.enlarged_posX+self.enlarged_size[0]*self.menu.text_shortcut_offset[0]-self.text_shortcut_size_enlarged[0]
+                  window.blit(self.text_shortcut_enlarged,(x_txt, self.enlarged_posY+self.enlarged_size[1]*self.menu.text_shortcut_offset[1])) 
             else:
                   window.blit(self.current_image, (self.posX, self.posY))
                   x_txt = self.posX+self.image_size[0]*self.menu.text_price_offset[0]-self.text_size[0]
                   window.blit(self.text_price,(x_txt, self.posY+self.image_size[1]*self.menu.text_price_offset[1]))
+                  x_txt = self.posX+self.image_size[0]*self.menu.text_shortcut_offset[0]-self.text_shortcut_size[0]
+                  window.blit(self.text_shortcut,(x_txt, self.posY+self.image_size[1]*self.menu.text_shortcut_offset[1]))
 
             self.mouse_over = False 
             self.rendering_layer = 0  
