@@ -64,22 +64,22 @@ class Menu():
 
       def add_buttons(self):
             (x,y) = (self.margin,0)
-            self.all_buttons.add(Tower_button(self,x,y,ARCANE_TOWER_LVL1_BUTTON_TAG))
+            self.all_buttons.add(Tower_button(self,x,y,BALLISTA_BUTTON_TAG))
 
             (x,y) = (self.margin+1.0*self.space,0)
-            self.all_buttons.add(Tower_button(self,x,y,FIRE_TOWER_LVL1_BUTTON_TAG))
+            self.all_buttons.add(Tower_button(self,x,y,CATAPULT_BUTTON_TAG))
 
             (x,y) = (self.margin+2.0*self.space,0)
-            self.all_buttons.add(Tower_button(self,x,y,LIGHTNING_TOWER_LVL1_BUTTON_TAG))
+            self.all_buttons.add(Tower_button(self,x,y,ARCANE_TOWER_LVL1_BUTTON_TAG))
 
             (x,y) = (self.margin+3.0*self.space,0)
             self.all_buttons.add(Tower_button(self,x,y,ICE_TOWER_LVL1_BUTTON_TAG))
 
             (x,y) = (self.margin+4.0*self.space,0)
-            self.all_buttons.add(Tower_button(self,x,y,BALLISTA_BUTTON_TAG))
+            self.all_buttons.add(Tower_button(self,x,y,LIGHTNING_TOWER_LVL1_BUTTON_TAG))
 
             (x,y) = (self.margin+5.0*self.space,0)
-            self.all_buttons.add(Tower_button(self,x,y,CATAPULT_BUTTON_TAG))
+            self.all_buttons.add(Tower_button(self,x,y,FIRE_TOWER_LVL1_BUTTON_TAG))
 
             path = MENU_MENU_BUTTON_IMAGE_PATH
             (x,y) = (self.margin+11.5*self.space,0)

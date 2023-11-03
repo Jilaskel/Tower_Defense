@@ -29,8 +29,11 @@ class Game_mouse(pygame.sprite.Sprite):
         self.box_not_valid = False
 
         self.hit_towers = []
+        self.hit_buttons = []
 
         self.rendering_layer = TOTAL_NUMBER_RENDERING_LAYER
+
+        self.pressable_keys = [K_a,K_z,K_e,K_r,K_t,K_y]
 
 
     def doing_stuff(self,game):
@@ -49,35 +52,79 @@ class Game_mouse(pygame.sprite.Sprite):
 
         self.hit_object = None
 
-        self.left_cliked = False
+        self.left_clicked = False
+        self.right_clicked = False
+        self.event_key = None
         for event in game.all_events:
             if (event.type == MOUSEBUTTONDOWN):
                 if event.button==1:  
-                    self.left_cliked = True
+                    self.left_clicked = True
+                if event.button==3:
+                    self.right_clicked = True
+            elif (event.type == KEYDOWN):
+                if event.key in self.pressable_keys:
+                    self.event_key = event
+                    self.hit_buttons = []
+                    self.carrying = False
+                    if (self.event_key.key == K_a):
+                        for button in game.menu.all_buttons:
+                            if button.my_tag==BALLISTA_BUTTON_TAG:
+                                self.hit_buttons.append(button)
+                                break
+                    if (self.event_key.key == K_z):
+                        for button in game.menu.all_buttons:
+                            if button.my_tag==CATAPULT_BUTTON_TAG:
+                                self.hit_buttons.append(button)
+                                break
+                    if (self.event_key.key == K_e):
+                        for button in game.menu.all_buttons:
+                            if button.my_tag in ARCANE_TOWER_BUTTONS_TAG:
+                                self.hit_buttons.append(button)
+                                break
+                    if (self.event_key.key == K_r):
+                        for button in game.menu.all_buttons:
+                            if button.my_tag in ICE_TOWER_BUTTONS_TAG:
+                                self.hit_buttons.append(button)
+                                break
+                    if (self.event_key.key == K_t):
+                        for button in game.menu.all_buttons:
+                            if button.my_tag in LIGHTNING_TOWER_BUTTONS_TAG:
+                                self.hit_buttons.append(button)
+                                break
+                    if (self.event_key.key == K_y):
+                        for button in game.menu.all_buttons:
+                            if button.my_tag in FIRE_TOWER_BUTTONS_TAG:
+                                self.hit_buttons.append(button)
+                                break  
 
-        if not(self.carrying):
-            self.hit_buttons = pygame.sprite.spritecollide(self, game.menu.all_buttons, False, pygame.sprite.collide_rect_ratio(self.ratio_for_hitbox))
-
+        if not(self.event_key):
+            self.hit_buttons = pygame.sprite.spritecollide(self, game.menu.all_buttons, False, pygame.sprite.collide_rect_ratio(self.ratio_for_hitbox))  
             if (self.hit_buttons):
                 self.hit_buttons[0].mouse_over = True
                 self.hit_buttons[0].rendering_layer = 22
-                if (self.left_click_pressed):
+                if self.left_clicked:
+                    self.carrying = False
+
+        if not(self.carrying):
+            if (self.hit_buttons):
+                if (self.left_clicked or self.event_key):
+                    self.my_hit_button = self.hit_buttons[0]
                     self.carrying = True
-                    self.carried_image = self.hit_buttons[0].image_to_carry
+                    self.carried_image = self.my_hit_button.image_to_carry
                     self.carried_image.set_alpha(MOUSE_CARRIED_IMAGE_ALPHA)
 
                     self.carried_rect = self.carried_image.get_rect()
                     self.carried_width = self.carried_rect.width
-                    self.carried_height = self.carried_rect.height
+                    self.carried_height = self.carried_rect.height               
             else:
                 self.hit_opt_buttons = pygame.sprite.spritecollide(self, game.menu.all_options_buttons, False, pygame.sprite.collide_rect_ratio(self.ratio_for_hitbox))
                 if (self.hit_opt_buttons):
                     self.hit_opt_buttons[0].mouse_over = True
                     self.hit_opt_buttons[0].rendering_layer = 22
-                    if self.left_cliked:
+                    if self.left_clicked:
                         self.hit_opt_buttons[0].action(game)   
                 if not(self.hit_opt_buttons):
-                    if self.left_cliked:
+                    if self.left_clicked:
                         self.hit_object = pygame.sprite.spritecollide(self, game.all_towers, False, pygame.sprite.collide_rect_ratio(self.ratio_for_hitbox))
                         if not(self.hit_object):
                             self.hit_object = pygame.sprite.spritecollide(self, game.all_ennemies, False, pygame.sprite.collide_rect_ratio(self.ratio_for_hitbox))
@@ -105,44 +152,48 @@ class Game_mouse(pygame.sprite.Sprite):
                 self.x_box = self.hit_boxes[0].posX
                 self.y_box = self.hit_boxes[0].posY
 
-                if (self.hit_boxes[0].grass and self.hit_buttons[0].compatible_grass):
+                if (self.hit_boxes[0].grass and self.my_hit_button.compatible_grass):
                     if not(self.hit_boxes[0].occupied):
                         self.box_valid = True
-                        if not(self.left_click_pressed):
-                            if (game.gold.amount >= self.hit_buttons[0].price):
-                                game.all_towers.add_tower(game,self.hit_boxes[0],self.hit_buttons[0].my_tag)
+                        if (self.left_clicked):
+                            if (game.gold.amount >= self.my_hit_button.price):
+                                game.all_towers.add_tower(game,self.hit_boxes[0],self.my_hit_button.my_tag)
                                 self.hit_boxes[0].occupied = True
+                                self.carrying = False
+                                game.show_grid = False
                             else:
                                 game.all_error_messages.add_error_message_anim("Not enough gold",self.x_box,self.y_box)
                     else:
                         self.box_not_valid = True
-                        if not(self.left_click_pressed):
+                        if self.left_clicked:
                             game.all_error_messages.add_error_message_anim("This spot has already been built",self.x_box,self.y_box)  
 
-                elif (self.hit_boxes[0].road and self.hit_buttons[0].compatible_road):
+                elif (self.hit_boxes[0].road and self.my_hit_button.compatible_road):
                     if not(self.hit_boxes[0].occupied):
                         self.box_valid = True
-                        if not(self.left_click_pressed):
-                            if (game.gold.amount >= self.hit_buttons[0].price):
-                                game.all_towers.add_tower(game,self.hit_boxes[0],self.hit_buttons[0].my_tag)
+                        if self.left_clicked:
+                            if (game.gold.amount >= self.my_hit_button.price):
+                                game.all_towers.add_tower(game,self.hit_boxes[0],self.my_hit_button.my_tag)
                                 self.hit_boxes[0].occupied = True
+                                self.carrying = False
+                                game.show_grid = False
                             else:
                                 game.all_error_messages.add_error_message_anim("Not enough gold",self.x_box,self.y_box)
                     else:
                         self.box_not_valid = True
-                        if not(self.left_click_pressed):
+                        if self.left_clicked:
                             game.all_error_messages.add_error_message_anim("This spot has already been built",self.x_box,self.y_box)  
 
                 else:
                     self.box_not_valid = True
-                    if not(self.left_click_pressed):
+                    if self.left_clicked:
                         game.all_error_messages.add_error_message_anim("Cannot be build here",self.x_box,self.y_box)
                          
         else: #display range?
             self.hit_towers = pygame.sprite.spritecollide(self, game.all_towers, False, pygame.sprite.collide_rect_ratio(self.ratio_for_hitbox))
       
 
-        if not(self.left_click_pressed):
+        if (self.right_clicked):
             self.carrying = False
             game.show_grid = False
 
@@ -154,7 +205,7 @@ class Game_mouse(pygame.sprite.Sprite):
         window.blit(self.current_image, (self.posX, self.posY)) 
 
         if self.carrying:
-            hitbox = self.hit_buttons[0].range_hitbox
+            hitbox = self.my_hit_button.range_hitbox
             window.blit(hitbox.image, (self.carried_x+hitbox.offset[0], self.carried_y+hitbox.offset[1]))  # display range hitbow while dragging
             window.blit(self.carried_image, (self.carried_x, self.carried_y))
             if self.box_valid:
