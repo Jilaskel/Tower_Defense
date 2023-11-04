@@ -55,7 +55,7 @@ class Gate(pygame.sprite.Sprite):
 
             self.rendering_layer = 22
 
-    def check_destroy(self):
+    def open(self):
         if ((self.hp<=0) and not(self.opened)):
                 # pygame.sprite.Sprite.kill(self)
                 self.rect.x = -500

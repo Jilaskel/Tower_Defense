@@ -141,7 +141,7 @@ class Game():
             for tower in self.all_towers:
                   tower.die()
             for gate in self.base.all_gates:
-                  gate.check_destroy()
+                  gate.open()
 
       def render(self,update=True):
             self.object_to_render.append(self.background)
@@ -261,7 +261,7 @@ class Game():
                                     global_status.status = "In pause"
                               elif (global_status.status == "In pause"):
                                     global_status.status = "In game"
-                        if (event.key == K_DELETE):
+                        if ((event.key == K_DELETE) or (event.key == K_x)):
                               if self.selected_object.destroyable:
                                     self.selected_object.obj.destroy(self)
                         if DEV_MODE:
