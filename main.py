@@ -1,6 +1,6 @@
 import pygame
 import sys
-from thread import * 
+from loading_screen import * 
  
  
 ############################# 
